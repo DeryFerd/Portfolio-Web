@@ -1,0 +1,31 @@
+.about {
+  background-color: var(--bg-primary);
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.content {
+  max-width: 800px;
+}
+
+.text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+}
+
+.link {
+  display: inline-block;
+  margin-top: var(--spacing-md);
+  font-size: 0.875rem;
+  color: var(--accent);
+  transition: color var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--text-primary);
+}
