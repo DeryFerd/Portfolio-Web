@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import styles from "./Header.module.css";
 
 const navLinks = [
@@ -15,13 +16,16 @@ export default function Header() {
         <Link href="/" className={styles.logo}>
           <span className="text-accent">&gt;</span> AI_Engineer
         </Link>
-        <nav className={styles.nav}>
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className={styles.navLink}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <div className={styles.rightSection}>
+          <nav className={styles.nav}>
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href} className={styles.navLink}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
