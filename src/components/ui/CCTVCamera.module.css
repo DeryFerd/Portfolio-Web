@@ -1,59 +1,59 @@
-/* ── CCTV Camera ── */
+/* ── CCTV Camera — section-level surveillance ── */
 
 .wrapper {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 2;
-    /* Hidden by default — parent card controls visibility via className override */
-    opacity: 0;
-    transform: scale(0.75);
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    pointer-events: none;
+    position: relative;
+    flex-shrink: 0;
 }
 
 .svg {
     width: 100%;
     height: 100%;
     overflow: visible;
-    filter: drop-shadow(0 2px 8px rgba(0, 180, 216, 0.3));
+    filter: drop-shadow(0 2px 12px rgba(0, 180, 216, 0.25));
 }
 
 /* ── Mount bracket ── */
 .mount {
     fill: var(--accent);
-    opacity: 0.55;
+    opacity: 0.5;
 }
 
 /* ── Camera housing ── */
 .housing {
     fill: #1a2530;
     stroke: var(--accent);
-    stroke-width: 1;
+    stroke-width: 1.2;
 }
 
 /* ── Lens barrel ── */
 .barrel {
     fill: #0d1a22;
     stroke: var(--accent);
-    stroke-width: 0.8;
+    stroke-width: 1;
 }
 
 /* ── Lens glass ── */
 .lens {
     fill: #050c12;
     stroke: var(--accent);
-    stroke-width: 1;
+    stroke-width: 1.2;
 }
 
 .lensGlare {
-    fill: rgba(0, 180, 216, 0.55);
+    fill: rgba(0, 180, 216, 0.6);
+}
+
+/* ── Scan lines inside housing ── */
+.scanline {
+    stroke: var(--accent);
+    stroke-width: 0.6;
+    opacity: 0.3;
 }
 
 /* ── Recording LED — blinking red ── */
 .led {
     fill: #ff3b3b;
-    filter: drop-shadow(0 0 4px rgba(255, 59, 59, 0.9));
+    filter: drop-shadow(0 0 5px rgba(255, 59, 59, 0.9));
     animation: ledBlink 1.1s ease-in-out infinite;
 }
 

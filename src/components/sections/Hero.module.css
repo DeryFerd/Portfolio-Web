@@ -19,10 +19,12 @@
   z-index: 1;
 }
 
-/* Row that holds the robot head — centred at top of hero */
-.robotRow {
-  align-self: flex-start;
-  margin-bottom: var(--spacing-md);
+/* Title row: h1 + robot head side by side */
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+  width: 100%;
 }
 
 .greeting {
@@ -36,8 +38,9 @@
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 700;
   line-height: 1.1;
-  max-width: 800px;
   text-align: left;
+  flex: 1;
+  /* take remaining space beside robot head */
 }
 
 .description {

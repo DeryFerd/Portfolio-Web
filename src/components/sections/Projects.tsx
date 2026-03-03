@@ -31,24 +31,23 @@ export default function Projects() {
   return (
     <section className={`section ${styles.projects}`} id="projects">
       <div className="container">
+        {/* ── Section header: title | "View All" link | CCTV camera ── */}
         <div className={styles.header}>
           <h2 className={styles.sectionTitle}>
             <span className="text-accent">#</span> Featured Projects
           </h2>
-          <Link href="/projects" className={styles.viewAll}>
-            View All &rarr;
-          </Link>
+          <div className={styles.headerRight}>
+            <Link href="/projects" className={styles.viewAll}>
+              View All &rarr;
+            </Link>
+            {/* CCTV always on, tracks cursor across the whole section */}
+            <CCTVCamera size={60} />
+          </div>
         </div>
+
         <div className={styles.grid}>
           {projects.map((project) => (
-            <article
-              key={project.slug}
-              className={styles.card}
-              data-cctv-card
-            >
-              {/* CCTV camera — appears & tracks cursor on hover */}
-              <CCTVCamera size={48} className={styles.cctvWrapper} />
-
+            <article key={project.slug} className={styles.card}>
               <div className={styles.imageWrapper}>
                 <Image
                   src={project.image}

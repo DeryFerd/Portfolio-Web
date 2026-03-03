@@ -1,40 +1,43 @@
 "use client";
-import { useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./CCTVCamera.module.css";
 
 interface CCTVCameraProps {
-    /** Size of the svg in px. Default: 44 */
+    /** Size of the svg in px. Default: 56 */
     size?: number;
-    /** ClassName passed from parent (used for hover visibility override) */
     className?: string;
 }
 
-export default function CCTVCamera({ size = 44, className = "" }: CCTVCameraProps) {
+/**
+ * CCTV Camera — mounted at section level.
+ * Tracks the GLOBAL cursor position and rotates to face it at all times.
+ * No hover gating — always watching.
+ */
+export default function CCTVCamera({ size = 56, className = "" }: CCTVCameraProps) {
     const cameraBodyRef = useRef<SVGGElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
-    const rotate = useCallback((e: React.MouseEvent) => {
+    useEffect(() => {
+        const body = cameraBodyRef.current;
         const wrapper = wrapperRef.current;
-        const body = cameraBodyRef.current;
-        if (!wrapper || !body) return;
+        if (!body || !wrapper) return;
 
-        const rect = wrapper.getBoundingClientRect();
-        const pivotX = rect.left + rect.width / 2;
-        const pivotY = rect.top + rect.height / 2;
+        const onMouseMove = (e: MouseEvent) => {
+            const rect = wrapper.getBoundingClientRect();
+            const pivotX = rect.left + rect.width / 2;
+            const pivotY = rect.top + rect.height / 2;
 
-        const dx = e.clientX - pivotX;
-        const dy = e.clientY - pivotY;
-        let angle = (Math.atan2(dy, dx) * 180) / Math.PI;
-        // Clamp to a natural surveillance arc (camera can't spin 360°)
-        angle = Math.max(-65, Math.min(65, angle));
+            const dx = e.clientX - pivotX;
+            const dy = e.clientY - pivotY;
+            let angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+            // Clamp to realistic surveillance arc: can't spin past its mount
+            angle = Math.max(-75, Math.min(75, angle));
 
-        body.style.transform = `rotate(${angle}deg)`;
-        body.style.transformOrigin = "50% 50%";
-    }, []);
+            body.style.transform = `rotate(${angle}deg)`;
+        };
 
-    const reset = useCallback(() => {
-        const body = cameraBodyRef.current;
-        if (body) body.style.transform = "rotate(0deg)";
+        window.addEventListener("mousemove", onMouseMove, { passive: true });
+        return () => window.removeEventListener("mousemove", onMouseMove);
     }, []);
 
     return (
@@ -42,33 +45,40 @@ export default function CCTVCamera({ size = 44, className = "" }: CCTVCameraProp
             ref={wrapperRef}
             className={`${styles.wrapper} ${className}`}
             style={{ width: size, height: size }}
-            onMouseMove={rotate}
-            onMouseLeave={reset}
+            aria-hidden="true"
         >
             <svg
-                viewBox="0 0 44 44"
+                viewBox="0 0 56 56"
                 xmlns="http://www.w3.org/2000/svg"
                 className={styles.svg}
-                aria-hidden="true"
             >
-                {/* Wall / ceiling bracket */}
-                <rect x="20" y="2" width="4" height="11" rx="1.5" className={styles.mount} />
-                <rect x="14" y="11" width="16" height="3" rx="1.5" className={styles.mount} />
+                {/* ── Ceiling mount ── */}
+                {/* Vertical stem */}
+                <rect x="25" y="2" width="6" height="14" rx="2" className={styles.mount} />
+                {/* Horizontal arm base */}
+                <rect x="18" y="14" width="20" height="4" rx="2" className={styles.mount} />
 
-                {/* Rotating camera body */}
+                {/* ── Rotating camera body ── */}
                 <g
                     ref={cameraBodyRef}
-                    style={{ transition: "transform 0.12s ease-out", transformOrigin: "50% 50%" }}
+                    style={{
+                        transition: "transform 0.1s ease-out",
+                        transformOrigin: "50% 50%",
+                    }}
                 >
-                    {/* Housing */}
-                    <rect x="10" y="19" width="20" height="12" rx="3" className={styles.housing} />
-                    {/* Barrel */}
-                    <rect x="30" y="21" width="8" height="8" rx="2" className={styles.barrel} />
-                    {/* Lens */}
-                    <circle cx="36" cy="25" r="3" className={styles.lens} />
-                    <circle cx="36" cy="25" r="1.2" className={styles.lensGlare} />
+                    {/* Housing body */}
+                    <rect x="14" y="24" width="24" height="16" rx="4" className={styles.housing} />
+                    {/* Lens barrel */}
+                    <rect x="38" y="27" width="12" height="10" rx="3" className={styles.barrel} />
+                    {/* Lens glass */}
+                    <circle cx="47" cy="32" r="4" className={styles.lens} />
+                    <circle cx="47" cy="32" r="1.6" className={styles.lensGlare} />
                     {/* Recording LED */}
-                    <circle cx="14" cy="25" r="2" className={styles.led} />
+                    <circle cx="19" cy="32" r="2.5" className={styles.led} />
+                    {/* Scan line detail */}
+                    <line x1="26" y1="29" x2="36" y2="29" className={styles.scanline} />
+                    <line x1="26" y1="32" x2="36" y2="32" className={styles.scanline} />
+                    <line x1="26" y1="35" x2="36" y2="35" className={styles.scanline} />
                 </g>
             </svg>
         </div>

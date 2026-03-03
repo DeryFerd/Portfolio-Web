@@ -1,7 +1,9 @@
+/* ── Projects Section ── */
 .projects {
   background-color: transparent;
 }
 
+/* ── Section header: title + [View All + CCTV] ── */
 .header {
   display: flex;
   justify-content: space-between;
@@ -11,6 +13,13 @@
 
 .sectionTitle {
   font-size: 2rem;
+}
+
+/* Right side of header groups the link and CCTV camera together */
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
 }
 
 .viewAll {
@@ -23,15 +32,16 @@
   color: var(--text-primary);
 }
 
+/* ── Project grid ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--spacing-lg);
 }
 
+/* ── Card ── */
 .card {
   position: relative;
-  /* needed for CCTV absolute positioning */
   padding: var(--spacing-lg);
   background-color: var(--bg-card);
   display: flex;
@@ -44,13 +54,7 @@
   transform: translateY(-4px);
 }
 
-/* Override CCTVCamera visibility for this card's scope */
-.card:hover .cctvWrapper {
-  opacity: 1 !important;
-  transform: scale(1) !important;
-  pointer-events: auto !important;
-}
-
+/* ── Card image ── */
 .imageWrapper {
   width: 100%;
   height: 180px;
@@ -69,6 +73,7 @@
   transform: scale(1.05);
 }
 
+/* ── Card text ── */
 .cardTitle {
   font-size: 1.25rem;
 }
@@ -80,6 +85,7 @@
   flex-grow: 1;
 }
 
+/* ── Tags ── */
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -95,6 +101,7 @@
   letter-spacing: 0.5px;
 }
 
+/* ── Card link ── */
 .cardLink {
   font-size: 0.875rem;
   color: var(--accent);
