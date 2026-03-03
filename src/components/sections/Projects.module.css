@@ -30,6 +30,8 @@
 }
 
 .card {
+  position: relative;
+  /* needed for CCTV absolute positioning */
   padding: var(--spacing-lg);
   background-color: var(--bg-card);
   display: flex;
@@ -40,6 +42,13 @@
 
 .card:hover {
   transform: translateY(-4px);
+}
+
+/* Override CCTVCamera visibility for this card's scope */
+.card:hover .cctvWrapper {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  pointer-events: auto !important;
 }
 
 .imageWrapper {

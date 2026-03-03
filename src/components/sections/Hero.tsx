@@ -1,5 +1,6 @@
 import Link from "next/link";
 import TypeWriter from "@/components/ui/TypeWriter";
+import RobotHead from "@/components/ui/RobotHead";
 import styles from "./Hero.module.css";
 
 const roles = [
@@ -17,9 +18,15 @@ export default function Hero() {
         <div className={styles.greeting}>
           <span className="text-accent">//</span> Hello, World
         </div>
-        <h1 className={styles.title}>
-          <TypeWriter words={roles} speed={80} deleteSpeed={40} pauseDuration={1500} />
-        </h1>
+
+        {/* ── Title row: TypeWriter text + Robot head side by side ── */}
+        <div className={styles.titleRow}>
+          <h1 className={styles.title}>
+            <TypeWriter words={roles} speed={80} deleteSpeed={40} pauseDuration={1500} />
+          </h1>
+          <RobotHead />
+        </div>
+
         <p className={styles.description}>
           Specializing in machine learning, deep learning, and AI solutions.
           Turning data into insights, models into products.

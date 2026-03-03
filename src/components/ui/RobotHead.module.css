@@ -1,0 +1,136 @@
+/* ── Static Robot Head — lives inside Hero ── */
+
+.wrapper {
+    position: relative;
+    width: 140px;
+    height: 160px;
+    flex-shrink: 0;
+    /* Float gently up & down */
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* ── Glow behind head ── */
+.glow {
+    position: absolute;
+    inset: -24px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 180, 216, 0.20) 0%, transparent 70%);
+    animation: glowPulse 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+/* ── SVG ── */
+.svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    filter: drop-shadow(0 6px 24px rgba(0, 180, 216, 0.30));
+}
+
+/* ── Antenna ── */
+.antennaStick {
+    stroke: var(--accent);
+    stroke-width: 2.5;
+    opacity: 0.7;
+}
+
+.antennaDot {
+    fill: var(--accent);
+    filter: drop-shadow(0 0 6px var(--accent));
+    animation: antennaPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes antennaPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}
+
+/* ── Head & Visor ── */
+.head {
+    fill: #1e2a30;
+    stroke: var(--accent);
+    stroke-width: 1.5;
+}
+
+.visor {
+    fill: #0a1520;
+    stroke: var(--accent);
+    stroke-width: 1;
+}
+
+/* ── Eyes ── */
+.eyeOuter {
+    fill: rgba(0, 180, 216, 0.12);
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    animation: eyeGlow 2s ease-in-out infinite;
+}
+
+.eyeInner {
+    fill: var(--accent);
+    filter: drop-shadow(0 0 6px var(--accent));
+}
+
+@keyframes eyeGlow {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ── Mouth ── */
+.mouth {
+    fill: #1a2530;
+    stroke: var(--accent);
+    stroke-width: 1;
+}
+
+.mouthGap {
+    fill: #080e14;
+}
+
+/* ── Neck ── */
+.neck {
+    fill: #1a2530;
+    stroke: var(--accent);
+    stroke-width: 1;
+    opacity: 0.85;
+}

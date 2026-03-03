@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import CCTVCamera from "@/components/ui/CCTVCamera";
 import styles from "./Projects.module.css";
 
 const projects = [
@@ -40,7 +41,14 @@ export default function Projects() {
         </div>
         <div className={styles.grid}>
           {projects.map((project) => (
-            <article key={project.slug} className={styles.card}>
+            <article
+              key={project.slug}
+              className={styles.card}
+              data-cctv-card
+            >
+              {/* CCTV camera — appears & tracks cursor on hover */}
+              <CCTVCamera size={48} className={styles.cctvWrapper} />
+
               <div className={styles.imageWrapper}>
                 <Image
                   src={project.image}

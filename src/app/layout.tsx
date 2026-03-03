@@ -4,7 +4,6 @@ import "@/styles/globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Loading from "@/components/ui/Loading";
-import RobotAnimation from "@/components/ui/RobotAnimation";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -25,7 +24,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={jetbrainsMono.className}>
         <Loading />
-        <RobotAnimation />
         <Header />
         <main>{children}</main>
         <Footer />
