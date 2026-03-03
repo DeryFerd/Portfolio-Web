@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Projects.module.css";
 
 const projects = [
@@ -7,18 +8,21 @@ const projects = [
     description: "A conversational AI built with GPT models for customer support automation.",
     tags: ["NLP", "GPT", "FastAPI"],
     slug: "ai-chatbot",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
   },
   {
     title: "Image Classifier",
     description: "Deep learning model for image classification using CNN architecture.",
     tags: ["Computer Vision", "PyTorch", "ResNet"],
     slug: "image-classifier",
+    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
   },
   {
     title: "Recommender System",
     description: "Collaborative filtering recommendation engine for e-commerce platforms.",
     tags: ["ML", "Recommendation", "Python"],
     slug: "recommender-system",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
   },
 ];
 
@@ -37,6 +41,16 @@ export default function Projects() {
         <div className={styles.grid}>
           {projects.map((project) => (
             <article key={project.slug} className={styles.card}>
+              <div className={styles.imageWrapper}>
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  width={400}
+                  height={200}
+                  className={styles.image}
+                  unoptimized
+                />
+              </div>
               <h3 className={styles.cardTitle}>{project.title}</h3>
               <p className={styles.cardDescription}>{project.description}</p>
               <div className={styles.tags}>

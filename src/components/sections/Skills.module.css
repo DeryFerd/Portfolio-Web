@@ -1,5 +1,5 @@
 .skills {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
 }
 
 .sectionTitle {
@@ -25,13 +25,11 @@
   align-items: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-lg);
-  border: 1px solid var(--border);
   background-color: var(--bg-card);
-  transition: border-color var(--transition-normal), transform var(--transition-normal);
+  transition: transform var(--transition-normal);
 }
 
 .skillCard:hover {
-  border-color: var(--accent);
   transform: translateY(-4px);
 }
 

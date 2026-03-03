@@ -1,5 +1,6 @@
 import Link from "next/link";
 import TypeWriter from "@/components/ui/TypeWriter";
+import NeuralBackground from "@/components/ui/NeuralBackground";
 import styles from "./Hero.module.css";
 
 const roles = [
@@ -13,6 +14,7 @@ const roles = [
 export default function Hero() {
   return (
     <section className={styles.hero}>
+      <NeuralBackground />
       <div className={`container ${styles.heroInner}`}>
         <div className={styles.greeting}>
           <span className="text-accent">//</span> Hello, World

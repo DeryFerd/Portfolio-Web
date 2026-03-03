@@ -50,7 +50,6 @@ a.value:hover {
   gap: var(--spacing-md);
   padding: var(--spacing-md) var(--spacing-lg);
   background-color: var(--bg-card);
-  border: 1px solid var(--border);
   font-size: 0.875rem;
   color: var(--text-secondary);
   transition: all var(--transition-normal);
@@ -71,7 +70,6 @@ a.value:hover {
 
 .cta {
   padding: var(--spacing-2xl);
-  border: 1px solid var(--border);
   background-color: var(--bg-card);
   max-width: 600px;
 }

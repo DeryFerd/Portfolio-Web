@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./page.module.css";
 
 const projectData: Record<string, {
@@ -6,6 +7,7 @@ const projectData: Record<string, {
   description: string;
   tags: string[];
   content: string;
+  image: string;
   github?: string;
   demo?: string;
 }> = {
@@ -13,6 +15,7 @@ const projectData: Record<string, {
     title: "AI Chatbot",
     description: "A conversational AI built with GPT models for customer support automation.",
     tags: ["NLP", "GPT", "FastAPI", "React"],
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop",
     content: `
 ## Overview
 Built a conversational AI chatbot using GPT-3.5 API for customer support automation. The system handles common queries and escalates complex issues to human agents.
@@ -42,6 +45,7 @@ Built a conversational AI chatbot using GPT-3.5 API for customer support automat
     title: "Image Classifier",
     description: "Deep learning model for image classification using CNN architecture.",
     tags: ["Computer Vision", "PyTorch", "ResNet", "Python"],
+    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&h=600&fit=crop",
     content: `
 ## Overview
 Developed a CNN-based image classifier capable of distinguishing between 100 different object categories with 95% accuracy.
@@ -57,14 +61,78 @@ Developed a CNN-based image classifier capable of distinguishing between 100 dif
     `,
     github: "https://github.com",
   },
+  "recommender-system": {
+    title: "Recommender System",
+    description: "Collaborative filtering recommendation engine for e-commerce platforms.",
+    tags: ["ML", "Recommendation", "Python"],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop",
+    content: `
+## Overview
+Built a hybrid recommendation system combining collaborative and content-based filtering for personalized product recommendations.
+
+## Tech Stack
+- **Python**: Scikit-learn, Pandas
+- **Algorithm**: Matrix Factorization
+- **Data**: User behavior logs
+    `,
+    github: "https://github.com",
+  },
+  "sentiment-analysis": {
+    title: "Sentiment Analysis",
+    description: "Real-time sentiment analysis for social media monitoring.",
+    tags: ["NLP", "BERT", "Streamlit"],
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&h=600&fit=crop",
+    content: `
+## Overview
+Developed a real-time sentiment analysis tool that monitors social media platforms and provides sentiment insights.
+
+## Tech Stack
+- **Model**: BERT-base
+- **Framework**: Hugging Face Transformers
+- **UI**: Streamlit
+    `,
+    github: "https://github.com",
+  },
+  "object-detection": {
+    title: "Object Detection",
+    description: "YOLO-based object detection for autonomous vehicles.",
+    tags: ["Computer Vision", "YOLO", "OpenCV"],
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=600&fit=crop",
+    content: `
+## Overview
+Implemented YOLOv8 for real-time object detection in autonomous vehicle scenarios.
+
+## Tech Stack
+- **Model**: YOLOv8
+- **Framework**: Ultralytics
+- **Tools**: OpenCV, NumPy
+    `,
+    github: "https://github.com",
+  },
+  "time-series": {
+    title: "Time Series Forecasting",
+    description: "LSTM model for stock price prediction and financial forecasting.",
+    tags: ["Deep Learning", "LSTM", "Finance"],
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=600&fit=crop",
+    content: `
+## Overview
+Built an LSTM-based model for predicting stock prices and financial time series data.
+
+## Tech Stack
+- **Model**: LSTM
+- **Framework**: TensorFlow, Keras
+- **Data**: Historical stock data
+    `,
+    github: "https://github.com",
+  },
 };
 
-export default function ProjectDetail({
+export default async function ProjectDetail({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const slug = "ai-chatbot";
+  const { slug } = await params;
   const project = projectData[slug] || projectData["ai-chatbot"];
 
   return (
@@ -73,6 +141,17 @@ export default function ProjectDetail({
         <Link href="/projects" className={styles.backLink}>
           &larr; Back to Projects
         </Link>
+        
+        <div className={styles.imageWrapper}>
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={1200}
+            height={600}
+            className={styles.image}
+            unoptimized
+          />
+        </div>
         
         <h1 className={styles.title}>{project.title}</h1>
         

@@ -1,0 +1,158 @@
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.marqueeWrapper {
+  position: absolute;
+  top: 60%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.clockWrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.text {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--spacing-lg);
+}
+
+.afterLoading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9998;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.clockWrapper {
+  width: 80px;
+  height: 80px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.clock {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  animation: spin 2s linear infinite;
+}
+
+.clockFace {
+  width: 100%;
+  height: 100%;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  position: relative;
+}
+
+.clockMark {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  background-color: var(--accent);
+  transform-origin: center 40px;
+}
+
+.hourHand {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 20px;
+  background-color: var(--text-primary);
+  transform-origin: center bottom;
+  transform: translateX(-50%) translateY(-100%) rotate(0deg);
+  animation: hourHand 2s steps(12) infinite;
+}
+
+.minuteHand {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 30px;
+  background-color: var(--accent);
+  transform-origin: center bottom;
+  transform: translateX(-50%) translateY(-100%) rotate(0deg);
+  animation: minuteHand 2s linear infinite;
+}
+
+.centerDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+}
+
+.marqueeWrapper {
+  position: absolute;
+  bottom: 100px;
+  width: 100%;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hourHand {
+  from {
+    transform: translateX(-50%) translateY(-100%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) translateY(-100%) rotate(360deg);
+  }
+}
+
+@keyframes minuteHand {
+  from {
+    transform: translateX(-50%) translateY(-100%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) translateY(-100%) rotate(360deg);
+  }
+}

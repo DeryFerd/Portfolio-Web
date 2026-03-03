@@ -50,6 +50,24 @@
   transform: translateY(-4px);
 }
 
+.imageWrapper {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
 .cardTitle {
   font-size: 1.25rem;
 }

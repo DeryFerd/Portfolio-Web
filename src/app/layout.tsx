@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Loading from "@/components/ui/Loading";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={jetbrainsMono.className}>
+        <Loading />
         <Header />
         <main>{children}</main>
         <Footer />

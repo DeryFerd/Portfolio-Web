@@ -45,11 +45,13 @@ LLMs are powerful tools that can accelerate development significantly. Start sma
   `,
 };
 
-export default function BlogPost({
+export default async function BlogPost({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
+  
   return (
     <div className={styles.page}>
       <div className="container">
