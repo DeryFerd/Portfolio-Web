@@ -1,130 +1,206 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./RobotAnimation.module.css";
 
-// Posisi mata dalam SVG viewBox (0 0 220 310)
-const LEFT_EYE = { x: 85, y: 76 };
-const RIGHT_EYE = { x: 135, y: 76 };
-const MAX_OFFSET = 5; // batas gerak pupil dalam unit SVG
+// ─── Constants ───────────────────────────────────────────────────────────────
+const ROBOT_W = 100;
+const ROBOT_H = 115;
+const LERP = 0.04;    // slow & lazy — feels like it's "waiting"
+const BOX_PAD = 10;      // extra breathing room around avoid boxes
+const MAX_PUPIL = 4;
 
+// How far above/beside the cursor the robot prefers to sit
+const OFFSET_Y = 70;       // px above cursor
+const OFFSET_X = 20;       // slight horizontal nudge toward cursor
+
+const LEFT_EYE = { cx: 36, cy: 62 };
+const RIGHT_EYE = { cx: 74, cy: 62 };
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t;
+}
+
+function clamp(v: number, lo: number, hi: number) {
+  return Math.max(lo, Math.min(hi, v));
+}
+
+/**
+ * Compute target (x, y) for the robot.
+ *
+ * Strategy — "companion that hovers above you":
+ *   1. Default target: centered on cursor, OFFSET_Y px above it.
+ *   2. If that position overlaps a [data-robot-avoid] box,
+ *      the robot climbs to just above that box (sits on top of the content).
+ *   3. No side-switching — the robot stays near the cursor at all times.
+ *   4. getBoundingClientRect() is always viewport-relative, so scroll is
+ *      handled automatically with no extra bookkeeping.
+ */
+function computeTarget(
+  mx: number,
+  my: number,
+  vw: number,
+  vh: number
+): { x: number; y: number } {
+  // 1. Default: hover above cursor, centred horizontally on it
+  let x = clamp(mx - ROBOT_W / 2, 8, vw - ROBOT_W - 8);
+  let y = clamp(my - ROBOT_H - OFFSET_Y, 8, vh - ROBOT_H - 8);
+
+  // 2. Collision with [data-robot-avoid] elements
+  const avoidEls = document.querySelectorAll<HTMLElement>("[data-robot-avoid]");
+
+  for (const el of avoidEls) {
+    const r = el.getBoundingClientRect();
+    const rl = r.left - BOX_PAD;
+    const rr = r.right + BOX_PAD;
+    const rt = r.top - BOX_PAD;
+    const rb = r.bottom + BOX_PAD;
+
+    // Skip if no horizontal overlap
+    if (x + ROBOT_W <= rl || x >= rr) continue;
+
+    // Skip if no vertical overlap
+    if (y + ROBOT_H <= rt || y >= rb) continue;
+
+    // Robot overlaps — prefer sitting ABOVE the box (feels like "waiting on top")
+    const spaceAbove = rt;          // viewport top → box top
+    const spaceBelow = vh - rb;     // box bottom   → viewport bottom
+
+    if (spaceAbove >= ROBOT_H + 8) {
+      // Enough room above: sit on top of the box
+      y = rt - ROBOT_H - 4;
+    } else if (spaceBelow >= ROBOT_H + 8) {
+      // Not enough above: peek below the box
+      y = rb + 4;
+    } else {
+      // Tight: slide to whichever vertical gap is bigger
+      y = spaceAbove >= spaceBelow
+        ? clamp(rt - ROBOT_H - 4, 0, vh - ROBOT_H)
+        : clamp(rb + 4, 0, vh - ROBOT_H);
+    }
+  }
+
+  return { x, y };
+}
+
+// ─── Component ───────────────────────────────────────────────────────────────
 export default function RobotAnimation() {
-    const svgRef = useRef<SVGSVGElement>(null);
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const leftPupilRef = useRef<SVGCircleElement>(null);
+  const rightPupilRef = useRef<SVGCircleElement>(null);
 
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            const svg = svgRef.current;
-            if (!svg) return;
+  // All mutable state lives in refs → zero React re-renders
+  const mouseX = useRef(0);
+  const mouseY = useRef(0);
+  const robotX = useRef(8);
+  const robotY = useRef(80);
 
-            const rect = svg.getBoundingClientRect();
+  useEffect(() => {
+    // Start mouse at viewport centre to avoid corner flash on load
+    mouseX.current = window.innerWidth / 2;
+    mouseY.current = window.innerHeight / 2;
 
-            // Konversi mouse ke koordinat SVG
-            const scaleX = 220 / rect.width;
-            const scaleY = 310 / rect.height;
-            const mouseX = (e.clientX - rect.left) * scaleX;
-            const mouseY = (e.clientY - rect.top) * scaleY;
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
 
-            // Gunakan mata kiri sebagai referensi tengah (keduanya bergerak sama)
-            const cx = (LEFT_EYE.x + RIGHT_EYE.x) / 2;
-            const cy = (LEFT_EYE.y + RIGHT_EYE.y) / 2;
+    // ── Passive mouse tracking — won't block scroll ────────────────────────
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX.current = e.clientX;
+      mouseY.current = e.clientY;
+    };
 
-            const dx = mouseX - cx;
-            const dy = mouseY - cy;
-            const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    // ── RAF animation loop ─────────────────────────────────────────────────
+    let rafId: number;
 
-            // Normalisasi → skala maksimal MAX_OFFSET, makin jauh makin full
-            const factor = Math.min(dist / 120, 1);
-            setOffset({
-                x: (dx / dist) * MAX_OFFSET * factor,
-                y: (dy / dist) * MAX_OFFSET * factor,
-            });
-        };
+    const tick = () => {
+      const mx = mouseX.current;
+      const my = mouseY.current;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
 
-        window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, []);
+      const { x: tx, y: ty } = computeTarget(mx, my, vw, vh);
 
-    const lx = LEFT_EYE.x + offset.x;
-    const ly = LEFT_EYE.y + offset.y;
-    const rx = RIGHT_EYE.x + offset.x;
-    const ry = RIGHT_EYE.y + offset.y;
+      // Smooth, lazy follow — LERP at 4% per frame (≈ 60 fps)
+      robotX.current = lerp(robotX.current, tx, LERP);
+      robotY.current = lerp(robotY.current, ty, LERP);
 
-    return (
-        <div className={styles.wrapper}>
-            <div className={styles.glow} />
-            <div className={styles.floatContainer}>
-                <svg
-                    ref={svgRef}
-                    viewBox="0 0 220 310"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={styles.svg}
-                    aria-label="AI Robot"
-                >
-                    {/* ── Antenna ── */}
-                    <line x1="110" y1="8" x2="110" y2="38" className={styles.antennaStick} />
-                    <circle cx="110" cy="7" r="6" className={styles.antennaDot} />
+      // Direct DOM write — no React re-render triggered
+      wrapper.style.transform =
+        `translate(${robotX.current}px, ${robotY.current}px)`;
 
-                    {/* ── Head ── */}
-                    <rect x="45" y="38" width="130" height="90" rx="14" className={styles.head} />
+      // ── Pupil tracking ──────────────────────────────────────────────────
+      const rcx = robotX.current + ROBOT_W / 2;
+      const rcy = robotY.current + ROBOT_H / 2;
+      const dx = mx - rcx;
+      const dy = my - rcy;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const f = Math.min(dist / 150, 1);
+      const px = (dx / dist) * MAX_PUPIL * f;
+      const py = (dy / dist) * MAX_PUPIL * f;
 
-                    {/* Visor */}
-                    <rect x="58" y="52" width="104" height="48" rx="8" className={styles.visor} />
+      leftPupilRef.current?.setAttribute("cx", String(LEFT_EYE.cx + px));
+      leftPupilRef.current?.setAttribute("cy", String(LEFT_EYE.cy + py));
+      rightPupilRef.current?.setAttribute("cx", String(RIGHT_EYE.cx + px));
+      rightPupilRef.current?.setAttribute("cy", String(RIGHT_EYE.cy + py));
 
-                    {/* Eye outer (static) */}
-                    <circle cx={LEFT_EYE.x} cy={LEFT_EYE.y} r="13" className={styles.eyeOuter} />
-                    <circle cx={RIGHT_EYE.x} cy={RIGHT_EYE.y} r="13" className={styles.eyeOuter} />
+      rafId = requestAnimationFrame(tick);
+    };
 
-                    {/* Pupils (follow mouse) */}
-                    <circle cx={lx} cy={ly} r="6" className={styles.eyeInner} />
-                    <circle cx={rx} cy={ry} r="6" className={styles.eyeInner} />
+    rafId = requestAnimationFrame(tick);
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
 
-                    {/* Mouth */}
-                    <rect x="78" y="107" width="64" height="10" rx="5" className={styles.mouth} />
-                    <rect x="86" y="110" width="10" height="4" rx="2" className={styles.mouthGap} />
-                    <rect x="100" y="110" width="10" height="4" rx="2" className={styles.mouthGap} />
-                    <rect x="114" y="110" width="10" height="4" rx="2" className={styles.mouthGap} />
-                    <rect x="128" y="110" width="10" height="4" rx="2" className={styles.mouthGap} />
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("mousemove", onMouseMove);
+    };
+  }, []);
 
-                    {/* ── Neck ── */}
-                    <rect x="92" y="128" width="36" height="16" rx="5" className={styles.neck} />
+  return (
+    <div
+      ref={wrapperRef}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: `${ROBOT_W}px`,
+        pointerEvents: "none",      // never intercepts clicks or hovers
+        zIndex: 49,
+        willChange: "transform",  // hint browser to GPU-composite this layer
+      }}
+      aria-hidden="true"
+    >
+      <div className={styles.glow} />
 
-                    {/* ── Body ── */}
-                    <rect x="22" y="144" width="176" height="110" rx="12" className={styles.body} />
-                    <rect x="42" y="158" width="136" height="82" rx="8" className={styles.panel} />
+      <svg
+        viewBox="0 0 110 115"
+        xmlns="http://www.w3.org/2000/svg"
+        className={styles.svg}
+      >
+        {/* Antenna */}
+        <line x1="55" y1="6" x2="55" y2="24" className={styles.antennaStick} />
+        <circle cx="55" cy="5" r="5" className={styles.antennaDot} />
 
-                    {/* Status lights */}
-                    <circle cx="68" cy="174" r="6" className={styles.light1} />
-                    <circle cx="90" cy="174" r="6" className={styles.light2} />
-                    <circle cx="112" cy="174" r="6" className={styles.light3} />
+        {/* Head & visor */}
+        <rect x="8" y="24" width="94" height="76" rx="14" className={styles.head} />
+        <rect x="18" y="36" width="74" height="44" rx="8" className={styles.visor} />
 
-                    {/* Progress bars */}
-                    <rect x="55" y="190" width="110" height="5" rx="2.5" className={styles.barTrack} />
-                    <rect x="55" y="190" width="80" height="5" rx="2.5" className={styles.barFill1} />
-                    <rect x="55" y="202" width="110" height="5" rx="2.5" className={styles.barTrack} />
-                    <rect x="55" y="202" width="50" height="5" rx="2.5" className={styles.barFill2} />
-                    <rect x="55" y="214" width="110" height="5" rx="2.5" className={styles.barTrack} />
-                    <rect x="55" y="214" width="95" height="5" rx="2.5" className={styles.barFill3} />
+        {/* Eye sockets */}
+        <circle cx={LEFT_EYE.cx} cy={LEFT_EYE.cy} r="12" className={styles.eyeOuter} />
+        <circle cx={RIGHT_EYE.cx} cy={RIGHT_EYE.cy} r="12" className={styles.eyeOuter} />
 
-                    {/* Ear ports */}
-                    <circle cx="34" cy="185" r="8" className={styles.earPort} />
-                    <circle cx="186" cy="185" r="8" className={styles.earPort} />
+        {/* Pupils — moved via setAttribute, never via state */}
+        <circle ref={leftPupilRef} cx={LEFT_EYE.cx} cy={LEFT_EYE.cy} r="5" className={styles.eyeInner} />
+        <circle ref={rightPupilRef} cx={RIGHT_EYE.cx} cy={RIGHT_EYE.cy} r="5" className={styles.eyeInner} />
 
-                    {/* ── Arms ── */}
-                    <rect x="-2" y="150" width="28" height="85" rx="10" className={styles.arm} />
-                    <rect x="194" y="150" width="28" height="85" rx="10" className={styles.arm} />
-                    <rect x="-6" y="228" width="36" height="22" rx="7" className={styles.hand} />
-                    <rect x="190" y="228" width="36" height="22" rx="7" className={styles.hand} />
+        {/* Mouth */}
+        <rect x="32" y="89" width="46" height="8" rx="4" className={styles.mouth} />
+        <rect x="38" y="92" width="7" height="3" rx="1" className={styles.mouthGap} />
+        <rect x="49" y="92" width="7" height="3" rx="1" className={styles.mouthGap} />
+        <rect x="60" y="92" width="7" height="3" rx="1" className={styles.mouthGap} />
 
-                    {/* ── Legs ── */}
-                    <rect x="52" y="254" width="46" height="50" rx="9" className={styles.leg} />
-                    <rect x="122" y="254" width="46" height="50" rx="9" className={styles.leg} />
-                    <rect x="42" y="294" width="64" height="16" rx="6" className={styles.foot} />
-                    <rect x="114" y="294" width="64" height="16" rx="6" className={styles.foot} />
-
-                    {/* ── Scan line ── */}
-                    <rect x="45" y="0" width="130" height="3" rx="1" className={styles.scanLine} />
-                </svg>
-            </div>
-        </div>
-    );
+        {/* Neck */}
+        <rect x="40" y="100" width="30" height="14" rx="5" className={styles.neck} />
+      </svg>
+    </div>
+  );
 }

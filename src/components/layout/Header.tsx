@@ -11,7 +11,7 @@ const navLinks = [
 
 export default function Header() {
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-robot-avoid>
       <div className={`container ${styles.headerInner}`}>
         <Link href="/" className={styles.logo}>
           <span className="text-accent">&gt;</span> AI_Engineer

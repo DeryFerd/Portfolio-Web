@@ -9,7 +9,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} data-robot-avoid>
       <div className={`container ${styles.footerInner}`}>
         <div className={styles.copyright}>
           <span className="text-accent">&copy;</span> {new Date().getFullYear()} AI Engineer. All rights reserved.
