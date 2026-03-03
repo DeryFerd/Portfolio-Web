@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getPostBySlug, posts } from "@/lib/blogData";
 import styles from "./page.module.css";
 
@@ -39,6 +40,18 @@ export default async function BlogPost({
           </div>
           <h1 className={styles.title}>{post.title}</h1>
         </header>
+
+        <div className={styles.coverWrapper}>
+          <Image
+            src={post.image}
+            alt={post.title}
+            width={900}
+            height={400}
+            className={styles.coverImage}
+            unoptimized
+            priority
+          />
+        </div>
 
         <div className={styles.content}>
           {post.content.split("\n").map((line, i) => {
