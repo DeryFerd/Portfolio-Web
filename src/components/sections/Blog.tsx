@@ -1,33 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { posts } from "@/lib/blogData";
 import styles from "./Blog.module.css";
 
-const posts = [
-    {
-        title: "Getting Started with Large Language Models",
-        excerpt: "A comprehensive guide to understanding and working with LLMs for production applications.",
-        date: "2024-01-15",
-        slug: "getting-started-with-llms",
-        tags: ["NLP", "LLM", "Tutorial"],
-        image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&h=400&fit=crop",
-    },
-    {
-        title: "Building a Neural Network from Scratch",
-        excerpt: "Learn the fundamentals of neural networks by building one from scratch using Python.",
-        date: "2024-01-10",
-        slug: "building-neural-network-from-scratch",
-        tags: ["Deep Learning", "Python", "Tutorial"],
-        image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
-    },
-    {
-        title: "Deploying ML Models with Docker",
-        excerpt: "Step-by-step guide to containerizing and deploying machine learning models.",
-        date: "2024-01-05",
-        slug: "deploying-ml-models-docker",
-        tags: ["MLOps", "Docker", "Deployment"],
-        image: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=600&h=400&fit=crop",
-    },
-];
 
 export default function Blog() {
     return (

@@ -1,29 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
+import { posts } from "@/lib/blogData";
 import styles from "./page.module.css";
-
-const posts = [
-  {
-    title: "Getting Started with Large Language Models",
-    excerpt: "A comprehensive guide to understanding and working with LLMs for production applications.",
-    date: "2024-01-15",
-    slug: "getting-started-with-llms",
-    tags: ["NLP", "LLM", "Tutorial"],
-  },
-  {
-    title: "Building a Neural Network from Scratch",
-    excerpt: "Learn the fundamentals of neural networks by building one from scratch using Python.",
-    date: "2024-01-10",
-    slug: "building-neural-network-from-scratch",
-    tags: ["Deep Learning", "Python", "Tutorial"],
-  },
-  {
-    title: "Deploying ML Models with Docker",
-    excerpt: "Step-by-step guide to containerizing and deploying machine learning models.",
-    date: "2024-01-05",
-    slug: "deploying-ml-models-docker",
-    tags: ["MLOps", "Docker", "Deployment"],
-  },
-];
 
 export default function BlogPage() {
   return (
@@ -38,25 +16,39 @@ export default function BlogPage() {
         <p className={styles.subtitle}>
           Thoughts on AI, machine learning, and building intelligent systems.
         </p>
-        
-        <div className={styles.posts}>
+
+        <div className={styles.grid}>
           {posts.map((post) => (
-            <article key={post.slug} className={styles.post}>
-              <div className={styles.postMeta}>
-                <time className={styles.date}>{post.date}</time>
-                <div className={styles.tags}>
-                  {post.tags.map((tag) => (
-                    <span key={tag} className={styles.tag}>{tag}</span>
-                  ))}
+            <article key={post.slug} className={styles.card}>
+              <Link href={`/blog/${post.slug}`} className={styles.imageWrapper}>
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  width={400}
+                  height={200}
+                  className={styles.image}
+                  unoptimized
+                />
+              </Link>
+              <div className={styles.cardBody}>
+                <div className={styles.meta}>
+                  <time className={styles.date}>{post.date}</time>
+                  <div className={styles.tags}>
+                    {post.tags.map((tag) => (
+                      <span key={tag} className={styles.tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+                <Link href={`/blog/${post.slug}`}>
+                  <h2 className={styles.cardTitle}>{post.title}</h2>
+                </Link>
+                <p className={styles.excerpt}>{post.excerpt}</p>
+                <Link href={`/blog/${post.slug}`} className={styles.readMore}>
+                  Read More &rarr;
+                </Link>
               </div>
-              <Link href={`/blog/${post.slug}`}>
-                <h2 className={styles.postTitle}>{post.title}</h2>
-              </Link>
-              <p className={styles.excerpt}>{post.excerpt}</p>
-              <Link href={`/blog/${post.slug}`} className={styles.readMore}>
-                Read More &rarr;
-              </Link>
             </article>
           ))}
         </div>
