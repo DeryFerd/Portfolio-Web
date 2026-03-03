@@ -7,18 +7,18 @@
   margin-bottom: var(--spacing-2xl);
 }
 
-.content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-2xl);
+/* ── Info row ── */
+.infoRow {
+  display: flex;
+  gap: var(--spacing-3xl);
   margin-bottom: var(--spacing-2xl);
+  flex-wrap: wrap;
 }
 
 .infoItem {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
-  margin-bottom: var(--spacing-md);
 }
 
 .label {
@@ -38,10 +38,12 @@ a.value:hover {
   color: var(--accent);
 }
 
+/* ── Socials: grid 3 kolom, 6 item = 2 baris × 3 ── */
 .socials {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-2xl);
 }
 
 .socialLink {
@@ -52,6 +54,7 @@ a.value:hover {
   background-color: var(--bg-card);
   font-size: 0.875rem;
   color: var(--text-secondary);
+  border: 1px solid transparent;
   transition: all var(--transition-normal);
 }
 
@@ -66,19 +69,27 @@ a.value:hover {
   justify-content: center;
   width: 20px;
   height: 20px;
+  flex-shrink: 0;
 }
 
+/* ── CTA: centered ── */
 .cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-lg);
   padding: var(--spacing-2xl);
   background-color: var(--bg-card);
-  max-width: 600px;
+  max-width: 560px;
+  margin: 0 auto;
 }
 
 .ctaText {
   font-size: 0.9375rem;
   color: var(--text-secondary);
   line-height: 1.7;
-  margin-bottom: var(--spacing-lg);
+  max-width: 560px;
 }
 
 .ctaBtn {
@@ -95,4 +106,21 @@ a.value:hover {
 .ctaBtn:hover {
   background-color: transparent;
   color: var(--accent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .socials {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .infoRow {
+    gap: var(--spacing-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .socials {
+    grid-template-columns: 1fr;
+  }
 }
