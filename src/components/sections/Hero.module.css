@@ -10,13 +10,29 @@
 
 .heroInner {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-2xl);
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.heroContent {
+  display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
   text-align: left;
   align-items: flex-start;
-  width: 100%;
-  position: relative;
-  z-index: 1;
+  flex: 1;
+  min-width: 0;
+}
+
+.heroVisual {
+  flex: 0 0 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .greeting {
@@ -109,6 +125,16 @@
 }
 
 @media (max-width: 768px) {
+  .heroInner {
+    flex-direction: column-reverse;
+    gap: var(--spacing-xl);
+  }
+
+  .heroVisual {
+    flex: none;
+    width: 220px;
+  }
+
   .cta {
     flex-direction: column;
   }

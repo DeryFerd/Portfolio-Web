@@ -1,0 +1,275 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glow {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 180, 216, 0.15) 0%, transparent 70%);
+  animation: glowPulse 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.floatContainer {
+  position: relative;
+  z-index: 1;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.antennaStick {
+  stroke: var(--accent);
+  stroke-width: 3;
+  opacity: 0.7;
+}
+
+.antennaDot {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 6px var(--accent));
+  animation: antennaPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes antennaPulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.head {
+  fill: #1e2a30;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.visor {
+  fill: #0a1520;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+.eyeOuter {
+  fill: rgba(0, 180, 216, 0.15);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  animation: eyeGlow 2s ease-in-out infinite;
+}
+
+.eyeInner {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 8px var(--accent));
+  animation: eyeGlow 2s ease-in-out infinite;
+}
+
+@keyframes eyeGlow {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.mouth {
+  fill: #1a2530;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+.mouthGap {
+  fill: #0a0a0a;
+}
+
+.neck {
+  fill: #1a2530;
+  stroke: var(--accent);
+  stroke-width: 1;
+  opacity: 0.8;
+}
+
+.body {
+  fill: #18252c;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.panel {
+  fill: #0e1c24;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+.light1 {
+  fill: #ff4d4d;
+  filter: drop-shadow(0 0 5px #ff4d4d);
+  animation: blink 2.4s ease-in-out infinite 0s;
+}
+
+.light2 {
+  fill: #ffd23f;
+  filter: drop-shadow(0 0 5px #ffd23f);
+  animation: blink 2.4s ease-in-out infinite 0.5s;
+}
+
+.light3 {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 5px var(--accent));
+  animation: blink 2.4s ease-in-out infinite 1s;
+}
+
+@keyframes blink {
+
+  0%,
+  40%,
+  100% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 0.1;
+  }
+}
+
+.barTrack {
+  fill: rgba(0, 180, 216, 0.1);
+}
+
+.barFill1 {
+  fill: var(--accent);
+  opacity: 0.9;
+  animation: bar 3s ease-in-out infinite;
+}
+
+.barFill2 {
+  fill: var(--accent);
+  opacity: 0.7;
+  animation: bar 4s ease-in-out infinite reverse;
+}
+
+.barFill3 {
+  fill: var(--accent);
+  opacity: 0.8;
+  animation: bar 3.5s ease-in-out infinite 0.5s;
+}
+
+@keyframes bar {
+
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.earPort {
+  fill: #1a2a32;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0.8;
+}
+
+.arm {
+  fill: #1e2d36;
+  stroke: var(--accent);
+  stroke-width: 1.2;
+}
+
+.hand {
+  fill: #18252d;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+.leg {
+  fill: #1e2d36;
+  stroke: var(--accent);
+  stroke-width: 1.2;
+}
+
+.foot {
+  fill: #16232a;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+.scanLine {
+  fill: var(--accent);
+  opacity: 0;
+  animation: scan 5s linear infinite 1s;
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 0.6;
+  }
+
+  45% {
+    transform: translateY(295px);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(295px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
