@@ -54,7 +54,7 @@ export default function NeuralBackground() {
         if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
 
         const currentSize = node.size + Math.sin(node.pulse) * 0.8;
-        
+
         ctx.beginPath();
         ctx.arc(node.x, node.y, currentSize, 0, Math.PI * 2);
         ctx.fillStyle = accentColor;
@@ -93,7 +93,7 @@ export default function NeuralBackground() {
             const midX = (node.x + other.x) / 2;
             const midY = (node.y + other.y) / 2;
             const pulseSize = 3 + Math.sin(time * 2 + dist * 0.1) * 2;
-            
+
             ctx.beginPath();
             ctx.arc(midX, midY, pulseSize, 0, Math.PI * 2);
             ctx.fillStyle = accentColor;

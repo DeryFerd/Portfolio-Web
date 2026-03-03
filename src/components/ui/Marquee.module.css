@@ -1,9 +1,6 @@
 .marqueeContainer {
   overflow: hidden;
-  background-color: var(--bg-secondary);
   padding: var(--spacing-md) 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
 }
 
 .marquee {
@@ -23,6 +20,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }

@@ -13,26 +13,28 @@
   overflow: hidden;
 }
 
-.marqueeWrapper {
-  position: absolute;
-  top: 60%;
-  left: 0;
-  width: 100%;
-  transform: translateY(-50%);
-  opacity: 0.15;
-  z-index: 0;
-}
+
 
 .clockWrapper {
   position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: var(--spacing-lg);
   z-index: 1;
 }
 
-.text {
-  position: relative;
-  z-index: 1;
-  margin-top: var(--spacing-lg);
+.marqueeWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  opacity: 0.18;
+  z-index: 0;
+  pointer-events: none;
 }
+
+
 
 .afterLoading {
   position: fixed;
@@ -47,15 +49,10 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
-}
-
-.clockWrapper {
-  width: 80px;
-  height: 80px;
-  margin-bottom: var(--spacing-lg);
 }
 
 .clock {
@@ -119,21 +116,22 @@
 }
 
 .text {
+  position: relative;
+  z-index: 1;
   font-size: 0.875rem;
   color: var(--text-secondary);
   letter-spacing: 2px;
+  margin-top: var(--spacing-lg);
 }
 
-.marqueeWrapper {
-  position: absolute;
-  bottom: 100px;
-  width: 100%;
-}
+
+
 
 @keyframes spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -143,6 +141,7 @@
   from {
     transform: translateX(-50%) translateY(-100%) rotate(0deg);
   }
+
   to {
     transform: translateX(-50%) translateY(-100%) rotate(360deg);
   }
@@ -152,6 +151,7 @@
   from {
     transform: translateX(-50%) translateY(-100%) rotate(0deg);
   }
+
   to {
     transform: translateX(-50%) translateY(-100%) rotate(360deg);
   }

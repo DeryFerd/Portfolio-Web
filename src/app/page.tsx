@@ -5,10 +5,13 @@ import Experience from "@/components/sections/Experience";
 import Projects from "@/components/sections/Projects";
 import Contact from "@/components/sections/Contact";
 import FadeIn from "@/components/ui/FadeIn";
+import NeuralBackground from "@/components/ui/NeuralBackground";
+import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <>
+    <div className={styles.homeWrapper}>
+      <NeuralBackground />
       <Hero />
       <FadeIn>
         <AboutTeaser />
@@ -25,6 +28,6 @@ export default function Home() {
       <FadeIn delay={400}>
         <Contact />
       </FadeIn>
-    </>
+    </div>
   );
 }

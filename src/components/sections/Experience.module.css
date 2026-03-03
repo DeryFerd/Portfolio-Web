@@ -1,5 +1,5 @@
 .experience {
-  background-color: var(--bg-primary);
+  background-color: transparent;
   position: relative;
   overflow: hidden;
 }
@@ -30,6 +30,7 @@
     transform: translateY(0);
     opacity: 1;
   }
+
   100% {
     transform: translateY(300px);
     opacity: 0;
@@ -77,9 +78,12 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 5px var(--accent);
   }
+
   50% {
     box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent);
   }

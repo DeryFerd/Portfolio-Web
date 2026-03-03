@@ -19,10 +19,10 @@ export default function Loading() {
 
   return (
     <div className={styles.loading}>
-      <div className={styles.marqueeWrapper}>
-        <Marquee text="AI ENGINEER • LLM ENGINEER • LLM DEVOPS • ML ENGINEER • DL ENGINEER •" />
-      </div>
       <div className={styles.clockWrapper}>
+        <div className={styles.marqueeWrapper}>
+          <Marquee text="AI ENGINEER • LLM ENGINEER • LLM DEVOPS • ML ENGINEER • DL ENGINEER •" />
+        </div>
         <div className={styles.clock}>
           <div className={styles.clockFace}>
             {[...Array(12)].map((_, i) => (
