@@ -23,7 +23,7 @@ export default function Hero() {
           <TypeWriter words={roles} speed={80} deleteSpeed={40} pauseDuration={1500} />
         </h1>
         <p className={styles.description}>
-          Specializing in machine learning, deep learning, and AI solutions. 
+          Specializing in machine learning, deep learning, and AI solutions.
           Turning data into insights, models into products.
         </p>
         <div className={styles.cta}>
@@ -40,9 +40,7 @@ export default function Hero() {
           <span className={styles.tag}>NLP</span>
           <span className={styles.tag}>Computer Vision</span>
         </div>
-        <Link href="/blog" className={styles.blogLink}>
-          Check my posts on my blog →
-        </Link>
+
       </div>
     </section>
   );

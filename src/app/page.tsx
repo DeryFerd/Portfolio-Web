@@ -3,6 +3,7 @@ import AboutTeaser from "@/components/sections/AboutTeaser";
 import Skills from "@/components/sections/Skills";
 import Experience from "@/components/sections/Experience";
 import Projects from "@/components/sections/Projects";
+import Blog from "@/components/sections/Blog";
 import Contact from "@/components/sections/Contact";
 import FadeIn from "@/components/ui/FadeIn";
 import NeuralBackground from "@/components/ui/NeuralBackground";
@@ -24,6 +25,9 @@ export default function Home() {
       </FadeIn>
       <FadeIn delay={300}>
         <Projects />
+      </FadeIn>
+      <FadeIn delay={350}>
+        <Blog />
       </FadeIn>
       <FadeIn delay={400}>
         <Contact />
