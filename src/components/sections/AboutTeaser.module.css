@@ -52,13 +52,11 @@
 .frameOuter {
   position: relative;
   padding: 6px;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 180, 216, 0.3),
-    rgba(0, 180, 216, 0.05) 40%,
-    rgba(0, 180, 216, 0.05) 60%,
-    rgba(0, 180, 216, 0.3)
-  );
+  background: linear-gradient(135deg,
+      rgba(0, 180, 216, 0.3),
+      rgba(0, 180, 216, 0.05) 40%,
+      rgba(0, 180, 216, 0.05) 60%,
+      rgba(0, 180, 216, 0.3));
   border-radius: 8px;
   box-shadow:
     0 0 20px rgba(0, 180, 216, 0.12),
@@ -123,8 +121,8 @@
   overflow: hidden;
   border-radius: 4px;
   background-color: var(--bg-card);
-  width: 280px;
-  height: 350px;
+  width: 260px;
+  height: 280px;
 }
 
 /* ── Photo ── */
@@ -156,7 +154,7 @@
   }
 
   .frameInner {
-    width: 220px;
-    height: 275px;
+    width: 200px;
+    height: 220px;
   }
 }
