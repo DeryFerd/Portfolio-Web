@@ -24,6 +24,13 @@
     color: var(--text-primary);
 }
 
+/* CCTV + link grouped together */
+.viewAllGroup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 /* ── Grid: 3 kolom, mirip Projects ── */
 .grid {
     display: grid;

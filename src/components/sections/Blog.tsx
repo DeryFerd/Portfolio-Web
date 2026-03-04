@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { posts } from "@/lib/blogData";
+import CCTVCamera from "@/components/ui/CCTVCamera";
 import styles from "./Blog.module.css";
 
 
@@ -12,9 +13,13 @@ export default function Blog() {
                     <h2 className={styles.sectionTitle}>
                         <span className="text-accent">#</span> Latest Posts
                     </h2>
-                    <Link href="/blog" className={styles.viewAll}>
-                        View All &rarr;
-                    </Link>
+                    {/* CCTV + View All — same pattern as Projects */}
+                    <div className={styles.viewAllGroup}>
+                        <CCTVCamera size={80} />
+                        <Link href="/blog" className={styles.viewAll}>
+                            View All &rarr;
+                        </Link>
+                    </div>
                 </div>
 
                 <div className={styles.grid}>

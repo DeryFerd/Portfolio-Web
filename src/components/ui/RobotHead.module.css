@@ -2,9 +2,14 @@
 
 .wrapper {
     position: relative;
-    width: 200px;
-    height: 230px;
+    width: 220px;
+    height: 260px;
     flex-shrink: 0;
+    /* Pull it a bit left so it hangs into the text area */
+    margin-right: -24px;
+    /* Drop it slightly below vertical centre */
+    align-self: flex-end;
+    margin-bottom: -16px;
     /* Float gently up & down */
     animation: float 4s ease-in-out infinite;
 }
@@ -133,4 +138,36 @@
     stroke: var(--accent);
     stroke-width: 1;
     opacity: 0.85;
+}
+
+/* ── Body / torso ── */
+.body {
+    fill: #1e2a30;
+    stroke: var(--accent);
+    stroke-width: 1.5;
+}
+
+.chestPanel {
+    fill: #0a1520;
+    stroke: var(--accent);
+    stroke-width: 1;
+}
+
+.chestLed {
+    fill: var(--accent);
+    filter: drop-shadow(0 0 6px var(--accent));
+    animation: eyeGlow 2s ease-in-out infinite;
+}
+
+/* ── Arms & hands ── */
+.arm {
+    fill: #1e2a30;
+    stroke: var(--accent);
+    stroke-width: 1.2;
+}
+
+.hand {
+    fill: #152028;
+    stroke: var(--accent);
+    stroke-width: 1.2;
 }
