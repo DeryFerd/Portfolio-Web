@@ -29,9 +29,8 @@ export default function CCTVCamera({ size = 56, className = "" }: CCTVCameraProp
 
             const dx = e.clientX - pivotX;
             const dy = e.clientY - pivotY;
-            let angle = (Math.atan2(dy, dx) * 180) / Math.PI;
-            // Clamp to realistic surveillance arc: can't spin past its mount
-            angle = Math.max(-75, Math.min(75, angle));
+            // Full 360° — no clamp, always faces the cursor
+            const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
 
             body.style.transform = `rotate(${angle}deg)`;
         };
@@ -62,7 +61,7 @@ export default function CCTVCamera({ size = 56, className = "" }: CCTVCameraProp
                 <g
                     ref={cameraBodyRef}
                     style={{
-                        transition: "transform 0.1s ease-out",
+                        transition: "transform 0.08s ease-out",
                         transformOrigin: "50% 50%",
                     }}
                 >

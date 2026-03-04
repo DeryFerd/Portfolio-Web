@@ -36,12 +36,12 @@ export default function Projects() {
           <h2 className={styles.sectionTitle}>
             <span className="text-accent">#</span> Featured Projects
           </h2>
-          <div className={styles.headerRight}>
+          {/* CCTV attached to the left of View All link — watches where you click */}
+          <div className={styles.viewAllGroup}>
+            <CCTVCamera size={52} />
             <Link href="/projects" className={styles.viewAll}>
               View All &rarr;
             </Link>
-            {/* CCTV always on, tracks cursor across the whole section */}
-            <CCTVCamera size={60} />
           </div>
         </div>
 

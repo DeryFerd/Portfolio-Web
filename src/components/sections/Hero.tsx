@@ -19,12 +19,12 @@ export default function Hero() {
           <span className="text-accent">//</span> Hello, World
         </div>
 
-        {/* ── Title row: TypeWriter text + Robot head side by side ── */}
+        {/* ── Title row: Robot head on LEFT, TypeWriter text on right ── */}
         <div className={styles.titleRow}>
+          <RobotHead />
           <h1 className={styles.title}>
             <TypeWriter words={roles} speed={80} deleteSpeed={40} pauseDuration={1500} />
           </h1>
-          <RobotHead />
         </div>
 
         <p className={styles.description}>

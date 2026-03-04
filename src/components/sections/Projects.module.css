@@ -15,11 +15,11 @@
   font-size: 2rem;
 }
 
-/* Right side of header groups the link and CCTV camera together */
-.headerRight {
+/* CCTV + "View All" link pinned together as one unit */
+.viewAllGroup {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: 10px;
 }
 
 .viewAll {

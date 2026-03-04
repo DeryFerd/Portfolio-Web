@@ -2,8 +2,8 @@
 
 .wrapper {
     position: relative;
-    width: 140px;
-    height: 160px;
+    width: 200px;
+    height: 230px;
     flex-shrink: 0;
     /* Float gently up & down */
     animation: float 4s ease-in-out infinite;
