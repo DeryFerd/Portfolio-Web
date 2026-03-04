@@ -38,7 +38,7 @@ export default function Projects() {
           </h2>
           {/* CCTV attached to the left of View All link — watches where you click */}
           <div className={styles.viewAllGroup}>
-            <CCTVCamera size={52} />
+            <CCTVCamera size={80} />
             <Link href="/projects" className={styles.viewAll}>
               View All &rarr;
             </Link>
