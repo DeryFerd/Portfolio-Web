@@ -2,15 +2,12 @@
 
 .wrapper {
     position: relative;
-    width: 220px;
-    height: 260px;
+    width: 160px;
     flex-shrink: 0;
-    /* Pull it a bit left so it hangs into the text area */
-    margin-right: -24px;
-    /* Drop it slightly below vertical centre */
+    /* Pull robot to the LEFT, overlapping slightly into the text */
+    margin-left: -24px;
     align-self: flex-end;
-    margin-bottom: -16px;
-    /* Float gently up & down */
+    margin-bottom: -24px;
     animation: float 4s ease-in-out infinite;
 }
 
@@ -97,13 +94,22 @@
 }
 
 /* ── Eyes ── */
+
+/* Outer socket: visible teal tint (was 0.12, barely visible = looked black) */
 .eyeOuter {
-    fill: rgba(0, 180, 216, 0.12);
+    fill: rgba(0, 180, 216, 0.22);
     stroke: var(--accent);
     stroke-width: 1.5;
     animation: eyeGlow 2s ease-in-out infinite;
 }
 
+/* Iris ring between socket and pupil — gives colour even when pupil moves */
+.eyeIris {
+    fill: rgba(0, 180, 216, 0.35);
+    pointer-events: none;
+}
+
+/* Pupil (darkest centre, glowing) */
 .eyeInner {
     fill: var(--accent);
     filter: drop-shadow(0 0 6px var(--accent));
@@ -140,7 +146,7 @@
     opacity: 0.85;
 }
 
-/* ── Body / torso ── */
+/* ── Torso ── */
 .body {
     fill: #1e2a30;
     stroke: var(--accent);
@@ -159,7 +165,14 @@
     animation: eyeGlow 2s ease-in-out infinite;
 }
 
-/* ── Arms & hands ── */
+/* ── Joints (shoulder, elbow, knee) ── */
+.joint {
+    fill: #243540;
+    stroke: var(--accent);
+    stroke-width: 1.2;
+}
+
+/* ── Arms ── */
 .arm {
     fill: #1e2a30;
     stroke: var(--accent);
@@ -167,7 +180,34 @@
 }
 
 .hand {
-    fill: #152028;
+    fill: #162028;
+    stroke: var(--accent);
+    stroke-width: 1;
+}
+
+.finger {
+    fill: #1a2a34;
+    stroke: var(--accent);
+    stroke-width: 0.8;
+}
+
+/* ── Hips ── */
+.hips {
+    fill: #19262e;
     stroke: var(--accent);
     stroke-width: 1.2;
+}
+
+/* ── Legs ── */
+.leg {
+    fill: #1e2a30;
+    stroke: var(--accent);
+    stroke-width: 1.2;
+}
+
+/* ── Feet ── */
+.foot {
+    fill: #162028;
+    stroke: var(--accent);
+    stroke-width: 1;
 }
