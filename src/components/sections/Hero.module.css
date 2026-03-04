@@ -1,8 +1,8 @@
 .hero {
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;
-  padding-top: calc(var(--header-height) + var(--spacing-2xl));
+  align-items: center;
+  padding-top: var(--header-height);
   position: relative;
   overflow: hidden;
   background-color: transparent;
@@ -10,15 +10,32 @@
 
 .heroInner {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-  text-align: left;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-2xl);
   width: 100%;
   position: relative;
   z-index: 1;
 }
 
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  text-align: left;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+}
+
+.characterCol {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 320px;
+}
 
 .greeting {
   font-size: 1rem;
@@ -110,6 +127,26 @@
 }
 
 @media (max-width: 768px) {
+  .heroInner {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .heroContent {
+    align-items: center;
+    text-align: center;
+  }
+
+  .characterCol {
+    width: 240px;
+    order: -1;
+  }
+
+  .title {
+    text-align: center;
+  }
+
   .cta {
     flex-direction: column;
   }
