@@ -1,0 +1,228 @@
+/* ══ Dragon Robot ═════════════════════════════════════════════ */
+
+.wrapper {
+  position: relative;
+  width: 220px;
+  flex-shrink: 0;
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,  100% { transform: translateY(0px);   }
+  50%        { transform: translateY(-12px); }
+}
+
+/* ── Ambient glow behind dragon ── */
+.glow {
+  position: absolute;
+  inset: -30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 180, 216, 0.18) 0%, transparent 68%);
+  animation: glowPulse 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0%,  100% { opacity: 0.5; transform: scale(1);    }
+  50%        { opacity: 1;   transform: scale(1.18); }
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 8px 32px rgba(0, 180, 216, 0.22));
+}
+
+/* ── Horns ── */
+.horn {
+  fill: #1a2e38;
+  stroke: var(--accent);
+  stroke-width: 1.2;
+}
+
+.hornInner {
+  fill: #0f1f28;
+  stroke: var(--accent);
+  stroke-width: 0.8;
+  opacity: 0.7;
+}
+
+.hornRidge {
+  stroke: var(--accent);
+  stroke-width: 1;
+  opacity: 0.5;
+}
+
+/* ── Head main plate ── */
+.headPlate {
+  fill: #1a2830;
+  stroke: var(--accent);
+  stroke-width: 1.4;
+}
+
+/* ── Crest (top spine) ── */
+.crest {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0.7;
+}
+
+/* ── Brow armor ── */
+.brow {
+  fill: #1f3040;
+  stroke: var(--accent);
+  stroke-width: 1;
+  opacity: 0.9;
+}
+
+/* ── Cheek plates ── */
+.cheek {
+  fill: #18282e;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+/* ── Scale texture ── */
+.scale {
+  fill: rgba(0, 180, 216, 0.12);
+  stroke: var(--accent);
+  stroke-width: 0.6;
+}
+
+.noseScale {
+  fill: #1f3040;
+  stroke: var(--accent);
+  stroke-width: 0.8;
+}
+
+/* ── Bolts ── */
+.bolt {
+  fill: var(--accent);
+  opacity: 0.6;
+}
+
+/* ── Eye socket ── */
+.eyeSocket {
+  fill: #080e14;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.eyeOuter {
+  fill: rgba(0, 180, 216, 0.20);
+  stroke: var(--accent);
+  stroke-width: 1.4;
+  animation: eyeGlow 2.2s ease-in-out infinite;
+}
+
+@keyframes eyeGlow {
+  0%,  100% { opacity: 0.6; }
+  50%        { opacity: 1;   }
+}
+
+.eyeIris {
+  fill: rgba(0, 180, 216, 0.45);
+}
+
+.pupil {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 6px var(--accent));
+}
+
+.slit {
+  fill: #000;
+  opacity: 0.6;
+}
+
+/* ── Snout ── */
+.snout {
+  fill: #1c2c36;
+  stroke: var(--accent);
+  stroke-width: 1.2;
+}
+
+.nostril {
+  fill: #0a1520;
+  stroke: var(--accent);
+  stroke-width: 0.8;
+}
+
+.nostrilSlit {
+  stroke: var(--accent);
+  stroke-width: 0.8;
+  opacity: 0.7;
+}
+
+.lip {
+  fill: #243640;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+/* ── Fangs ── */
+.fang {
+  fill: #e8f4ff;
+  stroke: var(--accent);
+  stroke-width: 0.8;
+  filter: drop-shadow(0 2px 6px rgba(0, 180, 216, 0.4));
+}
+
+.fangSmall {
+  fill: #cce8f8;
+  stroke: var(--accent);
+  stroke-width: 0.6;
+  opacity: 0.8;
+}
+
+/* ── Neck plates ── */
+.neckPlate {
+  fill: #1a2830;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+/* ── Mechanical wings ── */
+.wing {
+  fill: rgba(0, 180, 216, 0.08);
+  stroke: var(--accent);
+  stroke-width: 1;
+  animation: wingPulse 4s ease-in-out infinite;
+}
+
+@keyframes wingPulse {
+  0%,  100% { opacity: 0.6; }
+  50%        { opacity: 1;   }
+}
+
+.wingBone {
+  fill: #1a2830;
+  stroke: var(--accent);
+  stroke-width: 1.2;
+}
+
+.wingRib {
+  stroke: var(--accent);
+  stroke-width: 0.7;
+  opacity: 0.5;
+}
+
+/* ── Energy core ── */
+.core {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  animation: coreGlow 1.8s ease-in-out infinite;
+}
+
+.coreInner {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 8px var(--accent));
+  animation: coreGlow 1.8s ease-in-out infinite;
+}
+
+@keyframes coreGlow {
+  0%,  100% { opacity: 0.7; }
+  50%        { opacity: 1;   }
+}
