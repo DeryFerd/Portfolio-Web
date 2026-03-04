@@ -48,7 +48,7 @@ export default function Projects() {
         <div className={styles.grid}>
           {projects.map((project) => (
             <article key={project.slug} className={styles.card}>
-              <div className={styles.imageWrapper}>
+              <Link href={`/projects/${project.slug}`} className={styles.imageWrapper}>
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -57,7 +57,7 @@ export default function Projects() {
                   className={styles.image}
                   unoptimized
                 />
-              </div>
+              </Link>
               <h3 className={styles.cardTitle}>{project.title}</h3>
               <p className={styles.cardDescription}>{project.description}</p>
               <div className={styles.tags}>
