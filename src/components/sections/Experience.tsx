@@ -48,7 +48,7 @@ export default function Experience() {
           {experiences.map((exp, index) => (
             <FadeIn
               key={index}
-              direction={index % 2 === 0 ? "up" : "down"}
+              direction="auto"
               delay={index * 120}
             >
               <div className={styles.timelineItem}>
