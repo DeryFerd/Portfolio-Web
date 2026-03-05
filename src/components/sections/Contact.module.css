@@ -72,6 +72,15 @@ a.value:hover {
   flex-shrink: 0;
 }
 
+.hfIcon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  -webkit-mask: url("https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg") center / contain no-repeat;
+  mask: url("https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg") center / contain no-repeat;
+}
+
 /* ── CTA: centered ── */
 .cta {
   display: flex;

@@ -50,25 +50,7 @@ const socialLinks = [
     name: "HuggingFace",
     url: "https://huggingface.co",
     icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
-        <circle cx="12" cy="12" r="10" />
-        <circle cx="8.5" cy="10" r="1.2" fill="var(--bg-card)" />
-        <circle cx="15.5" cy="10" r="1.2" fill="var(--bg-card)" />
-        <path
-          d="M7.8 14.2c1.1 1.2 2.5 1.8 4.2 1.8s3.1-.6 4.2-1.8"
-          stroke="var(--bg-card)"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          fill="none"
-        />
-        <path
-          d="M5.7 13.2c.9-.7 1.9-.8 2.9-.3m9.7.3c-.9-.7-1.9-.8-2.9-.3"
-          stroke="var(--bg-card)"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          fill="none"
-        />
-      </svg>
+      <span className={styles.hfIcon} aria-hidden="true" />
     )
   },
 ];
@@ -124,5 +106,4 @@ export default function Contact() {
     </section>
   );
 }
-
 
