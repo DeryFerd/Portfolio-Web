@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# Personal Portfolio (AI Engineer)
 
-## Getting Started
+A personal portfolio website built with Next.js App Router.
 
-First, run the development server:
+This project showcases your profile, skills, projects, blog posts, and contact links in a clean single-page home plus dedicated detail pages.
+
+## What Is Inside
+
+- Home sections: Hero, About, Skills, Experience, Featured Projects, Latest Posts, Contact
+- Dedicated pages: About, Projects, Blog
+- Dynamic detail pages: `/projects/[slug]` and `/blog/[slug]`
+- Theme toggle support
+- Reusable UI components and CSS Modules styling
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- CSS Modules + global CSS variables
+- Optional Sanity setup (`next-sanity`, `@sanity/client`, `@sanity/image-url`)
+
+## Project Routes
+
+- `/` Home
+- `/about` About page
+- `/projects` All projects
+- `/projects/[slug]` Project detail
+- `/blog` All blog posts
+- `/blog/[slug]` Blog detail
+
+## Run Locally
+
+Requirements: Node.js LTS and npm.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Production build:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## Where To Edit Content
 
-To learn more about Next.js, take a look at the following resources:
+- Main home composition: `src/app/page.tsx`
+- Navbar links: `src/components/layout/Header.tsx`
+- Home featured projects: `src/components/sections/Projects.tsx`
+- Projects list page data: `src/app/projects/page.tsx`
+- Project detail content map: `src/app/projects/[slug]/page.tsx`
+- Blog list and detail data: `src/lib/blogData.ts`
+- Contact email and social links: `src/components/sections/Contact.tsx`
+- Global theme variables: `src/styles/globals.css`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Optional Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Create `.env.local` only if you want to use Sanity:
 
-## Deploy on Vercel
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
+NEXT_PUBLIC_SANITY_DATASET=production
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Note: current portfolio content works with local static data.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Personalization Checklist
+
+- Replace placeholder social/profile URLs
+- Replace placeholder email in Contact section
+- Replace demo project images and descriptions
+- Replace blog post sample content with your real writing
+- Update logo/title text in header
+
+## Deployment
+
+Quick deployment notes are available in `DEPLOYMENT.md`.
+
+You can deploy this project to platforms like Vercel or Netlify.
