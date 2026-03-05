@@ -37,6 +37,11 @@
   width: 320px;
 }
 
+/* Hide robot in light mode — it's designed for dark theme */
+:global([data-theme="light"]) .characterCol {
+  display: none;
+}
+
 .greeting {
   font-size: 1rem;
   color: var(--text-secondary);
