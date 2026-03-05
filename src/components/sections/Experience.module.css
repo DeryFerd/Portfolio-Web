@@ -117,20 +117,6 @@
 .timelineItem {
   position: relative;
   padding-left: var(--spacing-xl);
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
-}
-
-/* ── Fade-in states ── */
-.fadeInHidden {
-  opacity: 0;
-  transform: translateY(32px);
-}
-
-.fadeInVisible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ── Period label ── */

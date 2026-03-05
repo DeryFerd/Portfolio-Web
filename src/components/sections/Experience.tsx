@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import FadeIn from "@/components/ui/FadeIn";
 import styles from "./Experience.module.css";
 
 const experiences = [
@@ -35,69 +35,34 @@ const experiences = [
 ];
 
 export default function Experience() {
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [visibleCards, setVisibleCards] = useState<boolean[]>(
-    () => experiences.map(() => false)
-  );
-
-  const setCardRef = useCallback(
-    (index: number) => (el: HTMLDivElement | null) => {
-      cardRefs.current[index] = el;
-    },
-    []
-  );
-
-  /* ── Observe each card for fade-in ── */
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    cardRefs.current.forEach((el, i) => {
-      if (!el) return;
-      const io = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setVisibleCards((prev) => {
-              const next = [...prev];
-              next[i] = true;
-              return next;
-            });
-            io.disconnect();
-          }
-        },
-        { threshold: 0.2 }
-      );
-      io.observe(el);
-      observers.push(io);
-    });
-    return () => observers.forEach((o) => o.disconnect());
-  }, []);
-
   return (
     <section className={`section ${styles.experience}`} id="experience">
       <div className="container">
-        <h2 className={styles.sectionTitle}>
-          <span className="text-accent">#</span> Experience
-        </h2>
+        <FadeIn direction="down">
+          <h2 className={styles.sectionTitle}>
+            <span className="text-accent">#</span> Experience
+          </h2>
+        </FadeIn>
 
         <div className={styles.timeline}>
-          {/* The meteor trail line (::before pseudo-element in CSS) */}
-
           {experiences.map((exp, index) => (
-            <div
+            <FadeIn
               key={index}
-              ref={setCardRef(index)}
-              className={`${styles.timelineItem} ${visibleCards[index] ? styles.fadeInVisible : styles.fadeInHidden}`}
-              style={{ transitionDelay: `${index * 0.18}s` }}
+              direction={index % 2 === 0 ? "up" : "down"}
+              delay={index * 120}
             >
-              {/* Meteor head dot */}
-              <div className={styles.meteorHead} />
+              <div className={styles.timelineItem}>
+                {/* Meteor head dot */}
+                <div className={styles.meteorHead} />
 
-              <div className={styles.period}>{exp.period}</div>
-              <div className={styles.content}>
-                <h3 className={styles.role}>{exp.role}</h3>
-                <div className={styles.company}>{exp.company}</div>
-                <p className={styles.description}>{exp.description}</p>
+                <div className={styles.period}>{exp.period}</div>
+                <div className={styles.content}>
+                  <h3 className={styles.role}>{exp.role}</h3>
+                  <div className={styles.company}>{exp.company}</div>
+                  <p className={styles.description}>{exp.description}</p>
+                </div>
               </div>
-            </div>
+            </FadeIn>
           ))}
         </div>
       </div>
