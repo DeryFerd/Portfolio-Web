@@ -139,6 +139,19 @@
   filter: grayscale(0%) contrast(1.1);
 }
 
+/* ── Text Scramble ── */
+.scrambleInline {
+  font-family: inherit;
+  letter-spacing: 0.02em;
+}
+
+.scrambleBlock {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  letter-spacing: 0.01em;
+  font-size: 0.95em;
+  transition: font-family 0.3s ease;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .wrapper {

@@ -1,27 +1,77 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import TextScramble from "../ui/TextScramble";
 import styles from "./AboutTeaser.module.css";
 
+const PARAGRAPH_1 =
+  "I'm an AI Engineer passionate about building intelligent systems that solve real-world problems. With a strong foundation in machine learning and deep learning, I specialize in NLP and computer vision applications.";
+
+const PARAGRAPH_2 =
+  "Currently focused on large language models and their practical applications. I love turning complex problems into elegant AI solutions.";
+
 export default function AboutTeaser() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // only trigger once
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className={`section ${styles.about}`}>
+    <section ref={sectionRef} className={`section ${styles.about}`}>
       <div className="container">
         <div className={styles.wrapper}>
 
           {/* ── Text column (left) ── */}
           <div className={styles.content}>
             <h2 className={styles.sectionTitle}>
-              <span className="text-accent">#</span> About Me
+              <span className="text-accent">#</span>{" "}
+              <TextScramble
+                text="About Me"
+                trigger={isVisible}
+                speed={50}
+                delay={0}
+                className={styles.scrambleInline}
+              />
             </h2>
+
             <p className={styles.text}>
-              I&apos;m an AI Engineer passionate about building intelligent systems
-              that solve real-world problems. With a strong foundation in machine
-              learning and deep learning, I specialize in NLP and computer vision applications.
+              <TextScramble
+                text={PARAGRAPH_1}
+                trigger={isVisible}
+                speed={12}
+                delay={400}
+                className={styles.scrambleBlock}
+              />
             </p>
+
             <p className={styles.text}>
-              Currently focused on large language models and their practical applications.
-              I love turning complex problems into elegant AI solutions.
+              <TextScramble
+                text={PARAGRAPH_2}
+                trigger={isVisible}
+                speed={12}
+                delay={3000}
+                className={styles.scrambleBlock}
+              />
             </p>
+
             <Link href="/about" className={styles.link}>
               Read More &rarr;
             </Link>
