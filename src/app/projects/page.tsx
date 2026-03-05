@@ -64,7 +64,7 @@ export default function ProjectsPage() {
         <div className={styles.grid}>
           {projects.map((project) => (
             <article key={project.slug} className={styles.card}>
-              <div className={styles.imageWrapper}>
+              <Link href={`/projects/${project.slug}`} className={styles.imageWrapper}>
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -73,7 +73,7 @@ export default function ProjectsPage() {
                   className={styles.image}
                   unoptimized
                 />
-              </div>
+              </Link>
               <h2 className={styles.cardTitle}>{project.title}</h2>
               <p className={styles.cardDescription}>{project.description}</p>
               <div className={styles.tags}>
@@ -93,3 +93,4 @@ export default function ProjectsPage() {
     </div>
   );
 }
+
