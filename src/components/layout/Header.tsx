@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import styles from "./Header.module.css";
 
@@ -14,7 +14,7 @@ export default function Header() {
     <header className={styles.header} data-robot-avoid>
       <div className={`container ${styles.headerInner}`}>
         <Link href="/" className={styles.logo}>
-          <span className="text-accent">&gt;</span> AI_Engineer
+          <span className="text-accent">&gt;</span> LLM_Engineer
         </Link>
         <div className={styles.rightSection}>
           <nav className={styles.nav}>
