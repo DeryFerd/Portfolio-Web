@@ -138,14 +138,15 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--border-hover);
 }
-
 @media (max-width: 768px) {
   :root {
+    --header-height: 108px;
     --spacing-4xl: 64px;
     --spacing-3xl: 48px;
   }
-  
+
   .container {
     padding: 0 var(--spacing-md);
   }
 }
+

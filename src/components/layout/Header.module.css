@@ -70,11 +70,34 @@
 }
 
 @media (max-width: 768px) {
-  .nav {
+  .headerInner {
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) 0;
+  }
+
+  .logo {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .rightSection {
+    width: 100%;
+    justify-content: space-between;
     gap: var(--spacing-md);
   }
-  
+
+  .nav {
+    flex: 1;
+    min-width: 0;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+  }
+
   .navLink {
     font-size: 0.75rem;
   }
 }
+

@@ -132,6 +132,10 @@
 }
 
 @media (max-width: 768px) {
+  .hero {
+    padding-top: calc(var(--header-height) + var(--spacing-lg));
+  }
+
   .heroInner {
     flex-direction: column;
     text-align: center;
@@ -162,3 +166,4 @@
     justify-content: center;
   }
 }
+

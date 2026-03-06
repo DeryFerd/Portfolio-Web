@@ -19,7 +19,7 @@ export default function Hero() {
         {/* ── Text column (left) ── */}
         <div className={styles.heroContent}>
           <div className={styles.greeting}>
-            <span className="text-accent">//</span> Hello, World
+            <span className="text-accent">{"//"}</span> Ferdika, Dery
           </div>
           <h1 className={styles.title}>
             <TypeWriter words={roles} speed={80} deleteSpeed={40} pauseDuration={1500} />
@@ -53,3 +53,5 @@ export default function Hero() {
     </section>
   );
 }
+
+
