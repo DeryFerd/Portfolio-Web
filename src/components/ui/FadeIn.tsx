@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, ReactNode } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 interface FadeInProps {
   children: ReactNode;
@@ -8,61 +8,82 @@ interface FadeInProps {
   direction?: "up" | "down" | "auto";
 }
 
+const OFFSET_PX = 30;
+
+function getFixedTransform(direction: Exclude<FadeInProps["direction"], "auto">) {
+  return direction === "up"
+    ? `translateY(${OFFSET_PX}px)`
+    : `translateY(-${OFFSET_PX}px)`;
+}
+
+function getAutoTransform(rect: DOMRect, viewportHeight: number) {
+  if (rect.bottom <= 0) {
+    return `translateY(-${OFFSET_PX}px)`;
+  }
+
+  if (rect.top >= viewportHeight) {
+    return `translateY(${OFFSET_PX}px)`;
+  }
+
+  return rect.top >= viewportHeight / 2
+    ? `translateY(${OFFSET_PX}px)`
+    : `translateY(-${OFFSET_PX}px)`;
+}
+
+function getHiddenTransform(
+  direction: FadeInProps["direction"],
+  rect?: DOMRect,
+  viewportHeight?: number
+) {
+  if (direction !== "auto") {
+    return getFixedTransform(direction);
+  }
+
+  if (!rect || viewportHeight === undefined) {
+    return `translateY(${OFFSET_PX}px)`;
+  }
+
+  return getAutoTransform(rect, viewportHeight);
+}
+
 export default function FadeIn({ children, delay = 0, direction = "auto" }: FadeInProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [hiddenTransform, setHiddenTransform] = useState(() => getHiddenTransform(direction));
   const ref = useRef<HTMLDivElement>(null);
-  const scrollDir = useRef<"down" | "up">("down");
-  const lastScrollY = useRef(0);
 
-  /* ── Track scroll direction globally ── */
   useEffect(() => {
-    lastScrollY.current = window.scrollY;
+    const element = ref.current;
+    if (!element) return;
 
-    const onScroll = () => {
-      const currentY = window.scrollY;
-      scrollDir.current = currentY >= lastScrollY.current ? "down" : "up";
-      lastScrollY.current = currentY;
+    const updateHiddenTransform = (rect?: DOMRect) => {
+      setHiddenTransform(getHiddenTransform(direction, rect ?? element.getBoundingClientRect(), window.innerHeight));
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    updateHiddenTransform();
 
-  /* ── Observe element entering / leaving viewport ── */
-  useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-        } else {
-          setIsVisible(false);
+          return;
         }
+
+        updateHiddenTransform(entry.boundingClientRect);
+        setIsVisible(false);
       },
       { threshold: 0.1, rootMargin: "-50px" }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
+    observer.observe(element);
     return () => observer.disconnect();
-  }, []);
-
-  const getTransform = () => {
-    if (direction === "auto") {
-      // Scrolling down → element enters from below → translateY(30px)
-      // Scrolling up   → element enters from above → translateY(-30px)
-      return scrollDir.current === "down" ? "translateY(30px)" : "translateY(-30px)";
-    }
-    return direction === "up" ? "translateY(30px)" : "translateY(-30px)";
-  };
+  }, [direction]);
 
   return (
     <div
       ref={ref}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translate(0)" : getTransform(),
+        transform: isVisible ? "translateY(0)" : hiddenTransform,
         transition: `opacity 0.6s ease-out ${delay}ms, transform 0.6s ease-out ${delay}ms`,
       }}
     >
