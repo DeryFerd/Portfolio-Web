@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useRef } from "react";
 import styles from "./CCTVCamera.module.css";
 
@@ -8,35 +9,64 @@ interface CCTVCameraProps {
     className?: string;
 }
 
+const SPRING_FACTOR = 0.16;
+const SNAP_THRESHOLD = 0.1;
+
+function unwrapAngle(nextAngle: number, referenceAngle: number) {
+    const delta = ((((nextAngle - referenceAngle) % 360) + 540) % 360) - 180;
+    return referenceAngle + delta;
+}
+
 /**
- * CCTV Camera — mounted at section level.
- * Tracks the GLOBAL cursor position and rotates to face it at all times.
- * No hover gating — always watching.
+ * CCTV camera mounted at section level.
+ * Tracks the global cursor position and rotates continuously to face it.
  */
 export default function CCTVCamera({ size = 56, className = "" }: CCTVCameraProps) {
     const cameraBodyRef = useRef<SVGGElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
+    const currentAngleRef = useRef(0);
+    const targetAngleRef = useRef(0);
+    const frameRef = useRef<number | null>(null);
 
     useEffect(() => {
         const body = cameraBodyRef.current;
         const wrapper = wrapperRef.current;
         if (!body || !wrapper) return;
 
-        const onMouseMove = (e: MouseEvent) => {
+        const animate = () => {
+            const delta = targetAngleRef.current - currentAngleRef.current;
+
+            if (Math.abs(delta) < SNAP_THRESHOLD) {
+                currentAngleRef.current = targetAngleRef.current;
+            } else {
+                currentAngleRef.current += delta * SPRING_FACTOR;
+            }
+
+            body.style.transform = `rotate(${currentAngleRef.current}deg)`;
+            frameRef.current = window.requestAnimationFrame(animate);
+        };
+
+        const onPointerMove = (e: PointerEvent) => {
             const rect = wrapper.getBoundingClientRect();
             const pivotX = rect.left + rect.width / 2;
             const pivotY = rect.top + rect.height / 2;
-
             const dx = e.clientX - pivotX;
             const dy = e.clientY - pivotY;
-            // Full 360° — no clamp, always faces the cursor
-            const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+            const rawAngle = (Math.atan2(dy, dx) * 180) / Math.PI;
 
-            body.style.transform = `rotate(${angle}deg)`;
+            targetAngleRef.current = unwrapAngle(rawAngle, targetAngleRef.current);
         };
 
-        window.addEventListener("mousemove", onMouseMove, { passive: true });
-        return () => window.removeEventListener("mousemove", onMouseMove);
+        frameRef.current = window.requestAnimationFrame(animate);
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+
+        return () => {
+            window.removeEventListener("pointermove", onPointerMove);
+
+            if (frameRef.current !== null) {
+                window.cancelAnimationFrame(frameRef.current);
+            }
+        };
     }, []);
 
     return (
@@ -51,30 +81,22 @@ export default function CCTVCamera({ size = 56, className = "" }: CCTVCameraProp
                 xmlns="http://www.w3.org/2000/svg"
                 className={styles.svg}
             >
-                {/* ── Ceiling mount ── */}
-                {/* Vertical stem */}
                 <rect x="25" y="2" width="6" height="14" rx="2" className={styles.mount} />
-                {/* Horizontal arm base */}
                 <rect x="18" y="14" width="20" height="4" rx="2" className={styles.mount} />
 
-                {/* ── Rotating camera body ── */}
                 <g
                     ref={cameraBodyRef}
                     style={{
-                        transition: "transform 0.08s ease-out",
                         transformOrigin: "50% 50%",
+                        transformBox: "fill-box",
+                        willChange: "transform",
                     }}
                 >
-                    {/* Housing body */}
                     <rect x="14" y="24" width="24" height="16" rx="4" className={styles.housing} />
-                    {/* Lens barrel */}
                     <rect x="38" y="27" width="12" height="10" rx="3" className={styles.barrel} />
-                    {/* Lens glass */}
                     <circle cx="47" cy="32" r="4" className={styles.lens} />
                     <circle cx="47" cy="32" r="1.6" className={styles.lensGlare} />
-                    {/* Recording LED */}
                     <circle cx="19" cy="32" r="2.5" className={styles.led} />
-                    {/* Scan line detail */}
                     <line x1="26" y1="29" x2="36" y2="29" className={styles.scanline} />
                     <line x1="26" y1="32" x2="36" y2="32" className={styles.scanline} />
                     <line x1="26" y1="35" x2="36" y2="35" className={styles.scanline} />
