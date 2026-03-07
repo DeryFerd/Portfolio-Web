@@ -25,8 +25,8 @@ export default function Hero() {
             <TypeWriter words={roles} speed={80} deleteSpeed={40} pauseDuration={1500} />
           </h1>
           <p className={styles.description}>
-            Specializing in machine learning, deep learning, and AI solutions.
-            Turning data into insights, models into products.
+            Specializing in Machine Learning, Deep Learning, RAG, and Agentic AI.
+            Building autonomous AI Agents to solve real-world problems.
           </p>
           <div className={styles.cta}>
             <Link href="/projects" className={styles.primaryBtn}>
@@ -53,5 +53,6 @@ export default function Hero() {
     </section>
   );
 }
+
 
 
