@@ -7,10 +7,10 @@ import TextScramble from "../ui/TextScramble";
 import styles from "./AboutTeaser.module.css";
 
 const PARAGRAPH_1 =
-  "I'm an AI Engineer passionate about building intelligent systems that solve real-world problems. With a strong foundation in machine learning and deep learning, I specialize in NLP and computer vision applications.";
+  "I specialize in Large Language Models and Agentic AI, backed by a strong foundation in Machine Learning and Deep Learning. My work moves beyond basic integrations to focus on building autonomous AI Agents and efficient systems, covering RAG, model distillation, and inference optimization.";
 
 const PARAGRAPH_2 =
-  "Currently focused on large language models and their practical applications. I love turning complex problems into elegant AI solutions.";
+  "I also design technical curriculums as a Learning Developer, helping others master these technologies. I love solving the hard problems that come with deploying generative AI in the real world.";
 
 export default function AboutTeaser() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -103,3 +103,4 @@ export default function AboutTeaser() {
     </section>
   );
 }
+
