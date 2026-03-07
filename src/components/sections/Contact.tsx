@@ -67,13 +67,13 @@ export default function Contact() {
         <div className={styles.infoRow}>
           <div className={styles.infoItem}>
             <span className={styles.label}>Email</span>
-            <a href="mailto:hello@example.com" className={styles.value}>
-              hello@example.com
+            <a href="mailto:deryferdikao125@gmail.com" className={styles.value}>
+              deryferdikao125@gmail.com
             </a>
           </div>
           <div className={styles.infoItem}>
             <span className={styles.label}>Location</span>
-            <span className={styles.value}>Jakarta, Indonesia</span>
+            <span className={styles.value}>Malang, Indonesia</span>
           </div>
         </div>
 
@@ -98,7 +98,7 @@ export default function Contact() {
           <p className={styles.ctaText}>
             Currently looking for new opportunities. Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
           </p>
-          <a href="mailto:hello@example.com" className={styles.ctaBtn}>
+          <a href="mailto:deryferdikao125@gmail.com" className={styles.ctaBtn}>
             Say Hello
           </a>
         </div>
@@ -106,4 +106,6 @@ export default function Contact() {
     </section>
   );
 }
+
+
 
