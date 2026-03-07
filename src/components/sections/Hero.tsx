@@ -39,8 +39,10 @@ export default function Hero() {
           <div className={styles.tags}>
             <span className={styles.tag}>Machine Learning</span>
             <span className={styles.tag}>Deep Learning</span>
-            <span className={styles.tag}>NLP</span>
-            <span className={styles.tag}>Computer Vision</span>
+            <span className={styles.tag}>LLM</span>
+            <span className={styles.tag}>RAG</span>
+            <span className={styles.tag}>AI Agents</span>
+            <span className={styles.tag}>Agentic AI</span>
           </div>
         </div>
 
@@ -53,6 +55,7 @@ export default function Hero() {
     </section>
   );
 }
+
 
 
 
