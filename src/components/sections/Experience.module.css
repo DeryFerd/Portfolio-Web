@@ -1,12 +1,16 @@
-/* ══ Experience Section ════════════════════════════════════════ */
-
 .experience {
-  background-color: transparent;
   position: relative;
   overflow: hidden;
+  background-color: transparent;
+  --timeline-progress: 0;
+  --section-shift: 0px;
 }
 
-/* ── Section title ── */
+.motionLayer {
+  transform: translateY(var(--section-shift));
+  will-change: transform;
+}
+
 .sectionTitle {
   font-size: 2rem;
   margin-bottom: var(--spacing-2xl);
@@ -14,64 +18,89 @@
   z-index: 1;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   TIMELINE — the vertical line IS the meteor tail
-   ══════════════════════════════════════════════════════════════ */
+.timelineShell {
+  position: relative;
+  max-width: 920px;
+  padding-left: calc(var(--spacing-xl) + 18px);
+}
+
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xl);
-  padding-left: var(--spacing-lg);
+  gap: var(--spacing-2xl);
   position: relative;
   z-index: 1;
 }
 
-/* ── Meteor tail (the vertical line) ──
-   Gradient goes UPWARD to transparent so the top fades out
-   like a meteor trail burning away behind the head.          */
-.timeline::before {
-  content: "";
+.timelineRail {
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 3px;
-  border-radius: 3px;
-  background: linear-gradient(to top,
-      var(--accent) 0%,
-      rgba(0, 180, 216, 0.6) 30%,
-      rgba(0, 180, 216, 0.25) 65%,
-      transparent 100%);
-  box-shadow:
-    0 0 8px rgba(0, 180, 216, 0.3),
-    0 0 20px rgba(0, 180, 216, 0.1);
+  width: 18px;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   METEOR HEAD — the timeline dots glow like a burning light
-   ══════════════════════════════════════════════════════════════ */
-.meteorHead {
+.timelineRail::before {
+  content: "";
   position: absolute;
-  left: calc(-1 * var(--spacing-lg) - 6px);
-  top: 8px;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 180, 216, 0.06) 0%,
+    rgba(0, 180, 216, 0.18) 45%,
+    rgba(0, 180, 216, 0.08) 100%
+  );
+}
+
+.timelineProgress {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 3px;
+  height: calc(var(--timeline-progress) * 100%);
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 180, 216, 0.12) 0%,
+    rgba(0, 180, 216, 0.7) 58%,
+    var(--accent) 100%
+  );
+  opacity: clamp(0, calc(var(--timeline-progress) * 8), 1);
+  box-shadow:
+    0 0 12px rgba(0, 180, 216, 0.28),
+    0 0 24px rgba(0, 180, 216, 0.1);
+  will-change: height;
+}
+
+.timelineDot {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 45%);
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: radial-gradient(circle,
-      #ffffff 0%,
-      var(--accent) 45%,
-      rgba(0, 180, 216, 0.4) 100%);
+  background: radial-gradient(
+    circle,
+    #ffffff 0%,
+    var(--accent) 48%,
+    rgba(0, 180, 216, 0.24) 100%
+  );
   box-shadow:
     0 0 6px 2px rgba(0, 180, 216, 0.9),
     0 0 14px 4px rgba(0, 180, 216, 0.6),
     0 0 30px 8px rgba(0, 180, 216, 0.3),
     0 0 50px 14px rgba(0, 180, 216, 0.12);
-  animation: meteorFlicker 1.8s ease-in-out infinite;
+  animation: timelinePulse 1.2s ease-in-out infinite;
   z-index: 3;
 }
 
-/* Flickering box-shadow keyframes — like a burning light */
-@keyframes meteorFlicker {
+@keyframes timelinePulse {
   0% {
     box-shadow:
       0 0 6px 2px rgba(0, 180, 216, 0.9),
@@ -80,28 +109,12 @@
       0 0 50px 14px rgba(0, 180, 216, 0.12);
   }
 
-  25% {
-    box-shadow:
-      0 0 8px 3px rgba(0, 180, 216, 1),
-      0 0 18px 6px rgba(0, 180, 216, 0.7),
-      0 0 36px 10px rgba(0, 180, 216, 0.35),
-      0 0 60px 18px rgba(0, 180, 216, 0.15);
-  }
-
   50% {
     box-shadow:
-      0 0 5px 2px rgba(0, 180, 216, 0.7),
-      0 0 12px 3px rgba(0, 180, 216, 0.45),
-      0 0 24px 6px rgba(0, 180, 216, 0.2),
-      0 0 40px 10px rgba(0, 180, 216, 0.08);
-  }
-
-  75% {
-    box-shadow:
       0 0 10px 4px rgba(0, 180, 216, 1),
-      0 0 20px 8px rgba(0, 180, 216, 0.65),
-      0 0 40px 12px rgba(0, 180, 216, 0.3),
-      0 0 65px 20px rgba(0, 180, 216, 0.12);
+      0 0 20px 8px rgba(0, 180, 216, 0.7),
+      0 0 38px 10px rgba(0, 180, 216, 0.35),
+      0 0 65px 18px rgba(0, 180, 216, 0.15);
   }
 
   100% {
@@ -113,13 +126,15 @@
   }
 }
 
-/* ── Timeline item ── */
 .timelineItem {
-  position: relative;
-  padding-left: var(--spacing-xl);
+  opacity: var(--item-opacity, 0);
+  transform:
+    translateY(var(--item-translate, 32px))
+    scale(var(--item-scale, 0.96));
+  transform-origin: left top;
+  will-change: opacity, transform;
 }
 
-/* ── Period label ── */
 .period {
   font-size: 0.75rem;
   color: var(--accent);
@@ -128,19 +143,27 @@
   letter-spacing: 1px;
 }
 
-/* ── Content card ── */
 .content {
-  padding: var(--spacing-md);
-  background-color: var(--bg-card);
-  border-left: 2px solid transparent;
+  padding: var(--spacing-lg);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
+    var(--bg-card);
+  border: 1px solid rgba(0, 180, 216, 0.08);
+  border-left: 2px solid rgba(0, 180, 216, 0.2);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.16);
   transition:
+    transform 0.3s ease,
     border-color 0.3s ease,
     box-shadow 0.3s ease;
 }
 
 .timelineItem:hover .content {
   border-left-color: var(--accent);
-  box-shadow: 0 0 20px rgba(0, 180, 216, 0.06);
+  border-color: rgba(0, 180, 216, 0.18);
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.22),
+    0 0 22px rgba(0, 180, 216, 0.08);
 }
 
 .role {
@@ -158,4 +181,22 @@
   font-size: 0.875rem;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .timelineShell {
+    padding-left: calc(var(--spacing-lg) + 16px);
+  }
+
+  .timeline {
+    gap: var(--spacing-xl);
+  }
+
+  .content {
+    padding: var(--spacing-md);
+  }
 }

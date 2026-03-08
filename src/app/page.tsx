@@ -20,9 +20,7 @@ export default function Home() {
       <FadeIn delay={100}>
         <Skills />
       </FadeIn>
-      <FadeIn delay={200}>
-        <Experience />
-      </FadeIn>
+      <Experience />
       <FadeIn delay={300}>
         <Projects />
       </FadeIn>
