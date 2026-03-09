@@ -29,7 +29,7 @@ const experiences = [
   {
     company: "Data Solutions",
     role: "Data Engineer",
-    period: "2022 - 2023",
+    period: "2023",
     description:
       "Designed and maintained ETL pipelines, data warehouses, and real-time streaming architectures using Apache Spark and Airflow.",
   },
