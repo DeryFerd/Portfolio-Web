@@ -1,4 +1,4 @@
-﻿# Personal Portfolio (AI Engineer)
+﻿# Personal Portfolio (AI Engineer and LLM Engineer)
 
 A personal portfolio website built with Next.js App Router.
 
