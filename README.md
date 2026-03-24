@@ -2,7 +2,7 @@
 
 A personal portfolio website built with Next.js App Router.
 
-This project showcases your profile, skills, projects, blog posts, and contact links in a clean single-page home plus dedicated detail pages.
+This project showcases my profile, skills, projects, blog posts, and contact links in a clean single-page home plus dedicated detail pages.
 
 ## What Is Inside
 
