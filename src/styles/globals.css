@@ -11,6 +11,8 @@
   --border-hover: #404040;
 
   --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
 
   --spacing-xs: 4px;
   --spacing-sm: 8px;
