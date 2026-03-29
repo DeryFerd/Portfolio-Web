@@ -172,10 +172,34 @@
   align-items: start;
 }
 
+.mapScroll {
+  min-width: 0;
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
+}
+
+.monthLabels {
+  display: grid;
+  grid-template-columns: repeat(var(--week-count), 0.72rem);
+  column-gap: 0.28rem;
+  width: max-content;
+  min-width: max-content;
+  margin-bottom: 0.55rem;
+}
+
+.monthLabel {
+  justify-self: start;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(33, 50, 40, 0.45);
+}
+
 .dayLabels {
   display: grid;
   gap: 1.32rem;
-  padding-top: 0.85rem;
+  padding-top: 1.95rem;
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -187,9 +211,8 @@
   grid-auto-flow: column;
   grid-template-rows: repeat(7, 0.72rem);
   gap: 0.28rem;
-  min-width: 0;
-  overflow-x: auto;
-  padding-bottom: 0.3rem;
+  width: max-content;
+  min-width: max-content;
 }
 
 .day {

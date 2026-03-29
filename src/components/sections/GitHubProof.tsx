@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { getGitHubProofData } from "@/lib/github";
 import styles from "./GitHubProof.module.css";
@@ -19,9 +20,55 @@ function getDisplayLevel(count: number, level: number) {
   return Math.max(level, 1);
 }
 
+function formatMonthLabel(value: string) {
+  const [year, month] = value.split("-").map(Number);
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(year, month - 1, 1)));
+}
+
+function getMonthMarkers(contributions: Array<{ date: string }>) {
+  const markers: Array<{ key: string; label: string; columnStart: number }> = [];
+  let lastMonthKey = "";
+  let lastColumnStart = -99;
+
+  contributions.forEach((day, index) => {
+    const monthKey = day.date.slice(0, 7);
+
+    if (monthKey === lastMonthKey) {
+      return;
+    }
+
+    const columnStart = Math.floor(index / 7) + 1;
+
+    if (columnStart - lastColumnStart < 3) {
+      lastMonthKey = monthKey;
+      return;
+    }
+
+    markers.push({
+      key: monthKey,
+      label: formatMonthLabel(day.date),
+      columnStart,
+    });
+
+    lastMonthKey = monthKey;
+    lastColumnStart = columnStart;
+  });
+
+  return markers;
+}
+
 export default async function GitHubProof() {
   const data = await getGitHubProofData();
   const activeDays = data.contributions.filter((day) => day.count > 0).length;
+  const weekCount = Math.max(Math.ceil(data.contributions.length / 7), 1);
+  const monthMarkers = getMonthMarkers(data.contributions);
+  const mapStyle = {
+    "--week-count": weekCount,
+  } as CSSProperties;
 
   return (
     <section className={`section ${styles.proof}`} id="proof">
@@ -113,16 +160,29 @@ export default async function GitHubProof() {
                   <span>Wed</span>
                   <span>Fri</span>
                 </div>
-                <div className={styles.mapGrid}>
-                  {data.contributions.map((day) => (
-                    <span
-                      key={day.date}
-                      className={styles.day}
-                      data-level={getDisplayLevel(day.count, day.level)}
-                      data-active={day.count > 0}
-                      title={`${day.date}: ${day.count} contribution${day.count === 1 ? "" : "s"}`}
-                    />
-                  ))}
+                <div className={styles.mapScroll} style={mapStyle}>
+                  <div className={styles.monthLabels} aria-hidden="true">
+                    {monthMarkers.map((marker) => (
+                      <span
+                        key={marker.key}
+                        className={styles.monthLabel}
+                        style={{ gridColumnStart: marker.columnStart }}
+                      >
+                        {marker.label}
+                      </span>
+                    ))}
+                  </div>
+                  <div className={styles.mapGrid}>
+                    {data.contributions.map((day) => (
+                      <span
+                        key={day.date}
+                        className={styles.day}
+                        data-level={getDisplayLevel(day.count, day.level)}
+                        data-active={day.count > 0}
+                        title={`${day.date}: ${day.count} contribution${day.count === 1 ? "" : "s"}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             ) : (
