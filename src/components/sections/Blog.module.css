@@ -40,7 +40,7 @@
 .title {
   max-width: 33rem;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-size: clamp(1.75rem, 3.3vw, 2.85rem);
   line-height: 0.98;
   letter-spacing: -0.05em;
   color: var(--text-primary);
@@ -54,7 +54,7 @@
 
 .contentGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.74fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.62fr);
   gap: clamp(1.6rem, 4vw, 3.2rem);
   align-items: start;
 }
@@ -79,7 +79,7 @@
 
 .postTrigger {
   width: 100%;
-  padding: 1.18rem 0 1rem;
+  padding: 1rem 0 0.85rem;
   background: transparent;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -90,8 +90,8 @@
 
 .postNumber {
   grid-row: 1 / span 2;
-  padding-top: 0.45rem;
-  font-size: 0.95rem;
+  padding-top: 0.35rem;
+  font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -107,7 +107,7 @@
 
 .postTitle {
   font-family: var(--font-display);
-  font-size: clamp(2.15rem, 4.2vw, 3.8rem);
+  font-size: clamp(1.7rem, 3.4vw, 2.85rem);
   line-height: 0.95;
   letter-spacing: -0.04em;
   color: var(--text-primary);
@@ -118,7 +118,7 @@
 
 .postArrow {
   flex: none;
-  font-size: clamp(1.35rem, 1.8vw, 1.9rem);
+  font-size: clamp(1.05rem, 1.45vw, 1.45rem);
   line-height: 1;
   color: var(--accent);
   opacity: 0;
@@ -138,7 +138,7 @@
 }
 
 .postMeta {
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(33, 50, 40, 0.54);
@@ -155,8 +155,8 @@
   position: relative;
   overflow: hidden;
   background: #ddd6c7;
-  aspect-ratio: 0.78 / 0.96;
-  min-height: clamp(25rem, 46vw, 36rem);
+  aspect-ratio: 0.8 / 0.92;
+  min-height: clamp(20rem, 36vw, 29rem);
 }
 
 .detailImage {
@@ -179,7 +179,7 @@
 
 .detailDate {
   margin-bottom: 0.45rem;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgba(33, 50, 40, 0.5);
@@ -188,7 +188,7 @@
 .detailTitle {
   margin-bottom: 0.7rem;
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  font-size: clamp(1.4rem, 2.3vw, 2rem);
   line-height: 0.98;
   letter-spacing: -0.05em;
   color: var(--text-primary);
@@ -196,13 +196,13 @@
 
 .detailExcerpt {
   margin-bottom: 0.85rem;
-  font-size: 1rem;
-  line-height: 1.75;
+  font-size: 0.92rem;
+  line-height: 1.65;
   color: var(--text-secondary);
 }
 
 .detailLink {
-  font-size: 0.92rem;
+  font-size: 0.84rem;
   font-weight: 600;
   color: var(--accent);
 }
@@ -219,7 +219,7 @@
 
   .detailStage {
     aspect-ratio: 1.24 / 0.82;
-    min-height: clamp(18rem, 60vw, 28rem);
+    min-height: clamp(15rem, 56vw, 22rem);
   }
 
   .postItem {
@@ -241,15 +241,15 @@
   .postNumber {
     grid-row: auto;
     padding-top: 0;
-    font-size: 0.82rem;
+    font-size: 0.74rem;
   }
 
   .postTitle {
-    font-size: clamp(1.85rem, 10vw, 2.8rem);
+    font-size: clamp(1.55rem, 9vw, 2.2rem);
   }
 
   .postArrow {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
   }
 }
 
