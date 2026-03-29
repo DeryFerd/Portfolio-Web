@@ -55,10 +55,8 @@
 .heroInner {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.6fr);
+  display: flex;
   align-items: center;
-  gap: clamp(2rem, 5vw, 5rem);
   min-height: 100vh;
   min-height: 100svh;
   padding-top: calc(var(--header-height) + clamp(2.6rem, 7vh, 5.2rem));
@@ -66,7 +64,6 @@
 }
 
 .heroContent,
-.systemCard,
 .scrollHint {
   opacity: 0;
   animation: riseIn 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -104,10 +101,12 @@
   color: #f4eee6;
 }
 
-.titleStatement {
-  max-width: 12.5ch;
+.titleRole {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.2em;
   font-family: var(--font-display);
-  font-size: clamp(1.95rem, 4vw, 3.25rem);
+  font-size: clamp(1.75rem, 3.6vw, 2.9rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
   color: rgba(244, 238, 230, 0.94);
@@ -197,80 +196,6 @@
   color: rgba(238, 241, 244, 0.78);
 }
 
-.systemCard {
-  justify-self: end;
-  align-self: center;
-  width: min(100%, 20.5rem);
-  padding: 1.12rem;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background:
-    linear-gradient(180deg, rgba(8, 11, 14, 0.56), rgba(8, 11, 14, 0.28)),
-    rgba(8, 11, 14, 0.3);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
-  animation-delay: 0.34s;
-}
-
-.cardLabel {
-  margin-bottom: 0.5rem;
-  font-family: var(--font-sans);
-  font-size: 0.74rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(246, 206, 159, 0.78);
-}
-
-.cardTitle {
-  margin-bottom: 1rem;
-  font-family: var(--font-display);
-  font-size: 1.54rem;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: #f3eee7;
-}
-
-.cardGrid {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.cardRow {
-  display: grid;
-  gap: 0.28rem;
-  padding-top: 0.85rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.cardRow:first-child {
-  padding-top: 0;
-  border-top: 0;
-}
-
-.cardRowLabel {
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(221, 227, 232, 0.56);
-}
-
-.cardRowValue {
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: rgba(243, 239, 233, 0.86);
-}
-
-.cardFooter {
-  margin-top: 0.95rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  line-height: 1.55;
-  color: rgba(242, 237, 229, 0.72);
-}
-
 .scrollHint {
   position: absolute;
   left: max(1.5rem, calc((100vw - var(--container-max)) / 2 + 1.5rem));
@@ -310,13 +235,7 @@
 
 @media (max-width: 1024px) {
   .heroInner {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: end;
-  }
-
-  .systemCard {
-    justify-self: start;
-    width: min(100%, 28rem);
+    align-items: flex-end;
   }
 }
 
@@ -334,9 +253,8 @@
     font-size: clamp(3rem, 15vw, 5rem);
   }
 
-  .titleStatement {
-    max-width: 12ch;
-    font-size: clamp(1.9rem, 8vw, 2.8rem);
+  .titleRole {
+    font-size: clamp(1.55rem, 7vw, 2.35rem);
   }
 
   .description {
@@ -361,10 +279,6 @@
     font-size: 0.72rem;
   }
 
-  .systemCard {
-    width: 100%;
-  }
-
   .scrollHint {
     left: 1rem;
     bottom: 1rem;
@@ -373,7 +287,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .heroContent,
-  .systemCard,
   .scrollHint {
     opacity: 1;
     animation: none;

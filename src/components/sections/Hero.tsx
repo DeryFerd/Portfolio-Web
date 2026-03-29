@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TypeWriter from "@/components/ui/TypeWriter";
 import styles from "./Hero.module.css";
 
 const focusAreas = [
@@ -8,19 +9,12 @@ const focusAreas = [
   "Machine learning"
 ];
 
-const systemNotes = [
-  {
-    label: "Focus",
-    value: "Turning model logic into useful AI products."
-  },
-  {
-    label: "Approach",
-    value: "Calm execution, strong delivery, and production intent."
-  },
-  {
-    label: "Base",
-    value: "Malang, Indonesia"
-  }
+const roles = [
+  "ML Engineer",
+  "AI Engineer",
+  "MLOps",
+  "Data Engineer",
+  "LLM Engineer"
 ];
 
 export default function Hero() {
@@ -50,15 +44,14 @@ export default function Hero() {
 
           <h1 className={styles.title}>
             <span className={styles.titleName}>Dery Ferdika</span>
-            <span className={styles.titleStatement}>
-              Building AI systems that ship cleanly.
+            <span className={styles.titleRole}>
+              <TypeWriter words={roles} speed={72} deleteSpeed={38} pauseDuration={1400} />
             </span>
           </h1>
 
           <p className={styles.description}>
-            From retrieval pipelines and agent workflows to production-facing
-            interfaces, I build machine learning products that feel useful,
-            reliable, and ready for the real world.
+            Specializing in machine learning, MLOps, RAG, and agent workflows
+            for real-world AI products.
           </p>
 
           <div className={styles.cta}>
@@ -78,22 +71,6 @@ export default function Hero() {
             ))}
           </div>
         </div>
-
-        <aside className={styles.systemCard}>
-          <p className={styles.cardLabel}>Current vector</p>
-          <p className={styles.cardTitle}>Model logic to product delivery</p>
-          <div className={styles.cardGrid}>
-            {systemNotes.map((note) => (
-              <div key={note.label} className={styles.cardRow}>
-                <span className={styles.cardRowLabel}>{note.label}</span>
-                <span className={styles.cardRowValue}>{note.value}</span>
-              </div>
-            ))}
-          </div>
-          <p className={styles.cardFooter}>
-            Available for selected collaborations in 2026.
-          </p>
-        </aside>
       </div>
 
       <div className={styles.scrollHint}>
