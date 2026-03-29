@@ -14,6 +14,11 @@ function formatRepoDate(value: string) {
   }).format(new Date(value));
 }
 
+function getDisplayLevel(count: number, level: number) {
+  if (count <= 0) return 0;
+  return Math.max(level, 1);
+}
+
 export default async function GitHubProof() {
   const data = await getGitHubProofData();
   const activeDays = data.contributions.filter((day) => day.count > 0).length;
@@ -113,7 +118,8 @@ export default async function GitHubProof() {
                     <span
                       key={day.date}
                       className={styles.day}
-                      data-level={day.level}
+                      data-level={getDisplayLevel(day.count, day.level)}
+                      data-active={day.count > 0}
                       title={`${day.date}: ${day.count} contribution${day.count === 1 ? "" : "s"}`}
                     />
                   ))}
