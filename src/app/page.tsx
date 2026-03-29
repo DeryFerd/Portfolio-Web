@@ -14,22 +14,24 @@ export default function Home() {
     <div className={styles.homeWrapper}>
       <NeuralBackground />
       <Hero />
-      <FadeIn>
-        <AboutTeaser />
-      </FadeIn>
-      <FadeIn delay={100}>
-        <Skills />
-      </FadeIn>
-      <Experience />
-      <FadeIn delay={300}>
-        <Projects />
-      </FadeIn>
-      <FadeIn delay={350}>
-        <Blog />
-      </FadeIn>
-      <FadeIn delay={400}>
-        <Contact />
-      </FadeIn>
+      <div className={styles.storyStack}>
+        <FadeIn>
+          <AboutTeaser />
+        </FadeIn>
+        <FadeIn delay={100}>
+          <Skills />
+        </FadeIn>
+        <Experience />
+        <FadeIn delay={300}>
+          <Projects />
+        </FadeIn>
+        <FadeIn delay={350}>
+          <Blog />
+        </FadeIn>
+        <FadeIn delay={400}>
+          <Contact />
+        </FadeIn>
+      </div>
     </div>
   );
 }

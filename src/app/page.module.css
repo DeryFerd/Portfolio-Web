@@ -1,3 +1,24 @@
 .homeWrapper {
     position: relative;
+    overflow-x: clip;
+}
+
+.storyStack {
+    position: relative;
+    z-index: 4;
+    margin-top: clamp(-5rem, -8vh, -6.5rem);
+    padding-top: clamp(1rem, 3vw, 1.5rem);
+    background: linear-gradient(180deg, rgba(8, 10, 12, 0.94) 0%, var(--bg-primary) 5rem);
+    border-top-left-radius: clamp(1.5rem, 3vw, 2.25rem);
+    border-top-right-radius: clamp(1.5rem, 3vw, 2.25rem);
+    box-shadow: 0 -28px 72px rgba(0, 0, 0, 0.38);
+}
+
+@media (max-width: 768px) {
+    .storyStack {
+        margin-top: clamp(-3rem, -5vh, -4.5rem);
+        padding-top: 0.75rem;
+        border-top-left-radius: 1.35rem;
+        border-top-right-radius: 1.35rem;
+    }
 }
