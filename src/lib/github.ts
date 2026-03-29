@@ -1,6 +1,6 @@
 const GITHUB_USERNAME = process.env.NEXT_PUBLIC_GITHUB_USERNAME ?? "DeryFerd";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const REVALIDATE_SECONDS = 3600;
+const REVALIDATE_SECONDS = 600;
 
 interface GitHubUserResponse {
   login: string;
