@@ -1,16 +1,32 @@
 .toggle {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  transition: all var(--transition-fast);
+  width: 3.35rem;
+  height: 2.1rem;
+  padding: 0.18rem;
+  background: rgba(248, 244, 235, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .toggle:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  background: rgba(248, 244, 235, 0.14);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.knob {
+  display: block;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffe0b8, #e4af72);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+  transform: translateX(0);
+  transition: transform var(--transition-normal), background var(--transition-normal);
+}
+
+.knob[data-theme="light"] {
+  transform: translateX(1.2rem);
+  background: linear-gradient(135deg, #f8f4eb, #dfe6ed);
 }

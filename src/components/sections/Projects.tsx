@@ -1,77 +1,155 @@
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import CCTVCamera from "@/components/ui/CCTVCamera";
+import Link from "next/link";
 import styles from "./Projects.module.css";
 
 const projects = [
   {
     title: "AI Chatbot",
-    description: "A conversational AI built with GPT models for customer support automation.",
+    description:
+      "A conversational AI built for support automation with context-aware responses and production-minded delivery.",
     tags: ["NLP", "GPT", "FastAPI"],
     slug: "ai-chatbot",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
+    year: "2026",
+    image:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=900&h=720&fit=crop"
   },
   {
     title: "Image Classifier",
-    description: "Deep learning model for image classification using CNN architecture.",
+    description:
+      "A deep learning workflow for image classification using CNN-based architecture and fast inference-ready outputs.",
     tags: ["Computer Vision", "PyTorch", "ResNet"],
     slug: "image-classifier",
-    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
+    year: "2025",
+    image:
+      "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=900&h=720&fit=crop"
   },
   {
     title: "Recommender System",
-    description: "Collaborative filtering recommendation engine for e-commerce platforms.",
+    description:
+      "A collaborative filtering engine tuned for product discovery, personalization, and real recommendation workflows.",
     tags: ["ML", "Recommendation", "Python"],
     slug: "recommender-system",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+    year: "2025",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&h=720&fit=crop"
   },
+  {
+    title: "Sentiment Analysis",
+    description:
+      "A real-time sentiment monitor for social data, designed to surface trends and response signals with clarity.",
+    tags: ["NLP", "BERT", "Streamlit"],
+    slug: "sentiment-analysis",
+    year: "2024",
+    image:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&h=720&fit=crop"
+  },
+  {
+    title: "Object Detection",
+    description:
+      "A YOLO-based detection pipeline oriented around real-world imagery, monitoring, and applied computer vision.",
+    tags: ["Computer Vision", "YOLO", "OpenCV"],
+    slug: "object-detection",
+    year: "2024",
+    image:
+      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=900&h=720&fit=crop"
+  },
+  {
+    title: "Time Series Forecasting",
+    description:
+      "An LSTM forecasting setup for financial signals, with a focus on model behavior, trend reading, and deployment readiness.",
+    tags: ["Deep Learning", "LSTM", "Finance"],
+    slug: "time-series",
+    year: "2024",
+    image:
+      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&h=720&fit=crop"
+  }
 ];
 
 export default function Projects() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeProject = projects[activeIndex];
+
   return (
     <section className={`section ${styles.projects}`} id="projects">
       <div className="container">
-        {/* ── Section header: title | "View All" link | CCTV camera ── */}
         <div className={styles.header}>
-          <h2 className={styles.sectionTitle}>
-            <span className="text-accent">#</span> Featured Projects
-          </h2>
-          {/* CCTV attached to the left of View All link — watches where you click */}
-          <div className={styles.viewAllGroup}>
-            <CCTVCamera size={80} />
-            <Link href="/projects" className={styles.viewAll}>
-              View All &rarr;
-            </Link>
+          <div>
+            <p className={styles.kicker}>Selected projects</p>
+            <h2 className={styles.title}>Work presented with more signal than noise.</h2>
           </div>
+          <Link href="/projects" className={styles.archiveLink}>
+            View archive
+          </Link>
         </div>
 
-        <div className={styles.grid}>
-          {projects.map((project) => (
-            <article key={project.slug} className={styles.card}>
-              <Link href={`/projects/${project.slug}`} className={styles.imageWrapper}>
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  width={400}
-                  height={200}
-                  className={styles.image}
-                  unoptimized
-                />
-              </Link>
-              <h3 className={styles.cardTitle}>{project.title}</h3>
-              <p className={styles.cardDescription}>{project.description}</p>
-              <div className={styles.tags}>
-                {project.tags.map((tag) => (
-                  <span key={tag} className={styles.tag}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <Link href={`/projects/${project.slug}`} className={styles.cardLink}>
-                Learn More &rarr;
-              </Link>
-            </article>
+        <div className={styles.previewStrip}>
+          {projects.map((project, index) => (
+            <button
+              key={project.slug}
+              type="button"
+              className={`${styles.previewTile} ${index === activeIndex ? styles.previewTileActive : ""}`}
+              onMouseEnter={() => setActiveIndex(index)}
+              onFocus={() => setActiveIndex(index)}
+              onClick={() => setActiveIndex(index)}
+              aria-pressed={index === activeIndex}
+            >
+              <Image
+                src={project.image}
+                alt={project.title}
+                width={280}
+                height={220}
+                className={styles.previewImage}
+                unoptimized
+              />
+            </button>
           ))}
+        </div>
+
+        <div className={styles.contentGrid}>
+          <div className={styles.projectList}>
+            {projects.map((project, index) => (
+              <article key={project.slug} className={styles.projectItem}>
+                <button
+                  type="button"
+                  className={`${styles.projectTrigger} ${index === activeIndex ? styles.projectTriggerActive : ""}`}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onFocus={() => setActiveIndex(index)}
+                  onClick={() => setActiveIndex(index)}
+                  aria-pressed={index === activeIndex}
+                >
+                  <span className={styles.projectNumber}>
+                    _ {String(index + 1).padStart(2, "0")} .
+                  </span>
+                  <span className={styles.projectTitle}>{project.title}</span>
+                  <span className={styles.projectStack}>{project.tags.join(" / ")}</span>
+                </button>
+              </article>
+            ))}
+          </div>
+
+          <aside className={styles.detailPanel}>
+            <div className={styles.detailImageFrame}>
+              <Image
+                src={activeProject.image}
+                alt={activeProject.title}
+                width={900}
+                height={720}
+                className={styles.detailImage}
+                unoptimized
+              />
+            </div>
+            <div className={styles.detailMeta}>
+              <p className={styles.detailYear}>{activeProject.year}</p>
+              <h3 className={styles.detailTitle}>{activeProject.title}</h3>
+              <p className={styles.detailDescription}>{activeProject.description}</p>
+              <Link href={`/projects/${activeProject.slug}`} className={styles.detailLink}>
+                Open case study
+              </Link>
+            </div>
+          </aside>
         </div>
       </div>
     </section>

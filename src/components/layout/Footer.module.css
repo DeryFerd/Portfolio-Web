@@ -1,48 +1,67 @@
 .footer {
-  padding: var(--spacing-2xl) 0;
-  border-top: 1px solid var(--border);
-  margin-top: var(--spacing-4xl);
+  background: #f3f0e6;
+  padding: 0 0 3rem;
 }
 
-.footerInner {
+.shell {
+  padding-top: 2rem;
+  border-top: 1px solid rgba(33, 50, 40, 0.12);
+}
+
+.prompt {
+  margin-bottom: 0.8rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(33, 50, 40, 0.6);
+}
+
+.email {
+  display: inline-block;
+  margin-bottom: 2rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: #213228;
+}
+
+.bottomRow {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: var(--spacing-lg);
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(33, 50, 40, 0.1);
 }
 
-.copyright {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
+.signature {
+  font-size: 0.92rem;
+  color: rgba(33, 50, 40, 0.68);
 }
 
 .socials {
   display: flex;
-  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: 1.1rem;
 }
 
 .socialLink {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  transition: color var(--transition-fast);
+  font-size: 0.88rem;
+  color: rgba(33, 50, 40, 0.68);
 }
 
 .socialLink:hover {
-  color: var(--accent);
-}
-
-.socialIcon {
-  font-size: 0.75rem;
-  color: var(--accent);
+  color: #213228;
 }
 
 @media (max-width: 768px) {
-  .footerInner {
+  .bottomRow {
     flex-direction: column;
-    text-align: center;
+    align-items: flex-start;
+  }
+
+  .socials {
+    gap: 0.9rem;
   }
 }

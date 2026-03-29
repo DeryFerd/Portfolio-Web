@@ -1,63 +1,97 @@
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { posts } from "@/lib/blogData";
-import CCTVCamera from "@/components/ui/CCTVCamera";
 import styles from "./Blog.module.css";
 
-
 export default function Blog() {
-    return (
-        <section className={`section ${styles.blog}`} id="blog">
-            <div className="container">
-                <div className={styles.header}>
-                    <h2 className={styles.sectionTitle}>
-                        <span className="text-accent">#</span> Latest Posts
-                    </h2>
-                    {/* CCTV + View All — same pattern as Projects */}
-                    <div className={styles.viewAllGroup}>
-                        <CCTVCamera size={80} />
-                        <Link href="/blog" className={styles.viewAll}>
-                            View All &rarr;
-                        </Link>
-                    </div>
-                </div>
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activePost = posts[activeIndex];
 
-                <div className={styles.grid}>
-                    {posts.map((post) => (
-                        <article key={post.slug} className={styles.card}>
-                            <Link href={`/blog/${post.slug}`} className={styles.imageWrapper}>
-                                <Image
-                                    src={post.image}
-                                    alt={post.title}
-                                    width={400}
-                                    height={200}
-                                    className={styles.image}
-                                    unoptimized
-                                />
-                            </Link>
-                            <div className={styles.cardBody}>
-                                <div className={styles.meta}>
-                                    <time className={styles.date}>{post.date}</time>
-                                    <div className={styles.tags}>
-                                        {post.tags.map((tag) => (
-                                            <span key={tag} className={styles.tag}>
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                                <Link href={`/blog/${post.slug}`}>
-                                    <h3 className={styles.cardTitle}>{post.title}</h3>
-                                </Link>
-                                <p className={styles.cardExcerpt}>{post.excerpt}</p>
-                                <Link href={`/blog/${post.slug}`} className={styles.cardLink}>
-                                    Read More &rarr;
-                                </Link>
-                            </div>
-                        </article>
-                    ))}
-                </div>
+  return (
+    <section className={`section ${styles.blog}`} id="blog">
+      <div className="container">
+        <div className={styles.header}>
+          <div>
+            <p className={styles.kicker}>Latest writing</p>
+            <h2 className={styles.title}>Notes from building and learning in public.</h2>
+          </div>
+          <Link href="/blog" className={styles.archiveLink}>
+            View all posts
+          </Link>
+        </div>
+
+        <div className={styles.previewStrip}>
+          {posts.map((post, index) => (
+            <button
+              key={post.slug}
+              type="button"
+              className={`${styles.previewTile} ${index === activeIndex ? styles.previewTileActive : ""}`}
+              onMouseEnter={() => setActiveIndex(index)}
+              onFocus={() => setActiveIndex(index)}
+              onClick={() => setActiveIndex(index)}
+              aria-pressed={index === activeIndex}
+            >
+              <Image
+                src={post.image}
+                alt={post.title}
+                width={420}
+                height={280}
+                className={styles.previewImage}
+                unoptimized
+              />
+            </button>
+          ))}
+        </div>
+
+        <div className={styles.contentGrid}>
+          <div className={styles.postList}>
+            {posts.map((post, index) => (
+              <article key={post.slug} className={styles.postItem}>
+                <button
+                  type="button"
+                  className={`${styles.postTrigger} ${index === activeIndex ? styles.postTriggerActive : ""}`}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onFocus={() => setActiveIndex(index)}
+                  onClick={() => setActiveIndex(index)}
+                  aria-pressed={index === activeIndex}
+                >
+                  <span className={styles.postNumber}>
+                    _ {String(index + 1).padStart(2, "0")} .
+                  </span>
+                  <span className={styles.postTitle}>{post.title}</span>
+                  <span className={styles.postMeta}>
+                    {post.date} / {post.tags.join(" / ")}
+                  </span>
+                </button>
+              </article>
+            ))}
+          </div>
+
+          <aside className={styles.detailPanel}>
+            <div className={styles.detailImageFrame}>
+              <Image
+                src={activePost.image}
+                alt={activePost.title}
+                width={960}
+                height={640}
+                className={styles.detailImage}
+                unoptimized
+              />
             </div>
-        </section>
-    );
+            <div className={styles.detailMeta}>
+              <p className={styles.detailDate}>{activePost.date}</p>
+              <h3 className={styles.detailTitle}>{activePost.title}</h3>
+              <p className={styles.detailExcerpt}>{activePost.excerpt}</p>
+              <Link href={`/blog/${activePost.slug}`} className={styles.detailLink}>
+                Read article
+              </Link>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  );
 }

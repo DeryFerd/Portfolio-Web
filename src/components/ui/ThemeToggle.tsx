@@ -3,37 +3,37 @@
 import { useEffect, useState } from "react";
 import styles from "./ThemeToggle.module.css";
 
+type Theme = "dark" | "light";
+
+function getInitialTheme(): Theme {
+  if (typeof window === "undefined") {
+    return "dark";
+  }
+
+  const stored = localStorage.getItem("theme");
+  return stored === "light" ? "light" : "dark";
+}
+
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "dark";
-    setTheme(savedTheme);
-    document.documentElement.setAttribute("data-theme", savedTheme);
-  }, []);
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
+    setTheme((current) => (current === "dark" ? "light" : "dark"));
   };
 
   return (
-    <button 
-      onClick={toggleTheme} 
+    <button
+      onClick={toggleTheme}
       className={styles.toggle}
       aria-label="Toggle theme"
+      type="button"
     >
-      {theme === "dark" ? (
-        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-          <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
-        </svg>
-      ) : (
-        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-          <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-        </svg>
-      )}
+      <span className={styles.knob} data-theme={theme} />
     </button>
   );
 }
