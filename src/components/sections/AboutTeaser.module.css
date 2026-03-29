@@ -30,6 +30,11 @@
   color: var(--text-primary);
 }
 
+.scrambleInline {
+  display: inline-block;
+  min-height: 1em;
+}
+
 .lead {
   max-width: 34rem;
   margin-bottom: 1rem;
@@ -44,6 +49,14 @@
   font-size: 1rem;
   line-height: 1.8;
   color: var(--text-secondary);
+}
+
+.scrambleBlock {
+  display: inline-block;
+  min-height: 1em;
+  font-family: var(--font-mono);
+  font-size: 0.96em;
+  letter-spacing: 0.01em;
 }
 
 .link {
@@ -111,5 +124,12 @@
 @media (max-width: 900px) {
   .shell {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrambleBlock {
+    font-family: inherit;
+    letter-spacing: normal;
   }
 }

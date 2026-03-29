@@ -1,43 +1,85 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import TextScramble from "@/components/ui/TextScramble";
 import styles from "./AboutTeaser.module.css";
+
+const PARAGRAPH_1 =
+  "I specialize in Large Language Models and Agentic AI, backed by a strong foundation in Machine Learning and Deep Learning. My work moves beyond basic integrations to focus on building autonomous AI agents and efficient systems, covering RAG, model distillation, and inference optimization.";
+
+const PARAGRAPH_2 =
+  "I also design technical curriculums as a Learning Developer, helping others master these technologies. I love solving the hard problems that come with deploying generative AI in the real world.";
 
 const profileRows = [
   {
     label: "Base",
-    value: "Malang, Indonesia"
+    value: "Malang, Indonesia",
   },
   {
     label: "Focus",
-    value: "LLM systems, agent workflows, and machine learning products."
+    value: "LLM systems, agent workflows, and machine learning products.",
   },
   {
     label: "Working style",
-    value: "Clarity first, production-minded, and deeply iterative."
-  }
+    value: "Clarity first, production-minded, and deeply iterative.",
+  },
 ];
 
 export default function AboutTeaser() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.28 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className={`section ${styles.about}`} id="about">
+    <section ref={sectionRef} className={`section ${styles.about}`} id="about">
       <div className="container">
         <div className={styles.shell}>
           <div className={styles.copy}>
             <p className={styles.kicker}>About</p>
-            <h2 className={styles.title}>Human context behind the systems.</h2>
+            <h2 className={styles.title}>
+              <TextScramble
+                text="About Me"
+                trigger={isVisible}
+                speed={44}
+                delay={0}
+                className={styles.scrambleInline}
+              />
+            </h2>
             <p className={styles.lead}>
-              I work at the intersection of machine learning delivery and product
-              execution, building AI systems that are useful outside the lab.
+              <TextScramble
+                text={PARAGRAPH_1}
+                trigger={isVisible}
+                speed={8}
+                delay={280}
+                className={styles.scrambleBlock}
+              />
             </p>
             <p className={styles.text}>
-              My work spans retrieval pipelines, agentic workflows, model
-              operations, and the interfaces people actually use. I care about
-              making intelligent systems feel clear, dependable, and ready for
-              real environments.
-            </p>
-            <p className={styles.text}>
-              I also enjoy translating complex AI ideas into approachable
-              learning experiences, which is why teaching, writing, and system
-              design all feed back into how I build.
+              <TextScramble
+                text={PARAGRAPH_2}
+                trigger={isVisible}
+                speed={8}
+                delay={2700}
+                className={styles.scrambleBlock}
+              />
             </p>
             <Link href="/about" className={styles.link}>
               Read full background
