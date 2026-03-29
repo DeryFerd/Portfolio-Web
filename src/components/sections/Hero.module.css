@@ -89,7 +89,7 @@
 .title {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.55rem;
   max-width: 52rem;
 }
 
@@ -104,7 +104,8 @@
 .titleRole {
   display: inline-flex;
   align-items: center;
-  min-height: 1.2em;
+  min-height: 1.3em;
+  margin-top: 0.15rem;
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3.6vw, 2.9rem);
   line-height: 0.92;
@@ -254,6 +255,8 @@
   }
 
   .titleRole {
+    min-height: 1.35em;
+    margin-top: 0.05rem;
     font-size: clamp(1.55rem, 7vw, 2.35rem);
   }
 
