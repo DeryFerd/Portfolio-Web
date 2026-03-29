@@ -2,6 +2,7 @@ import Hero from "@/components/sections/Hero";
 import AboutTeaser from "@/components/sections/AboutTeaser";
 import Skills from "@/components/sections/Skills";
 import Experience from "@/components/sections/Experience";
+import GitHubProof from "@/components/sections/GitHubProof";
 import Projects from "@/components/sections/Projects";
 import Blog from "@/components/sections/Blog";
 import Contact from "@/components/sections/Contact";
@@ -21,6 +22,9 @@ export default function Home() {
         </FadeIn>
         <FadeIn delay={80}>
           <Experience />
+        </FadeIn>
+        <FadeIn delay={90}>
+          <GitHubProof />
         </FadeIn>
         <FadeIn delay={100}>
           <Projects />
