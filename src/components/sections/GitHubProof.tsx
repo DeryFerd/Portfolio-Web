@@ -1,12 +1,8 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
+import AnimatedNumber from "@/components/ui/AnimatedNumber";
 import { getGitHubProofData } from "@/lib/github";
 import styles from "./GitHubProof.module.css";
-
-function formatNumber(value: number | null) {
-  if (value === null) return "-";
-  return new Intl.NumberFormat("en-US").format(value);
-}
 
 function formatRepoDate(value: string) {
   return new Intl.DateTimeFormat("en-US", {
@@ -113,22 +109,29 @@ export default async function GitHubProof() {
           <div className={styles.statsGrid}>
             <article className={styles.statCard}>
               <p className={styles.statLabel}>Public repos</p>
-              <p className={styles.statValue}>{formatNumber(data.publicRepos)}</p>
+              <AnimatedNumber
+                className={styles.statValue}
+                value={data.publicRepos}
+              />
             </article>
             <article className={styles.statCard}>
               <p className={styles.statLabel}>Followers</p>
-              <p className={styles.statValue}>{formatNumber(data.followers)}</p>
+              <AnimatedNumber
+                className={styles.statValue}
+                value={data.followers}
+              />
             </article>
             <article className={styles.statCard}>
               <p className={styles.statLabel}>Contributions</p>
-              <p className={styles.statValue}>
-                {formatNumber(data.lastYearContributions)}
-              </p>
+              <AnimatedNumber
+                className={styles.statValue}
+                value={data.lastYearContributions}
+              />
               <p className={styles.statMeta}>Last year</p>
             </article>
             <article className={styles.statCard}>
               <p className={styles.statLabel}>Active days</p>
-              <p className={styles.statValue}>{formatNumber(activeDays)}</p>
+              <AnimatedNumber className={styles.statValue} value={activeDays} />
               <p className={styles.statMeta}>With visible activity</p>
             </article>
           </div>
