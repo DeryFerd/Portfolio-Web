@@ -77,7 +77,12 @@ export default function Projects() {
       <div className="container">
         <div className={styles.header}>
           <div>
-            <p className={styles.kicker}>Selected projects</p>
+            <div className={styles.kickerRow}>
+              <span className={styles.kickerIcon} aria-hidden="true">
+                *
+              </span>
+              <p className={styles.kicker}>Selected projects</p>
+            </div>
             <h2 className={styles.title}>Work presented with more signal than noise.</h2>
           </div>
           <Link href="/projects" className={styles.archiveLink}>
@@ -85,33 +90,13 @@ export default function Projects() {
           </Link>
         </div>
 
-        <div className={styles.previewStrip}>
-          {projects.map((project, index) => (
-            <button
-              key={project.slug}
-              type="button"
-              className={`${styles.previewTile} ${index === activeIndex ? styles.previewTileActive : ""}`}
-              onMouseEnter={() => setActiveIndex(index)}
-              onFocus={() => setActiveIndex(index)}
-              onClick={() => setActiveIndex(index)}
-              aria-pressed={index === activeIndex}
-            >
-              <Image
-                src={project.image}
-                alt={project.title}
-                width={280}
-                height={220}
-                className={styles.previewImage}
-                unoptimized
-              />
-            </button>
-          ))}
-        </div>
-
         <div className={styles.contentGrid}>
           <div className={styles.projectList}>
             {projects.map((project, index) => (
-              <article key={project.slug} className={styles.projectItem}>
+              <article
+                key={project.slug}
+                className={`${styles.projectItem} ${index === activeIndex ? styles.projectItemActive : ""}`}
+              >
                 <button
                   type="button"
                   className={`${styles.projectTrigger} ${index === activeIndex ? styles.projectTriggerActive : ""}`}
@@ -123,7 +108,12 @@ export default function Projects() {
                   <span className={styles.projectNumber}>
                     _ {String(index + 1).padStart(2, "0")} .
                   </span>
-                  <span className={styles.projectTitle}>{project.title}</span>
+                  <span className={styles.projectTitleRow}>
+                    <span className={styles.projectTitle}>{project.title}</span>
+                    <span className={styles.projectArrow} aria-hidden="true">
+                      ↗
+                    </span>
+                  </span>
                   <span className={styles.projectStack}>{project.tags.join(" / ")}</span>
                 </button>
               </article>
@@ -131,15 +121,19 @@ export default function Projects() {
           </div>
 
           <aside className={styles.detailPanel}>
-            <div className={styles.detailImageFrame}>
-              <Image
-                src={activeProject.image}
-                alt={activeProject.title}
-                width={900}
-                height={720}
-                className={styles.detailImage}
-                unoptimized
-              />
+            <div className={styles.detailStage}>
+              {projects.map((project, index) => (
+                <Image
+                  key={project.slug}
+                  src={project.image}
+                  alt={index === activeIndex ? project.title : ""}
+                  width={900}
+                  height={720}
+                  className={`${styles.detailImage} ${index === activeIndex ? styles.detailImageActive : ""}`}
+                  aria-hidden={index !== activeIndex}
+                  unoptimized
+                />
+              ))}
             </div>
             <div className={styles.detailMeta}>
               <p className={styles.detailYear}>{activeProject.year}</p>
