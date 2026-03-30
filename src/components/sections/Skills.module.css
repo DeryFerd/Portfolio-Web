@@ -75,12 +75,12 @@
   --spread-bottom: 1.1rem;
   --left-page-ratio: 0.5;
   position: relative;
-  padding-right: 4.1rem;
+  padding-right: 7.4rem;
 }
 
 .bookAura {
   position: absolute;
-  inset: 0.7rem 3.4rem 0.7rem 0;
+  inset: 0.7rem 6.6rem 0.7rem 0;
   border-radius: 2rem;
   background:
     radial-gradient(
@@ -771,7 +771,7 @@
 .bookmarks {
   position: absolute;
   top: 1.45rem;
-  right: 0;
+  right: 0.45rem;
   display: grid;
   gap: 0.24rem;
   z-index: 5;
@@ -782,7 +782,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  width: calc(0.78rem + (var(--cover-progress) * 1rem));
+  width: calc(0.74rem + (var(--cover-progress) * 0.9rem));
   min-height: 2.05rem;
   padding: 0.42rem 0.48rem 0.42rem 0.42rem;
   border: 1px solid rgba(109, 91, 63, 0.1);
@@ -803,12 +803,12 @@
 }
 
 .bookmarkTab:hover {
-  transform: translateX(-0.08rem);
+  transform: translateX(-0.04rem);
 }
 
 .bookmarkTab[data-active="true"] {
-  width: calc(0.95rem + (var(--cover-progress) * 8rem));
-  transform: translateX(-0.22rem);
+  width: calc(0.92rem + (var(--cover-progress) * 5.8rem));
+  transform: translateX(-0.08rem);
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--tab-accent) 18%, rgba(250, 245, 236, 0.98)),
