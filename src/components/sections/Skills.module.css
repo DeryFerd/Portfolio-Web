@@ -508,7 +508,7 @@
   transform:
     translateX(calc(var(--page-curl) * -1.35%))
     translateY(calc(var(--page-curl) * -0.35%))
-    rotateY(calc(var(--page-turn-eased) * -176deg))
+    rotateY(calc(var(--page-turn-display) * -176deg))
     rotateZ(calc(var(--page-curl) * -1.4deg))
     scaleX(calc(1 - (var(--page-curl) * 0.055)));
 }
@@ -518,7 +518,7 @@
   transform:
     translateX(calc(var(--page-curl) * 1.35%))
     translateY(calc(var(--page-curl) * -0.35%))
-    rotateY(calc(-176deg + (var(--page-turn-eased) * 176deg)))
+    rotateY(calc(-176deg + (var(--page-turn-display) * 176deg)))
     rotateZ(calc(var(--page-curl) * 1.4deg))
     scaleX(calc(1 - (var(--page-curl) * 0.055)));
 }

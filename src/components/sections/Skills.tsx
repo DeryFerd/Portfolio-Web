@@ -29,8 +29,9 @@ type TurnDirection = -1 | 0 | 1;
 const COVER_DRAG_DISTANCE = 240;
 const COVER_OPEN_THRESHOLD = 0.42;
 const COVER_ZONE_RATIO = 0.42;
-const PAGE_DRAG_DISTANCE = 220;
-const PAGE_TURN_THRESHOLD = 0.32;
+const PAGE_DRAG_DISTANCE = 320;
+const PAGE_TURN_DEADZONE = 24;
+const PAGE_TURN_THRESHOLD = 0.52;
 const PAGE_TURN_DURATION = 620;
 
 const stackTools: StackTool[] = [
@@ -569,6 +570,25 @@ export default function Skills() {
     }, PAGE_TURN_DURATION);
   };
 
+  const revertTurn = () => {
+    if (turnTimeoutRef.current !== null) {
+      window.clearTimeout(turnTimeoutRef.current);
+    }
+
+    if (turnTargetIndex === null) {
+      clearTurnState();
+      return;
+    }
+
+    setIsAnimatingTurn(true);
+    setTurnProgress(0);
+
+    turnTimeoutRef.current = window.setTimeout(() => {
+      clearTurnState();
+      turnTimeoutRef.current = null;
+    }, PAGE_TURN_DURATION);
+  };
+
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "mouse" && event.button !== 0) {
       return;
@@ -625,17 +645,31 @@ export default function Skills() {
       return;
     }
 
+    const absDelta = Math.abs(delta);
+
+    if (absDelta <= PAGE_TURN_DEADZONE) {
+      clearTurnState();
+      return;
+    }
+
+    const normalizedProgress = clamp(
+      (absDelta - PAGE_TURN_DEADZONE) /
+        (PAGE_DRAG_DISTANCE - PAGE_TURN_DEADZONE),
+      0,
+      1,
+    );
+
     if (delta > 0 && activeIndex < chapters.length - 1) {
       setTurnDirection(-1);
       setTurnTargetIndex(activeIndex + 1);
-      setTurnProgress(clamp(delta / PAGE_DRAG_DISTANCE, 0, 1));
+      setTurnProgress(normalizedProgress);
       return;
     }
 
     if (delta < 0 && activeIndex > 0) {
       setTurnDirection(1);
       setTurnTargetIndex(activeIndex - 1);
-      setTurnProgress(clamp(Math.abs(delta) / PAGE_DRAG_DISTANCE, 0, 1));
+      setTurnProgress(normalizedProgress);
       return;
     }
 
@@ -669,7 +703,7 @@ export default function Skills() {
       return;
     }
 
-    clearTurnState();
+    revertTurn();
     resetDrag(event.currentTarget, event.pointerId);
   };
 
@@ -681,16 +715,21 @@ export default function Skills() {
     if (dragStateRef.current.mode === "cover") {
       setCoverProgress(coverProgress > COVER_OPEN_THRESHOLD ? 1 : 0);
     } else {
-      clearTurnState();
+      revertTurn();
     }
 
     resetDrag(event.currentTarget, event.pointerId);
   };
 
+  const displayedTurnProgress =
+    isDragging && dragMode === "page"
+      ? turnProgress
+      : easeInOutCubic(turnProgress);
+
   const bookStyle = {
     "--cover-progress": coverProgress.toFixed(3),
     "--page-turn-progress": turnProgress.toFixed(3),
-    "--page-turn-eased": easeInOutCubic(turnProgress).toFixed(3),
+    "--page-turn-display": displayedTurnProgress.toFixed(3),
     "--page-curl": Math.sin(turnProgress * Math.PI).toFixed(3),
     "--chapter-accent": activeChapter.accent,
   } as CSSProperties;
