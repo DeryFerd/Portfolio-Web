@@ -33,6 +33,7 @@ const PAGE_DRAG_DISTANCE = 320;
 const PAGE_TURN_DEADZONE = 24;
 const PAGE_TURN_THRESHOLD = 0.52;
 const PAGE_TURN_DURATION = 620;
+const PAGE_TURN_COMMIT_DURATION = 540;
 
 const stackTools: StackTool[] = [
   {
@@ -507,6 +508,7 @@ export default function Skills() {
   const activeChapter = chapters[activeIndex] ?? chapters[0];
   const turnTargetChapter =
     turnTargetIndex !== null ? chapters[turnTargetIndex] ?? null : null;
+  const isDragging = dragMode !== "none";
 
   const visibleRightChapter = useMemo(() => {
     if (turnDirection === -1 && turnTargetChapter) {
@@ -515,8 +517,6 @@ export default function Skills() {
 
     return activeChapter;
   }, [activeChapter, turnDirection, turnTargetChapter]);
-
-  const isDragging = dragMode !== "none";
 
   const resetDrag = (target?: HTMLDivElement, pointerId?: number) => {
     if (
@@ -567,7 +567,7 @@ export default function Skills() {
 
       clearTurnState();
       turnTimeoutRef.current = null;
-    }, PAGE_TURN_DURATION);
+    }, PAGE_TURN_COMMIT_DURATION);
   };
 
   const revertTurn = () => {
