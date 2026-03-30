@@ -1,13 +1,11 @@
 "use client";
 
-import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
-import {
-  useEffect,
-  useEffectEvent,
-  useMemo,
-  useRef,
-  useState,
+import type {
+  CSSProperties,
+  HTMLAttributes,
+  PointerEvent as ReactPointerEvent,
 } from "react";
+import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Skills.module.css";
 
 interface Skill {
@@ -16,35 +14,22 @@ interface Skill {
   eyebrow: string;
   description: string;
   accent: string;
-  latitude: number;
-  longitude: number;
 }
 
-interface ProjectedSkill extends Skill {
-  x: number;
-  y: number;
-  z: number;
-  scale: number;
-  opacity: number;
-  blur: number;
+interface DeckCardProps {
+  active?: boolean;
+  animating?: boolean;
+  cardProps?: HTMLAttributes<HTMLDivElement>;
+  className: string;
+  counter: string;
+  dragging?: boolean;
+  relatedSkills: Skill[];
+  skill: Skill;
+  style?: CSSProperties;
+  swipeDirection?: number;
 }
 
-interface OrbPoint {
-  x: number;
-  y: number;
-  z: number;
-}
-
-interface MeshLine {
-  id: string;
-  fullPath: string;
-  frontPaths: string[];
-}
-
-const BASE_TILT = -12;
-const AUTO_SPIN_SPEED = 0.16;
-const FOCUS_HOLD_MS = 3600;
-const FRONT_Z_THRESHOLD = 0.28;
+const SWIPE_THRESHOLD = 96;
 
 const skills: Skill[] = [
   {
@@ -54,8 +39,6 @@ const skills: Skill[] = [
     description:
       "Model choice, prompting, and evaluation loops tuned for useful product behavior.",
     accent: "#f2c078",
-    latitude: 20,
-    longitude: -18,
   },
   {
     id: "rag",
@@ -64,8 +47,6 @@ const skills: Skill[] = [
     description:
       "Search pipelines that keep outputs anchored to the right context, not just fluent text.",
     accent: "#c08cff",
-    latitude: -16,
-    longitude: 42,
   },
   {
     id: "python",
@@ -74,8 +55,6 @@ const skills: Skill[] = [
     description:
       "The default layer for experiments, orchestration, inference services, and data work.",
     accent: "#5ab0f5",
-    latitude: 10,
-    longitude: -112,
   },
   {
     id: "pytorch",
@@ -84,8 +63,6 @@ const skills: Skill[] = [
     description:
       "Training, fine-tuning, and iterating on modern ML systems with practical deployment in mind.",
     accent: "#ff7b4d",
-    latitude: 48,
-    longitude: 18,
   },
   {
     id: "react",
@@ -94,8 +71,6 @@ const skills: Skill[] = [
     description:
       "Interfaces for AI products where fast iteration, clarity, and responsive state all matter.",
     accent: "#65d8ff",
-    latitude: -10,
-    longitude: -58,
   },
   {
     id: "nextjs",
@@ -104,8 +79,6 @@ const skills: Skill[] = [
     description:
       "App Router builds that connect product pages, server rendering, and operational polish.",
     accent: "#f0f0f0",
-    latitude: 14,
-    longitude: 112,
   },
   {
     id: "node",
@@ -114,8 +87,6 @@ const skills: Skill[] = [
     description:
       "APIs, background jobs, and streaming endpoints that support agent and product workflows.",
     accent: "#8cd66f",
-    latitude: 46,
-    longitude: 138,
   },
   {
     id: "postgres",
@@ -124,8 +95,6 @@ const skills: Skill[] = [
     description:
       "Reliable storage for product data, retrieval layers, and the state behind real applications.",
     accent: "#7a95ff",
-    latitude: -30,
-    longitude: 126,
   },
   {
     id: "docker",
@@ -134,8 +103,6 @@ const skills: Skill[] = [
     description:
       "Clean environments for reproducible training, inference, and product deployment pipelines.",
     accent: "#46b6ff",
-    latitude: -44,
-    longitude: -132,
   },
   {
     id: "tailwind",
@@ -144,167 +111,19 @@ const skills: Skill[] = [
     description:
       "Fast layout iteration when the frontend needs to move at the same speed as the backend.",
     accent: "#33d6dd",
-    latitude: -24,
-    longitude: 12,
   },
 ];
 
-const globeLatitudes = [-60, -42, -24, 0, 24, 42, 60];
-const globeMeridians = [0, 20, 40, 60, 80, 100, 120, 140, 160];
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
+function getWrappedIndex(index: number) {
+  return (index % skills.length + skills.length) % skills.length;
 }
 
-function wrapAngle(angle: number) {
-  let next = angle;
-
-  while (next > 180) next -= 360;
-  while (next < -180) next += 360;
-
-  return next;
+function getSkillAt(index: number) {
+  return skills[getWrappedIndex(index)] ?? skills[0];
 }
 
-function shortestAngleDifference(from: number, to: number) {
-  return wrapAngle(to - from);
-}
-
-function nearestEquivalentAngle(current: number, target: number) {
-  return current + shortestAngleDifference(current, target);
-}
-
-function toRadians(value: number) {
-  return (value * Math.PI) / 180;
-}
-
-function projectOrbPoint(latitudeValue: number, longitudeValue: number, rotation: number, tilt: number): OrbPoint {
-  const latitude = toRadians(latitudeValue);
-  const longitude = toRadians(longitudeValue);
-  const rotationY = toRadians(rotation);
-  const rotationX = toRadians(tilt);
-
-  const x0 = Math.cos(latitude) * Math.sin(longitude);
-  const y0 = Math.sin(latitude);
-  const z0 = Math.cos(latitude) * Math.cos(longitude);
-
-  const x1 = x0 * Math.cos(rotationY) + z0 * Math.sin(rotationY);
-  const y1 = y0;
-  const z1 = -x0 * Math.sin(rotationY) + z0 * Math.cos(rotationY);
-
-  const x2 = x1;
-  const y2 = y1 * Math.cos(rotationX) - z1 * Math.sin(rotationX);
-  const z2 = y1 * Math.sin(rotationX) + z1 * Math.cos(rotationX);
-
-  return {
-    x: x2,
-    y: y2,
-    z: z2,
-  };
-}
-
-function projectSkill(skill: Skill, rotation: number, tilt: number): ProjectedSkill {
-  const point = projectOrbPoint(skill.latitude, skill.longitude, rotation, tilt);
-
-  const depth = (point.z + 1) / 2;
-
-  return {
-    ...skill,
-    x: point.x,
-    y: point.y,
-    z: point.z,
-    scale: 0.72 + depth * 0.56,
-    opacity: 0.18 + depth * 0.82,
-    blur: (1 - depth) * 1.35,
-  };
-}
-
-function pointToSvg(point: OrbPoint) {
-  const x = 50 + point.x * 37.6;
-  const y = 50 + point.y * 37.6;
-
-  return `${x.toFixed(2)} ${y.toFixed(2)}`;
-}
-
-function buildLinePath(points: OrbPoint[]) {
-  if (points.length === 0) {
-    return "";
-  }
-
-  return points
-    .map((point, index) => `${index === 0 ? "M" : "L"}${pointToSvg(point)}`)
-    .join(" ");
-}
-
-function buildFrontSegments(points: OrbPoint[], loop = false) {
-  if (points.length === 0) {
-    return [];
-  }
-
-  const wrappedPoints = loop ? [...points, points[0]] : points;
-  const segments: OrbPoint[][] = [];
-  let current: OrbPoint[] = [];
-
-  wrappedPoints.forEach((point) => {
-    if (point.z >= 0) {
-      current.push(point);
-      return;
-    }
-
-    if (current.length > 1) {
-      segments.push(current);
-    }
-
-    current = [];
-  });
-
-  if (current.length > 1) {
-    segments.push(current);
-  }
-
-  const firstPoint = points[0];
-  const lastPoint = points.at(-1);
-
-  if (loop && segments.length > 1 && firstPoint && firstPoint.z >= 0 && lastPoint && lastPoint.z >= 0) {
-    const [first, ...rest] = segments;
-    const last = rest.pop();
-
-    if (first && last) {
-      segments.splice(0, segments.length, [...last, ...first.slice(1)], ...rest);
-    }
-  }
-
-  return segments.map((segment) => buildLinePath(segment));
-}
-
-function buildMesh(rotation: number, tilt: number) {
-  const latitudes: MeshLine[] = globeLatitudes.map((latitude) => {
-    const points = Array.from({ length: 73 }, (_, index) =>
-      projectOrbPoint(latitude, index * 5 - 180, rotation, tilt),
-    );
-
-    return {
-      id: `lat-${latitude}`,
-      fullPath: buildLinePath(points),
-      frontPaths: buildFrontSegments(points, true),
-    };
-  });
-
-  const meridians: MeshLine[] = globeMeridians.map((longitude) => {
-    const points = Array.from({ length: 73 }, (_, index) =>
-      projectOrbPoint(index * 2.5 - 90, longitude, rotation, tilt),
-    );
-
-    return {
-      id: `lon-${longitude}`,
-      fullPath: buildLinePath(points),
-      frontPaths: buildFrontSegments(points),
-    };
-  });
-
-  return {
-    latitudes,
-    meridians,
-  };
+function getRelatedSkills(centerIndex: number) {
+  return [0, 1, 3, 5].map((offset) => getSkillAt(centerIndex + offset));
 }
 
 function SkillIcon({ skillId }: { skillId: string }) {
@@ -529,199 +348,202 @@ function SkillIcon({ skillId }: { skillId: string }) {
   }
 }
 
+function DeckCard({
+  active = false,
+  animating = false,
+  cardProps,
+  className,
+  counter,
+  dragging = false,
+  relatedSkills,
+  skill,
+  style,
+  swipeDirection = 0,
+}: DeckCardProps) {
+  const cardStyle = {
+    "--card-accent": skill.accent,
+    ...style,
+  } as CSSProperties;
+
+  return (
+    <div
+      className={className}
+      style={cardStyle}
+      data-active={active}
+      data-animating={animating}
+      data-dragging={dragging}
+      data-swipe={swipeDirection}
+      {...cardProps}
+    >
+      <div className={styles.cardHeader}>
+        <span className={styles.cardCounter}>{counter}</span>
+        <span className={styles.cardEyebrow}>{skill.eyebrow}</span>
+      </div>
+
+      <div className={styles.cardHero}>
+        <span className={styles.cardIcon}>
+          <SkillIcon skillId={skill.id} />
+        </span>
+        <div className={styles.cardIdentity}>
+          <h3 className={styles.cardTitle}>{skill.label}</h3>
+          <p className={styles.cardDescription}>{skill.description}</p>
+        </div>
+      </div>
+
+      <div className={styles.logoRail}>
+        {relatedSkills.map((relatedSkill) => (
+          <span
+            key={`${skill.id}-${relatedSkill.id}`}
+            className={styles.logoChip}
+            data-active={relatedSkill.id === skill.id}
+            style={{ "--chip-accent": relatedSkill.accent } as CSSProperties}
+          >
+            <span className={styles.logoIcon}>
+              <SkillIcon skillId={relatedSkill.id} />
+            </span>
+            <span className={styles.logoLabel}>{relatedSkill.label}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Skills() {
-  const orbRef = useRef<HTMLDivElement>(null);
-  const rotationRef = useRef(12);
-  const tiltRef = useRef(BASE_TILT);
-  const targetRotationRef = useRef<number | null>(null);
-  const targetTiltRef = useRef(BASE_TILT);
-  const draggingRef = useRef(false);
+  const swipeTimeoutRef = useRef<number | null>(null);
   const dragStateRef = useRef({
     pointerId: -1,
     startX: 0,
-    startY: 0,
-    startRotation: 0,
-    startTilt: BASE_TILT,
   });
-  const holdSelectionUntilRef = useRef(0);
-  const isVisibleRef = useRef(false);
-  const [rotation, setRotation] = useState(rotationRef.current);
-  const [tilt, setTilt] = useState(BASE_TILT);
-  const [isVisible, setIsVisible] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [hoveredSkillId, setHoveredSkillId] = useState<string | null>(null);
-  const [selectedSkillId, setSelectedSkillId] = useState<string | null>(
-    skills[0]?.id ?? null,
-  );
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [swipeDirection, setSwipeDirection] = useState<-1 | 0 | 1>(0);
 
   useEffect(() => {
-    const node = orbRef.current;
-
-    if (!node) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.some((entry) => entry.isIntersecting);
-        isVisibleRef.current = visible;
-        setIsVisible(visible);
-      },
-      { threshold: 0.35 },
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
+    return () => {
+      if (swipeTimeoutRef.current !== null) {
+        window.clearTimeout(swipeTimeoutRef.current);
+      }
+    };
   }, []);
 
-  const animateOrb = useEffectEvent((now: number) => {
-    if (!isVisibleRef.current || draggingRef.current) {
+  const activeSkill = skills[activeIndex] ?? skills[0];
+
+  const deckCards = useMemo(
+    () =>
+      Array.from({ length: 3 }, (_, layer) => {
+        const index = getWrappedIndex(activeIndex + layer);
+
+        return {
+          layer,
+          index,
+          skill: skills[index] ?? skills[0],
+          relatedSkills: getRelatedSkills(index),
+        };
+      }),
+    [activeIndex],
+  );
+
+  const completeSwipe = (direction: -1 | 1) => {
+    if (swipeTimeoutRef.current !== null) {
+      window.clearTimeout(swipeTimeoutRef.current);
+    }
+
+    setSwipeDirection(direction);
+    setIsAnimating(true);
+
+    swipeTimeoutRef.current = window.setTimeout(() => {
+      startTransition(() => {
+        setActiveIndex((current) =>
+          getWrappedIndex(current + (direction < 0 ? 1 : -1)),
+        );
+      });
+      setDragOffset(0);
+      setSwipeDirection(0);
+      setIsAnimating(false);
+    }, 240);
+  };
+
+  const resetDrag = (target?: HTMLDivElement, pointerId?: number) => {
+    setDragOffset(0);
+    setIsDragging(false);
+
+    if (
+      target &&
+      pointerId !== undefined &&
+      target.hasPointerCapture(pointerId)
+    ) {
+      target.releasePointerCapture(pointerId);
+    }
+
+    dragStateRef.current.pointerId = -1;
+  };
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (isAnimating) {
       return;
     }
 
-    if (selectedSkillId && holdSelectionUntilRef.current && now > holdSelectionUntilRef.current) {
-      holdSelectionUntilRef.current = 0;
-      setSelectedSkillId(null);
-    }
-
-    const targetRotation = targetRotationRef.current;
-
-    if (targetRotation !== null) {
-      const delta = shortestAngleDifference(rotationRef.current, targetRotation);
-      rotationRef.current = wrapAngle(rotationRef.current + delta * 0.11);
-
-      if (Math.abs(delta) < 0.16) {
-        rotationRef.current = wrapAngle(targetRotation);
-        targetRotationRef.current = null;
-      }
-    } else if (!selectedSkillId) {
-      rotationRef.current = wrapAngle(rotationRef.current + AUTO_SPIN_SPEED);
-    }
-
-    const tiltDelta = targetTiltRef.current - tiltRef.current;
-    tiltRef.current += tiltDelta * 0.08;
-
-    setRotation(rotationRef.current);
-    setTilt(tiltRef.current);
-  });
-
-  useEffect(() => {
-    let frame = 0;
-
-    const tick = (now: number) => {
-      animateOrb(now);
-      frame = window.requestAnimationFrame(tick);
-    };
-
-    frame = window.requestAnimationFrame(tick);
-
-    return () => window.cancelAnimationFrame(frame);
-  }, [animateOrb]);
-
-  const projectedSkills = useMemo(
-    () => skills.map((skill) => projectSkill(skill, rotation, tilt)),
-    [rotation, tilt],
-  );
-  const mesh = useMemo(() => buildMesh(rotation, tilt), [rotation, tilt]);
-  const orbShadeStyle = {
-    "--globe-light-angle": `${wrapAngle(rotation * -1 + 118)}deg`,
-  } as CSSProperties;
-
-  const frontSkillId =
-    projectedSkills.reduce((front, skill) => {
-      if (!front || skill.z > front.z) {
-        return skill;
-      }
-
-      return front;
-    }, null as ProjectedSkill | null)?.id ?? skills[0].id;
-
-  const activeSkillId = hoveredSkillId ?? selectedSkillId ?? frontSkillId;
-  const activeSkill =
-    skills.find((skill) => skill.id === activeSkillId) ?? skills[0];
-  const activeSkillIndex = skills.findIndex((skill) => skill.id === activeSkill.id);
-
-  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "mouse" && event.button !== 0) {
       return;
     }
 
-    const target = event.target;
-
-    if (target instanceof HTMLElement && target.closest("[data-skill-node='true']")) {
-      return;
-    }
-
-    draggingRef.current = true;
-    targetRotationRef.current = null;
-    targetTiltRef.current = tiltRef.current;
     dragStateRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
-      startY: event.clientY,
-      startRotation: rotationRef.current,
-      startTilt: tiltRef.current,
     };
-    setSelectedSkillId(null);
-    setHoveredSkillId(null);
     setIsDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (
-      !draggingRef.current ||
-      dragStateRef.current.pointerId !== event.pointerId
+      !isDragging ||
+      dragStateRef.current.pointerId !== event.pointerId ||
+      isAnimating
     ) {
       return;
     }
 
-    const deltaX = event.clientX - dragStateRef.current.startX;
-    const deltaY = event.clientY - dragStateRef.current.startY;
-    const nextRotation = wrapAngle(
-      dragStateRef.current.startRotation + deltaX * 0.34,
-    );
-    const nextTilt = clamp(
-      dragStateRef.current.startTilt - deltaY * 0.12,
-      -24,
-      14,
-    );
-
-    rotationRef.current = nextRotation;
-    tiltRef.current = nextTilt;
-    setRotation(nextRotation);
-    setTilt(nextTilt);
+    setDragOffset(event.clientX - dragStateRef.current.startX);
   };
 
   const handlePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (
-      !draggingRef.current ||
-      dragStateRef.current.pointerId !== event.pointerId
+      !isDragging ||
+      dragStateRef.current.pointerId !== event.pointerId ||
+      isAnimating
     ) {
       return;
     }
 
-    draggingRef.current = false;
-    dragStateRef.current.pointerId = -1;
-    targetTiltRef.current = BASE_TILT;
-    setIsDragging(false);
+    const delta = event.clientX - dragStateRef.current.startX;
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
+    if (Math.abs(delta) >= SWIPE_THRESHOLD) {
+      resetDrag(event.currentTarget, event.pointerId);
+      completeSwipe(delta < 0 ? -1 : 1);
+      return;
     }
+
+    resetDrag(event.currentTarget, event.pointerId);
   };
 
-  const handleSkillClick = (skill: Skill) => {
-    setSelectedSkillId(skill.id);
-    setHoveredSkillId(null);
-    holdSelectionUntilRef.current = performance.now() + FOCUS_HOLD_MS;
-    targetRotationRef.current = nearestEquivalentAngle(
-      rotationRef.current,
-      -skill.longitude,
-    );
-    targetTiltRef.current = BASE_TILT;
+  const handlePointerCancel = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (dragStateRef.current.pointerId !== event.pointerId) {
+      return;
+    }
+
+    resetDrag(event.currentTarget, event.pointerId);
   };
+
+  const activeCardStyle = {
+    "--drag-x": `${dragOffset}px`,
+    "--drag-rotate": `${(dragOffset * 0.05).toFixed(2)}deg`,
+    "--swipe-x": swipeDirection < 0 ? "-138%" : "138%",
+    "--swipe-rotate": `${swipeDirection * 16}deg`,
+  } as CSSProperties;
 
   return (
     <section className={`section ${styles.skills}`} id="skills">
@@ -734,150 +556,101 @@ export default function Skills() {
               </span>
               <p className={styles.kicker}>Core stack</p>
             </div>
-            <h2 className={styles.title}>Systems that orbit product, not the other way around.</h2>
+            <h2 className={styles.title}>A stack you can swipe through instead of decode.</h2>
             <p className={styles.text}>
-              The stack is broad, but the center stays clear: model quality,
-              retrieval, application UX, and deployment reliability all need to
-              move together when AI work ships to real users.
+              The section is now just cards: one layer up front, two more
+              waiting behind it, and a direct gesture to move through the stack
+              without the visual noise from heavier concepts.
             </p>
             <div className={styles.copyMeta}>
-              <span>Drag to rotate</span>
-              <span>Click a node to focus</span>
-              <span>{skills.length} core layers</span>
+              <span>Swipe left for next</span>
+              <span>Swipe right for previous</span>
+              <span>{skills.length} stack cards</span>
             </div>
           </div>
 
-          <div className={styles.orbColumn}>
-            <div
-              ref={orbRef}
-              className={`${styles.orbStage} ${isDragging ? styles.orbStageDragging : ""}`}
-              onPointerDown={handlePointerDown}
-              onPointerMove={handlePointerMove}
-              onPointerUp={handlePointerUp}
-              onPointerCancel={handlePointerUp}
-            >
-              <div className={styles.orbField} aria-hidden="true" />
-              <div className={styles.orbAura} aria-hidden="true" />
-              <div className={styles.orbSphere} aria-hidden="true" />
-              <div
-                className={styles.orbShade}
-                style={orbShadeStyle}
-                aria-hidden="true"
-              />
-              <svg
-                className={styles.wireframe}
-                viewBox="0 0 100 100"
-                aria-hidden="true"
-              >
-                <defs>
-                  <radialGradient id="skill-orb-glow" cx="50%" cy="45%" r="72%">
-                    <stop offset="0%" stopColor="rgba(224,182,130,0.14)" />
-                    <stop offset="55%" stopColor="rgba(74,83,94,0.12)" />
-                    <stop offset="100%" stopColor="rgba(74,83,94,0)" />
-                  </radialGradient>
-                </defs>
-                <circle cx="50" cy="50" r="38" fill="url(#skill-orb-glow)" />
-                <circle cx="50" cy="50" r="37.6" className={styles.wireframeOuter} />
-                {mesh.latitudes.map((line) => (
-                  <path
-                    key={`${line.id}-back`}
-                    d={line.fullPath}
-                    className={styles.wireframeBack}
-                  />
-                ))}
-                {mesh.meridians.map((line) => (
-                  <path
-                    key={`${line.id}-back`}
-                    d={line.fullPath}
-                    className={styles.wireframeBack}
-                  />
-                ))}
-                {mesh.latitudes.flatMap((line) =>
-                  line.frontPaths.map((path, index) => (
-                    <path
-                      key={`${line.id}-front-${index}`}
-                      d={path}
-                      className={line.id === "lat-0" ? styles.wireframeFrontStrong : styles.wireframeFront}
-                    />
-                  )),
-                )}
-                {mesh.meridians.flatMap((line) =>
-                  line.frontPaths.map((path, index) => (
-                    <path
-                      key={`${line.id}-front-${index}`}
-                      d={path}
-                      className={styles.wireframeFront}
-                    />
-                  )),
-                )}
-              </svg>
+          <div className={styles.deckColumn}>
+            <div className={styles.deckStage}>
+              <div className={styles.deckMeta}>
+                <span className={styles.deckLabel}>Swipe deck</span>
+                <span className={styles.deckCounter}>
+                  {String(activeIndex + 1).padStart(2, "0")} / {String(skills.length).padStart(2, "0")}
+                </span>
+              </div>
 
-              <div className={styles.coreCenter}>
-                <div
-                  className={styles.coreIcon}
-                  style={{ "--active-accent": activeSkill.accent } as CSSProperties}
+              <div className={styles.cardStack}>
+                {deckCards
+                  .slice()
+                  .reverse()
+                  .map(({ layer, skill, relatedSkills }) => {
+                    const counter = `${String(getWrappedIndex(activeIndex + layer) + 1).padStart(2, "0")} / ${String(skills.length).padStart(2, "0")}`;
+
+                    if (layer === 0) {
+                      return (
+                        <DeckCard
+                          key={`front-${skill.id}-${activeIndex}`}
+                          active
+                          animating={isAnimating}
+                          className={styles.cardFront}
+                          counter={counter}
+                          dragging={isDragging}
+                          relatedSkills={relatedSkills}
+                          skill={skill}
+                          style={activeCardStyle}
+                          swipeDirection={swipeDirection}
+                          cardProps={{
+                            onPointerDown: handlePointerDown,
+                            onPointerMove: handlePointerMove,
+                            onPointerUp: handlePointerUp,
+                            onPointerCancel: handlePointerCancel,
+                          }}
+                        />
+                      );
+                    }
+
+                    return (
+                      <DeckCard
+                        key={`back-${skill.id}-${layer}-${activeIndex}`}
+                        className={styles.cardBack}
+                        counter={counter}
+                        relatedSkills={relatedSkills}
+                        skill={skill}
+                        style={{ "--card-layer": layer } as CSSProperties}
+                      />
+                    );
+                  })}
+              </div>
+
+              <p className={styles.swipeHint}>
+                Swipe the front card to reveal the next layer waiting behind it.
+              </p>
+            </div>
+
+            <div className={styles.selectorRail}>
+              {skills.map((skill, index) => (
+                <button
+                  key={skill.id}
+                  type="button"
+                  className={styles.selectorPill}
+                  data-active={index === activeIndex}
+                  style={{ "--pill-accent": skill.accent } as CSSProperties}
+                  onClick={() =>
+                    startTransition(() => {
+                      if (swipeTimeoutRef.current !== null) {
+                        window.clearTimeout(swipeTimeoutRef.current);
+                      }
+
+                      setActiveIndex(index);
+                      setDragOffset(0);
+                      setIsDragging(false);
+                      setSwipeDirection(0);
+                      setIsAnimating(false);
+                    })
+                  }
                 >
-                  <SkillIcon skillId={activeSkill.id} />
-                </div>
-                <p className={styles.coreCenterLabel}>{activeSkill.label}</p>
-              </div>
-
-              {projectedSkills.map((skill) => {
-                const isActive = skill.id === activeSkillId;
-                const isFront = skill.z >= FRONT_Z_THRESHOLD;
-                const nodeStyle = {
-                  "--node-x": `${(skill.x * 31).toFixed(2)}%`,
-                  "--node-y": `${(skill.y * 27).toFixed(2)}%`,
-                  "--node-scale": skill.scale.toFixed(3),
-                  "--node-opacity": skill.opacity.toFixed(3),
-                  "--node-blur": `${skill.blur.toFixed(2)}px`,
-                  "--node-accent": skill.accent,
-                  zIndex: Math.round((skill.z + 1) * 100),
-                } as CSSProperties;
-
-                return (
-                  <button
-                    key={skill.id}
-                    type="button"
-                    data-skill-node="true"
-                    data-active={isActive}
-                    data-front={isFront}
-                    className={styles.skillNode}
-                    style={nodeStyle}
-                    onMouseEnter={() => setHoveredSkillId(skill.id)}
-                    onMouseLeave={() => setHoveredSkillId(null)}
-                    onFocus={() => setHoveredSkillId(skill.id)}
-                    onBlur={() => setHoveredSkillId(null)}
-                    onClick={() => handleSkillClick(skill)}
-                    aria-pressed={isActive}
-                    aria-label={`Focus ${skill.label}`}
-                  >
-                    <span className={styles.skillGlow} aria-hidden="true" />
-                    <span className={styles.skillIcon}>
-                      <SkillIcon skillId={skill.id} />
-                    </span>
-                    <span className={styles.skillLabel}>{skill.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className={styles.detailCard}>
-              <div className={styles.detailHead}>
-                <p className={styles.detailEyebrow}>{activeSkill.eyebrow}</p>
-                <p className={styles.detailCounter}>
-                  {String(activeSkillIndex + 1).padStart(2, "0")} / {String(skills.length).padStart(2, "0")}
-                </p>
-              </div>
-              <h3 className={styles.detailTitle}>{activeSkill.label}</h3>
-              <p className={styles.detailDescription}>{activeSkill.description}</p>
-            </div>
-
-            <div className={styles.stackLegend}>
-              <span>AI reasoning</span>
-              <span>Retrieval</span>
-              <span>Applications</span>
-              <span>Infra</span>
+                  {skill.label}
+                </button>
+              ))}
             </div>
           </div>
         </div>

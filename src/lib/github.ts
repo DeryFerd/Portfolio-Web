@@ -1,3 +1,5 @@
+import { unstable_cache } from "next/cache";
+
 const GITHUB_USERNAME = process.env.NEXT_PUBLIC_GITHUB_USERNAME ?? "DeryFerd";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REVALIDATE_SECONDS = 600;
@@ -86,7 +88,8 @@ async function fetchJson<T>(url: string, init?: RequestInit): Promise<T | null> 
   }
 }
 
-export async function getGitHubProofData(): Promise<GitHubProofData> {
+const loadGitHubProofData = unstable_cache(
+  async (): Promise<GitHubProofData> => {
   const [user, repos, contributions] = await Promise.all([
     fetchJson<GitHubUserResponse>(`https://api.github.com/users/${GITHUB_USERNAME}`, {
       headers: getGitHubHeaders(),
@@ -113,6 +116,10 @@ export async function getGitHubProofData(): Promise<GitHubProofData> {
       pushedAt: repo.pushed_at,
     })) ?? [];
 
+  const normalizedContributions = [...(contributions?.contributions ?? [])].sort(
+    (left, right) => left.date.localeCompare(right.date),
+  );
+
   return {
     username: user?.login ?? GITHUB_USERNAME,
     profileUrl: user?.html_url ?? `https://github.com/${GITHUB_USERNAME}`,
@@ -121,7 +128,14 @@ export async function getGitHubProofData(): Promise<GitHubProofData> {
     followers: user?.followers ?? null,
     following: user?.following ?? null,
     lastYearContributions: contributions?.total?.lastYear ?? null,
-    contributions: contributions?.contributions ?? [],
+    contributions: normalizedContributions,
     recentRepos,
   };
+  },
+  ["github-proof-data"],
+  { revalidate: REVALIDATE_SECONDS },
+);
+
+export async function getGitHubProofData(): Promise<GitHubProofData> {
+  return loadGitHubProofData();
 }
