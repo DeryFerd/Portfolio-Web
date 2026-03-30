@@ -500,23 +500,46 @@
   z-index: 3;
   pointer-events: none;
   transform-style: preserve-3d;
-  transition: transform 520ms cubic-bezier(0.22, 0.7, 0.1, 1);
+  transition: transform 620ms cubic-bezier(0.23, 0.92, 0.14, 1);
 }
 
 .pageTurn[data-direction="next"] {
   transform-origin: left center;
   transform:
-    translateX(calc(var(--page-curl) * -1.1%))
+    translateX(calc(var(--page-curl) * -1.35%))
+    translateY(calc(var(--page-curl) * -0.35%))
     rotateY(calc(var(--page-turn-eased) * -176deg))
-    rotateZ(calc(var(--page-curl) * -1.15deg));
+    rotateZ(calc(var(--page-curl) * -1.4deg))
+    scaleX(calc(1 - (var(--page-curl) * 0.055)));
 }
 
 .pageTurn[data-direction="prev"] {
   transform-origin: left center;
   transform:
-    translateX(calc(var(--page-curl) * 1.1%))
+    translateX(calc(var(--page-curl) * 1.35%))
+    translateY(calc(var(--page-curl) * -0.35%))
     rotateY(calc(-176deg + (var(--page-turn-eased) * 176deg)))
-    rotateZ(calc(var(--page-curl) * 1.15deg));
+    rotateZ(calc(var(--page-curl) * 1.4deg))
+    scaleX(calc(1 - (var(--page-curl) * 0.055)));
+}
+
+.pageTurn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(0.5rem + (var(--page-curl) * 0.65rem));
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(83, 69, 45, 0.2),
+    rgba(83, 69, 45, 0.08),
+    transparent
+  );
+  opacity: calc(0.16 + (var(--page-curl) * 0.42));
+  pointer-events: none;
+  transform: translateX(calc(var(--page-curl) * -0.1rem));
 }
 
 .pageTurn::after {
@@ -525,10 +548,11 @@
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgba(8, 9, 9, 0.2),
-    transparent 10%,
-    transparent 72%,
-    rgba(8, 9, 9, 0.08)
+    rgba(8, 9, 9, 0.24),
+    rgba(8, 9, 9, 0.08) 8%,
+    transparent 18%,
+    transparent 70%,
+    rgba(8, 9, 9, 0.12)
   );
   opacity: calc(0.08 + (var(--page-curl) * 0.32));
   pointer-events: none;
@@ -551,6 +575,24 @@
     inset 22px 0 22px rgba(113, 96, 66, 0.08),
     inset -8px 0 10px rgba(255, 255, 255, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.68);
+}
+
+.turnFront::after,
+.turnBack::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: calc(0.5rem + (var(--page-curl) * 0.8rem));
+  background: linear-gradient(
+    270deg,
+    rgba(8, 9, 9, 0.16),
+    rgba(8, 9, 9, 0.04),
+    transparent
+  );
+  opacity: calc(0.08 + (var(--page-curl) * 0.28));
+  pointer-events: none;
 }
 
 .turnBack {
@@ -734,22 +776,24 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  width: calc(0.8rem + (var(--cover-progress) * 8rem));
+  width: calc(0.78rem + (var(--cover-progress) * 1rem));
   min-height: 2.05rem;
-  padding: 0.42rem 0.75rem 0.42rem 0.5rem;
+  padding: 0.42rem 0.48rem 0.42rem 0.42rem;
   border: 1px solid rgba(109, 91, 63, 0.1);
   border-left: none;
   border-radius: 0 0.72rem 0.72rem 0;
-  background: linear-gradient(180deg, rgba(248, 243, 233, 0.96), rgba(233, 224, 209, 0.92));
-  color: rgba(20, 29, 26, 0.8);
+  background: linear-gradient(180deg, rgba(215, 209, 197, 0.9), rgba(185, 178, 166, 0.84));
+  color: rgba(20, 29, 26, 0.54);
   box-shadow:
-    0 10px 18px rgba(113, 96, 66, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    0 8px 14px rgba(113, 96, 66, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36);
   overflow: hidden;
   transition:
     width 320ms ease,
     transform 220ms ease,
-    background 220ms ease;
+    background 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .bookmarkTab:hover {
@@ -757,12 +801,17 @@
 }
 
 .bookmarkTab[data-active="true"] {
+  width: calc(0.95rem + (var(--cover-progress) * 8rem));
   transform: translateX(-0.22rem);
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--tab-accent) 18%, rgba(250, 245, 236, 0.98)),
     color-mix(in srgb, var(--tab-accent) 11%, rgba(235, 226, 211, 0.94))
   );
+  color: rgba(20, 29, 26, 0.9);
+  box-shadow:
+    0 12px 20px color-mix(in srgb, var(--tab-accent) 10%, rgba(113, 96, 66, 0.1)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68);
 }
 
 .bookmarkSwatch {
@@ -777,7 +826,19 @@
   white-space: nowrap;
   font-size: 0.62rem;
   color: inherit;
-  opacity: calc(0.16 + (var(--cover-progress) * 0.84));
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(-0.18rem);
+  transition:
+    max-width 320ms ease,
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.bookmarkTab[data-active="true"] .bookmarkLabel {
+  max-width: 8rem;
+  opacity: calc(0.18 + (var(--cover-progress) * 0.82));
+  transform: translateX(0);
 }
 
 .bookmarkTab:focus-visible {
@@ -823,7 +884,9 @@
   }
 
   .bookmarkLabel {
+    max-width: none;
     opacity: 1;
+    transform: none;
   }
 }
 

@@ -31,7 +31,7 @@ const COVER_OPEN_THRESHOLD = 0.42;
 const COVER_ZONE_RATIO = 0.42;
 const PAGE_DRAG_DISTANCE = 220;
 const PAGE_TURN_THRESHOLD = 0.32;
-const PAGE_TURN_DURATION = 520;
+const PAGE_TURN_DURATION = 620;
 
 const stackTools: StackTool[] = [
   {
@@ -583,7 +583,10 @@ export default function Skills() {
     const bounds = event.currentTarget.getBoundingClientRect();
     const relativeX = (event.clientX - bounds.left) / bounds.width;
     const nextMode: DragMode =
-      coverProgress < 0.995 || relativeX <= COVER_ZONE_RATIO ? "cover" : "page";
+      coverProgress < 0.995 ||
+      (activeIndex === 0 && relativeX <= COVER_ZONE_RATIO)
+        ? "cover"
+        : "page";
 
     dragStateRef.current = {
       pointerId: event.pointerId,
