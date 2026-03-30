@@ -563,9 +563,9 @@ export default function Skills() {
     turnTimeoutRef.current = window.setTimeout(() => {
       startTransition(() => {
         setActiveIndex(targetIndex);
+        clearTurnState();
       });
 
-      clearTurnState();
       turnTimeoutRef.current = null;
     }, PAGE_TURN_COMMIT_DURATION);
   };
