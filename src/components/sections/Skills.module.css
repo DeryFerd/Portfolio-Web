@@ -60,6 +60,9 @@
 
 .bookColumn {
   position: relative;
+  overflow: hidden;
+  padding-top: 0.25rem;
+  padding-bottom: 0.8rem;
 }
 
 .bookScene {
@@ -70,7 +73,7 @@
   --spread-right: 1.5rem;
   --spread-top: 1.05rem;
   --spread-bottom: 1.1rem;
-  --left-page-ratio: 0.39;
+  --left-page-ratio: 0.5;
   position: relative;
   padding-right: 4.1rem;
 }
@@ -159,7 +162,7 @@
   position: absolute;
   inset: var(--spread-top) var(--spread-right) var(--spread-bottom) var(--spread-left);
   display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-radius: 1.35rem;
   overflow: hidden;
   opacity: calc(var(--cover-progress) * 0.98);
@@ -506,9 +509,9 @@
 .pageTurn[data-direction="next"] {
   transform-origin: left center;
   transform:
-    translateX(calc(var(--page-curl) * -1.35%))
+    translateX(calc(var(--page-curl) * -1.1%))
     translateY(calc(var(--page-curl) * -0.35%))
-    rotateY(calc(var(--page-turn-display) * -176deg))
+    rotateY(calc(var(--page-turn-display) * -179.5deg))
     rotateZ(calc(var(--page-curl) * -1.4deg))
     scaleX(calc(1 - (var(--page-curl) * 0.055)));
 }
@@ -516,9 +519,9 @@
 .pageTurn[data-direction="prev"] {
   transform-origin: left center;
   transform:
-    translateX(calc(var(--page-curl) * 1.35%))
+    translateX(calc(var(--page-curl) * 1.1%))
     translateY(calc(var(--page-curl) * -0.35%))
-    rotateY(calc(-176deg + (var(--page-turn-display) * 176deg)))
+    rotateY(calc(-179.5deg + (var(--page-turn-display) * 179.5deg)))
     rotateZ(calc(var(--page-curl) * 1.4deg))
     scaleX(calc(1 - (var(--page-curl) * 0.055)));
 }
