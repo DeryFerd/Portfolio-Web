@@ -1,129 +1,190 @@
 "use client";
 
-import type {
-  CSSProperties,
-  HTMLAttributes,
-  PointerEvent as ReactPointerEvent,
-} from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Skills.module.css";
 
-interface Skill {
+interface StackTool {
   id: string;
   label: string;
-  eyebrow: string;
-  description: string;
+  caption: string;
   accent: string;
 }
 
-interface DeckCardProps {
-  active?: boolean;
-  animating?: boolean;
-  cardProps?: HTMLAttributes<HTMLDivElement>;
-  className: string;
-  counter: string;
-  dragging?: boolean;
-  relatedSkills: Skill[];
-  skill: Skill;
-  style?: CSSProperties;
-  swipeDirection?: number;
+interface RoleChapter {
+  id: string;
+  chapter: string;
+  label: string;
+  note: string;
+  summary: string;
+  focus: string[];
+  stackIds: string[];
+  bridge: string;
+  accent: string;
 }
 
-const SWIPE_THRESHOLD = 96;
+type DragMode = "none" | "cover" | "page";
+type TurnDirection = -1 | 0 | 1;
 
-const skills: Skill[] = [
-  {
-    id: "llms",
-    label: "LLMs",
-    eyebrow: "Reasoning systems",
-    description:
-      "Model choice, prompting, and evaluation loops tuned for useful product behavior.",
-    accent: "#f2c078",
-  },
-  {
-    id: "rag",
-    label: "RAG",
-    eyebrow: "Grounded retrieval",
-    description:
-      "Search pipelines that keep outputs anchored to the right context, not just fluent text.",
-    accent: "#c08cff",
-  },
+const COVER_DRAG_DISTANCE = 240;
+const COVER_OPEN_THRESHOLD = 0.42;
+const COVER_ZONE_RATIO = 0.42;
+const PAGE_DRAG_DISTANCE = 220;
+const PAGE_TURN_THRESHOLD = 0.32;
+const PAGE_TURN_DURATION = 520;
+
+const stackTools: StackTool[] = [
   {
     id: "python",
     label: "Python",
-    eyebrow: "ML backbone",
-    description:
-      "The default layer for experiments, orchestration, inference services, and data work.",
+    caption: "Experiments, orchestration, and the daily backbone for data and ML work.",
     accent: "#5ab0f5",
-  },
-  {
-    id: "pytorch",
-    label: "PyTorch",
-    eyebrow: "Model work",
-    description:
-      "Training, fine-tuning, and iterating on modern ML systems with practical deployment in mind.",
-    accent: "#ff7b4d",
-  },
-  {
-    id: "react",
-    label: "React",
-    eyebrow: "Product surfaces",
-    description:
-      "Interfaces for AI products where fast iteration, clarity, and responsive state all matter.",
-    accent: "#65d8ff",
-  },
-  {
-    id: "nextjs",
-    label: "Next.js",
-    eyebrow: "Delivery layer",
-    description:
-      "App Router builds that connect product pages, server rendering, and operational polish.",
-    accent: "#f0f0f0",
-  },
-  {
-    id: "node",
-    label: "Node.js",
-    eyebrow: "Real-time glue",
-    description:
-      "APIs, background jobs, and streaming endpoints that support agent and product workflows.",
-    accent: "#8cd66f",
   },
   {
     id: "postgres",
     label: "Postgres",
-    eyebrow: "Structured memory",
-    description:
-      "Reliable storage for product data, retrieval layers, and the state behind real applications.",
+    caption: "Warehousing, retrieval state, and the structured layer beneath applications.",
     accent: "#7a95ff",
   },
   {
     id: "docker",
     label: "Docker",
-    eyebrow: "Portable runtime",
-    description:
-      "Clean environments for reproducible training, inference, and product deployment pipelines.",
+    caption: "Portable runtimes that keep model, data, and product environments aligned.",
     accent: "#46b6ff",
+  },
+  {
+    id: "node",
+    label: "Node.js",
+    caption: "APIs, background jobs, and the glue between product and model workflows.",
+    accent: "#8cd66f",
+  },
+  {
+    id: "pytorch",
+    label: "PyTorch",
+    caption: "Training loops, fine-tuning cycles, and model iteration with production in mind.",
+    accent: "#ff7b4d",
+  },
+  {
+    id: "llms",
+    label: "LLMs",
+    caption: "Reasoning layers shaped through prompting, evaluation, and product behavior.",
+    accent: "#f2c078",
+  },
+  {
+    id: "rag",
+    label: "RAG",
+    caption: "Retrieval systems that keep model output anchored to the right context.",
+    accent: "#c08cff",
+  },
+  {
+    id: "react",
+    label: "React",
+    caption: "Interactive product surfaces where model behavior needs clarity and speed.",
+    accent: "#65d8ff",
+  },
+  {
+    id: "nextjs",
+    label: "Next.js",
+    caption: "App delivery, server rendering, and product polish in one deployment layer.",
+    accent: "#f0f0f0",
   },
   {
     id: "tailwind",
     label: "Tailwind",
-    eyebrow: "Interface speed",
-    description:
-      "Fast layout iteration when the frontend needs to move at the same speed as the backend.",
+    caption: "Fast UI iteration when the frontend needs to move with the backend pace.",
     accent: "#33d6dd",
   },
 ];
 
-function getWrappedIndex(index: number) {
-  return (index % skills.length + skills.length) % skills.length;
+const stackToolById: Record<string, StackTool> = Object.fromEntries(
+  stackTools.map((tool) => [tool.id, tool]),
+);
+
+const chapters: RoleChapter[] = [
+  {
+    id: "data-engineer",
+    chapter: "Chapter 01",
+    label: "Data Engineer",
+    note: "Pipelines, storage, and clean movement before anything becomes intelligence.",
+    summary:
+      "This chapter is about making data dependable: ingestion, transformation, warehousing, and the operational discipline that every downstream model quietly depends on.",
+    focus: ["ETL", "Warehousing", "Reliability"],
+    stackIds: ["python", "postgres", "docker", "node"],
+    bridge: "Keeps the rest of the stack fed with context that is actually usable.",
+    accent: "#7a95ff",
+  },
+  {
+    id: "data-science",
+    chapter: "Chapter 02",
+    label: "Data Science",
+    note: "Exploration, signal finding, and experiment framing before the product layer starts.",
+    summary:
+      "Here the work is less about shipping chrome and more about finding signal: understanding distributions, testing ideas, and deciding which directions deserve to become systems.",
+    focus: ["EDA", "Feature work", "Evaluation"],
+    stackIds: ["python", "pytorch", "postgres", "llms"],
+    bridge: "Turns raw information into hypotheses worth engineering around.",
+    accent: "#5ab0f5",
+  },
+  {
+    id: "ml-engineer",
+    chapter: "Chapter 03",
+    label: "ML Engineer",
+    note: "Training loops, model iteration, and inference paths that are built to ship.",
+    summary:
+      "This is the chapter where experiments stop being isolated notebooks and start becoming repeatable systems with serving, performance, and operational constraints in view.",
+    focus: ["Training", "Inference", "Serving"],
+    stackIds: ["python", "pytorch", "docker", "node"],
+    bridge: "Connects modeling work to something that can survive product reality.",
+    accent: "#ff7b4d",
+  },
+  {
+    id: "llm-engineer",
+    chapter: "Chapter 04",
+    label: "LLM Engineer",
+    note: "Prompting, retrieval, and evaluation loops for language systems that stay grounded.",
+    summary:
+      "I treat LLM work as system design rather than prompt theater: context selection, retrieval quality, and the behavioral checks that keep outputs useful instead of just fluent.",
+    focus: ["Prompts", "Retrieval", "Eval loops"],
+    stackIds: ["llms", "rag", "python", "postgres"],
+    bridge: "Shapes generative behavior into something more trustworthy and more usable.",
+    accent: "#f2c078",
+  },
+  {
+    id: "ai-engineer",
+    chapter: "Chapter 05",
+    label: "AI Engineer",
+    note: "User-facing intelligence where models meet product and workflows meet people.",
+    summary:
+      "This spread is about turning model capability into product experience: agents, copilots, and interfaces that feel coherent, responsive, and understandable in daily use.",
+    focus: ["Agents", "Product UX", "Workflows"],
+    stackIds: ["react", "nextjs", "llms", "node"],
+    bridge: "Makes intelligence legible once it leaves the notebook and enters the product.",
+    accent: "#65d8ff",
+  },
+  {
+    id: "mlops",
+    chapter: "Chapter 06",
+    label: "MLOps",
+    note: "Deployment discipline, observability, and the calm side of keeping models live.",
+    summary:
+      "The goal here is confidence: reproducible environments, smooth promotion paths, and operational habits that make ML and AI systems feel dependable under real pressure.",
+    focus: ["Deployments", "Observability", "CI/CD"],
+    stackIds: ["docker", "python", "node", "postgres"],
+    bridge: "Turns technical capability into something repeatable, monitorable, and shippable.",
+    accent: "#8cd66f",
+  },
+];
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
 }
 
-function getSkillAt(index: number) {
-  return skills[getWrappedIndex(index)] ?? skills[0];
-}
+function easeInOutCubic(value: number) {
+  if (value < 0.5) {
+    return 4 * value * value * value;
+  }
 
-function getRelatedSkills(centerIndex: number) {
-  return [0, 1, 3, 5].map((offset) => getSkillAt(centerIndex + offset));
+  return 1 - Math.pow(-2 * value + 2, 3) / 2;
 }
 
 function SkillIcon({ skillId }: { skillId: string }) {
@@ -348,128 +409,115 @@ function SkillIcon({ skillId }: { skillId: string }) {
   }
 }
 
-function DeckCard({
-  active = false,
-  animating = false,
-  cardProps,
-  className,
-  counter,
-  dragging = false,
-  relatedSkills,
-  skill,
-  style,
-  swipeDirection = 0,
-}: DeckCardProps) {
-  const cardStyle = {
-    "--card-accent": skill.accent,
-    ...style,
-  } as CSSProperties;
+function ToolCard({ tool }: { tool: StackTool }) {
+  return (
+    <article
+      className={styles.toolCard}
+      style={{ "--tool-accent": tool.accent } as CSSProperties}
+    >
+      <span className={styles.toolIcon}>
+        <SkillIcon skillId={tool.id} />
+      </span>
+      <div className={styles.toolCopy}>
+        <h4 className={styles.toolTitle}>{tool.label}</h4>
+        <p className={styles.toolCaption}>{tool.caption}</p>
+      </div>
+    </article>
+  );
+}
+
+function RolePage({ chapter }: { chapter: RoleChapter }) {
+  const tools = chapter.stackIds
+    .map((stackId) => stackToolById[stackId])
+    .filter((tool): tool is StackTool => Boolean(tool));
 
   return (
     <div
-      className={className}
-      style={cardStyle}
-      data-active={active}
-      data-animating={animating}
-      data-dragging={dragging}
-      data-swipe={swipeDirection}
-      {...cardProps}
+      className={styles.rolePage}
+      style={{ "--page-accent": chapter.accent } as CSSProperties}
     >
-      <div className={styles.cardHeader}>
-        <span className={styles.cardCounter}>{counter}</span>
-        <span className={styles.cardEyebrow}>{skill.eyebrow}</span>
+      <div className={styles.roleHeader}>
+        <span className={styles.roleKicker}>{chapter.chapter}</span>
+        <h3 className={styles.roleTitle}>{chapter.label}</h3>
+        <p className={styles.roleNote}>{chapter.note}</p>
+        <p className={styles.roleSummary}>{chapter.summary}</p>
       </div>
 
-      <div className={styles.cardHero}>
-        <span className={styles.cardIcon}>
-          <SkillIcon skillId={skill.id} />
-        </span>
-        <div className={styles.cardIdentity}>
-          <h3 className={styles.cardTitle}>{skill.label}</h3>
-          <p className={styles.cardDescription}>{skill.description}</p>
-        </div>
-      </div>
-
-      <div className={styles.logoRail}>
-        {relatedSkills.map((relatedSkill) => (
-          <span
-            key={`${skill.id}-${relatedSkill.id}`}
-            className={styles.logoChip}
-            data-active={relatedSkill.id === skill.id}
-            style={{ "--chip-accent": relatedSkill.accent } as CSSProperties}
-          >
-            <span className={styles.logoIcon}>
-              <SkillIcon skillId={relatedSkill.id} />
-            </span>
-            <span className={styles.logoLabel}>{relatedSkill.label}</span>
+      <div className={styles.focusRail}>
+        {chapter.focus.map((item) => (
+          <span key={item} className={styles.focusPill}>
+            {item}
           </span>
         ))}
+      </div>
+
+      <div className={styles.toolGrid}>
+        {tools.map((tool) => (
+          <ToolCard key={`${chapter.id}-${tool.id}`} tool={tool} />
+        ))}
+      </div>
+
+      <div className={styles.roleBridge}>
+        <span className={styles.bridgeLabel}>Shared spine</span>
+        <p className={styles.bridgeText}>{chapter.bridge}</p>
       </div>
     </div>
   );
 }
 
+function TurnBackFace({ chapter }: { chapter: RoleChapter }) {
+  return (
+    <div
+      className={styles.turnBackFace}
+      style={{ "--page-accent": chapter.accent } as CSSProperties}
+    >
+      <span className={styles.turnBackKicker}>{chapter.chapter}</span>
+      <h4 className={styles.turnBackTitle}>{chapter.label}</h4>
+      <p className={styles.turnBackText}>{chapter.note}</p>
+    </div>
+  );
+}
+
 export default function Skills() {
-  const swipeTimeoutRef = useRef<number | null>(null);
   const dragStateRef = useRef({
     pointerId: -1,
     startX: 0,
+    startCoverProgress: 0,
+    mode: "none" as DragMode,
   });
+  const turnTimeoutRef = useRef<number | null>(null);
+
   const [activeIndex, setActiveIndex] = useState(0);
-  const [dragOffset, setDragOffset] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [swipeDirection, setSwipeDirection] = useState<-1 | 0 | 1>(0);
+  const [coverProgress, setCoverProgress] = useState(0);
+  const [dragMode, setDragMode] = useState<DragMode>("none");
+  const [turnDirection, setTurnDirection] = useState<TurnDirection>(0);
+  const [turnProgress, setTurnProgress] = useState(0);
+  const [turnTargetIndex, setTurnTargetIndex] = useState<number | null>(null);
+  const [isAnimatingTurn, setIsAnimatingTurn] = useState(false);
 
   useEffect(() => {
     return () => {
-      if (swipeTimeoutRef.current !== null) {
-        window.clearTimeout(swipeTimeoutRef.current);
+      if (turnTimeoutRef.current !== null) {
+        window.clearTimeout(turnTimeoutRef.current);
       }
     };
   }, []);
 
-  const activeSkill = skills[activeIndex] ?? skills[0];
+  const activeChapter = chapters[activeIndex] ?? chapters[0];
+  const turnTargetChapter =
+    turnTargetIndex !== null ? chapters[turnTargetIndex] ?? null : null;
 
-  const deckCards = useMemo(
-    () =>
-      Array.from({ length: 3 }, (_, layer) => {
-        const index = getWrappedIndex(activeIndex + layer);
-
-        return {
-          layer,
-          index,
-          skill: skills[index] ?? skills[0],
-          relatedSkills: getRelatedSkills(index),
-        };
-      }),
-    [activeIndex],
-  );
-
-  const completeSwipe = (direction: -1 | 1) => {
-    if (swipeTimeoutRef.current !== null) {
-      window.clearTimeout(swipeTimeoutRef.current);
+  const visibleRightChapter = useMemo(() => {
+    if (turnDirection === -1 && turnTargetChapter) {
+      return turnTargetChapter;
     }
 
-    setSwipeDirection(direction);
-    setIsAnimating(true);
+    return activeChapter;
+  }, [activeChapter, turnDirection, turnTargetChapter]);
 
-    swipeTimeoutRef.current = window.setTimeout(() => {
-      startTransition(() => {
-        setActiveIndex((current) =>
-          getWrappedIndex(current + (direction < 0 ? 1 : -1)),
-        );
-      });
-      setDragOffset(0);
-      setSwipeDirection(0);
-      setIsAnimating(false);
-    }, 240);
-  };
+  const isDragging = dragMode !== "none";
 
   const resetDrag = (target?: HTMLDivElement, pointerId?: number) => {
-    setDragOffset(0);
-    setIsDragging(false);
-
     if (
       target &&
       pointerId !== undefined &&
@@ -479,22 +527,71 @@ export default function Skills() {
     }
 
     dragStateRef.current.pointerId = -1;
+    dragStateRef.current.mode = "none";
+    setDragMode("none");
+  };
+
+  const clearTurnState = () => {
+    setTurnDirection(0);
+    setTurnProgress(0);
+    setTurnTargetIndex(null);
+    setIsAnimatingTurn(false);
+  };
+
+  const selectChapter = (index: number) => {
+    if (turnTimeoutRef.current !== null) {
+      window.clearTimeout(turnTimeoutRef.current);
+      turnTimeoutRef.current = null;
+    }
+
+    startTransition(() => {
+      setActiveIndex(index);
+      setCoverProgress(1);
+      clearTurnState();
+    });
+  };
+
+  const commitTurn = (targetIndex: number) => {
+    if (turnTimeoutRef.current !== null) {
+      window.clearTimeout(turnTimeoutRef.current);
+    }
+
+    setIsAnimatingTurn(true);
+    setTurnProgress(1);
+
+    turnTimeoutRef.current = window.setTimeout(() => {
+      startTransition(() => {
+        setActiveIndex(targetIndex);
+      });
+
+      clearTurnState();
+      turnTimeoutRef.current = null;
+    }, PAGE_TURN_DURATION);
   };
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (isAnimating) {
-      return;
-    }
-
     if (event.pointerType === "mouse" && event.button !== 0) {
       return;
     }
 
+    if (isAnimatingTurn) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const relativeX = (event.clientX - bounds.left) / bounds.width;
+    const nextMode: DragMode =
+      coverProgress < 0.995 || relativeX <= COVER_ZONE_RATIO ? "cover" : "page";
+
     dragStateRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
+      startCoverProgress: coverProgress,
+      mode: nextMode,
     };
-    setIsDragging(true);
+    setDragMode(nextMode);
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
@@ -502,31 +599,74 @@ export default function Skills() {
     if (
       !isDragging ||
       dragStateRef.current.pointerId !== event.pointerId ||
-      isAnimating
+      isAnimatingTurn
     ) {
       return;
     }
 
-    setDragOffset(event.clientX - dragStateRef.current.startX);
+    event.preventDefault();
+    const delta = dragStateRef.current.startX - event.clientX;
+
+    if (dragStateRef.current.mode === "cover") {
+      const nextCover = clamp(
+        dragStateRef.current.startCoverProgress + delta / COVER_DRAG_DISTANCE,
+        0,
+        1,
+      );
+
+      setCoverProgress(nextCover);
+      return;
+    }
+
+    if (dragStateRef.current.mode !== "page") {
+      return;
+    }
+
+    if (delta > 0 && activeIndex < chapters.length - 1) {
+      setTurnDirection(-1);
+      setTurnTargetIndex(activeIndex + 1);
+      setTurnProgress(clamp(delta / PAGE_DRAG_DISTANCE, 0, 1));
+      return;
+    }
+
+    if (delta < 0 && activeIndex > 0) {
+      setTurnDirection(1);
+      setTurnTargetIndex(activeIndex - 1);
+      setTurnProgress(clamp(Math.abs(delta) / PAGE_DRAG_DISTANCE, 0, 1));
+      return;
+    }
+
+    clearTurnState();
   };
 
   const handlePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (
-      !isDragging ||
-      dragStateRef.current.pointerId !== event.pointerId ||
-      isAnimating
-    ) {
+    if (!isDragging || dragStateRef.current.pointerId !== event.pointerId) {
       return;
     }
 
-    const delta = event.clientX - dragStateRef.current.startX;
+    event.preventDefault();
 
-    if (Math.abs(delta) >= SWIPE_THRESHOLD) {
+    if (dragStateRef.current.mode === "cover") {
+      const delta = dragStateRef.current.startX - event.clientX;
+      const nextCover = clamp(
+        dragStateRef.current.startCoverProgress + delta / COVER_DRAG_DISTANCE,
+        0,
+        1,
+      );
+
+      setCoverProgress(nextCover > COVER_OPEN_THRESHOLD ? 1 : 0);
       resetDrag(event.currentTarget, event.pointerId);
-      completeSwipe(delta < 0 ? -1 : 1);
       return;
     }
 
+    if (turnTargetIndex !== null && turnProgress > PAGE_TURN_THRESHOLD) {
+      const targetIndex = turnTargetIndex;
+      resetDrag(event.currentTarget, event.pointerId);
+      commitTurn(targetIndex);
+      return;
+    }
+
+    clearTurnState();
     resetDrag(event.currentTarget, event.pointerId);
   };
 
@@ -535,14 +675,21 @@ export default function Skills() {
       return;
     }
 
+    if (dragStateRef.current.mode === "cover") {
+      setCoverProgress(coverProgress > COVER_OPEN_THRESHOLD ? 1 : 0);
+    } else {
+      clearTurnState();
+    }
+
     resetDrag(event.currentTarget, event.pointerId);
   };
 
-  const activeCardStyle = {
-    "--drag-x": `${dragOffset}px`,
-    "--drag-rotate": `${(dragOffset * 0.05).toFixed(2)}deg`,
-    "--swipe-x": swipeDirection < 0 ? "-138%" : "138%",
-    "--swipe-rotate": `${swipeDirection * 16}deg`,
+  const bookStyle = {
+    "--cover-progress": coverProgress.toFixed(3),
+    "--page-turn-progress": turnProgress.toFixed(3),
+    "--page-turn-eased": easeInOutCubic(turnProgress).toFixed(3),
+    "--page-curl": Math.sin(turnProgress * Math.PI).toFixed(3),
+    "--chapter-accent": activeChapter.accent,
   } as CSSProperties;
 
   return (
@@ -556,85 +703,135 @@ export default function Skills() {
               </span>
               <p className={styles.kicker}>Core stack</p>
             </div>
-            <h2 className={styles.title}>A stack you can swipe through instead of decode.</h2>
+            <h2 className={styles.title}>One spine, six working chapters.</h2>
             <p className={styles.text}>
-              The section is now just cards: one layer up front, two more
-              waiting behind it, and a direct gesture to move through the stack
-              without the visual noise from heavier concepts.
+              The stack now behaves like an actual book: closed first, opened by
+              dragging the cover, then moved chapter by chapter as the work
+              shifts from data pipelines into models, LLM systems, product, and
+              operations.
             </p>
           </div>
 
-          <div className={styles.deckColumn}>
-            <div className={styles.deckStage}>
-              <div className={styles.cardStack}>
-                {deckCards
-                  .slice()
-                  .reverse()
-                  .map(({ layer, skill, relatedSkills }) => {
-                    const counter = `${String(getWrappedIndex(activeIndex + layer) + 1).padStart(2, "0")} / ${String(skills.length).padStart(2, "0")}`;
+          <div className={styles.bookColumn}>
+            <div className={styles.bookScene} style={bookStyle}>
+              <div className={styles.bookAura} aria-hidden="true" />
 
-                    if (layer === 0) {
-                      return (
-                        <DeckCard
-                          key={`front-${skill.id}-${activeIndex}`}
-                          active
-                          animating={isAnimating}
-                          className={styles.cardFront}
-                          counter={counter}
-                          dragging={isDragging}
-                          relatedSkills={relatedSkills}
-                          skill={skill}
-                          style={activeCardStyle}
-                          swipeDirection={swipeDirection}
-                          cardProps={{
-                            onPointerDown: handlePointerDown,
-                            onPointerMove: handlePointerMove,
-                            onPointerUp: handlePointerUp,
-                            onPointerCancel: handlePointerCancel,
-                          }}
+              <div
+                className={styles.bookViewport}
+                data-dragging={isDragging}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerCancel={handlePointerCancel}
+              >
+                <div className={styles.bookBody}>
+                  <div className={styles.bookSpread}>
+                    <div className={styles.leftPage}>
+                      <span className={styles.contentsKicker}>Playbook</span>
+                      <h3 className={styles.contentsTitle}>
+                        One portfolio, several operating modes.
+                      </h3>
+                      <p className={styles.contentsText}>
+                        The same build philosophy shows up in different forms:
+                        data movement, experiment design, model delivery, LLM
+                        behavior, product surfaces, and production stability.
+                      </p>
+
+                      <div className={styles.contentsList}>
+                        {chapters.map((chapter, index) => (
+                          <div
+                            key={chapter.id}
+                            className={styles.contentsItem}
+                            data-active={index === activeIndex}
+                          >
+                            <span className={styles.contentsItemIndex}>
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <span className={styles.contentsItemLabel}>
+                              {chapter.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className={styles.currentCard}>
+                        <span className={styles.currentChapter}>
+                          {activeChapter.chapter}
+                        </span>
+                        <h4 className={styles.currentLabel}>
+                          {activeChapter.label}
+                        </h4>
+                        <p className={styles.currentNote}>
+                          {activeChapter.note}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className={styles.rightPage}>
+                      <RolePage chapter={visibleRightChapter} />
+                    </div>
+                  </div>
+
+                  {turnTargetChapter ? (
+                    <div
+                      className={styles.pageTurn}
+                      data-direction={turnDirection < 0 ? "next" : "prev"}
+                    >
+                      <div className={`${styles.turnFace} ${styles.turnFront}`}>
+                        <RolePage
+                          chapter={
+                            turnDirection < 0 ? activeChapter : turnTargetChapter
+                          }
                         />
-                      );
-                    }
+                      </div>
+                      <div className={`${styles.turnFace} ${styles.turnBack}`}>
+                        <TurnBackFace
+                          chapter={
+                            turnDirection < 0 ? turnTargetChapter : activeChapter
+                          }
+                        />
+                      </div>
+                    </div>
+                  ) : null}
 
-                    return (
-                      <DeckCard
-                        key={`back-${skill.id}-${layer}-${activeIndex}`}
-                        className={styles.cardBack}
-                        counter={counter}
-                        relatedSkills={relatedSkills}
-                        skill={skill}
-                        style={{ "--card-layer": layer } as CSSProperties}
-                      />
-                    );
-                  })}
+                  <div className={styles.bookSpine} aria-hidden="true" />
+
+                  <div className={styles.bookCover} aria-hidden="true">
+                    <div className={styles.coverInner}>
+                      <div className={styles.coverTop}>
+                        <span className={styles.coverKicker}>Dery Ferdika</span>
+                        <h3 className={styles.coverTitle}>AI / Data Playbook</h3>
+                        <p className={styles.coverText}>
+                          Open the cover, then turn through the roles.
+                        </p>
+                      </div>
+
+                      <div className={styles.coverTags}>
+                        <span>Data</span>
+                        <span>Models</span>
+                        <span>Delivery</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className={styles.selectorRail}>
-              {skills.map((skill, index) => (
-                <button
-                  key={skill.id}
-                  type="button"
-                  className={styles.selectorPill}
-                  data-active={index === activeIndex}
-                  style={{ "--pill-accent": skill.accent } as CSSProperties}
-                  onClick={() =>
-                    startTransition(() => {
-                      if (swipeTimeoutRef.current !== null) {
-                        window.clearTimeout(swipeTimeoutRef.current);
-                      }
-
-                      setActiveIndex(index);
-                      setDragOffset(0);
-                      setIsDragging(false);
-                      setSwipeDirection(0);
-                      setIsAnimating(false);
-                    })
-                  }
-                >
-                  {skill.label}
-                </button>
-              ))}
+              <div className={styles.bookmarks}>
+                {chapters.map((chapter, index) => (
+                  <button
+                    key={chapter.id}
+                    type="button"
+                    className={styles.bookmarkTab}
+                    data-active={index === activeIndex}
+                    style={{ "--tab-accent": chapter.accent } as CSSProperties}
+                    aria-label={`Open ${chapter.label} chapter`}
+                    onClick={() => selectChapter(index)}
+                  >
+                    <span className={styles.bookmarkSwatch} />
+                    <span className={styles.bookmarkLabel}>{chapter.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
