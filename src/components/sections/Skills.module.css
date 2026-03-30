@@ -888,18 +888,87 @@
 }
 
 @media (max-width: 860px) {
+  .bookColumn {
+    overflow: visible;
+  }
+
   .bookScene {
     padding-right: 0;
+    display: grid;
+    gap: 0.9rem;
   }
 
   .bookAura {
-    inset-right: 0;
+    display: none;
+  }
+
+  .bookViewport {
+    min-height: auto;
+    cursor: default;
+    touch-action: pan-y;
+  }
+
+  .bookViewport[data-dragging="true"] {
+    cursor: default;
+  }
+
+  .bookBody {
+    position: relative;
+    inset: auto;
+  }
+
+  .bookBody::before,
+  .bookBody::after,
+  .bookSpine,
+  .pageTurn,
+  .bookCover {
+    display: none;
+  }
+
+  .bookSpread {
+    position: relative;
+    inset: auto;
+    display: block;
+    opacity: 1;
+    transform: none;
+    overflow: visible;
+    pointer-events: auto;
+    box-shadow: none;
+  }
+
+  .leftPage {
+    display: none;
+  }
+
+  .rightPage {
+    border-left: none;
+    border-radius: 1.4rem;
+    overflow: visible;
+    box-shadow:
+      0 18px 30px rgba(82, 68, 45, 0.08),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.42);
+  }
+
+  .pageScroller {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    scrollbar-width: none;
+  }
+
+  .pageScroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rolePage {
+    padding: 1rem;
+    gap: 0.85rem;
   }
 
   .bookmarks {
     position: static;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 1rem;
+    margin-top: 0;
   }
 
   .bookmarkTab {
@@ -907,10 +976,12 @@
     border-left: 1px solid rgba(109, 91, 63, 0.1);
     border-radius: 0.9rem;
     transform: none;
+    min-height: 2.25rem;
   }
 
   .bookmarkTab[data-active="true"] {
     transform: none;
+    width: 100%;
   }
 
   .bookmarkLabel {
@@ -921,13 +992,6 @@
 }
 
 @media (max-width: 640px) {
-  .bookScene {
-    --spread-left: 0.9rem;
-    --spread-right: 1.05rem;
-    --spread-top: 0.95rem;
-    --spread-bottom: 1rem;
-  }
-
   .contentsKicker,
   .roleKicker,
   .bridgeLabel,
@@ -940,12 +1004,8 @@
     font-size: 0.6rem;
   }
 
-  .bookViewport {
-    min-height: 35rem;
-  }
-
-  .bookSpread {
-    grid-template-columns: minmax(0, 0.74fr) minmax(0, 1.26fr);
+  .rolePage {
+    padding: 0.95rem;
   }
 
   .toolGrid {
@@ -960,10 +1020,6 @@
 @media (max-width: 480px) {
   .bookmarks {
     grid-template-columns: 1fr;
-  }
-
-  .bookViewport {
-    min-height: 40rem;
   }
 
   .coverTags {

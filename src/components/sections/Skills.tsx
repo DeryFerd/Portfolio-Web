@@ -516,12 +516,27 @@ export default function Skills() {
   const [turnProgress, setTurnProgress] = useState(0);
   const [turnTargetIndex, setTurnTargetIndex] = useState<number | null>(null);
   const [isAnimatingTurn, setIsAnimatingTurn] = useState(false);
+  const [isCompactLayout, setIsCompactLayout] = useState(false);
 
   useEffect(() => {
     return () => {
       if (turnTimeoutRef.current !== null) {
         window.clearTimeout(turnTimeoutRef.current);
       }
+    };
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 860px)");
+    const syncLayout = () => {
+      setIsCompactLayout(mediaQuery.matches);
+    };
+
+    syncLayout();
+    mediaQuery.addEventListener("change", syncLayout);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncLayout);
     };
   }, []);
 
@@ -619,6 +634,10 @@ export default function Skills() {
   };
 
   const handleWheel = (event: ReactWheelEvent<HTMLDivElement>) => {
+    if (isCompactLayout) {
+      return;
+    }
+
     if (
       coverProgress < 0.995 ||
       isAnimatingTurn
@@ -667,6 +686,10 @@ export default function Skills() {
   };
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (isCompactLayout) {
+      return;
+    }
+
     if (event.pointerType === "mouse" && event.button !== 0) {
       return;
     }
@@ -698,6 +721,10 @@ export default function Skills() {
   };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (isCompactLayout) {
+      return;
+    }
+
     if (
       !isDragging ||
       dragStateRef.current.pointerId !== event.pointerId ||
@@ -801,6 +828,10 @@ export default function Skills() {
   };
 
   const handlePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (isCompactLayout) {
+      return;
+    }
+
     if (!isDragging || dragStateRef.current.pointerId !== event.pointerId) {
       return;
     }
@@ -837,6 +868,10 @@ export default function Skills() {
   };
 
   const handlePointerCancel = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (isCompactLayout) {
+      return;
+    }
+
     if (dragStateRef.current.pointerId !== event.pointerId) {
       return;
     }

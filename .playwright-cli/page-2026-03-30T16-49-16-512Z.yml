@@ -1,0 +1,826 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e22]:
+    - generic [ref=e24]:
+      - link "D Dery Ferdika" [ref=e25] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e26]: D
+        - generic [ref=e27]: Dery Ferdika
+      - navigation [ref=e28]:
+        - link "About" [ref=e29] [cursor=pointer]:
+          - /url: /#about
+        - link "Experience" [ref=e30] [cursor=pointer]:
+          - /url: /#experience
+        - link "Projects" [ref=e31] [cursor=pointer]:
+          - /url: /#projects
+        - link "Journal" [ref=e32] [cursor=pointer]:
+          - /url: /#blog
+      - generic [ref=e33]:
+        - link "Let's Talk" [ref=e34] [cursor=pointer]:
+          - /url: /#contact
+        - button "Toggle theme" [ref=e35] [cursor=pointer]
+  - main [ref=e37]:
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - generic [ref=e43]:
+          - paragraph [ref=e44]: AI Engineer / LLM Systems / Malang, Indonesia
+          - heading "Dery Ferdika ML Engi |" [level=1] [ref=e774]:
+            - generic [ref=e46]: Dery Ferdika
+            - generic [ref=e48]:
+              - text: ML Engi
+              - generic [ref=e49]: "|"
+          - paragraph [ref=e50]: Specializing in machine learning, MLOps, RAG, and agent workflows for real-world AI products.
+          - generic [ref=e51]:
+            - link "View Projects" [ref=e52] [cursor=pointer]:
+              - /url: /projects
+            - link "Get In Touch" [ref=e53] [cursor=pointer]:
+              - /url: "#contact"
+          - generic [ref=e54]:
+            - generic [ref=e55]: LLM systems
+            - generic [ref=e56]: RAG pipelines
+            - generic [ref=e57]: Agent workflows
+            - generic [ref=e58]: Machine learning
+        - generic [ref=e61]: Scroll for selected work
+      - generic [ref=e62]:
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - paragraph [ref=e68]: About
+            - heading "About Me" [level=2] [ref=e69]:
+              - generic "About Me"
+            - paragraph [ref=e70]:
+              - generic "I specialize in Large Language Models and Agentic AI, backed by a strong foundation in Machine Learning and Deep Learning. My work moves beyond basic integrations to focus on building autonomous AI agents and efficient systems, covering RAG, model distillation, and inference optimization."
+            - paragraph [ref=e71]:
+              - generic "I also design technical curriculums as a Learning Developer, helping others master these technologies. I love solving the hard problems that come with deploying generative AI in the real world."
+            - link "Read full background" [ref=e72] [cursor=pointer]:
+              - /url: /about
+          - complementary [ref=e73]:
+            - paragraph [ref=e74]: Operational profile
+            - generic [ref=e75]:
+              - generic [ref=e76]:
+                - generic [ref=e77]: Base
+                - generic [ref=e78]: Malang, Indonesia
+              - generic [ref=e79]:
+                - generic [ref=e80]: Focus
+                - generic [ref=e81]: LLM systems, agent workflows, and machine learning products.
+              - generic [ref=e82]:
+                - generic [ref=e83]: Working style
+                - generic [ref=e84]: Clarity first, production-minded, and deeply iterative.
+            - paragraph [ref=e85]: Currently interested in product-facing AI systems, internal tools, and collaborations that need both technical depth and visual care.
+        - generic [ref=e777]:
+          - generic [ref=e778]:
+            - generic [ref=e779]:
+              - generic [ref=e780]: "*"
+              - paragraph [ref=e781]: Core stack
+            - heading "One spine, six working chapters." [level=2] [ref=e782]
+            - paragraph [ref=e783]: "The stack now behaves like an actual book: closed first, opened by dragging the cover, then moved chapter by chapter as the work shifts from data pipelines into models, LLM systems, product, and operations."
+          - generic [ref=e785]:
+            - generic [ref=e787]:
+              - generic:
+                - generic:
+                  - generic:
+                    - text: Playbook
+                    - heading "One portfolio, several operating modes." [level=3]
+                    - paragraph: "The same build philosophy shows up in different forms: data movement, experiment design, model delivery, LLM behavior, product surfaces, and production stability."
+                    - generic:
+                      - generic:
+                        - generic: "01"
+                        - generic: Data Engineer
+                      - generic:
+                        - generic: "02"
+                        - generic: Data Science
+                      - generic:
+                        - generic: "03"
+                        - generic: ML Engineer
+                      - generic:
+                        - generic: "04"
+                        - generic: LLM Engineer
+                      - generic:
+                        - generic: "05"
+                        - generic: AI Engineer
+                      - generic:
+                        - generic: "06"
+                        - generic: MLOps
+                    - generic:
+                      - generic: Chapter 01
+                      - heading "Data Engineer" [level=4]
+                      - paragraph: Pipelines, storage, and clean movement before anything becomes intelligence.
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: Chapter 01
+                        - heading "Data Engineer" [level=3]
+                        - paragraph: Pipelines, storage, and clean movement before anything becomes intelligence.
+                        - paragraph: "This chapter is about making data dependable: ingestion, transformation, warehousing, and the operational discipline that every downstream model quietly depends on."
+                      - generic:
+                        - generic: ETL
+                        - generic: Warehousing
+                        - generic: Reliability
+                      - generic:
+                        - article:
+                          - generic:
+                            - img
+                          - generic:
+                            - heading "Python" [level=4]
+                            - paragraph: Experiments, orchestration, and the daily backbone for data and ML work.
+                        - article:
+                          - generic:
+                            - img
+                          - generic:
+                            - heading "Postgres" [level=4]
+                            - paragraph: Warehousing, retrieval state, and the structured layer beneath applications.
+                        - article:
+                          - generic:
+                            - img
+                          - generic:
+                            - heading "Docker" [level=4]
+                            - paragraph: Portable runtimes that keep model, data, and product environments aligned.
+                        - article:
+                          - generic:
+                            - img
+                          - generic:
+                            - heading "Node.js" [level=4]
+                            - paragraph: APIs, background jobs, and the glue between product and model workflows.
+                      - generic:
+                        - generic: Shared spine
+                        - paragraph: Keeps the rest of the stack fed with context that is actually usable.
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Dery Ferdika
+                    - heading [level=3]: AI / Data Playbook
+                    - paragraph: Open the cover, then turn through the roles.
+                  - generic:
+                    - generic: Data
+                    - generic: Models
+                    - generic: Delivery
+            - generic [ref=e788]:
+              - button "Open Data Engineer chapter" [ref=e789] [cursor=pointer]:
+                - generic [ref=e791]: Data Engineer
+              - button "Open Data Science chapter" [ref=e792] [cursor=pointer]:
+                - generic: Data Science
+              - button "Open ML Engineer chapter" [ref=e794] [cursor=pointer]:
+                - generic: ML Engineer
+              - button "Open LLM Engineer chapter" [ref=e796] [cursor=pointer]:
+                - generic: LLM Engineer
+              - button "Open AI Engineer chapter" [ref=e798] [cursor=pointer]:
+                - generic: AI Engineer
+              - button "Open MLOps chapter" [ref=e800] [cursor=pointer]:
+                - generic: MLOps
+        - generic [ref=e117]:
+          - generic [ref=e118]:
+            - paragraph [ref=e119]: Experience
+            - heading "Where technical work became delivery." [level=2] [ref=e120]
+            - paragraph [ref=e121]: I care about the part between “it works” and “it ships.” These roles shaped how I think about product clarity, implementation quality, and the real constraints around building with AI.
+          - generic [ref=e122]:
+            - article [ref=e123]:
+              - generic [ref=e124]:
+                - generic [ref=e125]: "01"
+                - generic [ref=e126]: 2024 - Present
+              - generic [ref=e127]:
+                - heading "AI Engineer" [level=3] [ref=e128]
+                - paragraph [ref=e129]: Tech Company
+                - paragraph [ref=e130]: Building and deploying ML models for production, with emphasis on NLP workflows and computer vision systems.
+            - article [ref=e131]:
+              - generic [ref=e132]:
+                - generic [ref=e133]: "02"
+                - generic [ref=e134]: 2024 - Present
+              - generic [ref=e135]:
+                - heading "LLM DevOps" [level=3] [ref=e136]
+                - paragraph [ref=e137]: Cloud Corp
+                - paragraph [ref=e138]: Managing deployment pipelines, model operations, and the infrastructure needed to serve large language models reliably.
+            - article [ref=e139]:
+              - generic [ref=e140]:
+                - generic [ref=e141]: "03"
+                - generic [ref=e142]: 2023 - 2024
+              - generic [ref=e143]:
+                - heading "Machine Learning Intern" [level=3] [ref=e144]
+                - paragraph [ref=e145]: Startup Inc
+                - paragraph [ref=e146]: Developed recommendation systems, supported data pipelines, and explored practical LLM applications.
+            - article [ref=e147]:
+              - generic [ref=e148]:
+                - generic [ref=e149]: "04"
+                - generic [ref=e150]: "2023"
+              - generic [ref=e151]:
+                - heading "Data Engineer" [level=3] [ref=e152]
+                - paragraph [ref=e153]: Data Solutions
+                - paragraph [ref=e154]: Designed ETL pipelines and warehousing workflows for streaming and analytics-heavy products.
+        - generic [ref=e157]:
+          - generic [ref=e158]:
+            - generic [ref=e159]:
+              - generic [ref=e160]:
+                - generic [ref=e161]: "*"
+                - paragraph [ref=e162]: Public proof
+              - heading "Public proof of steady execution." [level=2] [ref=e163]
+              - paragraph [ref=e164]: Repository activity is not the whole story, but it helps show consistency, iteration, and how often technical work turns into shipped output.
+              - generic [ref=e165]:
+                - img "DeryFerd GitHub avatar" [ref=e166]
+                - generic [ref=e167]:
+                  - paragraph [ref=e168]: GitHub
+                  - link "@DeryFerd" [ref=e169] [cursor=pointer]:
+                    - /url: https://github.com/DeryFerd
+            - generic [ref=e170]:
+              - article [ref=e171]:
+                - paragraph [ref=e172]: Public repos
+                - paragraph [ref=e173]: "0"
+              - article [ref=e174]:
+                - paragraph [ref=e175]: Followers
+                - paragraph [ref=e176]: "0"
+              - article [ref=e177]:
+                - paragraph [ref=e178]: Contributions
+                - paragraph [ref=e179]: "0"
+                - paragraph [ref=e180]: Last year
+              - article [ref=e181]:
+                - paragraph [ref=e182]: Active days
+                - paragraph [ref=e183]: "0"
+                - paragraph [ref=e184]: With visible activity
+          - generic [ref=e185]:
+            - generic [ref=e186]:
+              - generic [ref=e187]:
+                - generic [ref=e188]:
+                  - paragraph [ref=e189]: Contribution map
+                  - paragraph [ref=e190]: Daily public activity over the last 365 days.
+                - link "Open GitHub" [ref=e191] [cursor=pointer]:
+                  - /url: https://github.com/DeryFerd
+              - generic [ref=e192]:
+                - generic [ref=e193]:
+                  - generic [ref=e194]: Mon
+                  - generic [ref=e195]: Wed
+                  - generic [ref=e196]: Fri
+                - generic [ref=e197]:
+                  - generic [ref=e198]:
+                    - generic [ref=e199]: Mar
+                    - generic [ref=e200]: May
+                    - generic [ref=e201]: Jun
+                    - generic [ref=e202]: Jul
+                    - generic [ref=e203]: Aug
+                    - generic [ref=e204]: Sep
+                    - generic [ref=e205]: Oct
+                    - generic [ref=e206]: Nov
+                    - generic [ref=e207]: Dec
+                    - generic [ref=e208]: Jan
+                    - generic [ref=e209]: Feb
+                    - generic [ref=e210]: Mar
+                  - generic [ref=e211]:
+                    - 'generic "2025-03-30: 0 contributions" [ref=e212]'
+                    - 'generic "2025-03-31: 0 contributions" [ref=e213]'
+                    - 'generic "2025-04-01: 0 contributions" [ref=e214]'
+                    - 'generic "2025-04-02: 0 contributions" [ref=e215]'
+                    - 'generic "2025-04-03: 0 contributions" [ref=e216]'
+                    - 'generic "2025-04-04: 0 contributions" [ref=e217]'
+                    - 'generic "2025-04-05: 0 contributions" [ref=e218]'
+                    - 'generic "2025-04-06: 0 contributions" [ref=e219]'
+                    - 'generic "2025-04-07: 0 contributions" [ref=e220]'
+                    - 'generic "2025-04-08: 0 contributions" [ref=e221]'
+                    - 'generic "2025-04-09: 0 contributions" [ref=e222]'
+                    - 'generic "2025-04-10: 0 contributions" [ref=e223]'
+                    - 'generic "2025-04-11: 0 contributions" [ref=e224]'
+                    - 'generic "2025-04-12: 0 contributions" [ref=e225]'
+                    - 'generic "2025-04-13: 0 contributions" [ref=e226]'
+                    - 'generic "2025-04-14: 0 contributions" [ref=e227]'
+                    - 'generic "2025-04-15: 0 contributions" [ref=e228]'
+                    - 'generic "2025-04-16: 0 contributions" [ref=e229]'
+                    - 'generic "2025-04-17: 0 contributions" [ref=e230]'
+                    - 'generic "2025-04-18: 0 contributions" [ref=e231]'
+                    - 'generic "2025-04-19: 0 contributions" [ref=e232]'
+                    - 'generic "2025-04-20: 0 contributions" [ref=e233]'
+                    - 'generic "2025-04-21: 0 contributions" [ref=e234]'
+                    - 'generic "2025-04-22: 0 contributions" [ref=e235]'
+                    - 'generic "2025-04-23: 0 contributions" [ref=e236]'
+                    - 'generic "2025-04-24: 0 contributions" [ref=e237]'
+                    - 'generic "2025-04-25: 0 contributions" [ref=e238]'
+                    - 'generic "2025-04-26: 0 contributions" [ref=e239]'
+                    - 'generic "2025-04-27: 0 contributions" [ref=e240]'
+                    - 'generic "2025-04-28: 0 contributions" [ref=e241]'
+                    - 'generic "2025-04-29: 0 contributions" [ref=e242]'
+                    - 'generic "2025-04-30: 0 contributions" [ref=e243]'
+                    - 'generic "2025-05-01: 0 contributions" [ref=e244]'
+                    - 'generic "2025-05-02: 0 contributions" [ref=e245]'
+                    - 'generic "2025-05-03: 0 contributions" [ref=e246]'
+                    - 'generic "2025-05-04: 3 contributions" [ref=e247]'
+                    - 'generic "2025-05-05: 1 contribution" [ref=e248]'
+                    - 'generic "2025-05-06: 0 contributions" [ref=e249]'
+                    - 'generic "2025-05-07: 1 contribution" [ref=e250]'
+                    - 'generic "2025-05-08: 0 contributions" [ref=e251]'
+                    - 'generic "2025-05-09: 0 contributions" [ref=e252]'
+                    - 'generic "2025-05-10: 0 contributions" [ref=e253]'
+                    - 'generic "2025-05-11: 0 contributions" [ref=e254]'
+                    - 'generic "2025-05-12: 10 contributions" [ref=e255]'
+                    - 'generic "2025-05-13: 3 contributions" [ref=e256]'
+                    - 'generic "2025-05-14: 0 contributions" [ref=e257]'
+                    - 'generic "2025-05-15: 1 contribution" [ref=e258]'
+                    - 'generic "2025-05-16: 0 contributions" [ref=e259]'
+                    - 'generic "2025-05-17: 0 contributions" [ref=e260]'
+                    - 'generic "2025-05-18: 0 contributions" [ref=e261]'
+                    - 'generic "2025-05-19: 0 contributions" [ref=e262]'
+                    - 'generic "2025-05-20: 0 contributions" [ref=e263]'
+                    - 'generic "2025-05-21: 0 contributions" [ref=e264]'
+                    - 'generic "2025-05-22: 0 contributions" [ref=e265]'
+                    - 'generic "2025-05-23: 0 contributions" [ref=e266]'
+                    - 'generic "2025-05-24: 0 contributions" [ref=e267]'
+                    - 'generic "2025-05-25: 0 contributions" [ref=e268]'
+                    - 'generic "2025-05-26: 0 contributions" [ref=e269]'
+                    - 'generic "2025-05-27: 0 contributions" [ref=e270]'
+                    - 'generic "2025-05-28: 0 contributions" [ref=e271]'
+                    - 'generic "2025-05-29: 0 contributions" [ref=e272]'
+                    - 'generic "2025-05-30: 0 contributions" [ref=e273]'
+                    - 'generic "2025-05-31: 0 contributions" [ref=e274]'
+                    - 'generic "2025-06-01: 0 contributions" [ref=e275]'
+                    - 'generic "2025-06-02: 0 contributions" [ref=e276]'
+                    - 'generic "2025-06-03: 0 contributions" [ref=e277]'
+                    - 'generic "2025-06-04: 0 contributions" [ref=e278]'
+                    - 'generic "2025-06-05: 0 contributions" [ref=e279]'
+                    - 'generic "2025-06-06: 0 contributions" [ref=e280]'
+                    - 'generic "2025-06-07: 2 contributions" [ref=e281]'
+                    - 'generic "2025-06-08: 0 contributions" [ref=e282]'
+                    - 'generic "2025-06-09: 0 contributions" [ref=e283]'
+                    - 'generic "2025-06-10: 0 contributions" [ref=e284]'
+                    - 'generic "2025-06-11: 0 contributions" [ref=e285]'
+                    - 'generic "2025-06-12: 0 contributions" [ref=e286]'
+                    - 'generic "2025-06-13: 0 contributions" [ref=e287]'
+                    - 'generic "2025-06-14: 0 contributions" [ref=e288]'
+                    - 'generic "2025-06-15: 0 contributions" [ref=e289]'
+                    - 'generic "2025-06-16: 0 contributions" [ref=e290]'
+                    - 'generic "2025-06-17: 0 contributions" [ref=e291]'
+                    - 'generic "2025-06-18: 0 contributions" [ref=e292]'
+                    - 'generic "2025-06-19: 0 contributions" [ref=e293]'
+                    - 'generic "2025-06-20: 0 contributions" [ref=e294]'
+                    - 'generic "2025-06-21: 0 contributions" [ref=e295]'
+                    - 'generic "2025-06-22: 0 contributions" [ref=e296]'
+                    - 'generic "2025-06-23: 0 contributions" [ref=e297]'
+                    - 'generic "2025-06-24: 0 contributions" [ref=e298]'
+                    - 'generic "2025-06-25: 0 contributions" [ref=e299]'
+                    - 'generic "2025-06-26: 0 contributions" [ref=e300]'
+                    - 'generic "2025-06-27: 0 contributions" [ref=e301]'
+                    - 'generic "2025-06-28: 0 contributions" [ref=e302]'
+                    - 'generic "2025-06-29: 1 contribution" [ref=e303]'
+                    - 'generic "2025-06-30: 0 contributions" [ref=e304]'
+                    - 'generic "2025-07-01: 0 contributions" [ref=e305]'
+                    - 'generic "2025-07-02: 0 contributions" [ref=e306]'
+                    - 'generic "2025-07-03: 0 contributions" [ref=e307]'
+                    - 'generic "2025-07-04: 0 contributions" [ref=e308]'
+                    - 'generic "2025-07-05: 0 contributions" [ref=e309]'
+                    - 'generic "2025-07-06: 0 contributions" [ref=e310]'
+                    - 'generic "2025-07-07: 1 contribution" [ref=e311]'
+                    - 'generic "2025-07-08: 5 contributions" [ref=e312]'
+                    - 'generic "2025-07-09: 0 contributions" [ref=e313]'
+                    - 'generic "2025-07-10: 1 contribution" [ref=e314]'
+                    - 'generic "2025-07-11: 12 contributions" [ref=e315]'
+                    - 'generic "2025-07-12: 14 contributions" [ref=e316]'
+                    - 'generic "2025-07-13: 0 contributions" [ref=e317]'
+                    - 'generic "2025-07-14: 0 contributions" [ref=e318]'
+                    - 'generic "2025-07-15: 1 contribution" [ref=e319]'
+                    - 'generic "2025-07-16: 15 contributions" [ref=e320]'
+                    - 'generic "2025-07-17: 12 contributions" [ref=e321]'
+                    - 'generic "2025-07-18: 0 contributions" [ref=e322]'
+                    - 'generic "2025-07-19: 0 contributions" [ref=e323]'
+                    - 'generic "2025-07-20: 0 contributions" [ref=e324]'
+                    - 'generic "2025-07-21: 0 contributions" [ref=e325]'
+                    - 'generic "2025-07-22: 2 contributions" [ref=e326]'
+                    - 'generic "2025-07-23: 5 contributions" [ref=e327]'
+                    - 'generic "2025-07-24: 0 contributions" [ref=e328]'
+                    - 'generic "2025-07-25: 0 contributions" [ref=e329]'
+                    - 'generic "2025-07-26: 9 contributions" [ref=e330]'
+                    - 'generic "2025-07-27: 5 contributions" [ref=e331]'
+                    - 'generic "2025-07-28: 0 contributions" [ref=e332]'
+                    - 'generic "2025-07-29: 0 contributions" [ref=e333]'
+                    - 'generic "2025-07-30: 19 contributions" [ref=e334]'
+                    - 'generic "2025-07-31: 0 contributions" [ref=e335]'
+                    - 'generic "2025-08-01: 0 contributions" [ref=e336]'
+                    - 'generic "2025-08-02: 14 contributions" [ref=e337]'
+                    - 'generic "2025-08-03: 14 contributions" [ref=e338]'
+                    - 'generic "2025-08-04: 0 contributions" [ref=e339]'
+                    - 'generic "2025-08-05: 3 contributions" [ref=e340]'
+                    - 'generic "2025-08-06: 26 contributions" [ref=e341]'
+                    - 'generic "2025-08-07: 0 contributions" [ref=e342]'
+                    - 'generic "2025-08-08: 0 contributions" [ref=e343]'
+                    - 'generic "2025-08-09: 0 contributions" [ref=e344]'
+                    - 'generic "2025-08-10: 0 contributions" [ref=e345]'
+                    - 'generic "2025-08-11: 0 contributions" [ref=e346]'
+                    - 'generic "2025-08-12: 0 contributions" [ref=e347]'
+                    - 'generic "2025-08-13: 0 contributions" [ref=e348]'
+                    - 'generic "2025-08-14: 0 contributions" [ref=e349]'
+                    - 'generic "2025-08-15: 0 contributions" [ref=e350]'
+                    - 'generic "2025-08-16: 0 contributions" [ref=e351]'
+                    - 'generic "2025-08-17: 11 contributions" [ref=e352]'
+                    - 'generic "2025-08-18: 0 contributions" [ref=e353]'
+                    - 'generic "2025-08-19: 8 contributions" [ref=e354]'
+                    - 'generic "2025-08-20: 4 contributions" [ref=e355]'
+                    - 'generic "2025-08-21: 0 contributions" [ref=e356]'
+                    - 'generic "2025-08-22: 0 contributions" [ref=e357]'
+                    - 'generic "2025-08-23: 0 contributions" [ref=e358]'
+                    - 'generic "2025-08-24: 0 contributions" [ref=e359]'
+                    - 'generic "2025-08-25: 0 contributions" [ref=e360]'
+                    - 'generic "2025-08-26: 0 contributions" [ref=e361]'
+                    - 'generic "2025-08-27: 0 contributions" [ref=e362]'
+                    - 'generic "2025-08-28: 0 contributions" [ref=e363]'
+                    - 'generic "2025-08-29: 0 contributions" [ref=e364]'
+                    - 'generic "2025-08-30: 4 contributions" [ref=e365]'
+                    - 'generic "2025-08-31: 6 contributions" [ref=e366]'
+                    - 'generic "2025-09-01: 1 contribution" [ref=e367]'
+                    - 'generic "2025-09-02: 4 contributions" [ref=e368]'
+                    - 'generic "2025-09-03: 0 contributions" [ref=e369]'
+                    - 'generic "2025-09-04: 0 contributions" [ref=e370]'
+                    - 'generic "2025-09-05: 2 contributions" [ref=e371]'
+                    - 'generic "2025-09-06: 1 contribution" [ref=e372]'
+                    - 'generic "2025-09-07: 0 contributions" [ref=e373]'
+                    - 'generic "2025-09-08: 0 contributions" [ref=e374]'
+                    - 'generic "2025-09-09: 0 contributions" [ref=e375]'
+                    - 'generic "2025-09-10: 0 contributions" [ref=e376]'
+                    - 'generic "2025-09-11: 2 contributions" [ref=e377]'
+                    - 'generic "2025-09-12: 2 contributions" [ref=e378]'
+                    - 'generic "2025-09-13: 0 contributions" [ref=e379]'
+                    - 'generic "2025-09-14: 0 contributions" [ref=e380]'
+                    - 'generic "2025-09-15: 0 contributions" [ref=e381]'
+                    - 'generic "2025-09-16: 0 contributions" [ref=e382]'
+                    - 'generic "2025-09-17: 0 contributions" [ref=e383]'
+                    - 'generic "2025-09-18: 0 contributions" [ref=e384]'
+                    - 'generic "2025-09-19: 4 contributions" [ref=e385]'
+                    - 'generic "2025-09-20: 0 contributions" [ref=e386]'
+                    - 'generic "2025-09-21: 2 contributions" [ref=e387]'
+                    - 'generic "2025-09-22: 0 contributions" [ref=e388]'
+                    - 'generic "2025-09-23: 0 contributions" [ref=e389]'
+                    - 'generic "2025-09-24: 1 contribution" [ref=e390]'
+                    - 'generic "2025-09-25: 18 contributions" [ref=e391]'
+                    - 'generic "2025-09-26: 0 contributions" [ref=e392]'
+                    - 'generic "2025-09-27: 0 contributions" [ref=e393]'
+                    - 'generic "2025-09-28: 0 contributions" [ref=e394]'
+                    - 'generic "2025-09-29: 0 contributions" [ref=e395]'
+                    - 'generic "2025-09-30: 0 contributions" [ref=e396]'
+                    - 'generic "2025-10-01: 4 contributions" [ref=e397]'
+                    - 'generic "2025-10-02: 0 contributions" [ref=e398]'
+                    - 'generic "2025-10-03: 0 contributions" [ref=e399]'
+                    - 'generic "2025-10-04: 0 contributions" [ref=e400]'
+                    - 'generic "2025-10-05: 3 contributions" [ref=e401]'
+                    - 'generic "2025-10-06: 0 contributions" [ref=e402]'
+                    - 'generic "2025-10-07: 0 contributions" [ref=e403]'
+                    - 'generic "2025-10-08: 0 contributions" [ref=e404]'
+                    - 'generic "2025-10-09: 0 contributions" [ref=e405]'
+                    - 'generic "2025-10-10: 0 contributions" [ref=e406]'
+                    - 'generic "2025-10-11: 0 contributions" [ref=e407]'
+                    - 'generic "2025-10-12: 0 contributions" [ref=e408]'
+                    - 'generic "2025-10-13: 0 contributions" [ref=e409]'
+                    - 'generic "2025-10-14: 0 contributions" [ref=e410]'
+                    - 'generic "2025-10-15: 0 contributions" [ref=e411]'
+                    - 'generic "2025-10-16: 0 contributions" [ref=e412]'
+                    - 'generic "2025-10-17: 0 contributions" [ref=e413]'
+                    - 'generic "2025-10-18: 0 contributions" [ref=e414]'
+                    - 'generic "2025-10-19: 0 contributions" [ref=e415]'
+                    - 'generic "2025-10-20: 1 contribution" [ref=e416]'
+                    - 'generic "2025-10-21: 0 contributions" [ref=e417]'
+                    - 'generic "2025-10-22: 1 contribution" [ref=e418]'
+                    - 'generic "2025-10-23: 0 contributions" [ref=e419]'
+                    - 'generic "2025-10-24: 0 contributions" [ref=e420]'
+                    - 'generic "2025-10-25: 0 contributions" [ref=e421]'
+                    - 'generic "2025-10-26: 1 contribution" [ref=e422]'
+                    - 'generic "2025-10-27: 4 contributions" [ref=e423]'
+                    - 'generic "2025-10-28: 9 contributions" [ref=e424]'
+                    - 'generic "2025-10-29: 0 contributions" [ref=e425]'
+                    - 'generic "2025-10-30: 0 contributions" [ref=e426]'
+                    - 'generic "2025-10-31: 0 contributions" [ref=e427]'
+                    - 'generic "2025-11-01: 1 contribution" [ref=e428]'
+                    - 'generic "2025-11-02: 3 contributions" [ref=e429]'
+                    - 'generic "2025-11-03: 0 contributions" [ref=e430]'
+                    - 'generic "2025-11-04: 0 contributions" [ref=e431]'
+                    - 'generic "2025-11-05: 0 contributions" [ref=e432]'
+                    - 'generic "2025-11-06: 3 contributions" [ref=e433]'
+                    - 'generic "2025-11-07: 4 contributions" [ref=e434]'
+                    - 'generic "2025-11-08: 0 contributions" [ref=e435]'
+                    - 'generic "2025-11-09: 0 contributions" [ref=e436]'
+                    - 'generic "2025-11-10: 0 contributions" [ref=e437]'
+                    - 'generic "2025-11-11: 0 contributions" [ref=e438]'
+                    - 'generic "2025-11-12: 0 contributions" [ref=e439]'
+                    - 'generic "2025-11-13: 0 contributions" [ref=e440]'
+                    - 'generic "2025-11-14: 0 contributions" [ref=e441]'
+                    - 'generic "2025-11-15: 0 contributions" [ref=e442]'
+                    - 'generic "2025-11-16: 0 contributions" [ref=e443]'
+                    - 'generic "2025-11-17: 0 contributions" [ref=e444]'
+                    - 'generic "2025-11-18: 3 contributions" [ref=e445]'
+                    - 'generic "2025-11-19: 0 contributions" [ref=e446]'
+                    - 'generic "2025-11-20: 0 contributions" [ref=e447]'
+                    - 'generic "2025-11-21: 4 contributions" [ref=e448]'
+                    - 'generic "2025-11-22: 0 contributions" [ref=e449]'
+                    - 'generic "2025-11-23: 2 contributions" [ref=e450]'
+                    - 'generic "2025-11-24: 0 contributions" [ref=e451]'
+                    - 'generic "2025-11-25: 4 contributions" [ref=e452]'
+                    - 'generic "2025-11-26: 0 contributions" [ref=e453]'
+                    - 'generic "2025-11-27: 0 contributions" [ref=e454]'
+                    - 'generic "2025-11-28: 0 contributions" [ref=e455]'
+                    - 'generic "2025-11-29: 0 contributions" [ref=e456]'
+                    - 'generic "2025-11-30: 0 contributions" [ref=e457]'
+                    - 'generic "2025-12-01: 0 contributions" [ref=e458]'
+                    - 'generic "2025-12-02: 3 contributions" [ref=e459]'
+                    - 'generic "2025-12-03: 0 contributions" [ref=e460]'
+                    - 'generic "2025-12-04: 4 contributions" [ref=e461]'
+                    - 'generic "2025-12-05: 0 contributions" [ref=e462]'
+                    - 'generic "2025-12-06: 1 contribution" [ref=e463]'
+                    - 'generic "2025-12-07: 3 contributions" [ref=e464]'
+                    - 'generic "2025-12-08: 0 contributions" [ref=e465]'
+                    - 'generic "2025-12-09: 0 contributions" [ref=e466]'
+                    - 'generic "2025-12-10: 0 contributions" [ref=e467]'
+                    - 'generic "2025-12-11: 0 contributions" [ref=e468]'
+                    - 'generic "2025-12-12: 0 contributions" [ref=e469]'
+                    - 'generic "2025-12-13: 0 contributions" [ref=e470]'
+                    - 'generic "2025-12-14: 0 contributions" [ref=e471]'
+                    - 'generic "2025-12-15: 0 contributions" [ref=e472]'
+                    - 'generic "2025-12-16: 0 contributions" [ref=e473]'
+                    - 'generic "2025-12-17: 0 contributions" [ref=e474]'
+                    - 'generic "2025-12-18: 0 contributions" [ref=e475]'
+                    - 'generic "2025-12-19: 0 contributions" [ref=e476]'
+                    - 'generic "2025-12-20: 0 contributions" [ref=e477]'
+                    - 'generic "2025-12-21: 0 contributions" [ref=e478]'
+                    - 'generic "2025-12-22: 0 contributions" [ref=e479]'
+                    - 'generic "2025-12-23: 0 contributions" [ref=e480]'
+                    - 'generic "2025-12-24: 0 contributions" [ref=e481]'
+                    - 'generic "2025-12-25: 0 contributions" [ref=e482]'
+                    - 'generic "2025-12-26: 0 contributions" [ref=e483]'
+                    - 'generic "2025-12-27: 0 contributions" [ref=e484]'
+                    - 'generic "2025-12-28: 0 contributions" [ref=e485]'
+                    - 'generic "2025-12-29: 2 contributions" [ref=e486]'
+                    - 'generic "2025-12-30: 0 contributions" [ref=e487]'
+                    - 'generic "2025-12-31: 0 contributions" [ref=e488]'
+                    - 'generic "2026-01-01: 0 contributions" [ref=e489]'
+                    - 'generic "2026-01-02: 0 contributions" [ref=e490]'
+                    - 'generic "2026-01-03: 0 contributions" [ref=e491]'
+                    - 'generic "2026-01-04: 0 contributions" [ref=e492]'
+                    - 'generic "2026-01-05: 0 contributions" [ref=e493]'
+                    - 'generic "2026-01-06: 0 contributions" [ref=e494]'
+                    - 'generic "2026-01-07: 0 contributions" [ref=e495]'
+                    - 'generic "2026-01-08: 0 contributions" [ref=e496]'
+                    - 'generic "2026-01-09: 0 contributions" [ref=e497]'
+                    - 'generic "2026-01-10: 0 contributions" [ref=e498]'
+                    - 'generic "2026-01-11: 0 contributions" [ref=e499]'
+                    - 'generic "2026-01-12: 0 contributions" [ref=e500]'
+                    - 'generic "2026-01-13: 0 contributions" [ref=e501]'
+                    - 'generic "2026-01-14: 0 contributions" [ref=e502]'
+                    - 'generic "2026-01-15: 0 contributions" [ref=e503]'
+                    - 'generic "2026-01-16: 0 contributions" [ref=e504]'
+                    - 'generic "2026-01-17: 0 contributions" [ref=e505]'
+                    - 'generic "2026-01-18: 0 contributions" [ref=e506]'
+                    - 'generic "2026-01-19: 0 contributions" [ref=e507]'
+                    - 'generic "2026-01-20: 0 contributions" [ref=e508]'
+                    - 'generic "2026-01-21: 0 contributions" [ref=e509]'
+                    - 'generic "2026-01-22: 0 contributions" [ref=e510]'
+                    - 'generic "2026-01-23: 0 contributions" [ref=e511]'
+                    - 'generic "2026-01-24: 0 contributions" [ref=e512]'
+                    - 'generic "2026-01-25: 0 contributions" [ref=e513]'
+                    - 'generic "2026-01-26: 0 contributions" [ref=e514]'
+                    - 'generic "2026-01-27: 0 contributions" [ref=e515]'
+                    - 'generic "2026-01-28: 0 contributions" [ref=e516]'
+                    - 'generic "2026-01-29: 0 contributions" [ref=e517]'
+                    - 'generic "2026-01-30: 0 contributions" [ref=e518]'
+                    - 'generic "2026-01-31: 0 contributions" [ref=e519]'
+                    - 'generic "2026-02-01: 2 contributions" [ref=e520]'
+                    - 'generic "2026-02-02: 0 contributions" [ref=e521]'
+                    - 'generic "2026-02-03: 0 contributions" [ref=e522]'
+                    - 'generic "2026-02-04: 0 contributions" [ref=e523]'
+                    - 'generic "2026-02-05: 0 contributions" [ref=e524]'
+                    - 'generic "2026-02-06: 0 contributions" [ref=e525]'
+                    - 'generic "2026-02-07: 0 contributions" [ref=e526]'
+                    - 'generic "2026-02-08: 0 contributions" [ref=e527]'
+                    - 'generic "2026-02-09: 0 contributions" [ref=e528]'
+                    - 'generic "2026-02-10: 0 contributions" [ref=e529]'
+                    - 'generic "2026-02-11: 0 contributions" [ref=e530]'
+                    - 'generic "2026-02-12: 0 contributions" [ref=e531]'
+                    - 'generic "2026-02-13: 0 contributions" [ref=e532]'
+                    - 'generic "2026-02-14: 0 contributions" [ref=e533]'
+                    - 'generic "2026-02-15: 0 contributions" [ref=e534]'
+                    - 'generic "2026-02-16: 0 contributions" [ref=e535]'
+                    - 'generic "2026-02-17: 0 contributions" [ref=e536]'
+                    - 'generic "2026-02-18: 0 contributions" [ref=e537]'
+                    - 'generic "2026-02-19: 0 contributions" [ref=e538]'
+                    - 'generic "2026-02-20: 0 contributions" [ref=e539]'
+                    - 'generic "2026-02-21: 0 contributions" [ref=e540]'
+                    - 'generic "2026-02-22: 0 contributions" [ref=e541]'
+                    - 'generic "2026-02-23: 0 contributions" [ref=e542]'
+                    - 'generic "2026-02-24: 0 contributions" [ref=e543]'
+                    - 'generic "2026-02-25: 0 contributions" [ref=e544]'
+                    - 'generic "2026-02-26: 0 contributions" [ref=e545]'
+                    - 'generic "2026-02-27: 0 contributions" [ref=e546]'
+                    - 'generic "2026-02-28: 1 contribution" [ref=e547]'
+                    - 'generic "2026-03-01: 2 contributions" [ref=e548]'
+                    - 'generic "2026-03-02: 4 contributions" [ref=e549]'
+                    - 'generic "2026-03-03: 1 contribution" [ref=e550]'
+                    - 'generic "2026-03-04: 20 contributions" [ref=e551]'
+                    - 'generic "2026-03-05: 10 contributions" [ref=e552]'
+                    - 'generic "2026-03-06: 4 contributions" [ref=e553]'
+                    - 'generic "2026-03-07: 7 contributions" [ref=e554]'
+                    - 'generic "2026-03-08: 2 contributions" [ref=e555]'
+                    - 'generic "2026-03-09: 1 contribution" [ref=e556]'
+                    - 'generic "2026-03-10: 3 contributions" [ref=e557]'
+                    - 'generic "2026-03-11: 1 contribution" [ref=e558]'
+                    - 'generic "2026-03-12: 14 contributions" [ref=e559]'
+                    - 'generic "2026-03-13: 2 contributions" [ref=e560]'
+                    - 'generic "2026-03-14: 17 contributions" [ref=e561]'
+                    - 'generic "2026-03-15: 15 contributions" [ref=e562]'
+                    - 'generic "2026-03-16: 16 contributions" [ref=e563]'
+                    - 'generic "2026-03-17: 7 contributions" [ref=e564]'
+                    - 'generic "2026-03-18: 2 contributions" [ref=e565]'
+                    - 'generic "2026-03-19: 1 contribution" [ref=e566]'
+                    - 'generic "2026-03-20: 2 contributions" [ref=e567]'
+                    - 'generic "2026-03-21: 1 contribution" [ref=e568]'
+                    - 'generic "2026-03-22: 1 contribution" [ref=e569]'
+                    - 'generic "2026-03-23: 1 contribution" [ref=e570]'
+                    - 'generic "2026-03-24: 1 contribution" [ref=e571]'
+                    - 'generic "2026-03-25: 1 contribution" [ref=e572]'
+                    - 'generic "2026-03-26: 1 contribution" [ref=e573]'
+                    - 'generic "2026-03-27: 3 contributions" [ref=e574]'
+                    - 'generic "2026-03-28: 1 contribution" [ref=e575]'
+                    - 'generic "2026-03-29: 14 contributions" [ref=e576]'
+                    - 'generic "2026-03-30: 11 contributions" [ref=e577]'
+            - generic [ref=e578]:
+              - generic [ref=e580]:
+                - paragraph [ref=e581]: Recent repository activity
+                - paragraph [ref=e582]: A quick read on what has been pushed most recently.
+              - generic [ref=e583]:
+                - article [ref=e584]:
+                  - generic [ref=e585]:
+                    - generic [ref=e586]: "01"
+                    - generic [ref=e587]: Updated Mar 2026
+                  - generic [ref=e588]:
+                    - link "Portfolio-Web" [ref=e589] [cursor=pointer]:
+                      - /url: https://github.com/DeryFerd/Portfolio-Web
+                    - paragraph [ref=e590]: My Portfolio Web
+                    - generic [ref=e591]:
+                      - generic [ref=e592]: TypeScript
+                      - generic [ref=e593]: 0 stars
+                - article [ref=e594]:
+                  - generic [ref=e595]:
+                    - generic [ref=e596]: "02"
+                    - generic [ref=e597]: Updated Mar 2026
+                  - generic [ref=e598]:
+                    - link "DeryFerd" [ref=e599] [cursor=pointer]:
+                      - /url: https://github.com/DeryFerd/DeryFerd
+                    - paragraph [ref=e600]: Repository with recent public activity.
+                    - generic [ref=e602]: 0 stars
+                - article [ref=e603]:
+                  - generic [ref=e604]:
+                    - generic [ref=e605]: "03"
+                    - generic [ref=e606]: Updated Mar 2026
+                  - generic [ref=e607]:
+                    - link "Qwen-Chat-Replicate" [ref=e608] [cursor=pointer]:
+                      - /url: https://github.com/DeryFerd/Qwen-Chat-Replicate
+                    - paragraph [ref=e609]: Replicating Qwen Chat UI
+                    - generic [ref=e610]:
+                      - generic [ref=e611]: JavaScript
+                      - generic [ref=e612]: 0 stars
+                - article [ref=e613]:
+                  - generic [ref=e614]:
+                    - generic [ref=e615]: "04"
+                    - generic [ref=e616]: Updated Mar 2026
+                  - generic [ref=e617]:
+                    - link "AI-Learning-Platform" [ref=e618] [cursor=pointer]:
+                      - /url: https://github.com/DeryFerd/AI-Learning-Platform
+                    - paragraph [ref=e619]: Learning Platform for AI Including LLM, ML, DL.
+                    - generic [ref=e620]:
+                      - generic [ref=e621]: TypeScript
+                      - generic [ref=e622]: 0 stars
+        - generic [ref=e625]:
+          - generic [ref=e626]:
+            - generic [ref=e627]:
+              - generic [ref=e628]:
+                - generic [ref=e629]: "*"
+                - paragraph [ref=e630]: Selected projects
+              - heading "Work presented with more signal than noise." [level=2] [ref=e631]
+            - link "View archive" [ref=e632] [cursor=pointer]:
+              - /url: /projects
+          - generic [ref=e633]:
+            - generic [ref=e634]:
+              - article [ref=e635]:
+                - button "_ 01 . AI Chatbot NLP / GPT / FastAPI" [pressed] [ref=e636] [cursor=pointer]:
+                  - generic [ref=e637]: _ 01 .
+                  - generic [ref=e638]:
+                    - generic [ref=e639]: AI Chatbot
+                    - generic [ref=e640]: ↗
+                  - generic [ref=e641]: NLP / GPT / FastAPI
+              - article [ref=e642]:
+                - button "_ 02 . Image Classifier Computer Vision / PyTorch / ResNet" [ref=e643] [cursor=pointer]:
+                  - generic [ref=e644]: _ 02 .
+                  - generic [ref=e645]:
+                    - generic [ref=e646]: Image Classifier
+                    - generic [ref=e647]: ↗
+                  - generic [ref=e648]: Computer Vision / PyTorch / ResNet
+              - article [ref=e649]:
+                - button "_ 03 . Recommender System ML / Recommendation / Python" [ref=e650] [cursor=pointer]:
+                  - generic [ref=e651]: _ 03 .
+                  - generic [ref=e652]:
+                    - generic [ref=e653]: Recommender System
+                    - generic [ref=e654]: ↗
+                  - generic [ref=e655]: ML / Recommendation / Python
+              - article [ref=e656]:
+                - button "_ 04 . Sentiment Analysis NLP / BERT / Streamlit" [ref=e657] [cursor=pointer]:
+                  - generic [ref=e658]: _ 04 .
+                  - generic [ref=e659]:
+                    - generic [ref=e660]: Sentiment Analysis
+                    - generic [ref=e661]: ↗
+                  - generic [ref=e662]: NLP / BERT / Streamlit
+              - article [ref=e663]:
+                - button "_ 05 . Object Detection Computer Vision / YOLO / OpenCV" [ref=e664] [cursor=pointer]:
+                  - generic [ref=e665]: _ 05 .
+                  - generic [ref=e666]:
+                    - generic [ref=e667]: Object Detection
+                    - generic [ref=e668]: ↗
+                  - generic [ref=e669]: Computer Vision / YOLO / OpenCV
+              - article [ref=e670]:
+                - button "_ 06 . Time Series Forecasting Deep Learning / LSTM / Finance" [ref=e671] [cursor=pointer]:
+                  - generic [ref=e672]: _ 06 .
+                  - generic [ref=e673]:
+                    - generic [ref=e674]: Time Series Forecasting
+                    - generic [ref=e675]: ↗
+                  - generic [ref=e676]: Deep Learning / LSTM / Finance
+            - complementary [ref=e677]:
+              - generic [ref=e678]:
+                - img "AI Chatbot" [ref=e679]
+                - img [ref=e680]
+                - img [ref=e681]
+                - img [ref=e682]
+                - img [ref=e683]
+                - img [ref=e684]
+              - generic [ref=e685]:
+                - paragraph [ref=e686]: "2026"
+                - heading "AI Chatbot" [level=3] [ref=e687]
+                - paragraph [ref=e688]: A conversational AI built for support automation with context-aware responses and production-minded delivery.
+                - link "Open case study" [ref=e689] [cursor=pointer]:
+                  - /url: /projects/ai-chatbot
+        - generic [ref=e692]:
+          - generic [ref=e693]:
+            - generic [ref=e694]:
+              - generic [ref=e695]:
+                - generic [ref=e696]: "*"
+                - paragraph [ref=e697]: Latest writing
+              - heading "Notes from building and learning in public." [level=2] [ref=e698]
+            - link "View all posts" [ref=e699] [cursor=pointer]:
+              - /url: /blog
+          - generic [ref=e700]:
+            - generic [ref=e701]:
+              - article [ref=e702]:
+                - button "_ 01 . Getting Started with Large Language Models 2024-01-15 / NLP / LLM / Tutorial" [pressed] [ref=e703] [cursor=pointer]:
+                  - generic [ref=e704]: _ 01 .
+                  - generic [ref=e705]:
+                    - generic [ref=e706]: Getting Started with Large Language Models
+                    - generic [ref=e707]: ↗
+                  - generic [ref=e708]: 2024-01-15 / NLP / LLM / Tutorial
+              - article [ref=e709]:
+                - button "_ 02 . Building a Neural Network from Scratch 2024-01-10 / Deep Learning / Python / Tutorial" [ref=e710] [cursor=pointer]:
+                  - generic [ref=e711]: _ 02 .
+                  - generic [ref=e712]:
+                    - generic [ref=e713]: Building a Neural Network from Scratch
+                    - generic [ref=e714]: ↗
+                  - generic [ref=e715]: 2024-01-10 / Deep Learning / Python / Tutorial
+              - article [ref=e716]:
+                - button "_ 03 . Deploying ML Models with Docker 2024-01-05 / MLOps / Docker / Deployment" [ref=e717] [cursor=pointer]:
+                  - generic [ref=e718]: _ 03 .
+                  - generic [ref=e719]:
+                    - generic [ref=e720]: Deploying ML Models with Docker
+                    - generic [ref=e721]: ↗
+                  - generic [ref=e722]: 2024-01-05 / MLOps / Docker / Deployment
+            - complementary [ref=e723]:
+              - generic [ref=e724]:
+                - img "Getting Started with Large Language Models" [ref=e725]
+                - img [ref=e726]
+                - img [ref=e727]
+              - generic [ref=e728]:
+                - paragraph [ref=e729]: 2024-01-15
+                - heading "Getting Started with Large Language Models" [level=3] [ref=e730]
+                - paragraph [ref=e731]: A comprehensive guide to understanding and working with LLMs for production applications.
+                - link "Read article" [ref=e732] [cursor=pointer]:
+                  - /url: /blog/getting-started-with-llms
+        - generic [ref=e736]:
+          - generic [ref=e737]:
+            - paragraph [ref=e738]: Contact
+            - heading "Have a project in mind?" [level=2] [ref=e739]
+            - paragraph [ref=e740]: I'm open to selected opportunities where AI systems need both technical depth and product-level clarity.
+            - link "deryferdikao125@gmail.com" [ref=e741] [cursor=pointer]:
+              - /url: mailto:deryferdikao125@gmail.com
+          - generic [ref=e742]:
+            - generic [ref=e743]:
+              - generic [ref=e744]: Base
+              - generic [ref=e745]: Malang, Indonesia
+            - generic [ref=e746]:
+              - generic [ref=e747]: Focus
+              - generic [ref=e748]: AI products, tooling, and interfaces
+            - generic [ref=e749]:
+              - link "GitHub" [ref=e750] [cursor=pointer]:
+                - /url: https://github.com
+              - link "LinkedIn" [ref=e751] [cursor=pointer]:
+                - /url: https://linkedin.com
+              - link "Twitter" [ref=e752] [cursor=pointer]:
+                - /url: https://twitter.com
+              - link "Medium" [ref=e753] [cursor=pointer]:
+                - /url: https://medium.com
+  - contentinfo [ref=e754]:
+    - generic [ref=e756]:
+      - paragraph [ref=e757]: Design & built by Dery Ferdika
+      - link "deryferdikao125@gmail.com" [ref=e758] [cursor=pointer]:
+        - /url: mailto:deryferdikao125@gmail.com
+      - generic [ref=e759]:
+        - generic [ref=e760]: AI systems, interfaces, and delivery.
+        - generic [ref=e761]:
+          - link "GitHub" [ref=e762] [cursor=pointer]:
+            - /url: https://github.com
+          - link "LinkedIn" [ref=e763] [cursor=pointer]:
+            - /url: https://linkedin.com
+          - link "Twitter" [ref=e764] [cursor=pointer]:
+            - /url: https://twitter.com
+  - button "Open Next.js Dev Tools" [ref=e770] [cursor=pointer]:
+    - img [ref=e771]
+  - alert [ref=e802]
