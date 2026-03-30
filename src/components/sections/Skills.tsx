@@ -562,22 +562,10 @@ export default function Skills() {
               waiting behind it, and a direct gesture to move through the stack
               without the visual noise from heavier concepts.
             </p>
-            <div className={styles.copyMeta}>
-              <span>Swipe left for next</span>
-              <span>Swipe right for previous</span>
-              <span>{skills.length} stack cards</span>
-            </div>
           </div>
 
           <div className={styles.deckColumn}>
             <div className={styles.deckStage}>
-              <div className={styles.deckMeta}>
-                <span className={styles.deckLabel}>Swipe deck</span>
-                <span className={styles.deckCounter}>
-                  {String(activeIndex + 1).padStart(2, "0")} / {String(skills.length).padStart(2, "0")}
-                </span>
-              </div>
-
               <div className={styles.cardStack}>
                 {deckCards
                   .slice()
@@ -620,10 +608,6 @@ export default function Skills() {
                     );
                   })}
               </div>
-
-              <p className={styles.swipeHint}>
-                Swipe the front card to reveal the next layer waiting behind it.
-              </p>
             </div>
 
             <div className={styles.selectorRail}>
