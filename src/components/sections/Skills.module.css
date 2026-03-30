@@ -97,7 +97,7 @@
   position: relative;
   min-height: clamp(26rem, 48vw, 34rem);
   perspective: 2600px;
-  touch-action: pan-y;
+  touch-action: none;
   cursor: ew-resize;
   user-select: none;
   -webkit-user-select: none;
@@ -193,7 +193,6 @@
 }
 
 .leftPage {
-  padding: clamp(1rem, 2vw, 1.4rem);
   border-radius: 1.35rem 0 0 1.35rem;
   background:
     linear-gradient(180deg, rgba(247, 242, 232, 0.99), rgba(239, 233, 220, 0.98)),
@@ -212,6 +211,31 @@
   box-shadow:
     inset 18px 0 18px rgba(113, 96, 66, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.68);
+}
+
+.pageScroller {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(113, 96, 66, 0.24) transparent;
+}
+
+.pageScroller::-webkit-scrollbar {
+  width: 0.42rem;
+}
+
+.pageScroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pageScroller::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(113, 96, 66, 0.2);
+}
+
+.leftPageScroller {
+  padding: clamp(1rem, 2vw, 1.4rem);
 }
 
 .leftPage::before,

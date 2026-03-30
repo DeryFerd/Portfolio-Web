@@ -1,6 +1,10 @@
 "use client";
 
-import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
+import type {
+  CSSProperties,
+  PointerEvent as ReactPointerEvent,
+  WheelEvent as ReactWheelEvent,
+} from "react";
 import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Skills.module.css";
 
@@ -23,12 +27,13 @@ interface RoleChapter {
   accent: string;
 }
 
-type DragMode = "none" | "cover" | "page";
+type DragMode = "none" | "cover" | "page" | "scroll";
 type TurnDirection = -1 | 0 | 1;
 
 const COVER_DRAG_DISTANCE = 240;
 const COVER_OPEN_THRESHOLD = 0.42;
 const COVER_ZONE_RATIO = 0.42;
+const GESTURE_DIRECTION_LOCK = 12;
 const PAGE_DRAG_DISTANCE = 320;
 const PAGE_TURN_DEADZONE = 24;
 const PAGE_TURN_THRESHOLD = 0.52;
@@ -481,13 +486,28 @@ function TurnBackFace({ chapter }: { chapter: RoleChapter }) {
 }
 
 export default function Skills() {
-  const dragStateRef = useRef({
+  const dragStateRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    startCoverProgress: number;
+    startScrollTop: number;
+    canCloseCover: boolean;
+    scrollTarget: HTMLDivElement | null;
+    mode: DragMode;
+  }>({
     pointerId: -1,
     startX: 0,
+    startY: 0,
     startCoverProgress: 0,
+    startScrollTop: 0,
+    canCloseCover: false,
+    scrollTarget: null,
     mode: "none" as DragMode,
   });
   const turnTimeoutRef = useRef<number | null>(null);
+  const leftScrollRef = useRef<HTMLDivElement>(null);
+  const rightScrollRef = useRef<HTMLDivElement>(null);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [coverProgress, setCoverProgress] = useState(0);
@@ -504,6 +524,11 @@ export default function Skills() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    leftScrollRef.current?.scrollTo({ top: 0 });
+    rightScrollRef.current?.scrollTo({ top: 0 });
+  }, [activeIndex]);
 
   const activeChapter = chapters[activeIndex] ?? chapters[0];
   const turnTargetChapter =
@@ -528,6 +553,10 @@ export default function Skills() {
     }
 
     dragStateRef.current.pointerId = -1;
+    dragStateRef.current.startY = 0;
+    dragStateRef.current.startScrollTop = 0;
+    dragStateRef.current.canCloseCover = false;
+    dragStateRef.current.scrollTarget = null;
     dragStateRef.current.mode = "none";
     setDragMode("none");
   };
@@ -589,6 +618,54 @@ export default function Skills() {
     }, PAGE_TURN_DURATION);
   };
 
+  const handleWheel = (event: ReactWheelEvent<HTMLDivElement>) => {
+    if (
+      coverProgress < 0.995 ||
+      isAnimatingTurn
+    ) {
+      return;
+    }
+
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) {
+      event.preventDefault();
+      return;
+    }
+
+    const canScroll = (element: HTMLDivElement | null, delta: number) => {
+      if (!element) {
+        return false;
+      }
+
+      if (delta > 0) {
+        return element.scrollTop + element.clientHeight < element.scrollHeight - 1;
+      }
+
+      if (delta < 0) {
+        return element.scrollTop > 1;
+      }
+
+      return false;
+    };
+
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const relativeX = (event.clientX - bounds.left) / bounds.width;
+    const primaryTarget = relativeX < 0.5 ? leftScrollRef.current : rightScrollRef.current;
+    const secondaryTarget = relativeX < 0.5 ? rightScrollRef.current : leftScrollRef.current;
+    const scrollTarget = canScroll(primaryTarget, event.deltaY)
+      ? primaryTarget
+      : canScroll(secondaryTarget, event.deltaY)
+        ? secondaryTarget
+        : null;
+
+    event.preventDefault();
+
+    if (!scrollTarget) {
+      return;
+    }
+
+    scrollTarget.scrollTop += event.deltaY;
+  };
+
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "mouse" && event.button !== 0) {
       return;
@@ -602,16 +679,18 @@ export default function Skills() {
 
     const bounds = event.currentTarget.getBoundingClientRect();
     const relativeX = (event.clientX - bounds.left) / bounds.width;
-    const nextMode: DragMode =
-      coverProgress < 0.995 ||
-      (activeIndex === 0 && relativeX <= COVER_ZONE_RATIO)
-        ? "cover"
-        : "page";
+    const nextMode: DragMode = coverProgress < 0.995 ? "cover" : "page";
+    const scrollTarget =
+      relativeX < 0.5 ? leftScrollRef.current : rightScrollRef.current;
 
     dragStateRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
+      startY: event.clientY,
       startCoverProgress: coverProgress,
+      startScrollTop: scrollTarget?.scrollTop ?? 0,
+      canCloseCover: coverProgress >= 0.995 && activeIndex === 0 && relativeX <= COVER_ZONE_RATIO,
+      scrollTarget,
       mode: nextMode,
     };
     setDragMode(nextMode);
@@ -628,11 +707,14 @@ export default function Skills() {
     }
 
     event.preventDefault();
-    const delta = dragStateRef.current.startX - event.clientX;
+    const deltaX = dragStateRef.current.startX - event.clientX;
+    const deltaY = dragStateRef.current.startY - event.clientY;
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
 
     if (dragStateRef.current.mode === "cover") {
       const nextCover = clamp(
-        dragStateRef.current.startCoverProgress + delta / COVER_DRAG_DISTANCE,
+        dragStateRef.current.startCoverProgress + deltaX / COVER_DRAG_DISTANCE,
         0,
         1,
       );
@@ -641,32 +723,74 @@ export default function Skills() {
       return;
     }
 
+    if (dragStateRef.current.mode === "scroll") {
+      if (dragStateRef.current.scrollTarget) {
+        dragStateRef.current.scrollTarget.scrollTop =
+          dragStateRef.current.startScrollTop + deltaY;
+      }
+      return;
+    }
+
     if (dragStateRef.current.mode !== "page") {
       return;
     }
 
-    const absDelta = Math.abs(delta);
+    if (
+      absDeltaY > absDeltaX + GESTURE_DIRECTION_LOCK &&
+      absDeltaY > PAGE_TURN_DEADZONE &&
+      dragStateRef.current.scrollTarget &&
+      dragStateRef.current.scrollTarget.scrollHeight >
+        dragStateRef.current.scrollTarget.clientHeight + 1
+    ) {
+      dragStateRef.current.mode = "scroll";
+      setDragMode("scroll");
+      clearTurnState();
+      dragStateRef.current.scrollTarget.scrollTop =
+        dragStateRef.current.startScrollTop + deltaY;
+      return;
+    }
 
-    if (absDelta <= PAGE_TURN_DEADZONE) {
+    if (
+      dragStateRef.current.canCloseCover &&
+      deltaX < 0 &&
+      absDeltaX > absDeltaY + GESTURE_DIRECTION_LOCK &&
+      absDeltaX > PAGE_TURN_DEADZONE
+    ) {
+      dragStateRef.current.mode = "cover";
+      setDragMode("cover");
+      clearTurnState();
+      const nextCover = clamp(
+        dragStateRef.current.startCoverProgress + deltaX / COVER_DRAG_DISTANCE,
+        0,
+        1,
+      );
+      setCoverProgress(nextCover);
+      return;
+    }
+
+    if (
+      absDeltaX <= PAGE_TURN_DEADZONE ||
+      absDeltaX <= absDeltaY + GESTURE_DIRECTION_LOCK
+    ) {
       clearTurnState();
       return;
     }
 
     const normalizedProgress = clamp(
-      (absDelta - PAGE_TURN_DEADZONE) /
+      (absDeltaX - PAGE_TURN_DEADZONE) /
         (PAGE_DRAG_DISTANCE - PAGE_TURN_DEADZONE),
       0,
       1,
     );
 
-    if (delta > 0 && activeIndex < chapters.length - 1) {
+    if (deltaX > 0 && activeIndex < chapters.length - 1) {
       setTurnDirection(-1);
       setTurnTargetIndex(activeIndex + 1);
       setTurnProgress(normalizedProgress);
       return;
     }
 
-    if (delta < 0 && activeIndex > 0) {
+    if (deltaX < 0 && activeIndex > 0) {
       setTurnDirection(1);
       setTurnTargetIndex(activeIndex - 1);
       setTurnProgress(normalizedProgress);
@@ -696,6 +820,11 @@ export default function Skills() {
       return;
     }
 
+    if (dragStateRef.current.mode === "scroll") {
+      resetDrag(event.currentTarget, event.pointerId);
+      return;
+    }
+
     if (turnTargetIndex !== null && turnProgress > PAGE_TURN_THRESHOLD) {
       const targetIndex = turnTargetIndex;
       resetDrag(event.currentTarget, event.pointerId);
@@ -714,6 +843,9 @@ export default function Skills() {
 
     if (dragStateRef.current.mode === "cover") {
       setCoverProgress(coverProgress > COVER_OPEN_THRESHOLD ? 1 : 0);
+    } else if (dragStateRef.current.mode === "scroll") {
+      resetDrag(event.currentTarget, event.pointerId);
+      return;
     } else {
       revertTurn();
     }
@@ -765,52 +897,60 @@ export default function Skills() {
                 onPointerMove={handlePointerMove}
                 onPointerUp={handlePointerUp}
                 onPointerCancel={handlePointerCancel}
+                onWheel={handleWheel}
               >
                 <div className={styles.bookBody}>
                   <div className={styles.bookSpread}>
                     <div className={styles.leftPage}>
-                      <span className={styles.contentsKicker}>Playbook</span>
-                      <h3 className={styles.contentsTitle}>
-                        One portfolio, several operating modes.
-                      </h3>
-                      <p className={styles.contentsText}>
-                        The same build philosophy shows up in different forms:
-                        data movement, experiment design, model delivery, LLM
-                        behavior, product surfaces, and production stability.
-                      </p>
-
-                      <div className={styles.contentsList}>
-                        {chapters.map((chapter, index) => (
-                          <div
-                            key={chapter.id}
-                            className={styles.contentsItem}
-                            data-active={index === activeIndex}
-                          >
-                            <span className={styles.contentsItemIndex}>
-                              {String(index + 1).padStart(2, "0")}
-                            </span>
-                            <span className={styles.contentsItemLabel}>
-                              {chapter.label}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className={styles.currentCard}>
-                        <span className={styles.currentChapter}>
-                          {activeChapter.chapter}
-                        </span>
-                        <h4 className={styles.currentLabel}>
-                          {activeChapter.label}
-                        </h4>
-                        <p className={styles.currentNote}>
-                          {activeChapter.note}
+                      <div
+                        ref={leftScrollRef}
+                        className={`${styles.pageScroller} ${styles.leftPageScroller}`}
+                      >
+                        <span className={styles.contentsKicker}>Playbook</span>
+                        <h3 className={styles.contentsTitle}>
+                          One portfolio, several operating modes.
+                        </h3>
+                        <p className={styles.contentsText}>
+                          The same build philosophy shows up in different forms:
+                          data movement, experiment design, model delivery, LLM
+                          behavior, product surfaces, and production stability.
                         </p>
+
+                        <div className={styles.contentsList}>
+                          {chapters.map((chapter, index) => (
+                            <div
+                              key={chapter.id}
+                              className={styles.contentsItem}
+                              data-active={index === activeIndex}
+                            >
+                              <span className={styles.contentsItemIndex}>
+                                {String(index + 1).padStart(2, "0")}
+                              </span>
+                              <span className={styles.contentsItemLabel}>
+                                {chapter.label}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className={styles.currentCard}>
+                          <span className={styles.currentChapter}>
+                            {activeChapter.chapter}
+                          </span>
+                          <h4 className={styles.currentLabel}>
+                            {activeChapter.label}
+                          </h4>
+                          <p className={styles.currentNote}>
+                            {activeChapter.note}
+                          </p>
+                        </div>
                       </div>
                     </div>
 
                     <div className={styles.rightPage}>
-                      <RolePage chapter={visibleRightChapter} />
+                      <div ref={rightScrollRef} className={styles.pageScroller}>
+                        <RolePage chapter={visibleRightChapter} />
+                      </div>
                     </div>
                   </div>
 
