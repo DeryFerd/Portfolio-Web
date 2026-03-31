@@ -5,6 +5,15 @@ import { useEffect, useRef, useState } from "react";
 import TextScramble from "@/components/ui/TextScramble";
 import styles from "./AboutTeaser.module.css";
 
+const JAKARTA_TIME_ZONE = "Asia/Jakarta";
+const JAKARTA_TIME_FORMATTER = new Intl.DateTimeFormat("en-GB", {
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false,
+  timeZone: JAKARTA_TIME_ZONE,
+});
+
 const PARAGRAPH_1 =
   "I specialize in Large Language Models and Agentic AI, backed by a strong foundation in Machine Learning and Deep Learning. My work moves beyond basic integrations to focus on building autonomous AI agents and efficient systems, covering RAG, model distillation, and inference optimization.";
 
@@ -12,10 +21,6 @@ const PARAGRAPH_2 =
   "I also design technical curriculums as a Learning Developer, helping others master these technologies. I love solving the hard problems that come with deploying generative AI in the real world.";
 
 const profileRows = [
-  {
-    label: "Base",
-    value: "Malang, Indonesia",
-  },
   {
     label: "Focus",
     value: "LLM systems, agent workflows, and machine learning products.",
@@ -25,6 +30,27 @@ const profileRows = [
     value: "Clarity first, production-minded, and deeply iterative.",
   },
 ];
+
+function formatLocalTime(date: Date) {
+  return `${JAKARTA_TIME_FORMATTER.format(date)} WIB`;
+}
+
+function LiveLocalTime() {
+  const [localTime, setLocalTime] = useState<string | null>(null);
+
+  useEffect(() => {
+    const updateTime = () => {
+      setLocalTime(formatLocalTime(new Date()));
+    };
+
+    updateTime();
+    const intervalId = window.setInterval(updateTime, 1000);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
+
+  return <span className={styles.metaValue}>{localTime ?? "--:--:-- WIB"}</span>;
+}
 
 export default function AboutTeaser() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -88,6 +114,16 @@ export default function AboutTeaser() {
 
           <aside className={styles.profileCard}>
             <p className={styles.cardLabel}>Operational profile</p>
+            <div className={styles.metaGrid}>
+              <div className={styles.metaCell}>
+                <span className={styles.metaLabel}>Location</span>
+                <span className={styles.metaValue}>Malang, Indonesia</span>
+              </div>
+              <div className={styles.metaCell}>
+                <span className={styles.metaLabel}>Local time</span>
+                <LiveLocalTime />
+              </div>
+            </div>
             <div className={styles.cardRows}>
               {profileRows.map((row) => (
                 <div key={row.label} className={styles.cardRow}>
