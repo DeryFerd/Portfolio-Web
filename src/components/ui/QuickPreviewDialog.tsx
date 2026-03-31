@@ -6,6 +6,8 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "./QuickPreviewDialog.module.css";
 
+type CloseIntent = "action" | "button" | "dismiss" | "escape" | "none";
+
 export interface QuickPreviewAction {
   href?: string;
   label: string;
@@ -57,11 +59,11 @@ function ActionControl({
 }: {
   action: QuickPreviewAction;
   className: string;
-  onClose: () => void;
+  onClose: (intent?: CloseIntent) => void;
 }) {
   const handleClick = () => {
     action.onClick?.();
-    onClose();
+    onClose("action");
   };
 
   if (action.href) {
@@ -118,6 +120,7 @@ export default function QuickPreviewDialog({
   const titleId = useId();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastFocusedElementRef = useRef<HTMLElement | null>(null);
+  const closeIntentRef = useRef<CloseIntent>("none");
 
   const { visibleTags, hiddenTagCount } = useMemo(() => {
     const safeTags = tags.filter(Boolean);
@@ -135,15 +138,21 @@ export default function QuickPreviewDialog({
   useEffect(() => {
     if (!isMounted || !open) {
       const previousFocus = lastFocusedElementRef.current;
+      const shouldRestoreFocus =
+        previousFocus &&
+        closeIntentRef.current !== "dismiss" &&
+        closeIntentRef.current !== "action";
 
-      if (previousFocus && typeof previousFocus.focus === "function") {
+      if (shouldRestoreFocus && typeof previousFocus.focus === "function") {
         previousFocus.focus();
       }
 
+      closeIntentRef.current = "none";
       lastFocusedElementRef.current = null;
       return undefined;
     }
 
+    closeIntentRef.current = "none";
     lastFocusedElementRef.current = document.activeElement as HTMLElement | null;
     const previousBodyOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -154,6 +163,7 @@ export default function QuickPreviewDialog({
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        closeIntentRef.current = "escape";
         onClose();
       }
     };
@@ -171,13 +181,18 @@ export default function QuickPreviewDialog({
     return null;
   }
 
+  const handleClose = (intent: CloseIntent = "button") => {
+    closeIntentRef.current = intent;
+    onClose();
+  };
+
   return createPortal(
     <div className={styles.overlay} data-open={open}>
       <button
         type="button"
         className={styles.backdrop}
         aria-label={`Close ${modalLabel}`}
-        onClick={onClose}
+        onClick={() => handleClose("dismiss")}
         suppressHydrationWarning
       />
 
@@ -203,7 +218,7 @@ export default function QuickPreviewDialog({
               type="button"
               className={styles.closeButton}
               aria-label={`Close ${modalLabel}`}
-              onClick={onClose}
+              onClick={() => handleClose("button")}
               suppressHydrationWarning
             >
               x
@@ -233,13 +248,13 @@ export default function QuickPreviewDialog({
                 <ActionControl
                   action={primaryAction}
                   className={styles.primaryAction}
-                  onClose={onClose}
+                  onClose={handleClose}
                 />
                 {secondaryAction ? (
                   <ActionControl
                     action={secondaryAction}
                     className={styles.secondaryAction}
-                    onClose={onClose}
+                    onClose={handleClose}
                   />
                 ) : null}
               </div>
