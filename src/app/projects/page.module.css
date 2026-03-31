@@ -1,7 +1,30 @@
 .page {
+  --archive-card-bg: rgba(250, 246, 238, 0.72);
+  --archive-card-border: rgba(153, 148, 138, 0.18);
+  --archive-card-border-hover: color-mix(in srgb, var(--accent) 28%, rgba(153, 148, 138, 0.18));
+  --archive-card-shadow: 0 24px 54px rgba(48, 40, 29, 0.08);
+  --archive-chip-bg: color-mix(in srgb, var(--bg-secondary) 88%, white 12%);
+  --archive-chip-border: color-mix(in srgb, var(--border) 92%, transparent);
+  --archive-image-frame: color-mix(in srgb, var(--bg-secondary) 90%, white 10%);
+  --archive-image-border: color-mix(in srgb, var(--border) 82%, transparent);
+  --archive-link-bg: color-mix(in srgb, var(--accent) 12%, transparent);
   padding-top: calc(var(--header-height) + var(--spacing-3xl));
   min-height: 100vh;
   padding-bottom: var(--spacing-4xl);
+}
+
+:global([data-theme="dark"]) .page {
+  --archive-card-bg: rgba(19, 24, 27, 0.92);
+  --archive-card-border: rgba(244, 238, 229, 0.1);
+  --archive-card-border-hover: rgba(212, 164, 96, 0.3);
+  --archive-card-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  --archive-chip-bg: rgba(244, 238, 229, 0.05);
+  --archive-chip-border: rgba(244, 238, 229, 0.1);
+  --archive-image-frame: rgba(14, 18, 20, 0.94);
+  --archive-image-border: rgba(244, 238, 229, 0.08);
+  --archive-link-bg: rgba(212, 164, 96, 0.12);
 }
 
 .backLink {
@@ -46,18 +69,23 @@
 
 .card {
   padding: var(--spacing-lg);
-  border: 1px solid rgba(153, 148, 138, 0.18);
+  border: 1px solid var(--archive-card-border);
   border-radius: 1.5rem;
-  background: rgba(250, 246, 238, 0.66);
+  background: var(--archive-card-bg);
+  box-shadow: var(--archive-card-shadow);
+  backdrop-filter: blur(18px);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
-  transition: border-color var(--transition-normal), transform var(--transition-normal);
+  transition:
+    border-color var(--transition-normal),
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal);
 }
 
 .card:hover {
-  border-color: var(--accent);
-  transform: translateY(-4px);
+  border-color: var(--archive-card-border-hover);
+  transform: translateY(-6px);
 }
 
 .imageWrapper {
@@ -66,7 +94,8 @@
   height: 180px;
   overflow: hidden;
   border-radius: 1rem;
-  background-color: var(--bg-secondary);
+  border: 1px solid var(--archive-image-border);
+  background-color: var(--archive-image-frame);
 }
 
 .image {
@@ -102,8 +131,8 @@
 
 .tag {
   padding: 2px var(--spacing-sm);
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background-color: var(--archive-chip-bg);
+  border: 1px solid var(--archive-chip-border);
   font-family: var(--font-mono);
   font-size: 0.64rem;
   color: var(--text-secondary);
@@ -112,16 +141,28 @@
 }
 
 .cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  padding: 0.6rem 0.78rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--archive-link-bg);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
-  transition: color var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 .cardLink:hover {
   color: var(--text-primary);
+  border-color: var(--archive-card-border-hover);
 }
 
 @media (max-width: 768px) {

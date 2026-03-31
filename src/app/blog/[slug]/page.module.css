@@ -1,7 +1,18 @@
 .page {
+  --detail-frame-bg: color-mix(in srgb, var(--bg-secondary) 92%, white 8%);
+  --detail-frame-border: color-mix(in srgb, var(--border) 88%, transparent);
+  --detail-chip-bg: color-mix(in srgb, var(--bg-card) 88%, transparent);
+  --detail-chip-border: color-mix(in srgb, var(--border) 92%, transparent);
   padding-top: calc(var(--header-height) + var(--spacing-3xl));
   min-height: 100vh;
   padding-bottom: var(--spacing-4xl);
+}
+
+:global([data-theme="dark"]) .page {
+  --detail-frame-bg: rgba(14, 18, 20, 0.94);
+  --detail-frame-border: rgba(244, 238, 229, 0.08);
+  --detail-chip-bg: rgba(244, 238, 229, 0.05);
+  --detail-chip-border: rgba(244, 238, 229, 0.1);
 }
 
 .backLink {
@@ -47,8 +58,8 @@
 
 .tag {
   padding: 2px var(--spacing-sm);
-  background-color: var(--bg-card);
-  border: 1px solid var(--border);
+  background-color: var(--detail-chip-bg);
+  border: 1px solid var(--detail-chip-border);
   font-family: var(--font-mono);
   font-size: 0.64rem;
   color: var(--text-secondary);
@@ -69,7 +80,9 @@
   height: 360px;
   overflow: hidden;
   margin-bottom: var(--spacing-2xl);
-  background-color: var(--bg-secondary);
+  border: 1px solid var(--detail-frame-border);
+  border-radius: 1.4rem;
+  background-color: var(--detail-frame-bg);
 }
 
 .coverImage {
