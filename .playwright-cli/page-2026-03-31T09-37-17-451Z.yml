@@ -1,0 +1,40 @@
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - link "About" [ref=e7] [cursor=pointer]:
+        - /url: "#about"
+        - generic [ref=e8]: About
+      - link "Projects" [ref=e9] [cursor=pointer]:
+        - /url: "#projects"
+        - generic [ref=e10]: Projects
+      - link "Experience" [ref=e11] [cursor=pointer]:
+        - /url: "#experience"
+        - generic [ref=e12]: Experience
+      - link "Contact" [ref=e13] [cursor=pointer]:
+        - /url: "#contact"
+        - generic [ref=e14]: Contact
+    - button "Let's Talk" [ref=e17] [cursor=pointer]:
+      - generic [ref=e18]: Let's Talk
+  - banner [ref=e19]:
+    - main [ref=e22]:
+      - generic [ref=e23]: Building AI systems with product-level clarity.
+      - heading "Hi! I am Firdaus" [level=1] [ref=e24]:
+        - generic [ref=e26]: Hi!
+        - generic [ref=e29]: I
+        - generic [ref=e32]: am
+        - generic [ref=e35]: Firdaus
+      - paragraph [ref=e36]: An AI engineer with full-stack delivery experience, building intelligent products from model design to production-ready interfaces.
+      - generic [ref=e37]:
+        - button "01 About" [ref=e38] [cursor=pointer]:
+          - generic [ref=e39]: "01"
+          - generic [ref=e40]: About
+          - img [ref=e41]
+        - button "02 Work" [ref=e44] [cursor=pointer]:
+          - generic [ref=e45]: "02"
+          - generic [ref=e46]: Work
+          - img [ref=e47]
+        - button "03 Contact" [ref=e50] [cursor=pointer]:
+          - generic [ref=e51]: "03"
+          - generic [ref=e52]: Contact
+          - img [ref=e53]
+  - main [ref=e57]

@@ -153,6 +153,8 @@ export default function PortfolioChatPanel({
       <aside
         className={styles.panel}
         data-open={open}
+        role="dialog"
+        aria-modal="true"
         aria-hidden={!open}
         aria-label="Portfolio AI chat"
       >
@@ -167,7 +169,7 @@ export default function PortfolioChatPanel({
             onClick={onClose}
             aria-label="Close AI chat"
           >
-            ×
+            x
           </button>
         </div>
 

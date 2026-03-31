@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import LetsTalkPanel from "@/components/layout/LetsTalkPanel";
 import PortfolioChatPanel from "@/components/layout/PortfolioChatPanel";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import styles from "./Header.module.css";
@@ -18,6 +19,7 @@ const DIRECTION_THRESHOLD = 10;
 
 export default function Header() {
   const [isHidden, setIsHidden] = useState(false);
+  const [isLetsTalkOpen, setIsLetsTalkOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const lastScrollYRef = useRef(0);
   const hiddenRef = useRef(false);
@@ -74,19 +76,24 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (!isChatOpen) {
+    if (!isChatOpen && !isLetsTalkOpen) {
       return;
     }
 
     hiddenRef.current = false;
     setIsHidden(false);
-  }, [isChatOpen]);
+  }, [isChatOpen, isLetsTalkOpen]);
+
+  const handleOpenChat = () => {
+    setIsLetsTalkOpen(false);
+    setIsChatOpen(true);
+  };
 
   return (
     <>
       <header
         className={styles.header}
-        data-hidden={isChatOpen ? false : isHidden}
+        data-hidden={isChatOpen || isLetsTalkOpen ? false : isHidden}
         data-robot-avoid
       >
         <div className={`container ${styles.headerShell}`}>
@@ -102,24 +109,28 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
-              <button
-                type="button"
-                className={styles.chatLink}
-                onClick={() => setIsChatOpen(true)}
-              >
-                Chat with My AI
-              </button>
             </nav>
 
             <div className={styles.actions}>
-              <Link href="/#contact" className={styles.contactLink}>
+              <button
+                type="button"
+                className={styles.contactButton}
+                aria-haspopup="dialog"
+                aria-expanded={isLetsTalkOpen}
+                onClick={() => setIsLetsTalkOpen(true)}
+              >
                 Let&apos;s Talk
-              </Link>
+              </button>
               <ThemeToggle />
             </div>
           </div>
         </div>
       </header>
+      <LetsTalkPanel
+        open={isLetsTalkOpen}
+        onClose={() => setIsLetsTalkOpen(false)}
+        onOpenChat={handleOpenChat}
+      />
       <PortfolioChatPanel
         open={isChatOpen}
         onClose={() => setIsChatOpen(false)}
