@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import LetsTalkPanel from "@/components/layout/LetsTalkPanel";
 import PortfolioChatPanel from "@/components/layout/PortfolioChatPanel";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -21,6 +22,7 @@ export default function Header() {
   const [isHidden, setIsHidden] = useState(false);
   const [isLetsTalkOpen, setIsLetsTalkOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const pathname = usePathname();
   const lastScrollYRef = useRef(0);
   const hiddenRef = useRef(false);
 
@@ -89,6 +91,37 @@ export default function Header() {
     setIsChatOpen(true);
   };
 
+  const handleNavLinkClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (pathname !== "/" || !href.startsWith("/#")) {
+      return;
+    }
+
+    const targetId = href.slice(2);
+    const targetElement = document.getElementById(targetId);
+
+    if (!targetElement) {
+      return;
+    }
+
+    event.preventDefault();
+    hiddenRef.current = false;
+    setIsHidden(false);
+
+    const headerHeight =
+      Number.parseFloat(
+        window.getComputedStyle(document.documentElement).getPropertyValue("--header-height"),
+      ) || 64;
+
+    const targetTop =
+      targetElement.getBoundingClientRect().top + window.scrollY - headerHeight - 18;
+
+    window.history.replaceState(null, "", href);
+    window.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
       <header
@@ -105,7 +138,12 @@ export default function Header() {
 
             <nav className={styles.nav}>
               {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className={styles.navLink}>
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={styles.navLink}
+                  onClick={(event) => handleNavLinkClick(event, link.href)}
+                >
                   {link.label}
                 </Link>
               ))}
