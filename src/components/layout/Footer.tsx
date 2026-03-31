@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Footer.module.css";
 
 const socialLinks = [
@@ -8,6 +11,12 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname !== "/") {
+    return null;
+  }
+
   return (
     <footer className={styles.footer} data-robot-avoid>
       <div className="container">
