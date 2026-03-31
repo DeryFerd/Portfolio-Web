@@ -5,9 +5,14 @@
 }
 
 .backLink {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   margin-bottom: var(--spacing-lg);
-  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--text-secondary);
   transition: color var(--transition-fast);
 }
@@ -28,8 +33,11 @@
 }
 
 .date {
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
   color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .tags {
@@ -41,14 +49,18 @@
   padding: 2px var(--spacing-sm);
   background-color: var(--bg-card);
   border: 1px solid var(--border);
-  font-size: 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
   color: var(--text-secondary);
   text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  line-height: 1.2;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  line-height: 0.94;
+  letter-spacing: -0.065em;
 }
 
 .coverWrapper {
@@ -71,23 +83,26 @@
 }
 
 .heading2 {
-  font-size: 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
   margin-top: var(--spacing-2xl);
   margin-bottom: var(--spacing-md);
   color: var(--accent);
 }
 
 .paragraph {
-  font-size: 0.9375rem;
+  font-size: 0.98rem;
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.82;
   margin-bottom: var(--spacing-md);
 }
 
 .listItem {
-  font-size: 0.9375rem;
+  font-size: 0.98rem;
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.82;
   margin-bottom: var(--spacing-sm);
   margin-left: var(--spacing-lg);
 }

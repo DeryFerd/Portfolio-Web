@@ -1,12 +1,18 @@
 .page {
   padding-top: calc(var(--header-height) + var(--spacing-3xl));
   min-height: 100vh;
+  padding-bottom: var(--spacing-4xl);
 }
 
 .backLink {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   margin-bottom: var(--spacing-lg);
-  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--text-secondary);
   transition: color var(--transition-fast);
 }
@@ -16,16 +22,19 @@
 }
 
 .title {
-  font-size: 2.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 5.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.065em;
   margin-bottom: var(--spacing-md);
 }
 
 .subtitle {
   font-size: 1rem;
   color: var(--text-secondary);
-  max-width: 600px;
+  max-width: 42rem;
   margin-bottom: var(--spacing-2xl);
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 .grid {
@@ -37,8 +46,9 @@
 
 .card {
   padding: var(--spacing-lg);
-  border: 1px solid var(--border);
-  background-color: var(--bg-card);
+  border: 1px solid rgba(153, 148, 138, 0.18);
+  border-radius: 1.5rem;
+  background: rgba(250, 246, 238, 0.66);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -55,6 +65,7 @@
   width: 100%;
   height: 180px;
   overflow: hidden;
+  border-radius: 1rem;
   background-color: var(--bg-secondary);
 }
 
@@ -70,13 +81,16 @@
 }
 
 .cardTitle {
-  font-size: 1.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
 }
 
 .cardDescription {
-  font-size: 0.875rem;
+  font-size: 0.94rem;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.72;
   flex-grow: 1;
 }
 
@@ -90,14 +104,18 @@
   padding: 2px var(--spacing-sm);
   background-color: var(--bg-secondary);
   border: 1px solid var(--border);
-  font-size: 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.12em;
 }
 
 .cardLink {
-  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--accent);
   transition: color var(--transition-fast);
 }

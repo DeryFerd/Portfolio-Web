@@ -138,8 +138,8 @@ export default async function ProjectDetail({
   return (
     <div className={styles.page}>
       <div className="container">
-        <Link href="/projects" className={styles.backLink}>
-          &larr; Back to Projects
+        <Link href="/#projects" className={styles.backLink}>
+          &larr; Back to Home
         </Link>
         
         <div className={styles.imageWrapper}>

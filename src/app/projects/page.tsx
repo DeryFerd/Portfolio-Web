@@ -45,21 +45,22 @@ const projects = [
     slug: "time-series",
     image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=400&fit=crop",
   },
-];
+] as const;
 
 export default function ProjectsPage() {
   return (
     <div className={styles.page}>
       <div className="container">
-        <Link href="/" className={styles.backLink}>
-          ← Back to Home
+        <Link href="/#projects" className={styles.backLink}>
+          &larr; Back to Home
         </Link>
         <h1 className={styles.title}>
-          <span className="text-accent">#</span> Projects
+          <span className="text-accent">#</span> My Projects
         </h1>
         <p className={styles.subtitle}>
-          A collection of AI/ML projects showcasing my work in machine learning, 
-          deep learning, and artificial intelligence.
+          A working archive of AI, data, and product-facing builds, shaped less
+          like a dump of demos and more like a record of systems delivered with
+          intent.
         </p>
         <div className={styles.grid}>
           {projects.map((project) => (
@@ -93,4 +94,3 @@ export default function ProjectsPage() {
     </div>
   );
 }
-

@@ -5,9 +5,14 @@
 }
 
 .backLink {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   margin-bottom: var(--spacing-lg);
-  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--text-secondary);
   transition: color var(--transition-fast);
 }
@@ -31,7 +36,10 @@
 }
 
 .title {
-  font-size: 2.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 4.8rem);
+  line-height: 0.92;
+  letter-spacing: -0.065em;
   margin-bottom: var(--spacing-md);
 }
 
@@ -46,16 +54,17 @@
   padding: var(--spacing-xs) var(--spacing-md);
   background-color: var(--bg-card);
   border: 1px solid var(--border);
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.12em;
 }
 
 .description {
-  font-size: 1.125rem;
+  font-size: 1.08rem;
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.82;
   margin-bottom: var(--spacing-2xl);
   max-width: 800px;
 }
@@ -66,7 +75,10 @@
 }
 
 .heading2 {
-  font-size: 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
   margin-top: var(--spacing-xl);
   margin-bottom: var(--spacing-md);
   color: var(--accent);
@@ -79,9 +91,9 @@
 }
 
 .paragraph {
-  font-size: 0.9375rem;
+  font-size: 0.98rem;
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.82;
   margin-bottom: var(--spacing-sm);
 }
 
@@ -96,8 +108,10 @@
   padding: var(--spacing-md) var(--spacing-xl);
   background-color: var(--accent);
   color: var(--bg-primary);
-  font-weight: 600;
-  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   transition: all var(--transition-normal);
 }
 

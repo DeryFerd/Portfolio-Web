@@ -7,14 +7,15 @@ export default function BlogPage() {
   return (
     <div className={styles.page}>
       <div className="container">
-        <Link href="/" className={styles.backLink}>
-          ← Back to Home
+        <Link href="/#blog" className={styles.backLink}>
+          &larr; Back to Home
         </Link>
         <h1 className={styles.title}>
-          <span className="text-accent">#</span> Blog
+          <span className="text-accent">#</span> My Blog
         </h1>
         <p className={styles.subtitle}>
-          Thoughts on AI, machine learning, and building intelligent systems.
+          Notes, experiments, and technical reflections from building across
+          AI, machine learning, data systems, and delivery.
         </p>
 
         <div className={styles.grid}>
