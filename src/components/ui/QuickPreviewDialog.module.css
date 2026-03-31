@@ -1,4 +1,19 @@
 .overlay {
+  --dialog-surface: linear-gradient(180deg, rgb(248, 243, 234), rgb(244, 238, 228));
+  --dialog-surface-base: #f3ece0;
+  --dialog-border: rgba(23, 24, 21, 0.09);
+  --dialog-border-strong: rgba(149, 141, 127, 0.24);
+  --dialog-outline: rgba(161, 153, 139, 0.26);
+  --dialog-panel: rgba(255, 252, 247, 0.76);
+  --dialog-panel-strong: rgba(255, 252, 247, 0.82);
+  --dialog-muted: rgba(93, 86, 77, 0.68);
+  --dialog-soft: rgba(56, 52, 46, 0.82);
+  --dialog-tag: rgba(72, 66, 58, 0.8);
+  --dialog-accent-bg: rgba(52, 74, 60, 0.08);
+  --dialog-accent-fg: rgba(52, 74, 60, 0.82);
+  --dialog-shadow: rgba(0, 0, 0, 0.16);
+  --dialog-image-frame: #d5cdbc;
+  --dialog-backdrop: rgba(16, 19, 20, 0.54);
   position: fixed;
   inset: 0;
   z-index: 118;
@@ -6,6 +21,24 @@
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
+}
+
+:global([data-theme="dark"]) .overlay {
+  --dialog-surface: linear-gradient(180deg, rgba(22, 27, 30, 0.98), rgba(14, 18, 20, 0.98));
+  --dialog-surface-base: #0f1316;
+  --dialog-border: rgba(244, 238, 229, 0.08);
+  --dialog-border-strong: rgba(244, 238, 229, 0.12);
+  --dialog-outline: rgba(244, 238, 229, 0.08);
+  --dialog-panel: rgba(255, 255, 255, 0.05);
+  --dialog-panel-strong: rgba(255, 255, 255, 0.08);
+  --dialog-muted: rgba(200, 195, 187, 0.72);
+  --dialog-soft: rgba(240, 233, 223, 0.84);
+  --dialog-tag: rgba(240, 233, 223, 0.84);
+  --dialog-accent-bg: color-mix(in srgb, var(--accent) 16%, rgba(255, 255, 255, 0.03));
+  --dialog-accent-fg: color-mix(in srgb, var(--accent) 58%, #f4eee5);
+  --dialog-shadow: rgba(0, 0, 0, 0.44);
+  --dialog-image-frame: #1a2023;
+  --dialog-backdrop: rgba(6, 8, 10, 0.68);
 }
 
 .overlay[data-open="true"] {
@@ -16,7 +49,7 @@
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(16, 19, 20, 0.54);
+  background: var(--dialog-backdrop);
   backdrop-filter: blur(6px);
   opacity: 0;
   transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -45,13 +78,11 @@
   display: grid;
   gap: clamp(1.3rem, 2vw, 1.8rem);
   padding: clamp(1rem, 2vw, 1.4rem);
-  border: 1px solid rgba(23, 24, 21, 0.09);
+  border: 1px solid var(--dialog-border);
   border-radius: 1.9rem;
-  background:
-    linear-gradient(180deg, rgb(248, 243, 234), rgb(244, 238, 228)),
-    #f3ece0;
+  background: var(--dialog-surface), var(--dialog-surface-base);
   box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.16),
+    0 30px 80px var(--dialog-shadow),
     0 1px 0 rgba(255, 255, 255, 0.82) inset;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -104,18 +135,18 @@
   min-height: 2rem;
   padding: 0.46rem 0.74rem;
   border-radius: 999px;
-  background: rgba(255, 252, 247, 0.76);
-  border: 1px solid rgba(149, 141, 127, 0.24);
-  color: rgba(56, 52, 46, 0.8);
+  background: var(--dialog-panel);
+  border: 1px solid var(--dialog-border-strong);
+  color: var(--dialog-soft);
 }
 
 .closeButton {
   width: 2.75rem;
   height: 2.75rem;
-  border: 1px solid rgba(147, 138, 123, 0.34);
+  border: 1px solid var(--dialog-border-strong);
   border-radius: 0.95rem;
-  background: rgba(255, 252, 247, 0.78);
-  color: rgba(59, 54, 47, 0.74);
+  background: var(--dialog-panel);
+  color: var(--dialog-soft);
   font-family: var(--font-mono);
   font-size: 0.98rem;
   line-height: 1;
@@ -127,8 +158,8 @@
 
 .closeButton:hover {
   transform: translateY(-1px);
-  border-color: rgba(122, 114, 100, 0.54);
-  background: rgba(255, 255, 255, 0.92);
+  border-color: var(--dialog-soft);
+  background: var(--dialog-panel-strong);
 }
 
 .leadGrid {
@@ -146,7 +177,7 @@
 
 .kindLabel,
 .sectionEyebrow {
-  color: rgba(93, 86, 77, 0.68);
+  color: var(--dialog-muted);
 }
 
 .title {
@@ -180,17 +211,17 @@
 }
 
 .tag {
-  border: 1px solid rgba(160, 151, 135, 0.34);
-  background: rgba(255, 252, 247, 0.7);
+  border: 1px solid var(--dialog-border-strong);
+  background: var(--dialog-panel);
   font-size: 0.77rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(72, 66, 58, 0.8);
+  color: var(--dialog-tag);
 }
 
 .tagOverflow {
-  background: rgba(52, 74, 60, 0.08);
-  color: rgba(52, 74, 60, 0.82);
+  background: var(--dialog-accent-bg);
+  color: var(--dialog-accent-fg);
 }
 
 .actionRow {
@@ -231,14 +262,14 @@
 }
 
 .secondaryAction {
-  border: 1px solid rgba(147, 138, 123, 0.38);
-  background: rgba(255, 252, 247, 0.72);
-  color: rgba(56, 52, 46, 0.82);
+  border: 1px solid var(--dialog-border-strong);
+  background: var(--dialog-panel);
+  color: var(--dialog-soft);
 }
 
 .secondaryAction:hover {
   transform: translateY(-1px);
-  border-color: rgba(122, 114, 100, 0.54);
+  border-color: var(--dialog-soft);
 }
 
 .imageFrame {
@@ -246,7 +277,7 @@
   overflow: hidden;
   min-height: clamp(20rem, 34vw, 28rem);
   border-radius: 1.6rem;
-  background: #d5cdbc;
+  background: var(--dialog-image-frame);
   box-shadow: 0 18px 42px rgba(66, 56, 46, 0.12);
 }
 
@@ -267,7 +298,7 @@
   display: grid;
   gap: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(161, 153, 139, 0.26);
+  border-top: 1px solid var(--dialog-outline);
 }
 
 .sectionHeader {
@@ -309,12 +340,12 @@
   min-height: 2.2rem;
   padding: 0.2rem;
   border-radius: 0.8rem;
-  background: rgba(255, 252, 247, 0.78);
-  border: 1px solid rgba(163, 154, 140, 0.28);
+  background: var(--dialog-panel-strong);
+  border: 1px solid var(--dialog-border-strong);
   font-size: 0.67rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(68, 63, 55, 0.75);
+  color: var(--dialog-soft);
 }
 
 .numberedText,
@@ -338,8 +369,8 @@
   gap: 0.85rem;
   padding: 0.9rem;
   border-radius: 1.2rem;
-  background: rgba(255, 252, 247, 0.76);
-  border: 1px solid rgba(164, 155, 139, 0.24);
+  background: var(--dialog-panel);
+  border: 1px solid var(--dialog-border-strong);
 }
 
 .cardMetaRow {
@@ -351,7 +382,7 @@
 
 .cardIndex,
 .cardMeta {
-  color: rgba(92, 86, 77, 0.62);
+  color: var(--dialog-muted);
 }
 
 .cardTitle {
