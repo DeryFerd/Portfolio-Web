@@ -4,6 +4,7 @@
   z-index: 118;
   pointer-events: none;
   overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
 }
 
@@ -37,6 +38,8 @@
 }
 
 .dialog {
+  position: relative;
+  isolation: isolate;
   width: min(72rem, calc(100vw - (var(--dialog-gap) * 2)));
   max-height: calc(100dvh - (var(--dialog-gap) * 2));
   display: grid;
@@ -45,13 +48,14 @@
   border: 1px solid rgba(23, 24, 21, 0.09);
   border-radius: 1.9rem;
   background:
-    linear-gradient(180deg, rgba(248, 243, 234, 0.985), rgba(244, 238, 228, 0.965)),
+    linear-gradient(180deg, rgb(248, 243, 234), rgb(244, 238, 228)),
     #f3ece0;
   box-shadow:
     0 30px 80px rgba(0, 0, 0, 0.16),
     0 1px 0 rgba(255, 255, 255, 0.82) inset;
   overflow-y: auto;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   scrollbar-gutter: stable;
   transform: translateY(2rem) scale(0.972);
   opacity: 0;

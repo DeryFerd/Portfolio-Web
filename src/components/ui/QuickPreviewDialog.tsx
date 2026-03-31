@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useId, useMemo, useRef } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import styles from "./QuickPreviewDialog.module.css";
 
 export interface QuickPreviewAction {
@@ -113,10 +114,7 @@ export default function QuickPreviewDialog({
   title,
   year,
 }: QuickPreviewDialogProps) {
-  if (!open) {
-    return null;
-  }
-
+  const [isMounted, setIsMounted] = useState(false);
   const titleId = useId();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastFocusedElementRef = useRef<HTMLElement | null>(null);
@@ -131,7 +129,11 @@ export default function QuickPreviewDialog({
   }, [tags]);
 
   useEffect(() => {
-    if (!open) {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || !open) {
       const previousFocus = lastFocusedElementRef.current;
 
       if (previousFocus && typeof previousFocus.focus === "function") {
@@ -143,11 +145,8 @@ export default function QuickPreviewDialog({
     }
 
     lastFocusedElementRef.current = document.activeElement as HTMLElement | null;
-
     const previousBodyOverflow = document.body.style.overflow;
-    const previousDocumentOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
 
     const focusTimeoutId = window.setTimeout(() => {
       closeButtonRef.current?.focus();
@@ -163,13 +162,16 @@ export default function QuickPreviewDialog({
 
     return () => {
       document.body.style.overflow = previousBodyOverflow;
-      document.documentElement.style.overflow = previousDocumentOverflow;
       window.clearTimeout(focusTimeoutId);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onClose, open]);
+  }, [isMounted, onClose, open]);
 
-  return (
+  if (!isMounted || !open) {
+    return null;
+  }
+
+  return createPortal(
     <div className={styles.overlay} data-open={open}>
       <button
         type="button"
@@ -308,6 +310,7 @@ export default function QuickPreviewDialog({
           </section>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
