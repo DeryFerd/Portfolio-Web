@@ -2,6 +2,8 @@
   position: fixed;
   inset: 0;
   z-index: 112;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   pointer-events: none;
 }
 
@@ -25,13 +27,17 @@
 
 .shell {
   position: relative;
+  min-height: 100%;
   display: flex;
   justify-content: flex-end;
+  align-items: flex-start;
   padding-top: 5.85rem;
+  padding-bottom: 1rem;
 }
 
 .panel {
   width: min(30rem, 100%);
+  max-height: calc(100dvh - 6.85rem);
   display: grid;
   gap: 1rem;
   padding: 0.95rem;
@@ -44,6 +50,10 @@
     0 30px 90px rgba(8, 10, 12, 0.2),
     0 6px 20px rgba(255, 255, 255, 0.3) inset;
   color: #1f1d1a;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
   transform: translateY(-0.85rem) scale(0.98);
   transform-origin: top right;
   opacity: 0;
@@ -394,15 +404,21 @@
   .shell {
     padding-top: 5.5rem;
   }
+
+  .panel {
+    max-height: calc(100dvh - 6.3rem);
+  }
 }
 
 @media (max-width: 640px) {
   .shell {
     padding-top: 5.1rem;
+    padding-bottom: 0.7rem;
   }
 
   .panel {
     width: 100%;
+    max-height: calc(100dvh - 5.8rem);
     border-radius: 1.6rem;
   }
 
