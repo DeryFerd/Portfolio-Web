@@ -231,6 +231,14 @@
   gap: 0.7rem;
 }
 
+.mapNarrative {
+  max-width: 38rem;
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: rgba(33, 50, 40, 0.72);
+  text-wrap: pretty;
+}
+
 .legendLabel,
 .legendMeta {
   font-size: 0.68rem;

@@ -106,6 +106,47 @@ function getPeakMonth(
   return peakMonth;
 }
 
+function buildMapNarrative({
+  peakMonth,
+  latestPush,
+  activeDays,
+  longestStreak,
+}: {
+  peakMonth: { key: string; total: number } | null;
+  latestPush:
+    | {
+        name: string;
+        language: string | null;
+        pushedAt: string;
+      }
+    | null;
+  activeDays: number;
+  longestStreak: number;
+}) {
+  if (!peakMonth && !latestPush) {
+    return "Public activity is visible here as a steady record of shipped work over the last year.";
+  }
+
+  const peakMonthLabel = peakMonth
+    ? formatInsightDate(`${peakMonth.key}-01`)
+    : "the most active stretch";
+  const pushLabel = latestPush ? latestPush.name : "the latest repository";
+  const pushDate = latestPush ? formatRepoDate(latestPush.pushedAt) : "recently";
+  const languageLabel = latestPush?.language
+    ? ` in ${latestPush.language}`
+    : "";
+
+  if (longestStreak >= 14) {
+    return `Momentum peaked in ${peakMonthLabel}, and the latest visible push sits in ${pushLabel}${languageLabel}, updated ${pushDate}. That rhythm was backed by a ${longestStreak}-day streak across ${activeDays} active days.`;
+  }
+
+  if (activeDays >= 140) {
+    return `Peak public output landed in ${peakMonthLabel}, while ${pushLabel}${languageLabel} remains the freshest visible push from ${pushDate}. The broader pattern still holds across ${activeDays} active days.`;
+  }
+
+  return `The strongest visible push landed in ${peakMonthLabel}, and the latest repo movement now points to ${pushLabel}${languageLabel}, updated ${pushDate}. It reads as steady iteration rather than a one-off spike.`;
+}
+
 export default async function GitHubProof() {
   const data = await getGitHubProofData();
   const activeDays = data.contributions.filter((day) => day.count > 0).length;
@@ -114,6 +155,12 @@ export default async function GitHubProof() {
   const longestStreak = getLongestStreak(data.contributions);
   const peakMonth = getPeakMonth(data.contributions);
   const latestPush = data.recentRepos[0] ?? null;
+  const mapNarrative = buildMapNarrative({
+    peakMonth,
+    latestPush,
+    activeDays,
+    longestStreak,
+  });
   const mapStyle = {
     "--week-count": weekCount,
   } as CSSProperties;
@@ -298,6 +345,8 @@ export default async function GitHubProof() {
                   </div>
                   <span className={styles.legendMeta}>Low to high</span>
                 </div>
+
+                <p className={styles.mapNarrative}>{mapNarrative}</p>
               </div>
             ) : null}
           </div>
