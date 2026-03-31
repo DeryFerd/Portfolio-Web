@@ -93,6 +93,7 @@ export default function Experience() {
                     className={styles.itemTrigger}
                     aria-expanded={openIndex === index}
                     aria-controls={`experience-panel-${index}`}
+                    suppressHydrationWarning
                     onClick={() =>
                       setOpenIndex((currentIndex) =>
                         currentIndex === index ? null : index,

@@ -86,7 +86,12 @@ function ActionControl({
   }
 
   return (
-    <button type="button" className={className} onClick={handleClick}>
+    <button
+      type="button"
+      className={className}
+      onClick={handleClick}
+      suppressHydrationWarning
+    >
       {action.label}
     </button>
   );
@@ -108,6 +113,10 @@ export default function QuickPreviewDialog({
   title,
   year,
 }: QuickPreviewDialogProps) {
+  if (!open) {
+    return null;
+  }
+
   const titleId = useId();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastFocusedElementRef = useRef<HTMLElement | null>(null);
@@ -167,9 +176,10 @@ export default function QuickPreviewDialog({
         className={styles.backdrop}
         aria-label={`Close ${modalLabel}`}
         onClick={onClose}
+        suppressHydrationWarning
       />
 
-      <div className={`container ${styles.shell}`}>
+      <div className={styles.shell}>
         <div
           className={styles.dialog}
           data-open={open}
@@ -192,6 +202,7 @@ export default function QuickPreviewDialog({
               className={styles.closeButton}
               aria-label={`Close ${modalLabel}`}
               onClick={onClose}
+              suppressHydrationWarning
             >
               x
             </button>

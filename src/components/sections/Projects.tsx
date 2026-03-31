@@ -238,6 +238,7 @@ export default function Projects() {
                     onClick={() => handleOpenPreview(index)}
                     aria-haspopup="dialog"
                     aria-expanded={previewSlug === project.slug}
+                    suppressHydrationWarning
                   >
                     <span className={styles.projectNumber}>
                       _ {String(index + 1).padStart(2, "0")} .

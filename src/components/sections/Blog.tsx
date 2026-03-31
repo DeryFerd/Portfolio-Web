@@ -125,6 +125,7 @@ export default function Blog() {
                     onClick={() => handleOpenPreview(index)}
                     aria-haspopup="dialog"
                     aria-expanded={previewSlug === post.slug}
+                    suppressHydrationWarning
                   >
                     <span className={styles.postNumber}>
                       _ {String(index + 1).padStart(2, "0")} .
