@@ -18,7 +18,7 @@
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(33, 50, 40, 0.6);
+  color: var(--text-muted);
 }
 
 .title {
@@ -71,7 +71,7 @@
 .profileCard {
   padding: 1.35rem;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.24);
+  background: var(--bg-card);
   backdrop-filter: blur(14px);
 }
 
@@ -80,7 +80,7 @@
   font-size: 0.74rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(33, 50, 40, 0.56);
+  color: var(--text-muted);
 }
 
 .metaGrid {
@@ -106,7 +106,7 @@
   font-size: 0.68rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(33, 50, 40, 0.48);
+  color: var(--text-muted);
 }
 
 .metaValue {
@@ -137,7 +137,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(33, 50, 40, 0.52);
+  color: var(--text-muted);
 }
 
 .rowValue {

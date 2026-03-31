@@ -18,7 +18,7 @@
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(33, 50, 40, 0.6);
+  color: var(--text-muted);
 }
 
 .title {
@@ -79,12 +79,12 @@
   height: 2rem;
   margin-top: 1.05rem;
   border-radius: 0.7rem;
-  border: 1px solid rgba(87, 111, 72, 0.16);
-  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(64, 84, 56, 0.74);
+  color: var(--text-secondary);
 }
 
 .item[data-open="true"] .itemNumber {
@@ -142,7 +142,7 @@
   font-size: 0.76rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(33, 50, 40, 0.56);
+  color: var(--text-muted);
 }
 
 .chevron {
@@ -152,9 +152,9 @@
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 999px;
-  border: 1px solid rgba(87, 111, 72, 0.16);
-  background: rgba(255, 255, 255, 0.36);
-  color: rgba(44, 60, 45, 0.82);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
   transition:
     transform var(--transition-normal),
     background-color var(--transition-normal),
@@ -242,12 +242,12 @@
   min-height: 2rem;
   padding: 0.4rem 0.8rem;
   border-radius: 999px;
-  border: 1px solid rgba(87, 111, 72, 0.16);
-  background: rgba(255, 255, 255, 0.38);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
   font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(64, 84, 56, 0.78);
+  color: var(--text-secondary);
 }
 
 .itemTrigger:hover .role,

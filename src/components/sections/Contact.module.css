@@ -15,7 +15,7 @@
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(33, 50, 40, 0.6);
+  color: var(--text-muted);
 }
 
 .title {
@@ -47,7 +47,7 @@
 .meta {
   padding: 1.2rem;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.24);
+  background: var(--bg-card);
   backdrop-filter: blur(12px);
 }
 
@@ -67,7 +67,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(33, 50, 40, 0.52);
+  color: var(--text-muted);
 }
 
 .metaValue {
@@ -92,7 +92,7 @@
   padding: 0.4rem 0.85rem;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.32);
+  background: var(--bg-card);
   font-size: 0.84rem;
   color: var(--text-primary);
 }
