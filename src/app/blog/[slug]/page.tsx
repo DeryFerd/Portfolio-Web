@@ -23,9 +23,14 @@ export default async function BlogPost({
   return (
     <div className={styles.page}>
       <div className="container">
-        <Link href="/#blog" className={styles.backLink}>
-          &larr; Back to Home
-        </Link>
+        <div className={styles.backNav}>
+          <Link href="/blog" className={styles.backLink}>
+            &larr; Back to My Blog
+          </Link>
+          <Link href="/#blog" className={styles.backLinkSecondary}>
+            Back to Home
+          </Link>
+        </div>
 
         <header className={styles.header}>
           <div className={styles.meta}>
