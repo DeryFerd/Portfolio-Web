@@ -23,6 +23,13 @@
 # misc
 .DS_Store
 *.pem
+.codex/
+.codex-*.log
+.codex-start-*.log
+.codex-start-*.err
+.codex-zickrian-*
+.playwright-cli/
+artifacts/
 
 # debug
 npm-debug.log*
