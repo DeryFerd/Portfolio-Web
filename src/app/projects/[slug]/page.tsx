@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ArchiveIcon, HomeIcon } from "@/components/ui/BackLinkIcons";
 import styles from "./page.module.css";
 
 const projectData: Record<string, {
@@ -140,10 +141,12 @@ export default async function ProjectDetail({
       <div className="container">
         <div className={styles.backNav}>
           <Link href="/projects" className={styles.backLink}>
-            &larr; Back to My Projects
+            <ArchiveIcon className={styles.backIcon} />
+            <span>Back to My Projects</span>
           </Link>
           <Link href="/#projects" className={styles.backLinkSecondary}>
-            Back to Home
+            <HomeIcon className={styles.backIcon} />
+            <span>Back to Home</span>
           </Link>
         </div>
         

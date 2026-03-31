@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { ArchiveIcon, HomeIcon } from "@/components/ui/BackLinkIcons";
 import { getPostBySlug, posts } from "@/lib/blogData";
 import styles from "./page.module.css";
 
@@ -25,10 +26,12 @@ export default async function BlogPost({
       <div className="container">
         <div className={styles.backNav}>
           <Link href="/blog" className={styles.backLink}>
-            &larr; Back to My Blog
+            <ArchiveIcon className={styles.backIcon} />
+            <span>Back to My Blog</span>
           </Link>
           <Link href="/#blog" className={styles.backLinkSecondary}>
-            Back to Home
+            <HomeIcon className={styles.backIcon} />
+            <span>Back to Home</span>
           </Link>
         </div>
 

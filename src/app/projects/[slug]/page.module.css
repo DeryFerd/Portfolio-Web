@@ -18,21 +18,25 @@
 }
 
 .backNav {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.32rem;
   flex-wrap: wrap;
   margin-bottom: var(--spacing-lg);
+  padding: 0.3rem;
+  border: 1px solid var(--detail-chip-border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--detail-chip-bg) 72%, transparent);
 }
 
 .backLink {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.65rem 0.92rem;
-  border: 1px solid var(--detail-chip-border);
+  gap: 0.5rem;
+  padding: 0.62rem 0.88rem;
+  border: 1px solid transparent;
   border-radius: 999px;
-  background: var(--detail-chip-bg);
+  background: color-mix(in srgb, var(--detail-chip-bg) 92%, transparent);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.14em;
@@ -50,16 +54,33 @@
 }
 
 .backLinkSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.62rem 0.88rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-muted);
-  transition: color var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 .backLinkSecondary:hover {
   color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--detail-chip-border) 92%, transparent);
+  background: color-mix(in srgb, var(--detail-chip-bg) 56%, transparent);
+}
+
+.backIcon {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex: none;
 }
 
 .imageWrapper {

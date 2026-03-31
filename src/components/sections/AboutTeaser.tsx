@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import TextScramble from "@/components/ui/TextScramble";
@@ -19,6 +20,8 @@ const PARAGRAPH_1 =
 
 const PARAGRAPH_2 =
   "I also design technical curriculums as a Learning Developer, helping others master these technologies. I love solving the hard problems that come with deploying generative AI in the real world.";
+
+const PROFILE_IMAGE = "/images/profile-placeholder.svg";
 
 const profileRows = [
   {
@@ -114,6 +117,28 @@ export default function AboutTeaser() {
 
           <aside className={styles.profileCard}>
             <p className={styles.cardLabel}>Operational profile</p>
+            <div className={styles.profileHero}>
+              <div className={styles.portraitFrame}>
+                <Image
+                  src={PROFILE_IMAGE}
+                  alt="Profile portrait placeholder for Dery Ferdika"
+                  fill
+                  className={styles.portraitImage}
+                  unoptimized
+                />
+                <span className={styles.portraitBadge}>Profile</span>
+              </div>
+              <div className={styles.identityBlock}>
+                <p className={styles.identityEyebrow}>Dery Ferdika</p>
+                <h3 className={styles.identityTitle}>
+                  AI systems, interfaces, and delivery.
+                </h3>
+                <p className={styles.identityText}>
+                  A merged profile card so the human layer and the working layer
+                  sit in one place.
+                </p>
+              </div>
+            </div>
             <div className={styles.metaGrid}>
               <div className={styles.metaCell}>
                 <span className={styles.metaLabel}>Location</span>
