@@ -179,6 +179,96 @@
   padding-bottom: 0.3rem;
 }
 
+.mapInsights {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  display: grid;
+  gap: 0.95rem;
+}
+
+.insightGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.insightItem {
+  min-width: 0;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid rgba(33, 50, 40, 0.08);
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.insightLabel {
+  margin-bottom: 0.38rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(33, 50, 40, 0.46);
+}
+
+.insightValue {
+  margin-bottom: 0.28rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+.insightMeta {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.mapLegend {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.legendLabel,
+.legendMeta {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(33, 50, 40, 0.46);
+}
+
+.legendScale {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+
+.legendDay {
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 0.18rem;
+  background: rgba(33, 50, 40, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(33, 50, 40, 0.05);
+}
+
+.legendDay[data-level="1"] {
+  background: rgba(77, 106, 55, 0.38);
+}
+
+.legendDay[data-level="2"] {
+  background: rgba(77, 106, 55, 0.56);
+}
+
+.legendDay[data-level="3"] {
+  background: rgba(77, 106, 55, 0.74);
+}
+
+.legendDay[data-level="4"] {
+  background: rgba(77, 106, 55, 0.9);
+}
+
 .monthLabels {
   display: grid;
   grid-template-columns: repeat(var(--week-count), 0.72rem);
@@ -347,6 +437,10 @@
   .repoItem {
     grid-template-columns: 1fr;
     gap: 0.55rem;
+  }
+
+  .insightGrid {
+    grid-template-columns: 1fr;
   }
 }
 

@@ -12,6 +12,14 @@ function formatRepoDate(value: string) {
   }).format(new Date(value));
 }
 
+function formatInsightDate(value: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
+
 function getDisplayLevel(count: number, level: number) {
   if (count <= 0) return 0;
   return Math.max(level, 1);
@@ -58,11 +66,54 @@ function getMonthMarkers(contributions: Array<{ date: string }>) {
   return markers;
 }
 
+function getLongestStreak(
+  contributions: Array<{ count: number }>,
+) {
+  let currentStreak = 0;
+  let maxStreak = 0;
+
+  contributions.forEach((day) => {
+    if (day.count > 0) {
+      currentStreak += 1;
+      maxStreak = Math.max(maxStreak, currentStreak);
+      return;
+    }
+
+    currentStreak = 0;
+  });
+
+  return maxStreak;
+}
+
+function getPeakMonth(
+  contributions: Array<{ date: string; count: number }>,
+): { key: string; total: number } | null {
+  const totals = new Map<string, number>();
+
+  contributions.forEach((day) => {
+    const monthKey = day.date.slice(0, 7);
+    totals.set(monthKey, (totals.get(monthKey) ?? 0) + day.count);
+  });
+
+  let peakMonth: { key: string; total: number } | null = null;
+
+  totals.forEach((total, key) => {
+    if (!peakMonth || total > peakMonth.total) {
+      peakMonth = { key, total };
+    }
+  });
+
+  return peakMonth;
+}
+
 export default async function GitHubProof() {
   const data = await getGitHubProofData();
   const activeDays = data.contributions.filter((day) => day.count > 0).length;
   const weekCount = Math.max(Math.ceil(data.contributions.length / 7), 1);
   const monthMarkers = getMonthMarkers(data.contributions);
+  const longestStreak = getLongestStreak(data.contributions);
+  const peakMonth = getPeakMonth(data.contributions);
+  const latestPush = data.recentRepos[0] ?? null;
   const mapStyle = {
     "--week-count": weekCount,
   } as CSSProperties;
@@ -195,6 +246,60 @@ export default async function GitHubProof() {
                 profile link above still points to the source.
               </p>
             )}
+
+            {data.contributions.length > 0 ? (
+              <div className={styles.mapInsights}>
+                <div className={styles.insightGrid}>
+                  <article className={styles.insightItem}>
+                    <p className={styles.insightLabel}>Longest streak</p>
+                    <p className={styles.insightValue}>
+                      {longestStreak > 0 ? `${longestStreak} days` : "Building"}
+                    </p>
+                    <p className={styles.insightMeta}>
+                      Consecutive visible activity days
+                    </p>
+                  </article>
+
+                  <article className={styles.insightItem}>
+                    <p className={styles.insightLabel}>Peak month</p>
+                    <p className={styles.insightValue}>
+                      {peakMonth ? formatInsightDate(`${peakMonth.key}-01`) : "N/A"}
+                    </p>
+                    <p className={styles.insightMeta}>
+                      {peakMonth
+                        ? `${peakMonth.total} contribution${peakMonth.total === 1 ? "" : "s"}`
+                        : "Monthly activity signal"}
+                    </p>
+                  </article>
+
+                  <article className={styles.insightItem}>
+                    <p className={styles.insightLabel}>Latest push</p>
+                    <p className={styles.insightValue}>
+                      {latestPush ? latestPush.name : "GitHub"}
+                    </p>
+                    <p className={styles.insightMeta}>
+                      {latestPush
+                        ? `Updated ${formatRepoDate(latestPush.pushedAt)}`
+                        : "Recent repository activity"}
+                    </p>
+                  </article>
+                </div>
+
+                <div className={styles.mapLegend} aria-hidden="true">
+                  <span className={styles.legendLabel}>Intensity</span>
+                  <div className={styles.legendScale}>
+                    {[0, 1, 2, 3, 4].map((level) => (
+                      <span
+                        key={level}
+                        className={styles.legendDay}
+                        data-level={level}
+                      />
+                    ))}
+                  </div>
+                  <span className={styles.legendMeta}>Low to high</span>
+                </div>
+              </div>
+            ) : null}
           </div>
 
           <div className={styles.repoPanel}>
