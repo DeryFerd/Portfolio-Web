@@ -50,7 +50,7 @@ export default function Hero() {
           </h1>
 
           <p className={styles.description}>
-            Specializing in machine learning, MLOps, RAG, and agent workflows
+            Specializing in Machine Learning, MLOps, RAG, and agent workflows
             for real-world AI products.
           </p>
 
