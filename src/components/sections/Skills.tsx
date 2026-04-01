@@ -1039,6 +1039,7 @@ export default function Skills() {
                     key={chapter.id}
                     type="button"
                     className={styles.bookmarkTab}
+                    suppressHydrationWarning
                     data-active={index === activeIndex}
                     style={{ "--tab-accent": chapter.accent } as CSSProperties}
                     aria-label={`Open ${chapter.label} chapter`}

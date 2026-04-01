@@ -1,158 +1,148 @@
 .loading {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: var(--bg-primary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  inset: 0;
   z-index: 9999;
   overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 214, 158, 0.14), transparent 16%),
+    radial-gradient(circle at 50% 50%, rgba(81, 124, 174, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(6, 9, 11, 1), rgba(5, 8, 10, 0.98) 52%, rgba(3, 5, 7, 1));
 }
 
-
-
-.clockWrapper {
-  position: relative;
-  width: 80px;
-  height: 80px;
-  margin-bottom: var(--spacing-lg);
-  z-index: 1;
-}
-
-.marqueeWrapper {
+.loading::before,
+.loading::after {
+  content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100vw;
-  opacity: 0.18;
-  z-index: 0;
+  inset: 0;
   pointer-events: none;
 }
 
-
-
-.afterLoading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 9998;
-  animation: fadeIn 0.5s ease-out;
+.loading::before {
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0, transparent 6%, rgba(3, 5, 7, 0.58) 34%, rgba(3, 5, 7, 0.92) 72%, rgba(3, 5, 7, 1) 100%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.04), transparent 38%);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+.loading::after {
+  inset: clamp(1rem, 2vw, 1.8rem);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: clamp(1.2rem, 2vw, 2rem);
+  opacity: 0.78;
 }
 
-.clock {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  animation: spin 2s linear infinite;
-}
-
-.clockFace {
-  width: 100%;
-  height: 100%;
-  border: 3px solid var(--accent);
-  border-radius: 50%;
-  position: relative;
-}
-
-.clockMark {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 8px;
-  background-color: var(--accent);
-  transform-origin: center 40px;
-}
-
-.hourHand {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 4px;
-  height: 20px;
-  background-color: var(--text-primary);
-  transform-origin: center bottom;
-  transform: translateX(-50%) translateY(-100%) rotate(0deg);
-  animation: hourHand 2s steps(12) infinite;
-}
-
-.minuteHand {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 2px;
-  height: 30px;
-  background-color: var(--accent);
-  transform-origin: center bottom;
-  transform: translateX(-50%) translateY(-100%) rotate(0deg);
-  animation: minuteHand 2s linear infinite;
-}
-
-.centerDot {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  background-color: var(--accent);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.text {
+.loadingFrame {
   position: relative;
   z-index: 1;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  letter-spacing: 2px;
-  margin-top: var(--spacing-lg);
+  display: grid;
+  justify-items: center;
+  gap: clamp(1rem, 2.4vw, 1.5rem);
+  width: min(100%, 30rem);
+  contain: layout paint;
 }
 
+.tunnel {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(42vw, 20rem);
+  aspect-ratio: 1;
+  will-change: transform, opacity;
+  contain: layout paint;
+}
 
+.tunnelGlow,
+.tunnelRing,
+.tunnelCore {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
 
+.tunnelGlow {
+  width: 34%;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle, rgba(255, 225, 188, 0.22), rgba(255, 225, 188, 0.08) 44%, rgba(95, 150, 214, 0.04) 70%, transparent 84%);
+  will-change: transform, opacity;
+}
 
-@keyframes spin {
+.tunnelRing {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 234, 209, 0.14);
+  background:
+    radial-gradient(circle, transparent 62%, rgba(255, 245, 232, 0.025) 74%, transparent 84%);
+  will-change: transform, opacity;
+}
+
+.tunnelCore {
+  width: 18%;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(20, 28, 36, 0.2), rgba(6, 9, 11, 0.92) 42%, rgba(0, 0, 0, 1) 74%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+  will-change: transform, opacity;
+}
+
+.copy {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  will-change: transform, opacity;
+}
+
+.kicker,
+.caption {
+  margin: 0;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+}
+
+.kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  color: rgba(243, 238, 228, 0.56);
+}
+
+.caption {
+  font-size: 0.74rem;
+  letter-spacing: 0.28em;
+  color: rgba(243, 238, 228, 0.42);
+}
+
+@media (max-width: 768px) {
+  .loading::after {
+    inset: 0.8rem;
+    border-radius: 1.1rem;
+  }
+
+  .tunnel {
+    width: min(70vw, 18rem);
+  }
+
+  .kicker,
+  .caption {
+    letter-spacing: 0.22em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading {
+    animation: fadeAway 320ms ease forwards;
+  }
+}
+
+@keyframes fadeAway {
   from {
-    transform: rotate(0deg);
+    opacity: 1;
   }
 
   to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes hourHand {
-  from {
-    transform: translateX(-50%) translateY(-100%) rotate(0deg);
-  }
-
-  to {
-    transform: translateX(-50%) translateY(-100%) rotate(360deg);
-  }
-}
-
-@keyframes minuteHand {
-  from {
-    transform: translateX(-50%) translateY(-100%) rotate(0deg);
-  }
-
-  to {
-    transform: translateX(-50%) translateY(-100%) rotate(360deg);
+    opacity: 0;
   }
 }
