@@ -6,11 +6,19 @@
 }
 
 .storyStack {
+  --corridor-blue: rgba(112, 166, 204, 0.14);
+  --corridor-gold: rgba(224, 182, 130, 0.12);
+  --corridor-line: rgba(244, 238, 229, 0.052);
+  --corridor-node: rgba(244, 238, 229, 0.24);
   position: relative;
   z-index: 4;
+  isolation: isolate;
   margin-top: calc(-1 * var(--story-overlap));
   padding-top: clamp(1rem, 2.6vw, 1.5rem);
-  background: linear-gradient(180deg, rgba(15, 20, 22, 0.96) 0%, #0f1416 4.5rem);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(112, 166, 204, 0.11), transparent 30%),
+    radial-gradient(circle at 84% 12%, rgba(224, 182, 130, 0.08), transparent 22%),
+    linear-gradient(180deg, rgba(15, 20, 22, 0.96) 0%, #0f1416 4.5rem);
   border-top-left-radius: clamp(1.45rem, 2.8vw, 2.25rem);
   border-top-right-radius: clamp(1.45rem, 2.8vw, 2.25rem);
   box-shadow: 0 -28px 72px rgba(0, 0, 0, 0.32);
@@ -25,6 +33,10 @@
   --text-muted: #919690;
   --border: rgba(244, 238, 229, 0.09);
   --border-hover: rgba(244, 238, 229, 0.18);
+  --corridor-blue: rgba(112, 166, 204, 0.14);
+  --corridor-gold: rgba(224, 182, 130, 0.12);
+  --corridor-line: rgba(244, 238, 229, 0.052);
+  --corridor-node: rgba(244, 238, 229, 0.24);
 }
 
 :global([data-theme="light"]) .storyStack {
@@ -36,7 +48,14 @@
   --text-muted: #7e857a;
   --border: rgba(33, 50, 40, 0.12);
   --border-hover: rgba(33, 50, 40, 0.28);
-  background: linear-gradient(180deg, rgba(243, 240, 230, 0.94) 0%, #f3f0e6 4.5rem);
+  --corridor-blue: rgba(93, 139, 171, 0.11);
+  --corridor-gold: rgba(168, 128, 71, 0.11);
+  --corridor-line: rgba(33, 50, 40, 0.055);
+  --corridor-node: rgba(33, 50, 40, 0.18);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(93, 139, 171, 0.08), transparent 28%),
+    radial-gradient(circle at 84% 12%, rgba(168, 128, 71, 0.08), transparent 20%),
+    linear-gradient(180deg, rgba(243, 240, 230, 0.94) 0%, #f3f0e6 4.5rem);
 }
 
 .storyStack::before {
@@ -53,10 +72,86 @@
     rgba(77, 106, 55, 0.42),
     rgba(77, 106, 55, 0)
   );
+  z-index: 2;
+}
+
+.storyStack::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: min(76rem, 100%);
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.82;
+  contain: paint;
+  background:
+    radial-gradient(
+      circle at 10% 14%,
+      transparent 0,
+      transparent 17%,
+      var(--corridor-blue) 17.15%,
+      transparent 17.85%
+    ),
+    radial-gradient(
+      circle at 33% 38%,
+      transparent 0,
+      transparent 24%,
+      var(--corridor-gold) 24.15%,
+      transparent 24.85%
+    ),
+    radial-gradient(
+      circle at 78% 22%,
+      transparent 0,
+      transparent 20%,
+      var(--corridor-blue) 20.15%,
+      transparent 20.85%
+    ),
+    radial-gradient(
+      circle at 68% 64%,
+      transparent 0,
+      transparent 26%,
+      var(--corridor-gold) 26.15%,
+      transparent 26.85%
+    ),
+    linear-gradient(
+      116deg,
+      transparent 0,
+      transparent 22%,
+      var(--corridor-line) 22.1%,
+      transparent 22.45%,
+      transparent 100%
+    ),
+    linear-gradient(
+      154deg,
+      transparent 0,
+      transparent 62%,
+      var(--corridor-line) 62.1%,
+      transparent 62.4%,
+      transparent 100%
+    ),
+    radial-gradient(circle at 23% 27%, var(--corridor-node) 0 0.18rem, transparent 0.24rem),
+    radial-gradient(circle at 38% 52%, var(--corridor-node) 0 0.16rem, transparent 0.22rem),
+    radial-gradient(circle at 74% 31%, var(--corridor-node) 0 0.18rem, transparent 0.24rem),
+    radial-gradient(circle at 63% 68%, var(--corridor-node) 0 0.16rem, transparent 0.22rem),
+    radial-gradient(circle at 18% 8%, var(--corridor-blue), transparent 26%),
+    radial-gradient(circle at 82% 18%, var(--corridor-gold), transparent 24%);
+  background-repeat: no-repeat;
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.98) 0%,
+    rgba(0, 0, 0, 0.94) 58%,
+    rgba(0, 0, 0, 0.46) 82%,
+    transparent 100%
+  );
 }
 
 .storyStack > * {
   position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 768px) {
