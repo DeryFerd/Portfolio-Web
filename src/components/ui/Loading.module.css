@@ -74,6 +74,7 @@
       transparent 80%);
   will-change: transform, opacity;
   filter: blur(12px);
+  opacity: 0;
 }
 
 /* Each concentric ring */
@@ -119,6 +120,7 @@
     0 0 50px rgba(90, 140, 220, 0.08),
     0 0 0 1px rgba(255, 255, 255, 0.05);
   will-change: transform, opacity;
+  opacity: 0;
 }
 
 /* ─── Particles ─────────────────────────────────── */
