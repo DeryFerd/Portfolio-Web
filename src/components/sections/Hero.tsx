@@ -39,7 +39,7 @@ export default function Hero() {
       <div className={`container ${styles.heroInner}`}>
         <div className={styles.heroContent}>
           <p className={styles.eyebrow}>
-            AI Engineer / LLM Systems / Malang, Indonesia
+            AI Engineer / Malang, Indonesia
           </p>
 
           <h1 className={styles.title}>
