@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 import styles from "./Experience.module.css";
 
 const experiences = [
@@ -58,8 +58,108 @@ const experiences = [
   },
 ];
 
+// Chevron icon as separate memoized component
+const ChevronIcon = memo(function ChevronIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" focusable="false" aria-hidden="true">
+      <path
+        d="M5 7.5 10 12.5 15 7.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.4"
+      />
+    </svg>
+  );
+});
+
+// Memoized experience item to prevent re-render
+interface ExperienceItemProps {
+  experience: typeof experiences[0];
+  index: number;
+  isOpen: boolean;
+  onToggle: (index: number) => void;
+}
+
+const ExperienceItem = memo(function ExperienceItem({
+  experience,
+  index,
+  isOpen,
+  onToggle,
+}: ExperienceItemProps) {
+  const handleClick = useCallback(() => {
+    onToggle(index);
+  }, [index, onToggle]);
+
+  return (
+    <article
+      key={`${experience.company}-${experience.period}`}
+      className={styles.item}
+      data-open={isOpen}
+    >
+      <span className={styles.itemNumber}>
+        {(index + 1).toString().padStart(2, "0")}
+      </span>
+
+      <div className={styles.itemColumn}>
+        <button
+          type="button"
+          className={styles.itemTrigger}
+          aria-expanded={isOpen}
+          aria-controls={`experience-panel-${index}`}
+          suppressHydrationWarning
+          onClick={handleClick}
+        >
+          <div className={styles.itemHeading}>
+            <div className={styles.roleLine}>
+              <h3 className={styles.role}>{experience.role}</h3>
+              <span className={styles.company}>@ {experience.company}</span>
+            </div>
+            <span className={styles.period}>{experience.period}</span>
+          </div>
+
+          <span className={styles.chevron} aria-hidden="true">
+            <ChevronIcon />
+          </span>
+        </button>
+
+        <div
+          id={`experience-panel-${index}`}
+          className={styles.details}
+          data-open={isOpen}
+        >
+          <div className={styles.detailsInner}>
+            <p className={styles.summary}>{experience.summary}</p>
+            <ul className={styles.highlights}>
+              {experience.highlights.map((highlight) => (
+                <li key={highlight} className={styles.highlightItem}>
+                  <span className={styles.highlightBullet} aria-hidden="true" />
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+            <div className={styles.tagRail}>
+              {experience.tags.map((tag) => (
+                <span key={tag} className={styles.tag}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+});
+
 export default function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const handleToggle = useCallback((index: number) => {
+    setOpenIndex((currentIndex) =>
+      currentIndex === index ? null : index,
+    );
+  }, []);
 
   return (
     <section className={`section ${styles.experience}`} id="experience">
@@ -78,75 +178,13 @@ export default function Experience() {
 
           <div className={styles.timeline}>
             {experiences.map((experience, index) => (
-              <article
+              <ExperienceItem
                 key={`${experience.company}-${experience.period}`}
-                className={styles.item}
-                data-open={openIndex === index}
-              >
-                <span className={styles.itemNumber}>
-                  {(index + 1).toString().padStart(2, "0")}
-                </span>
-
-                <div className={styles.itemColumn}>
-                  <button
-                    type="button"
-                    className={styles.itemTrigger}
-                    aria-expanded={openIndex === index}
-                    aria-controls={`experience-panel-${index}`}
-                    suppressHydrationWarning
-                    onClick={() =>
-                      setOpenIndex((currentIndex) =>
-                        currentIndex === index ? null : index,
-                      )
-                    }
-                  >
-                    <div className={styles.itemHeading}>
-                      <div className={styles.roleLine}>
-                        <h3 className={styles.role}>{experience.role}</h3>
-                        <span className={styles.company}>@ {experience.company}</span>
-                      </div>
-                      <span className={styles.period}>{experience.period}</span>
-                    </div>
-
-                    <span className={styles.chevron} aria-hidden="true">
-                      <svg viewBox="0 0 20 20" fill="none" focusable="false">
-                        <path
-                          d="M5 7.5 10 12.5 15 7.5"
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="1.4"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-
-                  <div
-                    id={`experience-panel-${index}`}
-                    className={styles.details}
-                    data-open={openIndex === index}
-                  >
-                    <div className={styles.detailsInner}>
-                      <p className={styles.summary}>{experience.summary}</p>
-                      <ul className={styles.highlights}>
-                        {experience.highlights.map((highlight) => (
-                          <li key={highlight} className={styles.highlightItem}>
-                            <span className={styles.highlightBullet} aria-hidden="true" />
-                            <span>{highlight}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <div className={styles.tagRail}>
-                        {experience.tags.map((tag) => (
-                          <span key={tag} className={styles.tag}>
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
+                experience={experience}
+                index={index}
+                isOpen={openIndex === index}
+                onToggle={handleToggle}
+              />
             ))}
           </div>
         </div>
