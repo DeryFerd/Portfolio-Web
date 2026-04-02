@@ -36,94 +36,15 @@ const JAKARTA_TIME_FORMATTER = new Intl.DateTimeFormat("en-GB", {
   timeZone: JAKARTA_TIME_ZONE,
 });
 
-const projectTypes = [
-  {
-    id: "ai-product",
-    label: "AI Product",
-    emailLabel: "AI product",
-    deliverable: "User-facing AI workflow with a clearer product path.",
-  },
-  {
-    id: "rag-system",
-    label: "RAG System",
-    emailLabel: "RAG system",
-    deliverable: "Retrieval flow with evaluation and shipping constraints in mind.",
-  },
-  {
-    id: "internal-tool",
-    label: "Internal Tool",
-    emailLabel: "Internal AI tool",
-    deliverable: "Operator-friendly tool that supports a real team workflow.",
-  },
-  {
-    id: "ml-pipeline",
-    label: "ML Pipeline",
-    emailLabel: "ML pipeline",
-    deliverable: "Delivery path from experimentation into stable production use.",
-  },
-  {
-    id: "ai-interface",
-    label: "AI Interface",
-    emailLabel: "AI interface",
-    deliverable: "Frontend system with sharper human-in-the-loop interaction.",
-  },
-] as const;
-
-const projectStages = [
-  {
-    id: "idea",
-    label: "Idea",
-    kickoff: "Kickoff window: 10-14 days",
-    scopeNote: "Best when we still need to shape the first version.",
-  },
-  {
-    id: "prototype",
-    label: "Prototype",
-    kickoff: "Kickoff window: 7-10 days",
-    scopeNote: "Best when the core workflow exists but needs structure.",
-  },
-  {
-    id: "production",
-    label: "Production",
-    kickoff: "Kickoff window: 5-7 days",
-    scopeNote: "Best when shipping risk, polish, or operations matter now.",
-  },
-] as const;
-
-const projectNeeds = [
-  {
-    id: "architecture",
-    label: "Architecture",
-    engagement: "Advisory sprint",
-    availability: "2 advisory windows open",
-    summary: "shape the system before the heavy build starts",
-    outputs: ["Architecture map", "Scope decisions", "Delivery risks"],
-  },
-  {
-    id: "implementation",
-    label: "Implementation",
-    engagement: "Build sprint",
-    availability: "1 build slot open",
-    summary: "build the core workflow with production-minded constraints",
-    outputs: ["Core implementation", "Integration path", "Shipping checklist"],
-  },
-  {
-    id: "polish",
-    label: "Polish",
-    engagement: "Refinement sprint",
-    availability: "1 polish slot open",
-    summary: "tighten release quality, UX, and delivery confidence",
-    outputs: ["Flow cleanup", "UI/UX refinement", "Launch notes"],
-  },
-  {
-    id: "audit",
-    label: "Audit",
-    engagement: "Audit window",
-    availability: "2 audit windows open",
-    summary: "review what exists and identify the next high-leverage move",
-    outputs: ["Audit notes", "Priority fixes", "Recommended route"],
-  },
-] as const;
+const QUICK_FIT = {
+  projectLabel: "AI Product",
+  stageLabel: "Prototype",
+  needLabel: "Architecture",
+  routeTitle: "System shaping sprint",
+  preferredEngagement: "Advisory sprint",
+  availability: "2 advisory windows open",
+  kickoff: "Kickoff window: 7-10 days",
+};
 
 const INITIAL_FORM_STATE: ContactFormState = {
   name: "",
@@ -131,71 +52,21 @@ const INITIAL_FORM_STATE: ContactFormState = {
   message: "",
 };
 
-type ProjectTypeId = (typeof projectTypes)[number]["id"];
-type ProjectStageId = (typeof projectStages)[number]["id"];
-type ProjectNeedId = (typeof projectNeeds)[number]["id"];
-
-function getProjectType(id: ProjectTypeId) {
-  return projectTypes.find((item) => item.id === id) ?? projectTypes[0];
-}
-
-function getProjectStage(id: ProjectStageId) {
-  return projectStages.find((item) => item.id === id) ?? projectStages[0];
-}
-
-function getProjectNeed(id: ProjectNeedId) {
-  return projectNeeds.find((item) => item.id === id) ?? projectNeeds[0];
-}
-
 function formatLocalTime(date: Date) {
   return `${JAKARTA_TIME_FORMATTER.format(date)} WIB`;
 }
 
-function getRouteTitle(stageId: ProjectStageId, needId: ProjectNeedId) {
-  const routeMap: Record<ProjectStageId, Record<ProjectNeedId, string>> = {
-    idea: {
-      architecture: "Discovery + architecture sprint",
-      implementation: "Validation prototype sprint",
-      polish: "Concept framing + UX direction",
-      audit: "Feasibility review window",
-    },
-    prototype: {
-      architecture: "System shaping sprint",
-      implementation: "Prototype build sprint",
-      polish: "Prototype refinement sprint",
-      audit: "Prototype audit window",
-    },
-    production: {
-      architecture: "Production architecture review",
-      implementation: "Delivery sprint",
-      polish: "Release polish sprint",
-      audit: "Production audit window",
-    },
-  };
-
-  return routeMap[stageId][needId];
-}
-
-function buildBriefCopy(
-  typeId: ProjectTypeId,
-  stageId: ProjectStageId,
-  needId: ProjectNeedId,
-) {
-  const project = getProjectType(typeId);
-  const stage = getProjectStage(stageId);
-  const need = getProjectNeed(needId);
-  const routeTitle = getRouteTitle(stageId, needId);
-
+function buildBriefCopy() {
   return [
     "Hi Dery,",
     "",
-    `I want to discuss a ${project.emailLabel.toLowerCase()} collaboration.`,
+    "I want to discuss an AI product collaboration.",
     "",
-    `Project type: ${project.label}`,
-    `Stage: ${stage.label}`,
-    `Help needed: ${need.label}`,
-    `Recommended route: ${routeTitle}`,
-    `Preferred engagement: ${need.engagement}`,
+    `Project type: ${QUICK_FIT.projectLabel}`,
+    `Stage: ${QUICK_FIT.stageLabel}`,
+    `Help needed: ${QUICK_FIT.needLabel}`,
+    `Recommended route: ${QUICK_FIT.routeTitle}`,
+    `Preferred engagement: ${QUICK_FIT.preferredEngagement}`,
     "",
     "Context:",
     "- Current stack:",
@@ -213,9 +84,6 @@ export default function LetsTalkPanel({
   const [form, setForm] = useState<ContactFormState>(INITIAL_FORM_STATE);
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [projectType, setProjectType] = useState<ProjectTypeId>("ai-product");
-  const [projectStage, setProjectStage] = useState<ProjectStageId>("prototype");
-  const [projectNeed, setProjectNeed] = useState<ProjectNeedId>("architecture");
   const [localTime, setLocalTime] = useState<string | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -226,9 +94,6 @@ export default function LetsTalkPanel({
         setForm(INITIAL_FORM_STATE);
         setStatus("idle");
         setErrorMessage("");
-        setProjectType("ai-product");
-        setProjectStage("prototype");
-        setProjectNeed("architecture");
         setLocalTime(null);
       }, 240);
 
@@ -272,19 +137,7 @@ export default function LetsTalkPanel({
     return () => window.clearInterval(intervalId);
   }, [open]);
 
-  const selectedProject = getProjectType(projectType);
-  const selectedStage = getProjectStage(projectStage);
-  const selectedNeed = getProjectNeed(projectNeed);
-  const routeTitle = getRouteTitle(projectStage, projectNeed);
-  const briefCopy = buildBriefCopy(projectType, projectStage, projectNeed);
-  const recommendationText = `Best fit when you need ${selectedNeed.summary} for a ${selectedStage.label.toLowerCase()} ${selectedProject.label.toLowerCase()}.`;
-  const resultPoints = [
-    selectedProject.deliverable,
-    ...selectedNeed.outputs.slice(0, 2),
-  ];
-  const mailtoHref = `mailto:${DIRECT_EMAIL}?subject=${encodeURIComponent(
-    `${selectedProject.label} · ${routeTitle}`,
-  )}&body=${encodeURIComponent(briefCopy)}`;
+  const briefCopy = useMemo(() => buildBriefCopy(), []);
 
   const handleOpenChat = () => {
     onClose();
@@ -392,7 +245,7 @@ export default function LetsTalkPanel({
       ? "Your brief is loaded below. Add the details you want me to see."
       : view === "success"
         ? "I will follow up through the email you shared."
-        : "Use the fit check first, then choose how you want to start.";
+        : "Quick routes only, so visitors can decide faster.";
 
   return (
     <div className={styles.overlay} data-open={open}>
@@ -451,175 +304,56 @@ export default function LetsTalkPanel({
           <div className={styles.divider} aria-hidden="true" />
 
           {view === "menu" ? (
-            <div className={styles.menuStack}>
-              <section className={styles.routeCard}>
-                <div className={styles.routeHeader}>
-                  <div>
-                    <p className={styles.sectionKicker}>Project Fit Check</p>
-                    <h3 className={styles.routeTitle}>{routeTitle}</h3>
-                  </div>
-                  <span className={styles.statusPill}>
-                    {selectedNeed.availability}
-                  </span>
+            <div className={styles.utilityGrid}>
+              <button
+                type="button"
+                className={`${styles.utilityCard} ${styles.fitCard}`}
+                onClick={handleOpenForm}
+              >
+                <div>
+                  <p className={styles.utilityKicker}>Project Fit + Availability</p>
+                  <h3 className={styles.utilityTitle}>{QUICK_FIT.routeTitle}</h3>
+                  <p className={styles.utilityMeta}>
+                    {QUICK_FIT.stageLabel} · {QUICK_FIT.projectLabel} ·{" "}
+                    {QUICK_FIT.needLabel}
+                  </p>
+                  <p className={styles.utilityMeta}>
+                    {QUICK_FIT.availability} · {QUICK_FIT.kickoff}
+                  </p>
+                  <p className={styles.utilityMeta}>
+                    Local time {localTime ?? "--:--:-- WIB"} · Reply 24-48 hours
+                  </p>
                 </div>
+                <span className={styles.utilityMark}>FIT</span>
+              </button>
 
-                <p className={styles.routeText}>{recommendationText}</p>
-
-                <ul className={styles.routeList}>
-                  {resultPoints.map((point) => (
-                    <li key={point} className={styles.routeItem}>
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className={styles.actionRow}>
-                  <button
-                    type="button"
-                    className={styles.primaryAction}
-                    onClick={handleOpenForm}
-                  >
-                    Send me a message
-                  </button>
-                  <a
-                    href={mailtoHref}
-                    className={styles.secondaryAction}
-                    onClick={onClose}
-                  >
-                    Email this brief
-                  </a>
+              <button
+                type="button"
+                className={styles.utilityCard}
+                onClick={handleOpenChat}
+              >
+                <div>
+                  <h3 className={styles.utilityTitle}>Chat with my assistant</h3>
+                  <p className={styles.utilityMeta}>Instant AI response</p>
                 </div>
-              </section>
+                <span className={styles.utilityMark}>AI</span>
+              </button>
 
-              <div className={styles.optionGroup}>
-                <span className={styles.optionLabel}>What are you building?</span>
-                <div className={styles.optionRail}>
-                  {projectTypes.map((option) => (
-                    <button
-                      key={option.id}
-                      type="button"
-                      className={styles.optionButton}
-                      data-selected={projectType === option.id}
-                      aria-pressed={projectType === option.id}
-                      onClick={() => setProjectType(option.id)}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
+              <Link
+                href="/#contact"
+                className={styles.utilityCard}
+                onClick={onClose}
+              >
+                <div>
+                  <h3 className={styles.utilityTitle}>Open contact section</h3>
+                  <p className={styles.utilityMeta}>
+                    Jump to the footer contact area
+                  </p>
                 </div>
-              </div>
-
-              <div className={styles.optionGroup}>
-                <span className={styles.optionLabel}>Where is it now?</span>
-                <div className={styles.optionRail}>
-                  {projectStages.map((option) => (
-                    <button
-                      key={option.id}
-                      type="button"
-                      className={styles.optionButton}
-                      data-selected={projectStage === option.id}
-                      aria-pressed={projectStage === option.id}
-                      onClick={() => setProjectStage(option.id)}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className={styles.optionGroup}>
-                <span className={styles.optionLabel}>What kind of help?</span>
-                <div className={styles.optionRail}>
-                  {projectNeeds.map((option) => (
-                    <button
-                      key={option.id}
-                      type="button"
-                      className={styles.optionButton}
-                      data-selected={projectNeed === option.id}
-                      aria-pressed={projectNeed === option.id}
-                      onClick={() => setProjectNeed(option.id)}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <section className={styles.console}>
-                <div className={styles.consoleHeader}>
-                  <div>
-                    <p className={styles.sectionKicker}>Availability Console</p>
-                    <p className={styles.consoleIntro}>
-                      Operating window for this route.
-                    </p>
-                  </div>
-                  <span className={styles.consoleTime}>
-                    {localTime ?? "--:--:-- WIB"}
-                  </span>
-                </div>
-
-                <div className={styles.consoleGrid}>
-                  <div className={styles.consoleRow}>
-                    <span className={styles.consoleLabel}>Preferred format</span>
-                    <span className={styles.consoleValue}>
-                      {selectedNeed.engagement}
-                    </span>
-                  </div>
-                  <div className={styles.consoleRow}>
-                    <span className={styles.consoleLabel}>Kickoff</span>
-                    <span className={styles.consoleValue}>
-                      {selectedStage.kickoff}
-                    </span>
-                  </div>
-                  <div className={styles.consoleRow}>
-                    <span className={styles.consoleLabel}>Reply rhythm</span>
-                    <span className={styles.consoleValue}>Within 24-48 hours</span>
-                  </div>
-                  <div className={styles.consoleRow}>
-                    <span className={styles.consoleLabel}>Best fit</span>
-                    <span className={styles.consoleValue}>
-                      {selectedStage.scopeNote}
-                    </span>
-                  </div>
-                  <div className={styles.consoleRow}>
-                    <span className={styles.consoleLabel}>Current focus</span>
-                    <span className={styles.consoleValue}>
-                      AI products, internal tools, and interfaces with a clear
-                      shipping path.
-                    </span>
-                  </div>
-                </div>
-              </section>
-
-              <div className={styles.utilityGrid}>
-                <button
-                  type="button"
-                  className={styles.utilityCard}
-                  onClick={handleOpenChat}
-                >
-                  <div>
-                    <h3 className={styles.utilityTitle}>Chat with my assistant</h3>
-                    <p className={styles.utilityMeta}>Instant AI response</p>
-                  </div>
-                  <span className={styles.utilityMark}>AI</span>
-                </button>
-
-                <Link
-                  href="/#contact"
-                  className={styles.utilityCard}
-                  onClick={onClose}
-                >
-                  <div>
-                    <h3 className={styles.utilityTitle}>Open contact section</h3>
-                    <p className={styles.utilityMeta}>
-                      Jump to the footer contact area
-                    </p>
-                  </div>
-                  <span className={styles.utilityMark} aria-hidden="true">
-                    →
-                  </span>
-                </Link>
-              </div>
+                <span className={styles.utilityMark} aria-hidden="true">
+                  -&gt;
+                </span>
+              </Link>
             </div>
           ) : null}
 
@@ -714,13 +448,9 @@ export default function LetsTalkPanel({
                 >
                   Back to options
                 </button>
-                <Link
-                  href="/#contact"
-                  className={styles.inlineLink}
-                  onClick={onClose}
-                >
-                  Open contact section
-                </Link>
+                <a href={`mailto:${DIRECT_EMAIL}`} className={styles.inlineLink}>
+                  Send direct email
+                </a>
               </div>
             </div>
           ) : null}
