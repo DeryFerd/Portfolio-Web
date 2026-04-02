@@ -139,7 +139,9 @@
     radial-gradient(circle at 63% 68%, var(--corridor-node) 0 0.16rem, transparent 0.22rem),
     radial-gradient(circle at 18% 8%, var(--corridor-blue), transparent 26%),
     radial-gradient(circle at 82% 18%, var(--corridor-gold), transparent 24%);
+  background-position: center top;
   background-repeat: no-repeat;
+  background-size: 100% 280rem;
   mask-image: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.98) 0%,
