@@ -155,16 +155,13 @@
   border: 1px solid var(--border);
   background: var(--bg-card);
   color: var(--text-secondary);
-  transition:
-    transform var(--transition-normal),
-    background-color var(--transition-normal),
-    border-color var(--transition-normal),
-    color var(--transition-normal);
+  transform-origin: center;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
-.chevron svg {
-  width: 1rem;
-  height: 1rem;
+.chevron:hover {
+  border-color: var(--border-hover);
 }
 
 .item[data-open="true"] .chevron {
@@ -175,18 +172,25 @@
 }
 
 .details {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    max-height 280ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 200ms ease,
+    transform 200ms ease;
+  will-change: max-height, opacity, transform;
 }
 
 .details[data-open="true"] {
-  grid-template-rows: 1fr;
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .detailsInner {
-  min-height: 0;
-  overflow: hidden;
   display: grid;
   gap: 1rem;
   max-width: 42rem;
