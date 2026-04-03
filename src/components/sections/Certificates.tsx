@@ -139,7 +139,9 @@ export default function Certificates() {
                       className={`${styles.archiveTrigger} ${index === activeIndex ? styles.archiveTriggerActive : ""}`}
                       onMouseEnter={() => setActiveIndex(index)}
                       onFocus={() => setActiveIndex(index)}
-                      onClick={() => setActiveIndex(index)}
+                      onClick={() => handleOpenPreview(index)}
+                      aria-haspopup="dialog"
+                      aria-expanded={previewSlug === certificate.slug}
                       suppressHydrationWarning
                     >
                       <span className={styles.archiveNumber}>
