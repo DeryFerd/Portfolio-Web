@@ -3,6 +3,8 @@
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import QuickPreviewDialog from "@/components/ui/QuickPreviewDialog";
 import { certificates } from "@/lib/certificatesData";
 import styles from "./Certificates.module.css";
 
@@ -33,9 +35,13 @@ export default function Certificates() {
     "idle",
   );
   const [activeIndex, setActiveIndex] = useState(0);
+  const [previewSlug, setPreviewSlug] = useState<string | null>(null);
   const pendingViewRef = useRef<"shelf" | "archive">("shelf");
   const activeCertificate = allCertificates[activeIndex] ?? allCertificates[0];
+  const previewCertificate = 
+    allCertificates.find((cert) => cert.slug === previewSlug) ?? activeCertificate;
   const isArchiveOpen = viewMode === "archive";
+  const isPreviewOpen = previewSlug !== null;
   const transitionClass =
     transitionState === "out"
       ? styles.viewLeaving
@@ -77,8 +83,14 @@ export default function Certificates() {
     setTransitionState("out");
   };
 
+  const handleOpenPreview = (index: number) => {
+    setActiveIndex(index);
+    setPreviewSlug(allCertificates[index]?.slug ?? null);
+  };
+
   return (
-    <section className={`section ${styles.certificates}`} id="certificates">
+    <>
+      <section className={`section ${styles.certificates}`} id="certificates">
       <div className="container">
         <div className={styles.header}>
           <div className={styles.copy}>
@@ -210,16 +222,30 @@ export default function Certificates() {
 
               <div className={styles.latestList}>
                 {latestCertificates.map((certificate, index) => (
-                  <article key={certificate.slug} className={styles.latestItem}>
-                    <span className={styles.latestNumber}>
-                      _ {String(index + 1).padStart(2, "0")} .
-                    </span>
-                    <div className={styles.latestBody}>
-                      <h3 className={styles.latestTitle}>{certificate.title}</h3>
-                      <p className={styles.latestMeta}>
-                        {certificate.issuer} / {formatIssuedAt(certificate.issuedAt)}
-                      </p>
-                    </div>
+                  <article 
+                    key={certificate.slug} 
+                    className={`${styles.latestItem} ${index === activeIndex ? styles.latestItemActive : ""}`}
+                  >
+                    <button
+                      type="button"
+                      className={`${styles.latestTrigger} ${index === activeIndex ? styles.latestTriggerActive : ""}`}
+                      onMouseEnter={() => setActiveIndex(index)}
+                      onFocus={() => setActiveIndex(index)}
+                      onClick={() => handleOpenPreview(index)}
+                      aria-haspopup="dialog"
+                      aria-expanded={previewSlug === certificate.slug}
+                      suppressHydrationWarning
+                    >
+                      <span className={styles.latestNumber}>
+                        _ {String(index + 1).padStart(2, "0")} .
+                      </span>
+                      <div className={styles.latestBody}>
+                        <h3 className={styles.latestTitle}>{certificate.title}</h3>
+                        <p className={styles.latestMeta}>
+                          {certificate.issuer} / {formatIssuedAt(certificate.issuedAt)}
+                        </p>
+                      </div>
+                    </button>
                   </article>
                 ))}
               </div>
@@ -228,5 +254,56 @@ export default function Certificates() {
         </div>
       </div>
     </section>
+
+    <QuickPreviewDialog
+      open={isPreviewOpen}
+      onClose={() => setPreviewSlug(null)}
+      modalLabel={`${previewCertificate.title} certificate preview`}
+      category="Certificate / Credential"
+      year={formatIssuedAt(previewCertificate.issuedAt).slice(-4)}
+      kindLabel="Certificate"
+      title={previewCertificate.title}
+      summary={`Issued by ${previewCertificate.issuer} in ${formatIssuedAt(previewCertificate.issuedAt)}`}
+      image={previewCertificate.image}
+      tags={[previewCertificate.issuer]}
+      primaryAction={{
+        href: "#",
+        label: "View certificate",
+      }}
+      secondaryAction={{
+        href: "#",
+        label: "View all certificates",
+      }}
+      sections={[
+        {
+          eyebrow: "Credential",
+          title: "Issuing details",
+          items: [
+            `Issued by: ${previewCertificate.issuer}`,
+            `Date issued: ${formatIssuedAt(previewCertificate.issuedAt)}`,
+            `Type: Professional certificate`,
+          ],
+          variant: "list",
+        },
+      ]}
+      cardSection={{
+        eyebrow: "Details",
+        title: "Certificate information.",
+        description: "Basic information about this professional credential.",
+        cards: [
+          {
+            index: "01",
+            meta: "Issuer",
+            title: previewCertificate.issuer,
+          },
+          {
+            index: "02", 
+            meta: "Date",
+            title: formatIssuedAt(previewCertificate.issuedAt),
+          },
+        ],
+      }}
+    />
+    </>
   );
 }

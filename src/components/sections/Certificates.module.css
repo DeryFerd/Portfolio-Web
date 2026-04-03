@@ -158,6 +158,41 @@
   gap: 0.55rem 0.95rem;
   padding: 0.8rem 0;
   border-bottom: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.latestItemActive {
+  background: var(--accent-subtle);
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  margin: 0 -0.8rem;
+}
+
+.latestTrigger {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.55rem 0.95rem;
+  width: 100%;
+  padding: 0.8rem 0;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  appearance: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.latestTrigger:hover .latestTitle {
+  color: var(--accent);
+}
+
+.latestTriggerActive .latestTitle {
+  color: var(--accent);
 }
 
 .latestItem:first-child {
