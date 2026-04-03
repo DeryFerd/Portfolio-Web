@@ -29,7 +29,9 @@
 .codex-start-*.err
 .codex-zickrian-*
 .playwright-cli/
+output/
 artifacts/
+devserver*.log
 
 # debug
 npm-debug.log*
