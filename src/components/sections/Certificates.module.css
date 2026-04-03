@@ -68,13 +68,31 @@
   transition:
     transform var(--transition-normal),
     border-color var(--transition-normal),
-    background-color var(--transition-normal);
+    background-color var(--transition-normal),
+    opacity var(--transition-normal);
 }
 
 .archiveToggle:hover,
 .archiveToggle:focus-visible {
   transform: translateY(-1px);
   border-color: var(--border-hover);
+}
+
+.archiveToggle:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.viewport {
+  will-change: opacity, transform;
+}
+
+.viewLeaving {
+  animation: certificateViewOut 220ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.viewEntering {
+  animation: certificateViewIn 220ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .shelfBlock {
@@ -180,13 +198,11 @@
   color: var(--text-muted);
 }
 
-.archivePanel {
+.archiveGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.8fr);
-  gap: clamp(1.1rem, 3vw, 1.8rem);
-  margin-top: clamp(1.4rem, 3vw, 1.8rem);
-  padding-top: clamp(1.4rem, 3vw, 1.8rem);
-  border-top: 1px solid var(--border);
+  grid-template-columns: minmax(0, 1fr) minmax(245px, 0.54fr);
+  gap: clamp(1.25rem, 3vw, 2.35rem);
+  align-items: start;
 }
 
 .archiveList {
@@ -195,7 +211,7 @@
 
 .archiveItem {
   border-bottom: 1px solid var(--border);
-  opacity: 0.38;
+  opacity: 0.34;
   transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -207,7 +223,9 @@
   width: 100%;
   padding: 0.78rem 0 0.72rem;
   border: 0;
+  border-radius: 0;
   background: transparent;
+  appearance: none;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 0.42rem 0.85rem;
@@ -234,16 +252,18 @@
 
 .archiveTitle {
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.3vw, 1.72rem);
+  font-size: clamp(1.42rem, 2.8vw, 2.05rem);
   line-height: 0.98;
   letter-spacing: -0.04em;
   color: var(--text-primary);
-  transition: color 0.3s ease;
+  transition:
+    color 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .archiveArrow {
   flex: none;
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
   line-height: 1;
   color: var(--accent);
   opacity: 0;
@@ -272,14 +292,16 @@
 .detailPanel {
   display: grid;
   gap: 0.85rem;
+  position: sticky;
+  top: calc(var(--header-height) + 1.45rem);
 }
 
 .detailStage {
   position: relative;
   overflow: hidden;
   background: var(--bg-card);
-  aspect-ratio: 0.82 / 1;
-  min-height: clamp(15rem, 28vw, 19rem);
+  aspect-ratio: 0.82 / 0.94;
+  min-height: clamp(14.5rem, 24vw, 18.2rem);
   border: 1px solid var(--border);
 }
 
@@ -290,7 +312,7 @@
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .detailImageActive {
@@ -298,22 +320,22 @@
 }
 
 .detailMeta {
-  padding: 0.95rem 1rem 0;
+  padding-top: 0.95rem;
   border-top: 1px solid var(--border);
 }
 
 .detailDate {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.45rem;
   font-size: 0.68rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .detailTitle {
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
   font-family: var(--font-display);
-  font-size: clamp(1.12rem, 1.8vw, 1.38rem);
+  font-size: clamp(1.12rem, 1.7vw, 1.34rem);
   line-height: 1.03;
   letter-spacing: -0.04em;
   color: var(--text-primary);
@@ -327,17 +349,22 @@
 
 @media (max-width: 1024px) {
   .shelfBlock,
-  .archivePanel {
+  .archiveGrid {
     grid-template-columns: 1fr;
   }
 
   .detailPanel {
     order: -1;
+    position: static;
   }
 
   .detailStage {
-    aspect-ratio: 1.24 / 0.82;
+    aspect-ratio: 1.22 / 0.82;
     min-height: clamp(14rem, 50vw, 18rem);
+  }
+
+  .archiveItem {
+    opacity: 0.44;
   }
 }
 
@@ -373,6 +400,42 @@
   }
 
   .archiveTitle {
-    font-size: clamp(1.15rem, 7vw, 1.5rem);
+    font-size: clamp(1.2rem, 7vw, 1.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archiveToggle,
+  .archiveItem,
+  .archiveTitle,
+  .archiveArrow,
+  .detailImage,
+  .viewport {
+    transition: none;
+    animation: none;
+  }
+}
+
+@keyframes certificateViewOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes certificateViewIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
