@@ -6,6 +6,16 @@
   overflow: hidden;
 }
 
+.container:hover .clickIndicator {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.container:hover .closeButton {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
 /* Background Photo Layer */
 .photoLayer {
   position: absolute;
@@ -59,24 +69,29 @@
   flex-direction: column;
 }
 
-/* Click Indicator */
+/* Floating Click Indicator - Center, hover-only, very transparent */
 .clickIndicator {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--bg-card) 85%, transparent);
+  background: color-mix(in srgb, var(--bg-card) 15%, transparent);
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-muted);
-  backdrop-filter: blur(10px);
-  z-index: 10;
+  color: var(--text-primary);
+  backdrop-filter: blur(8px);
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
 }
 
 .icon {
@@ -86,28 +101,33 @@
 
 .clickText {
   font-size: 0.7rem;
+  font-weight: 500;
 }
 
-/* Close Button - Appears when photo shown */
+/* Floating Close Button - Center, hover-only, very transparent, crossed eye */
 .closeButton {
   position: absolute;
-  bottom: 1rem;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%) scale(0.9);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.6rem 1rem;
-  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
   border-radius: 999px;
-  background: rgba(18, 24, 27, 0.8);
-  font-size: 0.75rem;
+  background: color-mix(in srgb, var(--bg-card) 15%, transparent);
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #f4eee5;
-  backdrop-filter: blur(10px);
+  color: var(--text-primary);
+  backdrop-filter: blur(8px);
   cursor: pointer;
-  z-index: 10;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: auto;
 }
 
 /* Reduced Motion */
