@@ -164,11 +164,6 @@ export default function AboutTeaser() {
                   </div>
                 ))}
               </div>
-
-              <p className={styles.cardNote}>
-                Currently interested in product-facing AI systems, internal tools,
-                and collaborations that need both technical depth and visual care.
-              </p>
             </CurtainReveal>
           </aside>
         </div>

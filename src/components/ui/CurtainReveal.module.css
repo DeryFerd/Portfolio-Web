@@ -1,7 +1,7 @@
 .container {
   position: relative;
   width: 100%;
-  min-height: 480px;
+  min-height: 420px;
   border-radius: 1.2rem;
   overflow: hidden;
 }
@@ -55,7 +55,7 @@
   position: relative;
   z-index: 3;
   height: 100%;
-  min-height: 480px;
+  min-height: 420px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -143,6 +143,6 @@
 @media (max-width: 520px) {
   .container,
   .infoBox {
-    min-height: 420px;
+    min-height: 380px;
   }
 }
