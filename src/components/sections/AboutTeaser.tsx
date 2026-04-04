@@ -118,18 +118,10 @@ export default function AboutTeaser() {
               <a
                 href={CV_DOWNLOAD_PATH}
                 download
-                className={styles.cvPanel}
+                className={styles.cvButton}
                 aria-label="Download my CV as PDF"
               >
-                <span className={styles.cvPanelKicker}>Profile document</span>
-                <span className={styles.cvPanelTitle}>Download My CV</span>
-                <span className={styles.cvPanelText}>
-                  Experience, selected work, and technical focus in one PDF.
-                </span>
-                <span className={styles.cvPanelMeta}>
-                  <span className={styles.cvMetaBadge}>PDF</span>
-                  <span className={styles.cvMetaAction}>Download file</span>
-                </span>
+                Download My CV
               </a>
             </div>
           </div>
