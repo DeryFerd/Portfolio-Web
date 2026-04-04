@@ -22,6 +22,7 @@ const PARAGRAPH_2 =
   "I also design technical curriculums as a Learning Developer, helping others master these technologies. I love solving the hard problems that come with deploying generative AI in the real world.";
 
 const PROFILE_IMAGE = "/images/profile-placeholder.svg";
+const CV_DOWNLOAD_PATH = "/documents/dery-ferdika-cv.pdf";
 
 const profileRows = [
   {
@@ -156,6 +157,17 @@ export default function AboutTeaser() {
                   <span className={styles.rowValue}>{row.value}</span>
                 </div>
               ))}
+            </div>
+            <div className={styles.cvActions}>
+              <a
+                href={CV_DOWNLOAD_PATH}
+                download
+                className={styles.cvLink}
+                aria-label="Download Dery Ferdika CV as PDF"
+              >
+                <span className={styles.cvLabel}>Download CV</span>
+                <span className={styles.cvMeta}>PDF</span>
+              </a>
             </div>
             <p className={styles.cardNote}>
               Currently interested in product-facing AI systems, internal tools,
