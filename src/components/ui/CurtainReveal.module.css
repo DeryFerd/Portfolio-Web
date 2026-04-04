@@ -1,10 +1,10 @@
 .container {
   position: relative;
   width: 100%;
+  height: 460px;
   min-height: 460px;
   border-radius: 1.2rem;
   overflow: hidden;
-  display: flex;
 }
 
 .container:hover .infoBox .clickIndicator {
@@ -31,7 +31,6 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  min-height: 460px;
   z-index: 1;
   background: var(--bg-card);
   border-radius: 1.2rem;
@@ -51,7 +50,7 @@
   top: 0;
   bottom: 0;
   width: 50%;
-  min-height: 460px;
+  height: 100%;
   background: var(--bg-card);
   z-index: 2;
 }
@@ -64,13 +63,12 @@
   right: 0;
 }
 
-/* Info Box - Solid, covers curtain, clickable, auto height */
+/* Info Box - Solid, covers curtain, clickable, fixed height */
 .infoBox {
   position: relative;
   z-index: 3;
   width: 100%;
-  height: auto;
-  min-height: 460px;
+  height: 100%;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -164,9 +162,8 @@
 
 /* Mobile adjustments */
 @media (max-width: 520px) {
-  .container,
-  .infoBox,
-  .photoLayer {
+  .container {
+    height: 420px;
     min-height: 420px;
   }
 }
