@@ -128,12 +128,12 @@ export default function AboutTeaser() {
           <aside className={styles.profileCard}>
             <p className={styles.cardLabel}>Operational profile</p>
 
-            {/* Curtain Reveal Profile Image */}
+            {/* Curtain Reveal - Photo behind all info */}
             <CurtainReveal
               imageSrc={PROFILE_IMAGE}
               imageAlt="Profile portrait of Dery Ferdika"
             >
-              {/* Default Info Content */}
+              {/* All Info Content */}
               <div className={styles.identityBlock}>
                 <p className={styles.identityEyebrow}>Dery Ferdika</p>
                 <h3 className={styles.identityTitle}>
@@ -144,30 +144,32 @@ export default function AboutTeaser() {
                   sit in one place.
                 </p>
               </div>
-            </CurtainReveal>
 
-            <div className={styles.metaGrid}>
-              <div className={styles.metaCell}>
-                <span className={styles.metaLabel}>Location</span>
-                <span className={styles.metaValue}>Malang, Indonesia</span>
-              </div>
-              <div className={styles.metaCell}>
-                <span className={styles.metaLabel}>Local time</span>
-                <LiveLocalTime />
-              </div>
-            </div>
-            <div className={styles.cardRows}>
-              {profileRows.map((row) => (
-                <div key={row.label} className={styles.cardRow}>
-                  <span className={styles.rowLabel}>{row.label}</span>
-                  <span className={styles.rowValue}>{row.value}</span>
+              <div className={styles.metaGrid}>
+                <div className={styles.metaCell}>
+                  <span className={styles.metaLabel}>Location</span>
+                  <span className={styles.metaValue}>Malang, Indonesia</span>
                 </div>
-              ))}
-            </div>
-            <p className={styles.cardNote}>
-              Currently interested in product-facing AI systems, internal tools,
-              and collaborations that need both technical depth and visual care.
-            </p>
+                <div className={styles.metaCell}>
+                  <span className={styles.metaLabel}>Local time</span>
+                  <LiveLocalTime />
+                </div>
+              </div>
+
+              <div className={styles.cardRows}>
+                {profileRows.map((row) => (
+                  <div key={row.label} className={styles.cardRow}>
+                    <span className={styles.rowLabel}>{row.label}</span>
+                    <span className={styles.rowValue}>{row.value}</span>
+                  </div>
+                ))}
+              </div>
+
+              <p className={styles.cardNote}>
+                Currently interested in product-facing AI systems, internal tools,
+                and collaborations that need both technical depth and visual care.
+              </p>
+            </CurtainReveal>
           </aside>
         </div>
       </div>

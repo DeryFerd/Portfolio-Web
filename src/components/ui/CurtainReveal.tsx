@@ -20,106 +20,67 @@ export default function CurtainReveal({
 
   const toggleCurtain = () => setIsOpen(!isOpen);
 
-  const isSvg = imageSrc.endsWith(".svg");
-
   return (
-    <div className={styles.container}>
-      {/* Default State - Info Box */}
-      <AnimatePresence mode="wait">
-        {!isOpen && (
-          <motion.div
-            key="info-box"
-            className={styles.infoBox}
-            onClick={toggleCurtain}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {/* Click Indicator */}
-            <div className={styles.clickIndicator}>
-              <Eye className={styles.icon} />
-              <span className={styles.clickText}>Click to reveal</span>
-            </div>
+    <div className={styles.container} onClick={toggleCurtain}>
+      {/* Background Photo Layer */}
+      <div className={styles.photoLayer}>
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          className={styles.photo}
+        />
+      </div>
 
-            {/* Info Content */}
-            <div className={styles.infoContent}>{children}</div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Open State - Full Image with Curtain Effect */}
+      {/* Curtain Layer - Covers photo when closed */}
       <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            key="image-container"
-            className={styles.imageContainer}
-            onClick={toggleCurtain}
-            initial={{ clipPath: "inset(0 50% 0 50%)" }}
-            animate={{ clipPath: "inset(0 0% 0 0%)" }}
-            exit={{ clipPath: "inset(0 50% 0 50%)" }}
-            transition={{
-              duration: 0.6,
-              ease: [0.4, 0, 0.2, 1],
-            }}
-          >
-            {/* Curtain Left */}
+        {!isOpen && (
+          <>
+            {/* Left Curtain Panel */}
             <motion.div
               className={`${styles.curtain} ${styles.curtainLeft}`}
               initial={{ x: 0 }}
-              animate={{ x: "-100%" }}
-              exit={{ x: 0 }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
               transition={{
                 duration: 0.5,
                 ease: [0.4, 0, 0.2, 1],
               }}
             />
-
-            {/* Curtain Right */}
+            {/* Right Curtain Panel */}
             <motion.div
               className={`${styles.curtain} ${styles.curtainRight}`}
               initial={{ x: 0 }}
-              animate={{ x: "100%" }}
-              exit={{ x: 0 }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
               transition={{
                 duration: 0.5,
                 ease: [0.4, 0, 0.2, 1],
               }}
             />
-
-            {/* Full Image - Use img for SVG, Next Image for others */}
-            <div className={styles.imageWrapper}>
-              {isSvg ? (
-                <img
-                  src={imageSrc}
-                  alt={imageAlt}
-                  className={styles.fullImage}
-                />
-              ) : (
-                <img
-                  src={imageSrc}
-                  alt={imageAlt}
-                  className={styles.fullImage}
-                />
-              )}
-            </div>
-
-            {/* Close Indicator */}
-            <motion.div
-              className={styles.closeIndicator}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ delay: 0.3, duration: 0.2 }}
-            >
-              <EyeOff className={styles.icon} />
-              <span className={styles.closeText}>Click to close</span>
-            </motion.div>
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
+
+      {/* Foreground Info Content Layer */}
+      <div className={styles.contentLayer}>
+        {/* Click Indicator */}
+        <div className={styles.clickIndicator}>
+          {isOpen ? (
+            <>
+              <EyeOff className={styles.icon} />
+              <span className={styles.clickText}>Click to close</span>
+            </>
+          ) : (
+            <>
+              <Eye className={styles.icon} />
+              <span className={styles.clickText}>Click to reveal</span>
+            </>
+          )}
+        </div>
+
+        {/* Children Content (all the info) */}
+        <div className={styles.content}>{children}</div>
+      </div>
     </div>
   );
 }
