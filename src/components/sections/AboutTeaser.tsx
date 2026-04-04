@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import TextScramble from "@/components/ui/TextScramble";
 import styles from "./AboutTeaser.module.css";
 
@@ -115,14 +116,11 @@ export default function AboutTeaser() {
               <Link href="/about" className={styles.link}>
                 Read full background
               </Link>
-              <a
-                href={CV_DOWNLOAD_PATH}
-                download
-                className={styles.cvButton}
-                aria-label="Download my CV as PDF"
-              >
-                Download My CV
-              </a>
+              <Button asChild variant="outline" size="lg" className={styles.cvButton}>
+                <a href={CV_DOWNLOAD_PATH} download aria-label="Download my CV as PDF">
+                  Download My CV
+                </a>
+              </Button>
             </div>
           </div>
 

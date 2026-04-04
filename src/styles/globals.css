@@ -11,9 +11,9 @@
   --text-primary: #f5efe7;
   --text-secondary: #b0b5b9;
   --text-muted: #7a8389;
-  --accent: oklch(0.97 0 0);
+  --accent: #e0b682;
   --accent-dim: #8f6d49;
-  --border: oklch(0.922 0 0);
+  --border: rgba(255, 255, 255, 0.14);
   --border-hover: rgba(255, 255, 255, 0.28);
 
   --font-mono: 'JetBrains Mono', monospace;
@@ -34,36 +34,36 @@
 
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --card: var(--bg-card);
+  --card-foreground: var(--text-primary);
+  --popover: var(--bg-card);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--accent);
+  --primary-foreground: var(--bg-primary);
+  --secondary: color-mix(in srgb, var(--bg-secondary) 88%, white 12%);
+  --secondary-foreground: var(--text-primary);
+  --muted: color-mix(in srgb, var(--bg-secondary) 82%, white 18%);
+  --muted-foreground: var(--text-secondary);
+  --accent-foreground: var(--bg-primary);
   --destructive: oklch(0.577 0.245 27.325);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --input: var(--border);
+  --ring: var(--border-hover);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: var(--bg-secondary);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: var(--accent);
+  --sidebar-primary-foreground: var(--bg-primary);
+  --sidebar-accent: color-mix(in srgb, var(--bg-secondary) 82%, white 18%);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--border-hover);
 }
 
 [data-theme="light"] {
@@ -77,6 +77,29 @@
   --accent-dim: #83946b;
   --border: rgba(33, 50, 40, 0.14);
   --border-hover: rgba(33, 50, 40, 0.28);
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --card: var(--bg-card);
+  --card-foreground: var(--text-primary);
+  --popover: var(--bg-card);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--accent);
+  --primary-foreground: #f8f6f0;
+  --secondary: color-mix(in srgb, var(--bg-secondary) 88%, white 12%);
+  --secondary-foreground: var(--text-primary);
+  --muted: color-mix(in srgb, var(--bg-secondary) 82%, white 18%);
+  --muted-foreground: var(--text-secondary);
+  --accent-foreground: #f8f6f0;
+  --input: var(--border);
+  --ring: var(--border-hover);
+  --sidebar: var(--bg-secondary);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: var(--accent);
+  --sidebar-primary-foreground: #f8f6f0;
+  --sidebar-accent: color-mix(in srgb, var(--bg-secondary) 82%, white 18%);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--border-hover);
 }
 
 * {
