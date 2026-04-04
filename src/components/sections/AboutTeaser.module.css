@@ -64,6 +64,90 @@
   color: var(--accent);
 }
 
+.copyActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.cvPanel {
+  display: grid;
+  gap: 0.45rem;
+  width: min(100%, 24rem);
+  padding: 1.1rem 1.15rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-card) 88%, white 12%) 0%, var(--bg-card) 100%);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.cvPanel:hover,
+.cvPanel:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+  transform: translateY(-2px);
+}
+
+.cvPanel:focus-visible {
+  outline: none;
+}
+
+.cvPanelKicker {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cvPanelTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.cvPanelText {
+  max-width: 22rem;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.cvPanelMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-top: 0.3rem;
+}
+
+.cvMetaBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.6rem;
+  padding: 0.18rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cvMetaAction {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+
 .profileCard {
   padding: 1.35rem;
   border: 1px solid var(--border);
@@ -216,50 +300,6 @@
   font-size: 0.92rem;
   line-height: 1.65;
   color: var(--text-secondary);
-}
-
-.cvActions {
-  margin-top: 0.45rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-
-.cvLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.75rem 0;
-  color: var(--text-primary);
-  text-decoration: none;
-}
-
-.cvLabel {
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-.cvMeta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 2.6rem;
-  padding: 0.18rem 0.5rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  font-size: 0.65rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.cvLink:hover .cvLabel,
-.cvLink:focus-visible .cvLabel {
-  color: var(--accent);
-}
-
-.cvLink:focus-visible {
-  outline: none;
 }
 
 @media (max-width: 900px) {

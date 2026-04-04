@@ -111,9 +111,27 @@ export default function AboutTeaser() {
                 className={styles.scrambleBlock}
               />
             </p>
-            <Link href="/about" className={styles.link}>
-              Read full background
-            </Link>
+            <div className={styles.copyActions}>
+              <Link href="/about" className={styles.link}>
+                Read full background
+              </Link>
+              <a
+                href={CV_DOWNLOAD_PATH}
+                download
+                className={styles.cvPanel}
+                aria-label="Download my CV as PDF"
+              >
+                <span className={styles.cvPanelKicker}>Profile document</span>
+                <span className={styles.cvPanelTitle}>Download My CV</span>
+                <span className={styles.cvPanelText}>
+                  Experience, selected work, and technical focus in one PDF.
+                </span>
+                <span className={styles.cvPanelMeta}>
+                  <span className={styles.cvMetaBadge}>PDF</span>
+                  <span className={styles.cvMetaAction}>Download file</span>
+                </span>
+              </a>
+            </div>
           </div>
 
           <aside className={styles.profileCard}>
@@ -157,17 +175,6 @@ export default function AboutTeaser() {
                   <span className={styles.rowValue}>{row.value}</span>
                 </div>
               ))}
-            </div>
-            <div className={styles.cvActions}>
-              <a
-                href={CV_DOWNLOAD_PATH}
-                download
-                className={styles.cvLink}
-                aria-label="Download Dery Ferdika CV as PDF"
-              >
-                <span className={styles.cvLabel}>Download CV</span>
-                <span className={styles.cvMeta}>PDF</span>
-              </a>
             </div>
             <p className={styles.cardNote}>
               Currently interested in product-facing AI systems, internal tools,
