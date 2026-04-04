@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import CurtainReveal from "@/components/ui/CurtainReveal";
 import TextScramble from "@/components/ui/TextScramble";
 import styles from "./AboutTeaser.module.css";
 
@@ -126,17 +127,13 @@ export default function AboutTeaser() {
 
           <aside className={styles.profileCard}>
             <p className={styles.cardLabel}>Operational profile</p>
-            <div className={styles.profileHero}>
-              <div className={styles.portraitFrame}>
-                <Image
-                  src={PROFILE_IMAGE}
-                  alt="Profile portrait placeholder for Dery Ferdika"
-                  fill
-                  className={styles.portraitImage}
-                  unoptimized
-                />
-                <span className={styles.portraitBadge}>Profile</span>
-              </div>
+
+            {/* Curtain Reveal Profile Image */}
+            <CurtainReveal
+              imageSrc={PROFILE_IMAGE}
+              imageAlt="Profile portrait of Dery Ferdika"
+            >
+              {/* Default Info Content */}
               <div className={styles.identityBlock}>
                 <p className={styles.identityEyebrow}>Dery Ferdika</p>
                 <h3 className={styles.identityTitle}>
@@ -147,7 +144,8 @@ export default function AboutTeaser() {
                   sit in one place.
                 </p>
               </div>
-            </div>
+            </CurtainReveal>
+
             <div className={styles.metaGrid}>
               <div className={styles.metaCell}>
                 <span className={styles.metaLabel}>Location</span>
