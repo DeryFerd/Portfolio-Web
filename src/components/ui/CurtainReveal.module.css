@@ -44,6 +44,16 @@
   object-position: center;
 }
 
+/* Clickable overlay on photo when visible */
+.photoClickOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  cursor: pointer;
+}
+
 /* Curtain Layer - Covers photo */
 .curtain {
   position: absolute;

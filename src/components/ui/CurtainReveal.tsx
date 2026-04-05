@@ -29,6 +29,10 @@ export default function CurtainReveal({
           alt={imageAlt}
           className={styles.photo}
         />
+        {/* Clickable overlay when photo is visible */}
+        {isOpen && (
+          <div className={styles.photoClickOverlay} onClick={toggleCurtain} />
+        )}
       </div>
 
       {/* Curtain Layer - Covers photo when info box visible */}
