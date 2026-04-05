@@ -76,36 +76,98 @@
   min-width: 14.5rem;
   height: 3.35rem;
   padding-inline: 1.25rem;
-  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+  
+  /* Glassmorphism Evolved */
+  background: color-mix(in srgb, var(--bg-card) 60%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  
+  /* Multi-layer Borders */
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-top-color: color-mix(in srgb, var(--accent) 45%, rgba(255, 255, 255, 0.15));
   border-radius: 1rem;
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--accent) 11%, var(--bg-card)) 0%,
-      color-mix(in srgb, var(--bg-card) 88%, white 12%) 100%
-    );
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 16px 32px rgba(0, 0, 0, 0.18);
+  
+  /* Modern Depth Shadows */
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 8px 16px -4px rgba(0, 0, 0, 0.2),
+    0 4px 8px -2px rgba(0, 0, 0, 0.1);
+  
   font-size: 0.92rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle inner glow pseudo-element */
+.cvButton::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 15%, transparent) 0%, transparent 60%);
+  opacity: 0.8;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .cvButton:hover,
 .cvButton:focus-visible {
-  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--accent) 16%, var(--bg-card)) 0%,
-      color-mix(in srgb, var(--bg-card) 84%, white 16%) 100%
-    );
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 18px 36px rgba(0, 0, 0, 0.22);
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  border-top-color: color-mix(in srgb, var(--accent) 80%, rgba(255, 255, 255, 0.25));
+  background: color-mix(in srgb, var(--bg-card) 40%, transparent);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 15%, transparent),
+    0 12px 24px -4px rgba(0, 0, 0, 0.25),
+    0 8px 16px -4px color-mix(in srgb, var(--accent) 15%, rgba(0, 0, 0, 0.15));
   color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.cvButton:hover::before {
+  opacity: 1;
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 25%, transparent) 0%, transparent 70%);
+}
+
+.cvButton:active {
+  transform: translateY(0);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+    0 4px 8px -2px rgba(0, 0, 0, 0.2);
+}
+
+.cvText, .cvIcon {
+  position: relative;
+  z-index: 1;
+}
+
+.cvText {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.cvIcon {
+  width: 1.15rem;
+  height: 1.15rem;
+  stroke-width: 2.2;
+  color: var(--accent);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s ease;
+}
+
+.cvButton:hover .cvIcon {
+  transform: translateY(2px) scale(1.05);
+  color: color-mix(in srgb, var(--accent) 90%, white);
 }
 
 .profileCard {

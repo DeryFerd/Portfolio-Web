@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
 import CurtainReveal from "@/components/ui/CurtainReveal";
 import TextScramble from "@/components/ui/TextScramble";
 import styles from "./AboutTeaser.module.css";
@@ -119,7 +119,8 @@ export default function AboutTeaser() {
               </Link>
               <Button asChild variant="outline" size="lg" className={styles.cvButton}>
                 <a href={CV_DOWNLOAD_PATH} download aria-label="Download my CV as PDF">
-                  Download My CV
+                  <span className={styles.cvText}>Download My CV</span>
+                  <Download className={styles.cvIcon} aria-hidden="true" />
                 </a>
               </Button>
             </div>
