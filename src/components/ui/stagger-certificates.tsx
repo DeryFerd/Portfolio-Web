@@ -109,13 +109,16 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 interface StaggerCertificatesProps {
   certificates: CertificateItem[];
   className?: string;
+  onIndexChange?: (index: number) => void;
 }
 
 export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({ 
   certificates,
-  className
+  className,
+  onIndexChange
 }) => {
   const [cardSize, setCardSize] = useState(340);
+  const [activeIndex, setActiveIndex] = useState(0);
   // Duplicate certificates 3x to create seamless infinite effect
   const [certificatesList, setCertificatesList] = useState(() => {
     const duplicated = [...certificates, ...certificates, ...certificates].map((cert, i) => ({
@@ -141,6 +144,10 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
       }
     }
     setCertificatesList(newList);
+    // Calculate new active index and notify parent
+    const newIndex = (activeIndex + steps + certificates.length) % certificates.length;
+    setActiveIndex(newIndex);
+    onIndexChange?.(newIndex);
   };
 
   useEffect(() => {

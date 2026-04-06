@@ -51,6 +51,7 @@ export default function Certificates() {
           <StaggerCertificates 
             certificates={certificateItems} 
             className={styles.staggerContainer}
+            onIndexChange={setActiveIndex}
           />
         </div>
 
