@@ -41,17 +41,17 @@ export default function CurtainReveal({
           <>
             <motion.div
               className={`${styles.curtain} ${styles.curtainLeft}`}
-              initial={{ x: 0 }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              initial={{ x: "-100%", scale: 0.95, skewX: 3 }}
+              animate={{ x: 0, scale: 1, skewX: 0 }}
+              exit={{ x: "-100%", scale: 0.95, skewX: 3 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             />
             <motion.div
               className={`${styles.curtain} ${styles.curtainRight}`}
-              initial={{ x: 0 }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              initial={{ x: "100%", scale: 0.95, skewX: -3 }}
+              animate={{ x: 0, scale: 1, skewX: 0 }}
+              exit={{ x: "100%", scale: 0.95, skewX: -3 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
             />
           </>
         )}
