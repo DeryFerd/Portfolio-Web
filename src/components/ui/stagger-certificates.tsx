@@ -131,13 +131,13 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
       for (let i = steps; i > 0; i--) {
         const item = newList.shift();
         if (!item) return;
-        newList.push(item);
+        newList.push({ ...item, id: `${item.id.split('-')[0]}-${Date.now()}-${Math.random()}` });
       }
     } else {
       for (let i = steps; i < 0; i++) {
         const item = newList.pop();
         if (!item) return;
-        newList.unshift(item);
+        newList.unshift({ ...item, id: `${item.id.split('-')[0]}-${Date.now()}-${Math.random()}` });
       }
     }
     setCertificatesList(newList);
