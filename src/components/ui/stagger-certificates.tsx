@@ -178,28 +178,28 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
       })}
       
       {/* Navigation Buttons */}
-      <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-3">
+      <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-2 p-1.5 rounded-full bg-background/40 backdrop-blur-md border border-border shadow-lg">
         <button
           onClick={() => handleMove(-1)}
           className={cn(
-            "flex h-12 w-12 items-center justify-center text-xl transition-colors",
-            "bg-[#faf8f3] border-2 border-[#e8e0d0] hover:bg-[#f5f0e6] hover:text-[#1a1a1a]",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4c8b0] focus-visible:ring-offset-2"
+            "group flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full transition-all duration-300",
+            "text-muted-foreground hover:text-accent hover:bg-secondary/80 hover:shadow-md",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           )}
           aria-label="Previous certificate"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:-translate-x-0.5" />
         </button>
         <button
           onClick={() => handleMove(1)}
           className={cn(
-            "flex h-12 w-12 items-center justify-center text-xl transition-colors",
-            "bg-[#faf8f3] border-2 border-[#e8e0d0] hover:bg-[#f5f0e6] hover:text-[#1a1a1a]",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4c8b0] focus-visible:ring-offset-2"
+            "group flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full transition-all duration-300",
+            "text-muted-foreground hover:text-accent hover:bg-secondary/80 hover:shadow-md",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           )}
           aria-label="Next certificate"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:translate-x-0.5" />
         </button>
       </div>
     </div>
