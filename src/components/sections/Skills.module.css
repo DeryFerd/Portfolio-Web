@@ -798,6 +798,13 @@
   display: grid;
   gap: 0.24rem;
   z-index: 5;
+  opacity: var(--cover-progress);
+  transition: opacity 320ms ease;
+  pointer-events: none;
+}
+
+.bookmarks > * {
+  pointer-events: auto;
 }
 
 .bookmarkTab {
