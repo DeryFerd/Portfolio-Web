@@ -20,21 +20,24 @@ interface CertificateCardProps {
   certificate: CertificateItem;
   handleMove: (steps: number) => void;
   cardSize: number;
+  isHidden?: boolean;
 }
 
 const CertificateCard: React.FC<CertificateCardProps> = ({ 
   position, 
   certificate, 
   handleMove, 
-  cardSize 
+  cardSize,
+  isHidden = false
 }) => {
   const isCenter = position === 0;
 
   return (
     <div
-      onClick={() => handleMove(position)}
+      onClick={() => !isHidden && handleMove(position)}
       className={cn(
         "absolute left-1/2 top-1/2 cursor-pointer border-2 p-6 transition-all duration-500 ease-in-out",
+        isHidden && "opacity-0 pointer-events-none",
         isCenter 
           ? "z-10 bg-[#f5f0e6] text-[#1a1a1a] border-[#d4c8b0]" 
           : "z-0 bg-[#faf8f3] text-[#4a4a4a] border-[#e8e0d0] hover:border-[#d4c8b0]/50"
@@ -160,6 +163,8 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
         const position = certificatesList.length % 2
           ? index - (certificatesList.length + 1) / 2
           : index - certificatesList.length / 2;
+        // Hide cards beyond position -1 and +1 (keep in DOM for smooth loop)
+        const isHidden = Math.abs(position) > 1;
         return (
           <CertificateCard
             key={certificate.id}
@@ -167,6 +172,7 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
             handleMove={handleMove}
             position={position}
             cardSize={cardSize}
+            isHidden={isHidden}
           />
         );
       })}
