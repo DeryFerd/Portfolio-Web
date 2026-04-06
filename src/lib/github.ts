@@ -11,6 +11,7 @@ interface GitHubUserResponse {
   public_repos: number;
   followers: number;
   following: number;
+  created_at: string;
 }
 
 interface GitHubRepoResponse {
@@ -22,6 +23,7 @@ interface GitHubRepoResponse {
   stargazers_count: number;
   fork: boolean;
   pushed_at: string;
+  topics: string[];
 }
 
 interface ContributionDay {
@@ -44,6 +46,8 @@ export interface GitHubProofData {
   publicRepos: number | null;
   followers: number | null;
   following: number | null;
+  createdAt: string | null;
+  topTopics: string[];
   lastYearContributions: number | null;
   contributions: ContributionDay[];
   recentRepos: Array<{
@@ -54,6 +58,7 @@ export interface GitHubProofData {
     language: string | null;
     stars: number;
     pushedAt: string;
+    topics: string[];
   }>;
 }
 
@@ -114,11 +119,24 @@ const loadGitHubProofData = unstable_cache(
       language: repo.language,
       stars: repo.stargazers_count,
       pushedAt: repo.pushed_at,
+      topics: repo.topics ?? [],
     })) ?? [];
 
   const normalizedContributions = [...(contributions?.contributions ?? [])].sort(
     (left, right) => left.date.localeCompare(right.date),
   );
+
+  // Calculate top topics from all repos
+  const topicCounts = new Map<string, number>();
+  recentRepos.forEach((repo) => {
+    repo.topics.forEach((topic) => {
+      topicCounts.set(topic, (topicCounts.get(topic) ?? 0) + 1);
+    });
+  });
+  const topTopics = Array.from(topicCounts.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([topic]) => topic);
 
   return {
     username: user?.login ?? GITHUB_USERNAME,
@@ -127,6 +145,8 @@ const loadGitHubProofData = unstable_cache(
     publicRepos: user?.public_repos ?? null,
     followers: user?.followers ?? null,
     following: user?.following ?? null,
+    createdAt: user?.created_at ?? null,
+    topTopics,
     lastYearContributions: contributions?.total?.lastYear ?? null,
     contributions: normalizedContributions,
     recentRepos,

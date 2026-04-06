@@ -92,6 +92,23 @@
   gap: 0.95rem;
 }
 
+.statCard:only-child,
+.statCard:nth-last-child(5):first-child,
+.statCard:nth-last-child(5):first-child ~ .statCard {
+  grid-column: span 1;
+}
+
+.statCard:nth-last-child(6):first-child,
+.statCard:nth-last-child(6):first-child ~ .statCard {
+  grid-column: span 1;
+}
+
+@media (min-width: 768px) {
+  .statsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .statCard {
   min-height: 9rem;
   padding: 1.15rem;
@@ -121,6 +138,32 @@
   margin-top: 0.5rem;
   font-size: 0.84rem;
   color: var(--text-secondary);
+}
+
+.statTopics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  min-height: 2rem;
+  align-items: center;
+}
+
+.topicTag {
+  display: inline-flex;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  border-radius: 0.35rem;
+}
+
+.topicEmpty {
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
 .board {

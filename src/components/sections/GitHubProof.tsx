@@ -233,6 +233,41 @@ export default async function GitHubProof() {
               <AnimatedNumber className={styles.statValue} value={activeDays} />
               <p className={styles.statMeta}>With visible activity</p>
             </article>
+            <article className={styles.statCard}>
+              <p className={styles.statLabel}>Member since</p>
+              <p className={styles.statValue}>
+                {data.createdAt
+                  ? new Date(data.createdAt).getFullYear()
+                  : "N/A"}
+              </p>
+              <p className={styles.statMeta}>
+                {data.createdAt
+                  ? new Date(data.createdAt).toLocaleDateString("en-US", {
+                      month: "short",
+                      year: "numeric",
+                    })
+                  : "GitHub member"}
+              </p>
+            </article>
+            <article className={styles.statCard}>
+              <p className={styles.statLabel}>Top topics</p>
+              <div className={styles.statTopics}>
+                {data.topTopics.length > 0 ? (
+                  data.topTopics.slice(0, 3).map((topic) => (
+                    <span key={topic} className={styles.topicTag}>
+                      {topic}
+                    </span>
+                  ))
+                ) : (
+                  <span className={styles.topicEmpty}>—</span>
+                )}
+              </div>
+              <p className={styles.statMeta}>
+                {data.topTopics.length > 0
+                  ? `${data.topTopics.length} frequent tags`
+                  : "Repository topics"}
+              </p>
+            </article>
           </div>
         </div>
 
