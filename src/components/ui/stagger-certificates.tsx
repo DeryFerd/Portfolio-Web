@@ -29,8 +29,6 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
   cardSize 
 }) => {
   const isCenter = position === 0;
-  const distanceFromCenter = Math.abs(position);
-  const zIndex = 20 - distanceFromCenter; // Center = 20, sides decrease
 
   return (
     <div
@@ -38,24 +36,20 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       className={cn(
         "absolute left-1/2 top-1/2 cursor-pointer border-2 p-6 transition-all duration-500 ease-in-out",
         isCenter 
-          ? "bg-[#f5f0e6] text-[#1a1a1a] border-[#d4c8b0]" 
-          : "bg-[#faf8f3] text-[#4a4a4a] border-[#e8e0d0] hover:border-[#d4c8b0]/50"
+          ? "z-10 bg-[#f5f0e6] text-[#1a1a1a] border-[#d4c8b0]" 
+          : "z-0 bg-[#faf8f3] text-[#4a4a4a] border-[#e8e0d0] hover:border-[#d4c8b0]/50"
       )}
       style={{
         width: cardSize,
-        height: cardSize * 1.15,
-        zIndex,
+        height: cardSize * 1.2,
         clipPath: `polygon(40px 0%, calc(100% - 40px) 0%, 100% 40px, 100% 100%, calc(100% - 40px) 100%, 40px 100%, 0 100%, 0 0)`,
         transform: `
           translate(-50%, -50%) 
-          translateX(${(cardSize / 1.6) * position}px)
-          translateY(${isCenter ? -40 : position % 2 ? 12 : -12}px)
+          translateX(${(cardSize / 1.5) * position}px)
+          translateY(${isCenter ? -50 : position % 2 ? 12 : -12}px)
           rotate(${isCenter ? 0 : position % 2 ? 2 : -2}deg)
-          scale(${isCenter ? 1 : 0.95})
         `,
-        boxShadow: isCenter 
-          ? "0px 8px 0px 4px rgba(212, 200, 176, 0.5), 0 20px 40px rgba(0, 0, 0, 0.15)" 
-          : `${position > 0 ? '-' : ''}${distanceFromCenter * 2}px ${distanceFromCenter * 4}px ${distanceFromCenter * 6}px rgba(0, 0, 0, ${0.1 - distanceFromCenter * 0.02})`
+        boxShadow: isCenter ? "0px 8px 0px 4px rgba(212, 200, 176, 0.5)" : "0px 0px 0px 0px transparent"
       }}
     >
       {/* Corner ribbon effect */}
@@ -71,7 +65,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       
       {/* Certificate Image */}
       <div 
-        className="relative mb-4 w-full aspect-[1.4/1] overflow-hidden"
+        className="relative mb-4 w-full aspect-[1.4/1] overflow-hidden bg-[#e8e0d0]"
         style={{
           boxShadow: "3px 3px 0px rgba(250, 248, 243, 1)"
         }}
@@ -87,7 +81,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       
       {/* Title */}
       <h3 className={cn(
-        "text-sm sm:text-base font-medium leading-tight mb-2",
+        "text-sm sm:text-base font-medium leading-tight mb-2 line-clamp-2",
         isCenter ? "text-[#1a1a1a]" : "text-[#4a4a4a]"
       )}>
         {certificate.title}
@@ -118,8 +112,15 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
   certificates,
   className
 }) => {
-  const [cardSize, setCardSize] = useState(300);
-  const [certificatesList, setCertificatesList] = useState(certificates);
+  const [cardSize, setCardSize] = useState(340);
+  // Duplicate certificates 3x to create seamless infinite effect
+  const [certificatesList, setCertificatesList] = useState(() => {
+    const duplicated = [...certificates, ...certificates, ...certificates].map((cert, i) => ({
+      ...cert,
+      id: `${cert.id}-${i}`
+    }));
+    return duplicated;
+  });
 
   const handleMove = (steps: number) => {
     const newList = [...certificatesList];
@@ -127,13 +128,13 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
       for (let i = steps; i > 0; i--) {
         const item = newList.shift();
         if (!item) return;
-        newList.push({ ...item, id: `${item.id}-${Math.random()}` });
+        newList.push(item);
       }
     } else {
       for (let i = steps; i < 0; i++) {
         const item = newList.pop();
         if (!item) return;
-        newList.unshift({ ...item, id: `${item.id}-${Math.random()}` });
+        newList.unshift(item);
       }
     }
     setCertificatesList(newList);
@@ -142,7 +143,7 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
   useEffect(() => {
     const updateSize = () => {
       const { matches } = window.matchMedia("(min-width: 640px)");
-      setCardSize(matches ? 300 : 240);
+      setCardSize(matches ? 340 : 280);
     };
 
     updateSize();
@@ -150,41 +151,35 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
-  // Only show certificates within visible range (-2 to +2 from center)
-  const visibleCertificates = certificatesList.map((cert, index) => {
-    const position = certificatesList.length % 2
-      ? index - (certificatesList.length + 1) / 2
-      : index - certificatesList.length / 2;
-    return { cert, position, index };
-  }).filter(({ position }) => Math.abs(position) <= 2);
-
   return (
     <div
       className={cn("relative w-full overflow-hidden", className)}
-      style={{ height: 480 }}
+      style={{ height: 520 }}
     >
-      {visibleCertificates.map(({ cert, position, index }) => (
-        <CertificateCard
-          key={cert.id}
-          certificate={cert}
-          handleMove={handleMove}
-          position={position}
-          cardSize={cardSize}
-        />
-      ))}
+      {certificatesList.map((certificate, index) => {
+        const position = certificatesList.length % 2
+          ? index - (certificatesList.length + 1) / 2
+          : index - certificatesList.length / 2;
+        return (
+          <CertificateCard
+            key={certificate.id}
+            certificate={certificate}
+            handleMove={handleMove}
+            position={position}
+            cardSize={cardSize}
+          />
+        );
+      })}
       
       {/* Navigation Buttons */}
       <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-3">
         <button
           onClick={() => handleMove(-1)}
           className={cn(
-            "flex h-12 w-12 items-center justify-center text-xl transition-all duration-200",
-            "bg-[#faf8f3] border-2 border-[#e8e0d0] hover:bg-[#f5f0e6] hover:border-[#d4c8b0]",
+            "flex h-12 w-12 items-center justify-center text-xl transition-colors",
+            "bg-[#faf8f3] border-2 border-[#e8e0d0] hover:bg-[#f5f0e6] hover:text-[#1a1a1a]",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4c8b0] focus-visible:ring-offset-2"
           )}
-          style={{
-            clipPath: "polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% 100%, calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 0)"
-          }}
           aria-label="Previous certificate"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -192,13 +187,10 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
         <button
           onClick={() => handleMove(1)}
           className={cn(
-            "flex h-12 w-12 items-center justify-center text-xl transition-all duration-200",
-            "bg-[#faf8f3] border-2 border-[#e8e0d0] hover:bg-[#f5f0e6] hover:border-[#d4c8b0]",
+            "flex h-12 w-12 items-center justify-center text-xl transition-colors",
+            "bg-[#faf8f3] border-2 border-[#e8e0d0] hover:bg-[#f5f0e6] hover:text-[#1a1a1a]",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4c8b0] focus-visible:ring-offset-2"
           )}
-          style={{
-            clipPath: "polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% 100%, calc(100% - 8px) 100%, 8px 100%, 0 100%, 0 0)"
-          }}
           aria-label="Next certificate"
         >
           <ChevronRight className="w-5 h-5" />
