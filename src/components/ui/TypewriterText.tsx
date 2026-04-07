@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ElementType } from "react";
+import { useEffect, useRef, useState, type ElementType } from "react";
 
 interface TypewriterTextProps {
   text: string;
@@ -20,10 +20,15 @@ export default function TypewriterText({
   as: Component = "span",
 }: TypewriterTextProps) {
   const [displayed, setDisplayed] = useState("");
+  const hasCompletedRef = useRef(false);
 
   useEffect(() => {
     if (!trigger) {
-      setDisplayed("");
+      return;
+    }
+
+    if (hasCompletedRef.current) {
+      setDisplayed(text);
       return;
     }
 
@@ -35,6 +40,7 @@ export default function TypewriterText({
       setDisplayed(text.slice(0, currentIndex));
 
       if (currentIndex >= text.length) {
+        hasCompletedRef.current = true;
         return;
       }
 
