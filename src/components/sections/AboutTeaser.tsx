@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import CurtainReveal from "@/components/ui/CurtainReveal";
 import TextScramble from "@/components/ui/TextScramble";
-import { ShiningText } from "@/components/ui/shining-text";
+import { ShiningText, ThinkingToScramble } from "@/components/ui/shining-text";
 import styles from "./AboutTeaser.module.css";
 
 const JAKARTA_TIME_ZONE = "Asia/Jakarta";
@@ -88,7 +88,13 @@ export default function AboutTeaser() {
           <div className={styles.copy}>
             <p className={styles.kicker}>About</p>
             <h2 className={styles.title}>
-              <ShiningText text="About Me" className="text-4xl md:text-5xl font-bold" />
+              <ThinkingToScramble 
+                thinkingText="This Section is Thinking..." 
+                finalText="About Me" 
+                thinkingDuration={3000}
+                scrambleSpeed={44}
+                className="text-4xl md:text-5xl font-bold"
+              />
             </h2>
             <p className={styles.lead}>
               <TextScramble
