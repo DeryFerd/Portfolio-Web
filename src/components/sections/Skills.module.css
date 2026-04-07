@@ -83,22 +83,12 @@
 
 .quickScene {
   position: relative;
-  min-height: clamp(26rem, 48vw, 34rem);
-  border-radius: 2rem;
-  background:
-    radial-gradient(circle at 12% 14%, rgba(122, 149, 255, 0.14), transparent 24%),
-    radial-gradient(circle at 84% 18%, rgba(101, 216, 255, 0.14), transparent 26%),
-    linear-gradient(180deg, rgba(250, 247, 240, 0.98), rgba(242, 235, 222, 0.98));
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.42),
-    0 24px 40px rgba(82, 68, 45, 0.08);
-  overflow: hidden;
-  padding: clamp(1rem, 2.2vw, 1.5rem);
+  padding-top: 0.25rem;
 }
 
 .quickGrid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0.72rem;
   align-content: start;
 }
@@ -106,41 +96,42 @@
 .quickCard {
   --tool-accent: var(--accent);
   display: grid;
-  justify-items: start;
-  gap: 0.72rem;
-  min-height: 0;
-  padding: 0.9rem;
+  justify-items: center;
+  align-content: center;
+  gap: 0.56rem;
+  min-height: 7rem;
+  padding: 0.8rem 0.65rem;
   border: 1px solid rgba(33, 50, 40, 0.08);
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.74);
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.28),
     0 10px 20px rgba(113, 96, 66, 0.04);
+  text-align: center;
 }
 
 .quickIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 0.9rem;
-  color: var(--tool-accent);
-  background: color-mix(in srgb, var(--tool-accent) 13%, rgba(255, 255, 255, 0.82));
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--tool-accent) 20%, rgba(33, 50, 40, 0.08)),
-    0 8px 16px color-mix(in srgb, var(--tool-accent) 10%, transparent);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.72rem;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 0 0 1px rgba(33, 50, 40, 0.05);
 }
 
-.quickIcon svg {
+.quickIcon svg,
+.quickIcon img {
   width: 68%;
   height: 68%;
+  object-fit: contain;
 }
 
 .quickTitle {
   margin: 0;
-  font-size: 0.82rem;
-  line-height: 1.3;
+  font-size: 0.78rem;
+  line-height: 1.25;
   letter-spacing: 0;
   color: rgba(24, 32, 28, 0.92);
 }
@@ -932,7 +923,7 @@
   }
 
   .quickGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -952,7 +943,7 @@
   }
 
   .quickGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .bookAura {

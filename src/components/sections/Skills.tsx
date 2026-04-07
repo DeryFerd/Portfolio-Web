@@ -16,6 +16,7 @@ interface StackTool {
   label: string;
   caption: string;
   accent: string;
+  logoUrl: string;
 }
 
 interface RoleChapter {
@@ -50,60 +51,70 @@ const stackTools: StackTool[] = [
     label: "Python",
     caption: "Experiments, orchestration, and the daily backbone for data and ML work.",
     accent: "#5ab0f5",
+    logoUrl: "https://cdn.simpleicons.org/python",
   },
   {
     id: "postgres",
     label: "Postgres",
     caption: "Warehousing, retrieval state, and the structured layer beneath applications.",
     accent: "#7a95ff",
+    logoUrl: "https://cdn.simpleicons.org/postgresql",
   },
   {
     id: "docker",
     label: "Docker",
     caption: "Portable runtimes that keep model, data, and product environments aligned.",
     accent: "#46b6ff",
+    logoUrl: "https://cdn.simpleicons.org/docker",
   },
   {
     id: "node",
     label: "Node.js",
     caption: "APIs, background jobs, and the glue between product and model workflows.",
     accent: "#8cd66f",
+    logoUrl: "https://cdn.simpleicons.org/nodedotjs",
   },
   {
     id: "pytorch",
     label: "PyTorch",
     caption: "Training loops, fine-tuning cycles, and model iteration with production in mind.",
     accent: "#ff7b4d",
+    logoUrl: "https://cdn.simpleicons.org/pytorch",
   },
   {
     id: "llms",
     label: "LLMs",
     caption: "Reasoning layers shaped through prompting, evaluation, and product behavior.",
     accent: "#f2c078",
+    logoUrl: "https://cdn.simpleicons.org/openai",
   },
   {
     id: "rag",
     label: "RAG",
     caption: "Retrieval systems that keep model output anchored to the right context.",
     accent: "#c08cff",
+    logoUrl: "https://cdn.simpleicons.org/langchain",
   },
   {
     id: "react",
     label: "React",
     caption: "Interactive product surfaces where model behavior needs clarity and speed.",
     accent: "#65d8ff",
+    logoUrl: "https://cdn.simpleicons.org/react",
   },
   {
     id: "nextjs",
     label: "Next.js",
     caption: "App delivery, server rendering, and product polish in one deployment layer.",
     accent: "#f0f0f0",
+    logoUrl: "https://cdn.simpleicons.org/nextdotjs",
   },
   {
     id: "tailwind",
     label: "Tailwind",
     caption: "Fast UI iteration when the frontend needs to move with the backend pace.",
     accent: "#33d6dd",
+    logoUrl: "https://cdn.simpleicons.org/tailwindcss",
   },
 ];
 
@@ -199,6 +210,18 @@ function easeInOutCubic(value: number) {
 }
 
 function SkillIcon({ skillId }: { skillId: string }) {
+  const tool = stackToolById[skillId];
+  if (tool?.logoUrl) {
+    return (
+      <img
+        src={tool.logoUrl}
+        alt={`${tool.label} logo`}
+        loading="lazy"
+        decoding="async"
+      />
+    );
+  }
+
   switch (skillId) {
     case "llms":
       return (
@@ -925,16 +948,7 @@ export default function Skills() {
   } as CSSProperties;
 
   const quickStackItems = useMemo(
-    () =>
-      chapters.flatMap((chapter) =>
-        chapter.stackIds
-          .map((stackId) => stackToolById[stackId])
-          .filter((tool): tool is StackTool => Boolean(tool))
-          .map((tool) => ({
-            id: `${chapter.id}-${tool.id}`,
-            tool,
-          })),
-      ),
+    () => stackTools,
     [],
   );
 
@@ -1117,7 +1131,7 @@ export default function Skills() {
                   {quickStackItems.map((item) => (
                     <QuickToolCard
                       key={item.id}
-                      tool={item.tool}
+                      tool={item}
                     />
                   ))}
                 </div>
