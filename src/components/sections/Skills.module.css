@@ -115,44 +115,11 @@
 }
 
 .bookBody::before {
-  content: "";
-  position: absolute;
-  left: 1rem;
-  right: 1.25rem;
-  bottom: 0.35rem;
-  height: 1rem;
-  border-radius: 0 0 1.2rem 1.2rem;
-  background: linear-gradient(
-    180deg,
-    rgba(244, 238, 228, 0.92),
-    rgba(229, 219, 202, 0.9)
-  );
-  box-shadow:
-    0 10px 22px rgba(83, 69, 45, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  transform: skewX(-14deg);
-  transform-origin: left center;
-  pointer-events: none;
+  content: none;
 }
 
 .bookBody::after {
-  content: "";
-  position: absolute;
-  top: 1rem;
-  right: 0.45rem;
-  bottom: 1rem;
-  width: 0.78rem;
-  border-radius: 0 1rem 1rem 0;
-  background: linear-gradient(
-    180deg,
-    rgba(245, 239, 229, 0.96),
-    rgba(231, 222, 206, 0.92)
-  );
-  box-shadow:
-    0 12px 24px rgba(83, 69, 45, 0.1),
-    inset 1px 0 0 rgba(255, 255, 255, 0.65),
-    inset -1px 0 0 rgba(113, 96, 66, 0.12);
-  pointer-events: none;
+  content: none;
 }
 
 .bookSpread {
