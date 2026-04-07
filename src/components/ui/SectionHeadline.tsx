@@ -58,7 +58,7 @@ export default function SectionHeadline({
       {titlePhase === "thinking" ? (
         <ShiningText
           text={thinkingText}
-          className={styles.thinking}
+          className={`${styles.thinking} ${styles.content}`}
         />
       ) : (
         <TextScramble
@@ -67,7 +67,7 @@ export default function SectionHeadline({
           trigger={shouldScramble}
           speed={68}
           delay={120}
-          className={styles.scramble}
+          className={`${styles.scramble} ${styles.content}`}
         />
       )}
     </h2>

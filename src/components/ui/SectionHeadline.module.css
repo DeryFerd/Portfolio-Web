@@ -2,6 +2,16 @@
   display: block;
 }
 
+.content {
+  display: block;
+  width: 100%;
+  min-height: 1em;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
 .thinking {
   opacity: 0.34;
   filter: blur(0.5px);
@@ -9,8 +19,7 @@
 }
 
 .scramble {
-  display: inline-block;
-  min-height: 1em;
+  white-space: normal;
 }
 
 @media (prefers-reduced-motion: reduce) {
