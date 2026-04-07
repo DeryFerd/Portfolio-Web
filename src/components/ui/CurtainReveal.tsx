@@ -71,7 +71,6 @@ export default function CurtainReveal({
           >
             <div className={styles.clickIndicator}>
               <Eye className={styles.icon} />
-              <span className={styles.clickText}>Click to reveal</span>
             </div>
             <div className={styles.infoContent}>{children}</div>
           </motion.div>
@@ -89,9 +88,9 @@ export default function CurtainReveal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
+            aria-label="Close profile reveal"
           >
             <EyeOff className={styles.icon} />
-            <span>Click to close</span>
           </motion.button>
         )}
       </AnimatePresence>
