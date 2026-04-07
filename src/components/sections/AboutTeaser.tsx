@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import CurtainReveal from "@/components/ui/CurtainReveal";
 import TextScramble from "@/components/ui/TextScramble";
-import { ShiningText, ThinkingToScramble } from "@/components/ui/shining-text";
+import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./AboutTeaser.module.css";
 
 const JAKARTA_TIME_ZONE = "Asia/Jakarta";
@@ -62,6 +62,7 @@ function LiveLocalTime() {
 export default function AboutTeaser() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [titlePhase, setTitlePhase] = useState<"thinking" | "aboutme">("thinking");
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -81,6 +82,15 @@ export default function AboutTeaser() {
     return () => observer.disconnect();
   }, []);
 
+  // Switch from thinking to About Me after 1.5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTitlePhase("aboutme");
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section ref={sectionRef} className={`section ${styles.about}`} id="about">
       <div className="container">
@@ -88,13 +98,20 @@ export default function AboutTeaser() {
           <div className={styles.copy}>
             <p className={styles.kicker}>About</p>
             <h2 className={styles.title}>
-              <ThinkingToScramble 
-                thinkingText="This Section is Thinking..." 
-                finalText="About Me" 
-                thinkingDuration={3000}
-                scrambleSpeed={44}
-                className="text-4xl md:text-5xl font-bold"
-              />
+              {titlePhase === "thinking" ? (
+                <ShiningText 
+                  text="This Section is Thinking..." 
+                  className="text-4xl md:text-5xl font-bold"
+                />
+              ) : (
+                <TextScramble
+                  text="About Me"
+                  trigger={true}
+                  speed={44}
+                  delay={100}
+                  className={`${styles.scrambleInline} text-4xl md:text-5xl font-bold`}
+                />
+              )}
             </h2>
             <p className={styles.lead}>
               <TextScramble

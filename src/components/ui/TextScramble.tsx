@@ -19,7 +19,7 @@ export default function TextScramble({
   className = "",
   trigger = true,
 }: TextScrambleProps) {
-  const [displayed, setDisplayed] = useState("");
+  const [displayed, setDisplayed] = useState(text); // Start with actual text, then scramble
   const frameRef = useRef<number | null>(null);
   const hasRun = useRef(false);
 
@@ -57,17 +57,21 @@ export default function TextScramble({
   }, [speed, text]);
 
   useEffect(() => {
-    if (!trigger || hasRun.current) return;
+    if (!trigger) return;
+    if (hasRun.current) {
+      // If already ran, just show the text
+      setDisplayed(text);
+      return;
+    }
 
     hasRun.current = true;
-
     const timeout = window.setTimeout(scramble, delay);
 
     return () => {
       clearTimeout(timeout);
       if (frameRef.current) clearTimeout(frameRef.current);
     };
-  }, [delay, scramble, trigger]);
+  }, [delay, scramble, trigger, text]);
 
   useEffect(() => {
     return () => {
