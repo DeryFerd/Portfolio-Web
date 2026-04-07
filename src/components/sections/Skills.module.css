@@ -122,12 +122,11 @@
   bottom: 0.35rem;
   height: 1rem;
   border-radius: 0 0 1.2rem 1.2rem;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(248, 243, 233, 0.98) 0 4px,
-      rgba(232, 223, 208, 0.98) 4px 8px
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(244, 238, 228, 0.92),
+    rgba(229, 219, 202, 0.9)
+  );
   box-shadow:
     0 10px 22px rgba(83, 69, 45, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
@@ -142,14 +141,13 @@
   top: 1rem;
   right: 0.45rem;
   bottom: 1rem;
-  width: 1.05rem;
+  width: 0.78rem;
   border-radius: 0 1rem 1rem 0;
-  background:
-    repeating-linear-gradient(
-      180deg,
-      rgba(250, 245, 235, 0.98) 0 2px,
-      rgba(232, 223, 208, 0.98) 2px 4px
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(245, 239, 229, 0.96),
+    rgba(231, 222, 206, 0.92)
+  );
   box-shadow:
     0 12px 24px rgba(83, 69, 45, 0.1),
     inset 1px 0 0 rgba(255, 255, 255, 0.65),
@@ -216,21 +214,14 @@
   height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(113, 96, 66, 0.24) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .pageScroller::-webkit-scrollbar {
-  width: 0.42rem;
-}
-
-.pageScroller::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.pageScroller::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: rgba(113, 96, 66, 0.2);
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .leftPageScroller {
