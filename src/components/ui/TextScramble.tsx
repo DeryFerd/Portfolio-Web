@@ -21,7 +21,7 @@ export default function TextScramble({
 }: TextScrambleProps) {
   const [displayed, setDisplayed] = useState("");
   const frameRef = useRef<number | null>(null);
-  const hasRun = useRef(false);
+  const completedTextRef = useRef<string | null>(null);
 
   const scramble = useCallback(() => {
     const length = text.length;
@@ -35,6 +35,7 @@ export default function TextScramble({
 
     const step = () => {
       if (resolved >= length) {
+        completedTextRef.current = text;
         setDisplayed(text);
         return;
       }
@@ -62,12 +63,11 @@ export default function TextScramble({
       return;
     }
 
-    if (hasRun.current) {
+    if (completedTextRef.current === text) {
       setDisplayed(text);
       return;
     }
 
-    hasRun.current = true;
     const timeout = window.setTimeout(scramble, delay);
 
     return () => {

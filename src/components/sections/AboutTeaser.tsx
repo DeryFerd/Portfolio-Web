@@ -111,10 +111,11 @@ export default function AboutTeaser() {
                 />
               ) : (
                 <TextScramble
+                  key="about-me-scramble"
                   text="About Me"
                   trigger={shouldScrambleTitle}
-                  speed={36}
-                  delay={80}
+                  speed={72}
+                  delay={140}
                   className={`${styles.scrambleInline} text-4xl md:text-5xl font-bold`}
                 />
               )}
