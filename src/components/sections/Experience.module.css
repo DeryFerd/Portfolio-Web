@@ -50,10 +50,10 @@
   width: 1px;
   background: linear-gradient(
     180deg,
-    rgba(87, 111, 72, 0.12),
-    rgba(87, 111, 72, 0.38) 18%,
-    rgba(87, 111, 72, 0.18) 82%,
-    rgba(87, 111, 72, 0.08)
+    color-mix(in srgb, var(--accent) 16%, transparent),
+    color-mix(in srgb, var(--accent) 36%, transparent) 18%,
+    color-mix(in srgb, var(--accent) 20%, transparent) 82%,
+    color-mix(in srgb, var(--accent) 10%, transparent)
   );
 }
 
@@ -89,9 +89,9 @@
 }
 
 .item[data-open="true"] .itemNumber {
-  border-color: rgba(87, 111, 72, 0.78);
-  background: rgba(87, 111, 72, 0.92);
-  color: #f5f0e7;
+  border-color: color-mix(in srgb, var(--accent) 65%, transparent);
+  background: color-mix(in srgb, var(--accent) 84%, transparent);
+  color: var(--bg-primary);
 }
 
 .itemColumn {
@@ -136,7 +136,7 @@
   font-size: clamp(0.98rem, 1.5vw, 1.16rem);
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: rgba(87, 111, 72, 0.9);
+  color: color-mix(in srgb, var(--accent) 88%, var(--text-primary) 12%);
 }
 
 .period {
@@ -167,9 +167,9 @@
 
 .item[data-open="true"] .chevron {
   transform: rotate(180deg);
-  background: rgba(87, 111, 72, 0.12);
-  border-color: rgba(87, 111, 72, 0.32);
-  color: rgba(54, 73, 50, 0.96);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 34%, transparent);
+  color: var(--accent);
 }
 
 .details {
@@ -231,8 +231,8 @@
   height: 0.5rem;
   margin-top: 0.55rem;
   border-radius: 999px;
-  background: rgba(87, 111, 72, 0.82);
-  box-shadow: 0 0 0 4px rgba(87, 111, 72, 0.12);
+  background: color-mix(in srgb, var(--accent) 78%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .tagRail {
@@ -257,12 +257,12 @@
 
 .itemTrigger:hover .role,
 .itemTrigger:focus-visible .role {
-  color: rgba(45, 61, 45, 0.98);
+  color: var(--accent);
 }
 
 .itemTrigger:hover .company,
 .itemTrigger:focus-visible .company {
-  color: rgba(72, 97, 60, 0.98);
+  color: var(--accent);
 }
 
 .itemTrigger:focus-visible {
@@ -271,8 +271,8 @@
 
 .itemTrigger:focus-visible .chevron,
 .itemTrigger:focus-visible .itemNumber {
-  border-color: rgba(87, 111, 72, 0.42);
-  box-shadow: 0 0 0 3px rgba(87, 111, 72, 0.12);
+  border-color: color-mix(in srgb, var(--accent) 42%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 @media (max-width: 900px) {
