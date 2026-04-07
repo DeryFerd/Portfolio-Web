@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import SectionHeadline from "@/components/ui/SectionHeadline";
+import SectionSubheadline from "@/components/ui/SectionSubheadline";
 import { StaggerCertificates, CertificateItem } from "@/components/ui/stagger-certificates";
 import { certificates } from "@/lib/certificatesData";
 import styles from "./Certificates.module.css";
@@ -43,11 +44,10 @@ export default function Certificates() {
               text="Formal training, kept visible and tidy."
               className={styles.title}
             />
-            <p className={styles.text}>
-              A lighter credential layer between public proof and shipped work.
-              Browse through the carousel to see professional certifications
-              from recognized institutions.
-            </p>
+            <SectionSubheadline
+              text="A lighter credential layer between public proof and shipped work. Browse through the carousel to see professional certifications from recognized institutions."
+              className={styles.text}
+            />
           </div>
         </div>
 

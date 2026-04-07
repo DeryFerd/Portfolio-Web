@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import AnimatedNumber from "@/components/ui/AnimatedNumber";
 import SectionHeadline from "@/components/ui/SectionHeadline";
+import SectionSubheadline from "@/components/ui/SectionSubheadline";
 import { getGitHubProofData } from "@/lib/github";
 import styles from "./GitHubProof.module.css";
 
@@ -181,11 +182,10 @@ export default async function GitHubProof() {
               text="Public proof of steady execution."
               className={styles.title}
             />
-            <p className={styles.text}>
-              Repository activity is not the whole story, but it helps show
-              consistency, iteration, and how often technical work turns into
-              shipped output.
-            </p>
+            <SectionSubheadline
+              text="Repository activity is not the whole story, but it helps show consistency, iteration, and how often technical work turns into shipped output."
+              className={styles.text}
+            />
             <div className={styles.identityRow}>
               {data.avatarUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element

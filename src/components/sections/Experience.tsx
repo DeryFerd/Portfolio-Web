@@ -2,6 +2,7 @@
 
 import { useState, useCallback, memo } from "react";
 import SectionHeadline from "@/components/ui/SectionHeadline";
+import SectionSubheadline from "@/components/ui/SectionSubheadline";
 import styles from "./Experience.module.css";
 
 const experiences = [
@@ -172,12 +173,10 @@ export default function Experience() {
               text="Where technical work became delivery."
               className={styles.title}
             />
-            <p className={styles.text}>
-              I care about the part between &ldquo;it works&rdquo; and
-              &ldquo;it ships.&rdquo; These roles shaped how I think about
-              product clarity, implementation quality, and the real constraints
-              around building with AI.
-            </p>
+            <SectionSubheadline
+              text='I care about the part between "it works" and "it ships." These roles shaped how I think about product clarity, implementation quality, and the real constraints around building with AI.'
+              className={styles.text}
+            />
           </div>
 
           <div className={styles.timeline}>

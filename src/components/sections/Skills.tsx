@@ -7,6 +7,7 @@ import type {
 } from "react";
 import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import SectionHeadline from "@/components/ui/SectionHeadline";
+import SectionSubheadline from "@/components/ui/SectionSubheadline";
 import styles from "./Skills.module.css";
 
 interface StackTool {
@@ -917,12 +918,10 @@ export default function Skills() {
               text="One spine, six working chapters."
               className={styles.title}
             />
-            <p className={styles.text}>
-              The stack now behaves like an actual book: closed first, opened by
-              dragging the cover, then moved chapter by chapter as the work
-              shifts from data pipelines into models, LLM systems, product, and
-              operations.
-            </p>
+            <SectionSubheadline
+              text="The stack now behaves like an actual book: closed first, opened by dragging the cover, then moved chapter by chapter as the work shifts from data pipelines into models, LLM systems, product, and operations."
+              className={styles.text}
+            />
           </div>
 
           <div className={styles.bookColumn}>
