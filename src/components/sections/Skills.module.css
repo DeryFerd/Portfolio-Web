@@ -77,12 +77,14 @@
 .bookColumn {
   position: relative;
   overflow: hidden;
+  min-height: clamp(26rem, 48vw, 34rem);
   padding-top: 0.25rem;
   padding-bottom: 0.8rem;
 }
 
 .quickScene {
   position: relative;
+  min-height: clamp(26rem, 48vw, 34rem);
   padding-top: 0.35rem;
 }
 
@@ -91,6 +93,7 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0.8rem;
   align-content: start;
+  min-height: 100%;
 }
 
 .quickCard {
