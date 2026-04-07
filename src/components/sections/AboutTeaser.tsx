@@ -63,6 +63,7 @@ export default function AboutTeaser() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [titlePhase, setTitlePhase] = useState<"thinking" | "aboutme">("thinking");
+  const [shouldScrambleTitle, setShouldScrambleTitle] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -82,14 +83,19 @@ export default function AboutTeaser() {
     return () => observer.disconnect();
   }, []);
 
-  // Switch from thinking to About Me after 1.5 seconds
   useEffect(() => {
-    const timer = setTimeout(() => {
+    if (!isVisible) return;
+
+    setTitlePhase("thinking");
+    setShouldScrambleTitle(false);
+
+    const timer = window.setTimeout(() => {
       setTitlePhase("aboutme");
+      setShouldScrambleTitle(true);
     }, 1500);
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => window.clearTimeout(timer);
+  }, [isVisible]);
 
   return (
     <section ref={sectionRef} className={`section ${styles.about}`} id="about">
@@ -101,14 +107,14 @@ export default function AboutTeaser() {
               {titlePhase === "thinking" ? (
                 <ShiningText 
                   text="This Section is Thinking..." 
-                  className="text-4xl md:text-5xl font-bold"
+                  className={`${styles.thinkingTitle} text-4xl md:text-5xl font-bold`}
                 />
               ) : (
                 <TextScramble
                   text="About Me"
-                  trigger={true}
-                  speed={44}
-                  delay={100}
+                  trigger={shouldScrambleTitle}
+                  speed={36}
+                  delay={80}
                   className={`${styles.scrambleInline} text-4xl md:text-5xl font-bold`}
                 />
               )}
