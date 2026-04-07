@@ -3,6 +3,7 @@
 import { useState, useCallback, memo } from "react";
 import SectionHeadline from "@/components/ui/SectionHeadline";
 import SectionSubheadline from "@/components/ui/SectionSubheadline";
+import TypewriterText from "@/components/ui/TypewriterText";
 import styles from "./Experience.module.css";
 
 const experiences = [
@@ -131,12 +132,24 @@ const ExperienceItem = memo(function ExperienceItem({
           data-open={isOpen}
         >
           <div className={styles.detailsInner}>
-            <p className={styles.summary}>{experience.summary}</p>
+            <TypewriterText
+              as="p"
+              text={experience.summary}
+              trigger={isOpen}
+              delay={120}
+              speed={14}
+              className={styles.summary}
+            />
             <ul className={styles.highlights}>
-              {experience.highlights.map((highlight) => (
+              {experience.highlights.map((highlight, highlightIndex) => (
                 <li key={highlight} className={styles.highlightItem}>
                   <span className={styles.highlightBullet} aria-hidden="true" />
-                  <span>{highlight}</span>
+                  <TypewriterText
+                    text={highlight}
+                    trigger={isOpen}
+                    delay={300 + highlightIndex * 220}
+                    speed={12}
+                  />
                 </li>
               ))}
             </ul>
