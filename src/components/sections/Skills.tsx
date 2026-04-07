@@ -6,6 +6,7 @@ import type {
   WheelEvent as ReactWheelEvent,
 } from "react";
 import { startTransition, useEffect, useMemo, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 import SectionHeadline from "@/components/ui/SectionHeadline";
 import SectionSubheadline from "@/components/ui/SectionSubheadline";
 import styles from "./Skills.module.css";
@@ -31,6 +32,7 @@ interface RoleChapter {
 
 type DragMode = "none" | "cover" | "page" | "scroll";
 type TurnDirection = -1 | 0 | 1;
+type StackViewMode = "detail" | "quick";
 
 const COVER_DRAG_DISTANCE = 240;
 const COVER_OPEN_THRESHOLD = 0.42;
@@ -435,6 +437,24 @@ function ToolCard({ tool }: { tool: StackTool }) {
   );
 }
 
+function QuickToolCard({
+  tool,
+}: {
+  tool: StackTool;
+}) {
+  return (
+    <article
+      className={styles.quickCard}
+      style={{ "--tool-accent": tool.accent } as CSSProperties}
+    >
+      <span className={styles.quickIcon}>
+        <SkillIcon skillId={tool.id} />
+      </span>
+      <h4 className={styles.quickTitle}>{tool.label}</h4>
+    </article>
+  );
+}
+
 function RolePage({ chapter }: { chapter: RoleChapter }) {
   const tools = chapter.stackIds
     .map((stackId) => stackToolById[stackId])
@@ -512,6 +532,7 @@ export default function Skills() {
   const rightScrollRef = useRef<HTMLDivElement>(null);
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [stackViewMode, setStackViewMode] = useState<StackViewMode>("detail");
   const [coverProgress, setCoverProgress] = useState(0);
   const [dragMode, setDragMode] = useState<DragMode>("none");
   const [turnDirection, setTurnDirection] = useState<TurnDirection>(0);
@@ -903,6 +924,20 @@ export default function Skills() {
     "--chapter-accent": activeChapter.accent,
   } as CSSProperties;
 
+  const quickStackItems = useMemo(
+    () =>
+      chapters.flatMap((chapter) =>
+        chapter.stackIds
+          .map((stackId) => stackToolById[stackId])
+          .filter((tool): tool is StackTool => Boolean(tool))
+          .map((tool) => ({
+            id: `${chapter.id}-${tool.id}`,
+            tool,
+          })),
+      ),
+    [],
+  );
+
   return (
     <section className={`section ${styles.skills}`} id="skills">
       <div className="container">
@@ -922,138 +957,172 @@ export default function Skills() {
               text="The stack now behaves like an actual book: closed first, opened by dragging the cover, then moved chapter by chapter as the work shifts from data pipelines into models, LLM systems, product, and operations."
               className={styles.text}
             />
+
+            <div className={styles.viewToggle}>
+              <Button
+                type="button"
+                size="sm"
+                variant={stackViewMode === "quick" ? "default" : "outline"}
+                className={styles.viewButton}
+                onClick={() => setStackViewMode("quick")}
+              >
+                Quick
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                variant={stackViewMode === "detail" ? "default" : "outline"}
+                className={styles.viewButton}
+                onClick={() => setStackViewMode("detail")}
+              >
+                Detail
+              </Button>
+            </div>
           </div>
 
           <div className={styles.bookColumn}>
-            <div className={styles.bookScene} style={bookStyle}>
-              <div className={styles.bookAura} aria-hidden="true" />
+            {stackViewMode === "detail" ? (
+              <div className={styles.bookScene} style={bookStyle}>
+                <div className={styles.bookAura} aria-hidden="true" />
 
-              <div
-                className={styles.bookViewport}
-                data-dragging={isDragging}
-                onPointerDown={handlePointerDown}
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
-                onPointerCancel={handlePointerCancel}
-                onWheel={handleWheel}
-              >
-                <div className={styles.bookBody}>
-                  <div className={styles.bookSpread}>
-                    <div className={styles.leftPage}>
-                      <div
-                        ref={leftScrollRef}
-                        className={`${styles.pageScroller} ${styles.leftPageScroller}`}
-                      >
-                        <span className={styles.contentsKicker}>Playbook</span>
-                        <h3 className={styles.contentsTitle}>
-                          One portfolio, several operating modes.
-                        </h3>
-                        <p className={styles.contentsText}>
-                          The same build philosophy shows up in different forms:
-                          data movement, experiment design, model delivery, LLM
-                          behavior, product surfaces, and production stability.
-                        </p>
+                <div
+                  className={styles.bookViewport}
+                  data-dragging={isDragging}
+                  onPointerDown={handlePointerDown}
+                  onPointerMove={handlePointerMove}
+                  onPointerUp={handlePointerUp}
+                  onPointerCancel={handlePointerCancel}
+                  onWheel={handleWheel}
+                >
+                  <div className={styles.bookBody}>
+                    <div className={styles.bookSpread}>
+                      <div className={styles.leftPage}>
+                        <div
+                          ref={leftScrollRef}
+                          className={`${styles.pageScroller} ${styles.leftPageScroller}`}
+                        >
+                          <span className={styles.contentsKicker}>Playbook</span>
+                          <h3 className={styles.contentsTitle}>
+                            One portfolio, several operating modes.
+                          </h3>
+                          <p className={styles.contentsText}>
+                            The same build philosophy shows up in different forms:
+                            data movement, experiment design, model delivery, LLM
+                            behavior, product surfaces, and production stability.
+                          </p>
 
-                        <div className={styles.contentsList}>
-                          {chapters.map((chapter, index) => (
-                            <div
-                              key={chapter.id}
-                              className={styles.contentsItem}
-                              data-active={index === activeIndex}
-                            >
-                              <span className={styles.contentsItemIndex}>
-                                {String(index + 1).padStart(2, "0")}
-                              </span>
-                              <span className={styles.contentsItemLabel}>
-                                {chapter.label}
-                              </span>
-                            </div>
-                          ))}
+                          <div className={styles.contentsList}>
+                            {chapters.map((chapter, index) => (
+                              <div
+                                key={chapter.id}
+                                className={styles.contentsItem}
+                                data-active={index === activeIndex}
+                              >
+                                <span className={styles.contentsItemIndex}>
+                                  {String(index + 1).padStart(2, "0")}
+                                </span>
+                                <span className={styles.contentsItemLabel}>
+                                  {chapter.label}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className={styles.currentCard}>
+                            <span className={styles.currentChapter}>
+                              {activeChapter.chapter}
+                            </span>
+                            <h4 className={styles.currentLabel}>
+                              {activeChapter.label}
+                            </h4>
+                            <p className={styles.currentNote}>
+                              {activeChapter.note}
+                            </p>
+                          </div>
                         </div>
+                      </div>
 
-                        <div className={styles.currentCard}>
-                          <span className={styles.currentChapter}>
-                            {activeChapter.chapter}
-                          </span>
-                          <h4 className={styles.currentLabel}>
-                            {activeChapter.label}
-                          </h4>
-                          <p className={styles.currentNote}>
-                            {activeChapter.note}
+                      <div className={styles.rightPage}>
+                        <div ref={rightScrollRef} className={styles.pageScroller}>
+                          <RolePage chapter={visibleRightChapter} />
+                        </div>
+                      </div>
+                    </div>
+
+                    {turnTargetChapter ? (
+                      <div
+                        className={styles.pageTurn}
+                        data-direction={turnDirection < 0 ? "next" : "prev"}
+                      >
+                        <div className={`${styles.turnFace} ${styles.turnFront}`}>
+                          <RolePage
+                            chapter={
+                              turnDirection < 0 ? activeChapter : turnTargetChapter
+                            }
+                          />
+                        </div>
+                        <div className={`${styles.turnFace} ${styles.turnBack}`}>
+                          <TurnBackFace
+                            chapter={
+                              turnDirection < 0 ? turnTargetChapter : activeChapter
+                            }
+                          />
+                        </div>
+                      </div>
+                    ) : null}
+
+                    <div className={styles.bookSpine} aria-hidden="true" />
+
+                    <div className={styles.bookCover} aria-hidden="true">
+                      <div className={styles.coverInner}>
+                        <div className={styles.coverTop}>
+                          <span className={styles.coverKicker}>Dery Ferdika</span>
+                          <h3 className={styles.coverTitle}>AI / Data Playbook</h3>
+                          <p className={styles.coverText}>
+                            Open the cover, then turn through the roles.
                           </p>
                         </div>
-                      </div>
-                    </div>
 
-                    <div className={styles.rightPage}>
-                      <div ref={rightScrollRef} className={styles.pageScroller}>
-                        <RolePage chapter={visibleRightChapter} />
-                      </div>
-                    </div>
-                  </div>
-
-                  {turnTargetChapter ? (
-                    <div
-                      className={styles.pageTurn}
-                      data-direction={turnDirection < 0 ? "next" : "prev"}
-                    >
-                      <div className={`${styles.turnFace} ${styles.turnFront}`}>
-                        <RolePage
-                          chapter={
-                            turnDirection < 0 ? activeChapter : turnTargetChapter
-                          }
-                        />
-                      </div>
-                      <div className={`${styles.turnFace} ${styles.turnBack}`}>
-                        <TurnBackFace
-                          chapter={
-                            turnDirection < 0 ? turnTargetChapter : activeChapter
-                          }
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-
-                  <div className={styles.bookSpine} aria-hidden="true" />
-
-                  <div className={styles.bookCover} aria-hidden="true">
-                    <div className={styles.coverInner}>
-                      <div className={styles.coverTop}>
-                        <span className={styles.coverKicker}>Dery Ferdika</span>
-                        <h3 className={styles.coverTitle}>AI / Data Playbook</h3>
-                        <p className={styles.coverText}>
-                          Open the cover, then turn through the roles.
-                        </p>
-                      </div>
-
-                      <div className={styles.coverTags}>
-                        <span>Data</span>
-                        <span>Models</span>
-                        <span>Delivery</span>
+                        <div className={styles.coverTags}>
+                          <span>Data</span>
+                          <span>Models</span>
+                          <span>Delivery</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className={styles.bookmarks}>
-                {chapters.map((chapter, index) => (
-                  <button
-                    key={chapter.id}
-                    type="button"
-                    className={styles.bookmarkTab}
-                    suppressHydrationWarning
-                    data-active={index === activeIndex}
-                    style={{ "--tab-accent": chapter.accent } as CSSProperties}
-                    aria-label={`Open ${chapter.label} chapter`}
-                    onClick={() => selectChapter(index)}
-                  >
-                    <span className={styles.bookmarkSwatch} />
-                    <span className={styles.bookmarkLabel}>{chapter.label}</span>
-                  </button>
-                ))}
+                <div className={styles.bookmarks}>
+                  {chapters.map((chapter, index) => (
+                    <button
+                      key={chapter.id}
+                      type="button"
+                      className={styles.bookmarkTab}
+                      suppressHydrationWarning
+                      data-active={index === activeIndex}
+                      style={{ "--tab-accent": chapter.accent } as CSSProperties}
+                      aria-label={`Open ${chapter.label} chapter`}
+                      onClick={() => selectChapter(index)}
+                    >
+                      <span className={styles.bookmarkSwatch} />
+                      <span className={styles.bookmarkLabel}>{chapter.label}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className={styles.quickScene}>
+                <div className={styles.quickGrid}>
+                  {quickStackItems.map((item) => (
+                    <QuickToolCard
+                      key={item.id}
+                      tool={item.tool}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

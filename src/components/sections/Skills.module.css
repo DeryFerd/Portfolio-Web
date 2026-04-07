@@ -57,11 +57,92 @@
   color: var(--text-secondary);
 }
 
+.viewToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.1rem;
+  padding: 0.35rem;
+  border: 1px solid rgba(33, 50, 40, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.46);
+  backdrop-filter: blur(10px);
+}
+
+.viewButton {
+  min-width: 5.25rem;
+  border-radius: 999px;
+}
+
 .bookColumn {
   position: relative;
   overflow: hidden;
   padding-top: 0.25rem;
   padding-bottom: 0.8rem;
+}
+
+.quickScene {
+  position: relative;
+  min-height: clamp(26rem, 48vw, 34rem);
+  border-radius: 2rem;
+  background:
+    radial-gradient(circle at 12% 14%, rgba(122, 149, 255, 0.14), transparent 24%),
+    radial-gradient(circle at 84% 18%, rgba(101, 216, 255, 0.14), transparent 26%),
+    linear-gradient(180deg, rgba(250, 247, 240, 0.98), rgba(242, 235, 222, 0.98));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.42),
+    0 24px 40px rgba(82, 68, 45, 0.08);
+  overflow: hidden;
+  padding: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.72rem;
+  align-content: start;
+}
+
+.quickCard {
+  --tool-accent: var(--accent);
+  display: grid;
+  justify-items: start;
+  gap: 0.72rem;
+  min-height: 0;
+  padding: 0.9rem;
+  border: 1px solid rgba(33, 50, 40, 0.08);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+    0 10px 20px rgba(113, 96, 66, 0.04);
+}
+
+.quickIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.9rem;
+  color: var(--tool-accent);
+  background: color-mix(in srgb, var(--tool-accent) 13%, rgba(255, 255, 255, 0.82));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--tool-accent) 20%, rgba(33, 50, 40, 0.08)),
+    0 8px 16px color-mix(in srgb, var(--tool-accent) 10%, transparent);
+}
+
+.quickIcon svg {
+  width: 68%;
+  height: 68%;
+}
+
+.quickTitle {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: rgba(24, 32, 28, 0.92);
 }
 
 .bookScene {
@@ -849,6 +930,10 @@
     max-width: 100%;
     padding-top: 0;
   }
+
+  .quickGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 860px) {
@@ -860,6 +945,14 @@
     padding-right: 0;
     display: grid;
     gap: 0.9rem;
+  }
+
+  .quickScene {
+    min-height: auto;
+  }
+
+  .quickGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .bookAura {
@@ -976,8 +1069,18 @@
     grid-template-columns: 1fr;
   }
 
+  .quickGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .coverText {
     max-width: 12rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .quickGrid {
+    grid-template-columns: 1fr;
   }
 }
 
