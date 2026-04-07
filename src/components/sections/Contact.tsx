@@ -19,9 +19,6 @@ export default function Contact() {
               I&apos;m open to selected opportunities where AI systems need both
               technical depth and product-level clarity.
             </p>
-            <a href="mailto:deryferdikao125@gmail.com" className={styles.email}>
-              deryferdikao125@gmail.com
-            </a>
           </div>
 
           <div className={styles.meta}>

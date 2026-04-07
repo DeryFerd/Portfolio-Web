@@ -22,9 +22,6 @@ export default function Footer() {
       <div className="container">
         <div className={styles.shell}>
           <p className={styles.prompt}>Design &amp; built by Dery Ferdika</p>
-          <a href="mailto:deryferdikao125@gmail.com" className={styles.email}>
-            deryferdikao125@gmail.com
-          </a>
 
           <div className={styles.bottomRow}>
             <div className={styles.signature}>AI systems, interfaces, and delivery.</div>
