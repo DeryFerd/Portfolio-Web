@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import InteractiveHeadlineText from "@/components/ui/InteractiveHeadlineText";
 import TextScramble from "@/components/ui/TextScramble";
 import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./SectionHeadline.module.css";
@@ -18,7 +19,7 @@ export default function SectionHeadline({
 }: SectionHeadlineProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [titlePhase, setTitlePhase] = useState<"thinking" | "final">("thinking");
+  const [titlePhase, setTitlePhase] = useState<"thinking" | "scramble" | "interactive">("thinking");
   const [shouldScramble, setShouldScramble] = useState(false);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function SectionHeadline({
     setShouldScramble(false);
 
     const timer = window.setTimeout(() => {
-      setTitlePhase("final");
+      setTitlePhase("scramble");
       setShouldScramble(true);
     }, 1350);
 
@@ -61,14 +62,24 @@ export default function SectionHeadline({
           className={`${styles.thinking} ${styles.content}`}
         />
       ) : (
-        <TextScramble
-          key={text}
-          text={text}
-          trigger={shouldScramble}
-          speed={68}
-          delay={120}
-          className={`${styles.scramble} ${styles.content}`}
-        />
+        <>
+          {titlePhase === "scramble" ? (
+            <TextScramble
+              key={text}
+              text={text}
+              trigger={shouldScramble}
+              speed={68}
+              delay={120}
+              onComplete={() => setTitlePhase("interactive")}
+              className={`${styles.scramble} ${styles.content}`}
+            />
+          ) : (
+            <InteractiveHeadlineText
+              text={text}
+              className={styles.content}
+            />
+          )}
+        </>
       )}
     </h2>
   );

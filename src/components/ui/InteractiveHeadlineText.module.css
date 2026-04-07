@@ -1,0 +1,41 @@
+.headlineText {
+  display: block;
+  width: 100%;
+  min-height: 1em;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  white-space: normal;
+}
+
+.word {
+  display: inline-block;
+  font: inherit;
+  font-style: normal;
+  transition:
+    transform 180ms ease,
+    letter-spacing 180ms ease,
+    opacity 180ms ease;
+  transform-origin: center bottom;
+}
+
+.word:hover {
+  font-style: italic;
+  letter-spacing: 0.01em;
+  transform: translateY(-1px) skewX(-7deg);
+}
+
+.space {
+  white-space: pre;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    transition: none;
+  }
+
+  .word:hover {
+    transform: none;
+  }
+}

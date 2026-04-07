@@ -10,6 +10,7 @@ interface TextScrambleProps {
   speed?: number;
   className?: string;
   trigger?: boolean;
+  onComplete?: () => void;
 }
 
 export default function TextScramble({
@@ -18,6 +19,7 @@ export default function TextScramble({
   speed = 40,
   className = "",
   trigger = true,
+  onComplete,
 }: TextScrambleProps) {
   const [displayed, setDisplayed] = useState("");
   const frameRef = useRef<number | null>(null);
@@ -37,6 +39,7 @@ export default function TextScramble({
       if (resolved >= length) {
         completedTextRef.current = text;
         setDisplayed(text);
+        onComplete?.();
         return;
       }
 
@@ -55,7 +58,7 @@ export default function TextScramble({
     };
 
     frameRef.current = window.setTimeout(step, speed);
-  }, [speed, text]);
+  }, [onComplete, speed, text]);
 
   useEffect(() => {
     if (!trigger) {

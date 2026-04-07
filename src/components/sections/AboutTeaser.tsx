@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import CurtainReveal from "@/components/ui/CurtainReveal";
+import InteractiveHeadlineText from "@/components/ui/InteractiveHeadlineText";
 import TextScramble from "@/components/ui/TextScramble";
 import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./AboutTeaser.module.css";
@@ -62,7 +63,7 @@ function LiveLocalTime() {
 export default function AboutTeaser() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [titlePhase, setTitlePhase] = useState<"thinking" | "aboutme">("thinking");
+  const [titlePhase, setTitlePhase] = useState<"thinking" | "scramble" | "interactive">("thinking");
   const [shouldScrambleTitle, setShouldScrambleTitle] = useState(false);
 
   useEffect(() => {
@@ -90,7 +91,7 @@ export default function AboutTeaser() {
     setShouldScrambleTitle(false);
 
     const timer = window.setTimeout(() => {
-      setTitlePhase("aboutme");
+      setTitlePhase("scramble");
       setShouldScrambleTitle(true);
     }, 1500);
 
@@ -110,14 +111,24 @@ export default function AboutTeaser() {
                   className={`${styles.thinkingTitle} text-4xl md:text-5xl font-bold`}
                 />
               ) : (
-                <TextScramble
-                  key="about-me-scramble"
-                  text="About Me"
-                  trigger={shouldScrambleTitle}
-                  speed={72}
-                  delay={140}
-                  className={`${styles.scrambleInline} text-4xl md:text-5xl font-bold`}
-                />
+                <>
+                  {titlePhase === "scramble" ? (
+                    <TextScramble
+                      key="about-me-scramble"
+                      text="About Me"
+                      trigger={shouldScrambleTitle}
+                      speed={72}
+                      delay={140}
+                      onComplete={() => setTitlePhase("interactive")}
+                      className={`${styles.scrambleInline} text-4xl md:text-5xl font-bold`}
+                    />
+                  ) : (
+                    <InteractiveHeadlineText
+                      text="About Me"
+                      className={`${styles.scrambleInline} text-4xl md:text-5xl font-bold`}
+                    />
+                  )}
+                </>
               )}
             </h2>
             <p className={styles.lead}>
