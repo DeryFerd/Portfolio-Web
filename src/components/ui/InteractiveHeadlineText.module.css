@@ -22,7 +22,7 @@
 
 .headlineText:hover .line {
   filter: saturate(1.05);
-  transform: translateY(-1px) skewX(-9deg) scaleX(0.985);
+  transform: translateY(-1px) skewX(-4deg) scaleX(0.996);
 }
 
 @media (prefers-reduced-motion: reduce) {

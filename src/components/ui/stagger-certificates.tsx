@@ -188,6 +188,7 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
       <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-2 p-1.5 rounded-full bg-background/40 backdrop-blur-md border border-border shadow-lg">
         <button
           onClick={() => handleMove(-1)}
+          suppressHydrationWarning
           className={cn(
             "group flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full transition-all duration-300",
             "text-muted-foreground hover:text-accent hover:bg-secondary/80 hover:shadow-md",
@@ -199,6 +200,7 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
         </button>
         <button
           onClick={() => handleMove(1)}
+          suppressHydrationWarning
           className={cn(
             "group flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full transition-all duration-300",
             "text-muted-foreground hover:text-accent hover:bg-secondary/80 hover:shadow-md",
