@@ -116,6 +116,48 @@ const stackTools: StackTool[] = [
     accent: "#33d6dd",
     logoUrl: "https://cdn.simpleicons.org/tailwindcss",
   },
+  {
+    id: "typescript",
+    label: "TypeScript",
+    caption: "Typed interfaces and safer iteration across product-facing code.",
+    accent: "#3178c6",
+    logoUrl: "https://cdn.simpleicons.org/typescript",
+  },
+  {
+    id: "git",
+    label: "Git",
+    caption: "Versioned delivery, branch discipline, and controlled iteration.",
+    accent: "#f05032",
+    logoUrl: "https://cdn.simpleicons.org/git",
+  },
+  {
+    id: "fastapi",
+    label: "FastAPI",
+    caption: "High-speed API layers for model serving and internal tools.",
+    accent: "#009688",
+    logoUrl: "https://cdn.simpleicons.org/fastapi",
+  },
+  {
+    id: "opencv",
+    label: "OpenCV",
+    caption: "Vision pipelines, preprocessing, and practical computer vision tooling.",
+    accent: "#5c3ee8",
+    logoUrl: "https://cdn.simpleicons.org/opencv",
+  },
+  {
+    id: "sklearn",
+    label: "Scikit-learn",
+    caption: "Classical ML workflows, experimentation, and model baselines.",
+    accent: "#f7931e",
+    logoUrl: "https://cdn.simpleicons.org/scikitlearn",
+  },
+  {
+    id: "huggingface",
+    label: "Hugging Face",
+    caption: "Model ecosystems, datasets, and practical open model tooling.",
+    accent: "#ffcf3f",
+    logoUrl: "https://cdn.simpleicons.org/huggingface",
+  },
 ];
 
 const stackToolById: Record<string, StackTool> = Object.fromEntries(
@@ -948,7 +990,8 @@ export default function Skills() {
   } as CSSProperties;
 
   const quickStackItems = useMemo(
-    () => stackTools,
+    () =>
+      stackTools.filter((tool) => !["llms", "rag"].includes(tool.id)),
     [],
   );
 
