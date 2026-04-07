@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import SectionHeadline from "@/components/ui/SectionHeadline";
 import { StaggerCertificates, CertificateItem } from "@/components/ui/stagger-certificates";
 import { certificates } from "@/lib/certificatesData";
 import styles from "./Certificates.module.css";
@@ -38,7 +39,10 @@ export default function Certificates() {
               </span>
               <p className={styles.kicker}>Certificates</p>
             </div>
-            <h2 className={styles.title}>Formal training, kept visible and tidy.</h2>
+            <SectionHeadline
+              text="Formal training, kept visible and tidy."
+              className={styles.title}
+            />
             <p className={styles.text}>
               A lighter credential layer between public proof and shipped work.
               Browse through the carousel to see professional certifications

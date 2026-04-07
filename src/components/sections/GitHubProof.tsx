@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import AnimatedNumber from "@/components/ui/AnimatedNumber";
+import SectionHeadline from "@/components/ui/SectionHeadline";
 import { getGitHubProofData } from "@/lib/github";
 import styles from "./GitHubProof.module.css";
 
@@ -176,7 +177,10 @@ export default async function GitHubProof() {
               </span>
               <p className={styles.kicker}>Public proof</p>
             </div>
-            <h2 className={styles.title}>Public proof of steady execution.</h2>
+            <SectionHeadline
+              text="Public proof of steady execution."
+              className={styles.title}
+            />
             <p className={styles.text}>
               Repository activity is not the whole story, but it helps show
               consistency, iteration, and how often technical work turns into

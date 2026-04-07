@@ -1,0 +1,22 @@
+.headline {
+  display: block;
+}
+
+.thinking {
+  opacity: 0.34;
+  filter: blur(0.5px);
+  transform: translateY(1px);
+}
+
+.scramble {
+  display: inline-block;
+  min-height: 1em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thinking {
+    opacity: 0.5;
+    filter: none;
+    transform: none;
+  }
+}

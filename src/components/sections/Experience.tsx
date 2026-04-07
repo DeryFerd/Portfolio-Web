@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, memo } from "react";
+import SectionHeadline from "@/components/ui/SectionHeadline";
 import styles from "./Experience.module.css";
 
 const experiences = [
@@ -167,7 +168,10 @@ export default function Experience() {
         <div className={styles.shell}>
           <div className={styles.copy}>
             <p className={styles.kicker}>Experience</p>
-            <h2 className={styles.title}>Where technical work became delivery.</h2>
+            <SectionHeadline
+              text="Where technical work became delivery."
+              className={styles.title}
+            />
             <p className={styles.text}>
               I care about the part between &ldquo;it works&rdquo; and
               &ldquo;it ships.&rdquo; These roles shaped how I think about

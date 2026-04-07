@@ -6,6 +6,7 @@ import type {
   WheelEvent as ReactWheelEvent,
 } from "react";
 import { startTransition, useEffect, useMemo, useRef, useState } from "react";
+import SectionHeadline from "@/components/ui/SectionHeadline";
 import styles from "./Skills.module.css";
 
 interface StackTool {
@@ -912,7 +913,10 @@ export default function Skills() {
               </span>
               <p className={styles.kicker}>Core stack</p>
             </div>
-            <h2 className={styles.title}>One spine, six working chapters.</h2>
+            <SectionHeadline
+              text="One spine, six working chapters."
+              className={styles.title}
+            />
             <p className={styles.text}>
               The stack now behaves like an actual book: closed first, opened by
               dragging the cover, then moved chapter by chapter as the work

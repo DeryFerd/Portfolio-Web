@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import SectionHeadline from "@/components/ui/SectionHeadline";
 import QuickPreviewDialog from "@/components/ui/QuickPreviewDialog";
 import { posts } from "@/lib/blogData";
 import styles from "./Blog.module.css";
@@ -101,9 +102,10 @@ export default function Blog() {
                 </span>
                 <p className={styles.kicker}>Latest writing</p>
               </div>
-              <h2 className={styles.title}>
-                Notes from building and learning in public.
-              </h2>
+              <SectionHeadline
+                text="Notes from building and learning in public."
+                className={styles.title}
+              />
             </div>
             <Link href="/blog" className={styles.archiveLink}>
               View all posts

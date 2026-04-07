@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import SectionHeadline from "@/components/ui/SectionHeadline";
 import QuickPreviewDialog from "@/components/ui/QuickPreviewDialog";
 import styles from "./Projects.module.css";
 
@@ -214,9 +215,10 @@ export default function Projects() {
                 </span>
                 <p className={styles.kicker}>Selected projects</p>
               </div>
-              <h2 className={styles.title}>
-                Work presented with more signal than noise.
-              </h2>
+              <SectionHeadline
+                text="Work presented with more signal than noise."
+                className={styles.title}
+              />
             </div>
             <Link href="/projects" className={styles.archiveLink}>
               View archive
