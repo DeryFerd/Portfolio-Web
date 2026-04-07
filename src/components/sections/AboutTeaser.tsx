@@ -94,7 +94,7 @@ export default function AboutTeaser() {
               <TextScramble
                 text={PARAGRAPH_1}
                 trigger={isVisible}
-                speed={8}
+                speed={2}
                 delay={280}
                 className={styles.scrambleBlock}
               />
@@ -103,7 +103,7 @@ export default function AboutTeaser() {
               <TextScramble
                 text={PARAGRAPH_2}
                 trigger={isVisible}
-                speed={8}
+                speed={2}
                 delay={2700}
                 className={styles.scrambleBlock}
               />
