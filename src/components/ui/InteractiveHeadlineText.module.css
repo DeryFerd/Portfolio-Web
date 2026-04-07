@@ -9,7 +9,7 @@
   white-space: normal;
 }
 
-.word {
+.line {
   display: inline-block;
   font: inherit;
   font-style: normal;
@@ -20,22 +20,18 @@
   transform-origin: center bottom;
 }
 
-.word:hover {
+.headlineText:hover .line {
   font-style: italic;
   letter-spacing: 0.01em;
   transform: translateY(-1px) skewX(-7deg);
 }
 
-.space {
-  white-space: pre;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .word {
+  .line {
     transition: none;
   }
 
-  .word:hover {
+  .headlineText:hover .line {
     transform: none;
   }
 }
