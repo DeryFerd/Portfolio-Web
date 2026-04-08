@@ -180,21 +180,94 @@
   display: block;
 }
 
-.profileFrame {
-  position: relative;
-  min-height: 31rem;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
-  border-radius: 1.25rem;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--bg-secondary) 90%, white 10%) 0%, var(--bg-secondary) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 18px 44px -24px rgba(0, 0, 0, 0.32);
+.identityBlock {
+  display: grid;
+  gap: 0.42rem;
 }
 
-.profileImage {
-  object-fit: cover;
+.identityEyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.identityTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+}
+
+.identityText {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.metaCell {
+  display: grid;
+  gap: 0.42rem;
+  padding: 0.9rem 0;
+}
+
+.metaCell + .metaCell {
+  padding-left: 1rem;
+  border-left: 1px solid var(--border);
+}
+
+.metaLabel {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.metaValue {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.cardRows {
+  display: grid;
+}
+
+.cardRow {
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--border);
+}
+
+.cardRow:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.rowLabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.rowValue {
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: var(--text-primary);
 }
 
 @media (max-width: 900px) {
@@ -204,8 +277,14 @@
 }
 
 @media (max-width: 520px) {
-  .profileFrame {
-    min-height: 23rem;
+  .metaGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .metaCell + .metaCell {
+    padding-top: 0;
+    padding-left: 0;
+    border-left: 0;
   }
 }
 
