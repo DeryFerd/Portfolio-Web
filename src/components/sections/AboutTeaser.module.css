@@ -180,6 +180,10 @@
   display: block;
 }
 
+.profileReveal {
+  min-height: 31rem;
+}
+
 .identityBlock {
   display: grid;
   gap: 0.42rem;
@@ -277,6 +281,10 @@
 }
 
 @media (max-width: 520px) {
+  .profileReveal {
+    min-height: 23rem;
+  }
+
   .metaGrid {
     grid-template-columns: 1fr;
   }

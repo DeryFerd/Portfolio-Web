@@ -174,6 +174,8 @@ export default function AboutTeaser() {
             <CurtainReveal
               imageSrc={PROFILE_IMAGE}
               imageAlt="Profile portrait of Dery Ferdika"
+              className={styles.profileReveal}
+              photoFit="contain"
             >
               <div className={styles.identityBlock}>
                 <p className={styles.identityEyebrow}>Dery Ferdika</p>

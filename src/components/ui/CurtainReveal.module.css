@@ -1,8 +1,8 @@
 .container {
   position: relative;
   width: 100%;
-  height: 460px;
-  min-height: 460px;
+  height: 100%;
+  min-height: 100%;
   border-radius: 1.2rem;
   overflow: hidden;
 }
@@ -44,6 +44,12 @@
   object-position: center;
 }
 
+.photoContain {
+  object-fit: contain;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-secondary) 90%, white 10%) 0%, var(--bg-secondary) 100%);
+}
+
 /* Clickable overlay on photo when visible */
 .photoClickOverlay {
   position: absolute;
@@ -63,6 +69,7 @@
   height: 100%;
   background: var(--bg-card);
   z-index: 2;
+  will-change: transform;
 }
 
 .curtainLeft {
@@ -85,6 +92,7 @@
   background: var(--bg-card);
   cursor: pointer;
   box-sizing: border-box;
+  will-change: opacity;
 }
 
 .infoContent {
@@ -111,7 +119,6 @@
   border-radius: 999px;
   background: color-mix(in srgb, var(--bg-card) 8%, transparent);
   color: var(--text-primary);
-  backdrop-filter: blur(4px);
   z-index: 100;
   opacity: 0;
   transition: opacity 0.25s ease;
@@ -141,7 +148,6 @@
   border-radius: 999px;
   background: color-mix(in srgb, var(--bg-card) 8%, transparent);
   color: var(--text-primary);
-  backdrop-filter: blur(4px);
   cursor: pointer;
   z-index: 100;
   opacity: 0;
@@ -160,7 +166,6 @@
 /* Mobile adjustments */
 @media (max-width: 520px) {
   .container {
-    height: 420px;
-    min-height: 420px;
+    min-height: 100%;
   }
 }

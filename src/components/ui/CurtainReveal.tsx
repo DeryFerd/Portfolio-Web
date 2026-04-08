@@ -4,30 +4,35 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import styles from "./CurtainReveal.module.css";
+import { cn } from "@/lib/utils";
 
 interface CurtainRevealProps {
   imageSrc: string;
   imageAlt: string;
   children: React.ReactNode;
+  className?: string;
+  photoFit?: "cover" | "contain";
 }
 
 export default function CurtainReveal({
   imageSrc,
   imageAlt,
   children,
+  className,
+  photoFit = "cover",
 }: CurtainRevealProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleCurtain = () => setIsOpen(!isOpen);
 
   return (
-    <div className={styles.container}>
+    <div className={cn(styles.container, className)}>
       {/* Background Photo - Always present */}
       <div className={styles.photoLayer}>
         <img
           src={imageSrc}
           alt={imageAlt}
-          className={styles.photo}
+          className={cn(styles.photo, photoFit === "contain" && styles.photoContain)}
         />
         {/* Clickable overlay when photo is visible */}
         {isOpen && (
@@ -41,17 +46,17 @@ export default function CurtainReveal({
           <>
             <motion.div
               className={`${styles.curtain} ${styles.curtainLeft}`}
-              initial={{ x: "-100%", scale: 0.95, skewX: 3 }}
-              animate={{ x: 0, scale: 1, skewX: 0 }}
-              exit={{ x: "-100%", scale: 0.95, skewX: 3 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.44, ease: [0.22, 1, 0.36, 1] }}
             />
             <motion.div
               className={`${styles.curtain} ${styles.curtainRight}`}
-              initial={{ x: "100%", scale: 0.95, skewX: -3 }}
-              animate={{ x: 0, scale: 1, skewX: 0 }}
-              exit={{ x: "100%", scale: 0.95, skewX: -3 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.44, ease: [0.22, 1, 0.36, 1], delay: 0.02 }}
             />
           </>
         )}
