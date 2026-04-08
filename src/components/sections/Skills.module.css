@@ -896,6 +896,11 @@
   );
 }
 
+.bookCover.bookBackCover::before {
+  left: auto;
+  right: 0.9rem;
+}
+
 .bookCover::after {
   content: "";
   position: absolute;
