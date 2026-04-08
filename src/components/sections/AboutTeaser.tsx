@@ -129,8 +129,7 @@ export default function AboutTeaser() {
             </div>
           </div>
 
-          <aside className={styles.profileCard}>
-            <p className={styles.cardLabel}>Operational profile</p>
+          <aside className={styles.profileRail}>
             <div className={styles.profileFrame}>
               <Image
                 src={PROFILE_IMAGE}

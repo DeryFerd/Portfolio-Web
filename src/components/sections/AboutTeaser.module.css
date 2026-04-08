@@ -176,20 +176,8 @@
   color: color-mix(in srgb, var(--accent) 90%, white);
 }
 
-.profileCard {
-  padding: 1.35rem;
-  border: 1px solid var(--border);
-  border-radius: 1.5rem;
-  background: var(--bg-card);
-  backdrop-filter: blur(14px);
-}
-
-.cardLabel {
-  margin-bottom: 0.95rem;
-  font-size: 0.74rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+.profileRail {
+  display: block;
 }
 
 .profileFrame {
