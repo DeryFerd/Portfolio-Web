@@ -262,9 +262,11 @@
       color-mix(in srgb, var(--chapter-accent) 12%, rgba(255, 255, 255, 0.45)),
       transparent 38%
     ),
-    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.36), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.04));
+     radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.36), transparent 30%),
+     linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.04));
   pointer-events: none;
+  opacity: calc(1 - (var(--back-cover-progress) * 0.94));
+  transition: opacity 320ms ease;
 }
 
 .bookViewport {
@@ -822,12 +824,14 @@
     12px 0 26px rgba(8, 9, 9, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.28);
   transition:
+    opacity 320ms ease,
     transform 520ms cubic-bezier(0.22, 0.7, 0.1, 1),
     width 520ms cubic-bezier(0.22, 0.7, 0.1, 1);
   z-index: 4;
   overflow: hidden;
   pointer-events: none;
   backface-visibility: hidden;
+  opacity: 1;
 }
 
 .bookBackCover {
@@ -844,11 +848,28 @@
     0 34px 58px rgba(8, 9, 9, 0.22),
     -12px 0 26px rgba(8, 9, 9, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  opacity: 1;
+}
+
+.bookCover:not(.bookBackCover) {
+  opacity: calc(1 - var(--back-cover-progress));
 }
 
 .bookBackCover::before {
-  left: auto;
+  content: "";
+  position: absolute;
+  top: 0.7rem;
+  bottom: 0.7rem;
   right: 0.9rem;
+  width: 0.45rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.18),
+    rgba(255, 255, 255, 0.12),
+    rgba(0, 0, 0, 0.16)
+  );
+  opacity: calc(0.3 + (var(--back-cover-progress) * 0.4));
 }
 
 .bookBackCover::after {
@@ -964,6 +985,12 @@
   opacity: calc(var(--cover-progress) * (1 - var(--back-cover-progress)));
   transition: opacity 320ms ease;
   pointer-events: none;
+  transform: translateX(calc(var(--back-cover-progress) * 0.9rem));
+  clip-path: inset(0 0 0 calc(var(--back-cover-progress) * 100%));
+  transition:
+    opacity 320ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    clip-path 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .bookmarks > * {
