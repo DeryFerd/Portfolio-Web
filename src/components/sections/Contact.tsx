@@ -1,4 +1,13 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import InteractiveHeadlineText from "@/components/ui/InteractiveHeadlineText";
+import TextScramble from "@/components/ui/TextScramble";
+import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./Contact.module.css";
+
+const SUBTITLE_TEXT =
+  "I'm open to selected opportunities where AI systems need both technical depth and product-level clarity.";
 
 const socialLinks = [
   { name: "GitHub", url: "https://github.com" },
@@ -8,16 +17,84 @@ const socialLinks = [
 ];
 
 export default function Contact() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [titlePhase, setTitlePhase] = useState<"thinking" | "scramble" | "interactive">("thinking");
+  const [shouldScrambleTitle, setShouldScrambleTitle] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.28 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    setTitlePhase("thinking");
+    setShouldScrambleTitle(false);
+
+    const timer = window.setTimeout(() => {
+      setTitlePhase("scramble");
+      setShouldScrambleTitle(true);
+    }, 1500);
+
+    return () => window.clearTimeout(timer);
+  }, [isVisible]);
+
   return (
-    <section className={`section ${styles.contact}`} id="contact">
+    <section ref={sectionRef} className={`section ${styles.contact}`} id="contact">
       <div className="container">
         <div className={styles.shell}>
           <div className={styles.copy}>
             <p className={styles.kicker}>Contact</p>
-            <h2 className={styles.title}>Have a project in mind?</h2>
+            <h2 className={styles.title}>
+              {titlePhase === "thinking" ? (
+                <ShiningText
+                  text="This Section is Thinking..."
+                  className={`${styles.thinkingTitle} text-4xl md:text-5xl font-bold`}
+                />
+              ) : (
+                <>
+                  {titlePhase === "scramble" ? (
+                    <TextScramble
+                      key="contact-title-scramble"
+                      text="Have a project in mind?"
+                      trigger={shouldScrambleTitle}
+                      speed={72}
+                      delay={140}
+                      onComplete={() => setTitlePhase("interactive")}
+                      className={`${styles.scrambleInline} text-4xl md:text-5xl font-bold`}
+                    />
+                  ) : (
+                    <InteractiveHeadlineText
+                      text="Have a project in mind?"
+                      className={`${styles.scrambleInline} text-4xl md:text-5xl font-bold`}
+                    />
+                  )}
+                </>
+              )}
+            </h2>
             <p className={styles.text}>
-              I&apos;m open to selected opportunities where AI systems need both
-              technical depth and product-level clarity.
+              <TextScramble
+                text={SUBTITLE_TEXT}
+                trigger={isVisible}
+                speed={6}
+                delay={600}
+                className={styles.scrambleBlock}
+              />
             </p>
           </div>
 
