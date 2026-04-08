@@ -31,7 +31,7 @@ interface RoleChapter {
   accent: string;
 }
 
-type DragMode = "none" | "cover" | "page" | "scroll";
+type DragMode = "none" | "cover" | "back-cover" | "page" | "scroll";
 type TurnDirection = -1 | 0 | 1;
 type StackViewMode = "detail" | "quick";
 
@@ -578,8 +578,10 @@ export default function Skills() {
     startX: number;
     startY: number;
     startCoverProgress: number;
+    startBackCoverProgress: number;
     startScrollTop: number;
     canCloseCover: boolean;
+    canCloseBackCover: boolean;
     scrollTarget: HTMLDivElement | null;
     mode: DragMode;
   }>({
@@ -587,8 +589,10 @@ export default function Skills() {
     startX: 0,
     startY: 0,
     startCoverProgress: 0,
+    startBackCoverProgress: 0,
     startScrollTop: 0,
     canCloseCover: false,
+    canCloseBackCover: false,
     scrollTarget: null,
     mode: "none" as DragMode,
   });
@@ -599,6 +603,7 @@ export default function Skills() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [stackViewMode, setStackViewMode] = useState<StackViewMode>("detail");
   const [coverProgress, setCoverProgress] = useState(0);
+  const [backCoverProgress, setBackCoverProgress] = useState(0);
   const [dragMode, setDragMode] = useState<DragMode>("none");
   const [turnDirection, setTurnDirection] = useState<TurnDirection>(0);
   const [turnProgress, setTurnProgress] = useState(0);
@@ -659,6 +664,7 @@ export default function Skills() {
     dragStateRef.current.startY = 0;
     dragStateRef.current.startScrollTop = 0;
     dragStateRef.current.canCloseCover = false;
+    dragStateRef.current.canCloseBackCover = false;
     dragStateRef.current.scrollTarget = null;
     dragStateRef.current.mode = "none";
     setDragMode("none");
@@ -680,6 +686,7 @@ export default function Skills() {
     startTransition(() => {
       setActiveIndex(index);
       setCoverProgress(1);
+      setBackCoverProgress(0);
       clearTurnState();
     });
   };
@@ -728,6 +735,7 @@ export default function Skills() {
 
     if (
       coverProgress < 0.995 ||
+      backCoverProgress > 0.005 ||
       isAnimatingTurn
     ) {
       return;
@@ -790,7 +798,13 @@ export default function Skills() {
 
     const bounds = event.currentTarget.getBoundingClientRect();
     const relativeX = (event.clientX - bounds.left) / bounds.width;
-    const nextMode: DragMode = coverProgress < 0.995 ? "cover" : "page";
+    const nextMode: DragMode =
+      coverProgress < 0.995
+        ? "cover"
+        : activeIndex === chapters.length - 1 &&
+            (backCoverProgress > 0.005 || relativeX >= 1 - COVER_ZONE_RATIO)
+          ? "back-cover"
+          : "page";
     const scrollTarget =
       relativeX < 0.5 ? leftScrollRef.current : rightScrollRef.current;
 
@@ -799,8 +813,13 @@ export default function Skills() {
       startX: event.clientX,
       startY: event.clientY,
       startCoverProgress: coverProgress,
+      startBackCoverProgress: backCoverProgress,
       startScrollTop: scrollTarget?.scrollTop ?? 0,
       canCloseCover: coverProgress >= 0.995 && activeIndex === 0 && relativeX <= COVER_ZONE_RATIO,
+      canCloseBackCover:
+        coverProgress >= 0.995 &&
+        activeIndex === chapters.length - 1 &&
+        relativeX >= 1 - COVER_ZONE_RATIO,
       scrollTarget,
       mode: nextMode,
     };
@@ -835,6 +854,17 @@ export default function Skills() {
       );
 
       setCoverProgress(nextCover);
+      return;
+    }
+
+    if (dragStateRef.current.mode === "back-cover") {
+      const nextBackCover = clamp(
+        dragStateRef.current.startBackCoverProgress + deltaX / COVER_DRAG_DISTANCE,
+        0,
+        1,
+      );
+
+      setBackCoverProgress(nextBackCover);
       return;
     }
 
@@ -880,6 +910,24 @@ export default function Skills() {
         1,
       );
       setCoverProgress(nextCover);
+      return;
+    }
+
+    if (
+      dragStateRef.current.canCloseBackCover &&
+      deltaX > 0 &&
+      absDeltaX > absDeltaY + GESTURE_DIRECTION_LOCK &&
+      absDeltaX > PAGE_TURN_DEADZONE
+    ) {
+      dragStateRef.current.mode = "back-cover";
+      setDragMode("back-cover");
+      clearTurnState();
+      const nextBackCover = clamp(
+        dragStateRef.current.startBackCoverProgress + deltaX / COVER_DRAG_DISTANCE,
+        0,
+        1,
+      );
+      setBackCoverProgress(nextBackCover);
       return;
     }
 
@@ -939,6 +987,19 @@ export default function Skills() {
       return;
     }
 
+    if (dragStateRef.current.mode === "back-cover") {
+      const delta = dragStateRef.current.startX - event.clientX;
+      const nextBackCover = clamp(
+        dragStateRef.current.startBackCoverProgress + delta / COVER_DRAG_DISTANCE,
+        0,
+        1,
+      );
+
+      setBackCoverProgress(nextBackCover > COVER_OPEN_THRESHOLD ? 1 : 0);
+      resetDrag(event.currentTarget, event.pointerId);
+      return;
+    }
+
     if (dragStateRef.current.mode === "scroll") {
       resetDrag(event.currentTarget, event.pointerId);
       return;
@@ -966,6 +1027,8 @@ export default function Skills() {
 
     if (dragStateRef.current.mode === "cover") {
       setCoverProgress(coverProgress > COVER_OPEN_THRESHOLD ? 1 : 0);
+    } else if (dragStateRef.current.mode === "back-cover") {
+      setBackCoverProgress(backCoverProgress > COVER_OPEN_THRESHOLD ? 1 : 0);
     } else if (dragStateRef.current.mode === "scroll") {
       resetDrag(event.currentTarget, event.pointerId);
       return;
@@ -983,6 +1046,7 @@ export default function Skills() {
 
   const bookStyle = {
     "--cover-progress": coverProgress.toFixed(3),
+    "--back-cover-progress": backCoverProgress.toFixed(3),
     "--page-turn-progress": turnProgress.toFixed(3),
     "--page-turn-display": displayedTurnProgress.toFixed(3),
     "--page-curl": Math.sin(turnProgress * Math.PI).toFixed(3),
@@ -1144,6 +1208,24 @@ export default function Skills() {
                           <span>Data</span>
                           <span>Models</span>
                           <span>Delivery</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={`${styles.bookCover} ${styles.bookBackCover}`} aria-hidden="true">
+                      <div className={`${styles.coverInner} ${styles.backCoverInner}`}>
+                        <div className={styles.coverTop}>
+                          <span className={styles.coverKicker}>Chapter 06 complete</span>
+                          <h3 className={styles.coverTitle}>Close the playbook.</h3>
+                          <p className={styles.coverText}>
+                            One more swipe closes the back cover, like finishing the last page of a real book.
+                          </p>
+                        </div>
+
+                        <div className={styles.coverTags}>
+                          <span>Operate</span>
+                          <span>Ship</span>
+                          <span>Repeat</span>
                         </div>
                       </div>
                     </div>
