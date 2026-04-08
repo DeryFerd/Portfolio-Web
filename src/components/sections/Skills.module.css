@@ -240,6 +240,7 @@
 .bookScene {
   --cover-progress: 0;
   --back-cover-progress: 0;
+  --spread-visibility: calc(var(--cover-progress) * (1 - (var(--back-cover-progress) * 0.98)));
   --page-turn-progress: 0;
   --chapter-accent: var(--accent);
   --spread-left: 1.15rem;
@@ -303,10 +304,11 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   border-radius: 1.35rem;
   overflow: hidden;
-  opacity: calc(var(--cover-progress) * 0.98);
+  opacity: calc(var(--spread-visibility) * 0.98);
   transform:
     translateX(calc((1 - var(--cover-progress)) * 5.5%))
-    scale(calc(0.92 + (var(--cover-progress) * 0.08)));
+    translateY(calc(var(--back-cover-progress) * 5.5%))
+    scale(calc(0.92 + (var(--cover-progress) * 0.08) - (var(--back-cover-progress) * 0.045)));
   transform-origin: left center;
   transition:
     opacity 340ms ease,
@@ -641,7 +643,7 @@
     rgba(87, 72, 49, 0.2),
     rgba(87, 72, 49, 0.02)
   );
-  opacity: calc(var(--cover-progress) * 0.92);
+  opacity: calc(var(--spread-visibility) * 0.92);
   transition: opacity 320ms ease;
   pointer-events: none;
 }
@@ -837,11 +839,24 @@
   transform:
     translateX(calc((1 - var(--back-cover-progress)) * 44%))
     rotateY(calc((1 - var(--back-cover-progress)) * 112deg));
+  z-index: 6;
+  box-shadow:
+    0 34px 58px rgba(8, 9, 9, 0.22),
+    -12px 0 26px rgba(8, 9, 9, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
 .bookBackCover::before {
   left: auto;
   right: 0.9rem;
+}
+
+.bookBackCover::after {
+  background:
+    linear-gradient(270deg, rgba(255, 255, 255, 0.12), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.08)),
+    radial-gradient(circle at 88% 16%, rgba(255, 255, 255, 0.08), transparent 28%);
+  mix-blend-mode: normal;
+  opacity: 0.72;
 }
 
 .bookCover::before {
@@ -946,7 +961,7 @@
   display: grid;
   gap: 0.24rem;
   z-index: 5;
-  opacity: var(--cover-progress);
+  opacity: calc(var(--cover-progress) * (1 - var(--back-cover-progress)));
   transition: opacity 320ms ease;
   pointer-events: none;
 }
