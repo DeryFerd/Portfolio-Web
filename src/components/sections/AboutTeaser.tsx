@@ -1,22 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
-import CurtainReveal from "@/components/ui/CurtainReveal";
 import InteractiveHeadlineText from "@/components/ui/InteractiveHeadlineText";
 import TextScramble from "@/components/ui/TextScramble";
 import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./AboutTeaser.module.css";
-
-const JAKARTA_TIME_ZONE = "Asia/Jakarta";
-const JAKARTA_TIME_FORMATTER = new Intl.DateTimeFormat("en-GB", {
-  hour: "2-digit",
-  minute: "2-digit",
-  second: "2-digit",
-  hour12: false,
-  timeZone: JAKARTA_TIME_ZONE,
-});
 
 const PARAGRAPH_1 =
   "Hi, I'm Dery. I build AI products that turn model capability into reliable user experiences, with a focus on LLM systems, agent workflows, and production-ready machine learning.";
@@ -29,42 +20,6 @@ const PARAGRAPH_3 =
 
 const PROFILE_IMAGE = "/images/profile-placeholder.svg";
 const CV_DOWNLOAD_PATH = "/documents/dery-ferdika-cv.pdf";
-
-const profileRows = [
-  {
-    label: "Focus",
-    value: "LLM systems, agent workflows, RAG, and production AI delivery.",
-  },
-  {
-    label: "Working style",
-    value: "Clear thinking, strong execution, and iterative product building.",
-  },
-  {
-    label: "What I bring",
-    value: "AI engineering, learning design, and interface awareness in one workflow.",
-  },
-];
-
-function formatLocalTime(date: Date) {
-  return `${JAKARTA_TIME_FORMATTER.format(date)} WIB`;
-}
-
-function LiveLocalTime() {
-  const [localTime, setLocalTime] = useState<string | null>(null);
-
-  useEffect(() => {
-    const updateTime = () => {
-      setLocalTime(formatLocalTime(new Date()));
-    };
-
-    updateTime();
-    const intervalId = window.setInterval(updateTime, 1000);
-
-    return () => window.clearInterval(intervalId);
-  }, []);
-
-  return <span className={styles.metaValue}>{localTime ?? "--:--:-- WIB"}</span>;
-}
 
 export default function AboutTeaser() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -176,44 +131,15 @@ export default function AboutTeaser() {
 
           <aside className={styles.profileCard}>
             <p className={styles.cardLabel}>Operational profile</p>
-
-            {/* Curtain Reveal - Photo behind all info */}
-            <CurtainReveal
-              imageSrc={PROFILE_IMAGE}
-              imageAlt="Profile portrait of Dery Ferdika"
-            >
-              {/* All Info Content */}
-              <div className={styles.identityBlock}>
-                <p className={styles.identityEyebrow}>Dery Ferdika</p>
-                <h3 className={styles.identityTitle}>
-                  AI systems, interfaces, and delivery.
-                </h3>
-                <p className={styles.identityText}>
-                  I build systems with a product lens, so strategy, implementation,
-                  and usability stay connected from start to launch.
-                </p>
-              </div>
-
-              <div className={styles.metaGrid}>
-                <div className={styles.metaCell}>
-                  <span className={styles.metaLabel}>Location</span>
-                  <span className={styles.metaValue}>Malang, Indonesia</span>
-                </div>
-                <div className={styles.metaCell}>
-                  <span className={styles.metaLabel}>Local time</span>
-                  <LiveLocalTime />
-                </div>
-              </div>
-
-              <div className={styles.cardRows}>
-                {profileRows.map((row) => (
-                  <div key={row.label} className={styles.cardRow}>
-                    <span className={styles.rowLabel}>{row.label}</span>
-                    <span className={styles.rowValue}>{row.value}</span>
-                  </div>
-                ))}
-              </div>
-            </CurtainReveal>
+            <div className={styles.profileFrame}>
+              <Image
+                src={PROFILE_IMAGE}
+                alt="Profile portrait of Dery Ferdika"
+                fill
+                className={styles.profileImage}
+                unoptimized
+              />
+            </div>
           </aside>
         </div>
       </div>
