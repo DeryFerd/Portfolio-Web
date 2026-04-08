@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SectionHeadline from "@/components/ui/SectionHeadline";
+import SectionSubheadline from "@/components/ui/SectionSubheadline";
 import QuickPreviewDialog from "@/components/ui/QuickPreviewDialog";
 import styles from "./Projects.module.css";
 
@@ -208,7 +209,7 @@ export default function Projects() {
       <section className={`section ${styles.projects}`} id="projects">
         <div className="container">
           <div className={styles.header}>
-            <div>
+            <div className={styles.copy}>
               <div className={styles.kickerRow}>
                 <span className={styles.kickerIcon} aria-hidden="true">
                   *
@@ -218,6 +219,10 @@ export default function Projects() {
               <SectionHeadline
                 text="Work presented with more signal than noise."
                 className={styles.title}
+              />
+              <SectionSubheadline
+                text="A curated selection of projects that balance technical depth with practical delivery. Each case study shows how models, systems, and interfaces connect into real products."
+                className={styles.text}
               />
             </div>
             <Link href="/projects" className={styles.archiveLink}>

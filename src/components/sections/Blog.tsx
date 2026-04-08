@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SectionHeadline from "@/components/ui/SectionHeadline";
+import SectionSubheadline from "@/components/ui/SectionSubheadline";
 import QuickPreviewDialog from "@/components/ui/QuickPreviewDialog";
 import { posts } from "@/lib/blogData";
 import styles from "./Blog.module.css";
@@ -95,7 +96,7 @@ export default function Blog() {
       <section className={`section ${styles.blog}`} id="blog">
         <div className="container">
           <div className={styles.header}>
-            <div>
+            <div className={styles.copy}>
               <div className={styles.kickerRow}>
                 <span className={styles.kickerIcon} aria-hidden="true">
                   *
@@ -105,6 +106,10 @@ export default function Blog() {
               <SectionHeadline
                 text="Notes from building and learning in public."
                 className={styles.title}
+              />
+              <SectionSubheadline
+                text="A collection of articles that break down technical concepts, implementation details, and practical lessons from real projects. Each piece is written to be useful before you even finish reading."
+                className={styles.text}
               />
             </div>
             <Link href="/blog" className={styles.archiveLink}>

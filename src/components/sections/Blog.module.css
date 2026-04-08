@@ -46,6 +46,16 @@
   color: var(--text-primary);
 }
 
+.copy {
+  max-width: 34rem;
+}
+
+.text {
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
 .archiveLink {
   font-size: 0.82rem;
   font-weight: 600;
