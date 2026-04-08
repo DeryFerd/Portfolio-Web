@@ -10,13 +10,13 @@ import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./AboutTeaser.module.css";
 
 const PARAGRAPH_1 =
-  "Hi, I am Dery. I am an aspiring AI Engineer with a background in pure mathematics, and I build AI products that turn complex model capabilities into reliable user experiences. My work is grounded in a strong foundation of machine learning and deep learning, with a focus on making advanced systems easier to trust, operate, and scale in the real world.";
+  "Hi, I am Dery. I am an aspiring AI Engineer with a degree in pure mathematics, and I build reliable AI products. My work is backed by a solid foundation in machine learning and deep learning, focusing on making advanced systems easy to trust and operate.";
 
 const PARAGRAPH_2 =
-  "My technical focus goes beyond basic integrations to specialize in building autonomous AI agents and practical agentic AI workflows. I regularly develop efficient large language model systems, covering areas like RAG, model distillation, and inference optimization. Because deploying great AI requires solid infrastructure, I am also highly interested in data engineering to ensure these systems are robust and production-ready.";
+  "I specialize in building autonomous AI agents and practical agentic AI workflows. To make this happen, I regularly develop efficient systems using RAG and model optimization. Because great AI needs strong infrastructure, I am also highly interested in data engineering to keep everything production-ready.";
 
 const PARAGRAPH_3 =
-  "Alongside shipping systems, I work as a curriculum developer designing technical learning experiences that help others master these emerging technologies. Based in Malang, Indonesia, I bridge research, engineering, and interface design. I care deeply about clarity, grounded execution, and solving the hard problems that come with bringing generative AI to life.";
+  "Beyond shipping code, I work as a curriculum developer to help others master these technologies. Based in Malang, Indonesia, I love bridging research and engineering to solve the hard problems of deploying generative AI in the real world.";
 
 const PROFILE_IMAGE = "/images/profile-placeholder.svg";
 const CV_DOWNLOAD_PATH = "/documents/dery-ferdika-cv.pdf";
