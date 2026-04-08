@@ -10,13 +10,13 @@ import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./AboutTeaser.module.css";
 
 const PARAGRAPH_1 =
-  "Hi, I'm Dery. I build AI products that turn model capability into reliable user experiences, with a focus on LLM systems, agent workflows, and production-ready machine learning.";
+  "Hi, I am Dery. I am an aspiring AI Engineer with a background in pure mathematics, and I build AI products that turn complex model capabilities into reliable user experiences. My work is grounded in a strong foundation of machine learning and deep learning, with a focus on making advanced systems easier to trust, operate, and scale in the real world.";
 
 const PARAGRAPH_2 =
-  "Alongside shipping systems, I design technical learning experiences that help teams understand what they are building. I care about clarity, grounded execution, and making advanced AI feel useful in real-world environments.";
+  "My technical focus goes beyond basic integrations to specialize in building autonomous AI agents and practical agentic AI workflows. I regularly develop efficient large language model systems, covering areas like RAG, model distillation, and inference optimization. Because deploying great AI requires solid infrastructure, I am also highly interested in data engineering to ensure these systems are robust and production-ready.";
 
 const PARAGRAPH_3 =
-  "Based in Malang, Indonesia, I work across research, engineering, and interface design to make intelligent systems easier to trust, operate, and scale.";
+  "Alongside shipping systems, I work as a curriculum developer designing technical learning experiences that help others master these emerging technologies. Based in Malang, Indonesia, I bridge research, engineering, and interface design. I care deeply about clarity, grounded execution, and solving the hard problems that come with bringing generative AI to life.";
 
 const PROFILE_IMAGE = "/images/profile-placeholder.svg";
 const CV_DOWNLOAD_PATH = "/documents/dery-ferdika-cv.pdf";
