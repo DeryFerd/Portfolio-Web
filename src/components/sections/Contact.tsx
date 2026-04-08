@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import InteractiveHeadlineText from "@/components/ui/InteractiveHeadlineText";
 import TextScramble from "@/components/ui/TextScramble";
+import TypewriterText from "@/components/ui/TypewriterText";
 import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./Contact.module.css";
 
@@ -88,12 +89,12 @@ export default function Contact() {
               )}
             </h2>
             <p className={styles.text}>
-              <TextScramble
+              <TypewriterText
                 text={SUBTITLE_TEXT}
                 trigger={isVisible}
-                speed={6}
                 delay={600}
-                className={styles.scrambleBlock}
+                speed={16}
+                className={styles.typewriterText}
               />
             </p>
           </div>

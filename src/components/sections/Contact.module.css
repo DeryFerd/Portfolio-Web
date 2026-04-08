@@ -27,6 +27,23 @@
   color: var(--text-primary);
 }
 
+.scrambleInline {
+  display: inline-block;
+  min-height: 1em;
+}
+
+.thinkingTitle {
+  opacity: 0.34;
+  filter: blur(0.5px);
+  transform: translateY(1px);
+}
+
+.typewriterText {
+  font-family: var(--font-mono);
+  font-size: 0.96em;
+  letter-spacing: 0.01em;
+}
+
 .text {
   max-width: 36rem;
   margin-bottom: 1.1rem;
@@ -101,5 +118,18 @@
   .shell {
     grid-template-columns: 1fr;
     align-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thinkingTitle {
+    opacity: 0.5;
+    filter: none;
+    transform: none;
+  }
+
+  .typewriterText {
+    font-family: inherit;
+    letter-spacing: normal;
   }
 }
