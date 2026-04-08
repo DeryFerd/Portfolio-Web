@@ -5,6 +5,7 @@
   min-height: 100%;
   border-radius: 1.2rem;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .container:hover .infoBox .clickIndicator {
@@ -28,11 +29,11 @@
 /* Photo Layer - Match infoBox style */
 .photoLayer {
   position: absolute;
-  inset: 0;
+  inset: -1px;
   width: 100%;
   height: 100%;
   z-index: 1;
-  background: var(--bg-card);
+  background: var(--bg-secondary);
   border-radius: 1.2rem;
   overflow: hidden;
 }
@@ -65,9 +66,9 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 50%;
+  width: calc(50% + 1px);
   height: 100%;
-  background: var(--bg-card);
+  background: var(--bg-secondary);
   z-index: 2;
   will-change: transform;
 }
@@ -82,14 +83,17 @@
 
 /* Info Box - Solid, covers curtain, clickable, fixed height */
 .infoBox {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 3;
   width: 100%;
   height: 100%;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  background: var(--bg-card);
+  background: var(--bg-secondary);
+  border-radius: inherit;
+  overflow: hidden;
   cursor: pointer;
   box-sizing: border-box;
   will-change: opacity;
