@@ -30,12 +30,18 @@
 .scrambleInline {
   display: inline-block;
   min-height: 1em;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 
 .thinkingTitle {
   opacity: 0.34;
   filter: blur(0.5px);
   transform: translateY(1px);
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 
 .typewriterText {

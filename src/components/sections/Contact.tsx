@@ -65,7 +65,7 @@ export default function Contact() {
               {titlePhase === "thinking" ? (
                 <ShiningText
                   text="This Section is Thinking..."
-                  className={`${styles.thinkingTitle} text-4xl md:text-5xl font-bold`}
+                  className={styles.thinkingTitle}
                 />
               ) : (
                 <>
@@ -77,12 +77,12 @@ export default function Contact() {
                       speed={72}
                       delay={140}
                       onComplete={() => setTitlePhase("interactive")}
-                      className={`${styles.scrambleInline} text-4xl md:text-5xl font-bold`}
+                      className={styles.scrambleInline}
                     />
                   ) : (
                     <InteractiveHeadlineText
                       text="Have a project in mind?"
-                      className={`${styles.scrambleInline} text-4xl md:text-5xl font-bold`}
+                      className={styles.scrambleInline}
                     />
                   )}
                 </>
