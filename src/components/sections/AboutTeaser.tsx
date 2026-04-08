@@ -27,7 +27,7 @@ const PARAGRAPH_2 =
 const PARAGRAPH_3 =
   "Beyond shipping code, I also work as a curriculum developer, helping others learn these technologies while staying close to the realities of production AI.";
 
-const PROFILE_IMAGE = "/images/profile-placeholder.svg";
+const PROFILE_IMAGE = "/images/dery-photo.jpg";
 const CV_DOWNLOAD_PATH = "/documents/dery-ferdika-cv.pdf";
 
 const profileRows = [
