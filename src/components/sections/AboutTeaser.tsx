@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
@@ -20,10 +19,13 @@ const JAKARTA_TIME_FORMATTER = new Intl.DateTimeFormat("en-GB", {
 });
 
 const PARAGRAPH_1 =
-  "I specialize in Large Language Models and Agentic AI, backed by a strong foundation in Machine Learning and Deep Learning. My work moves beyond basic integrations to focus on building autonomous AI agents and efficient systems, covering RAG, model distillation, and inference optimization.";
+  "Hi, I'm Dery. I build AI products that turn model capability into reliable user experiences, with a focus on LLM systems, agent workflows, and production-ready machine learning.";
 
 const PARAGRAPH_2 =
-  "I also design technical curriculums as a Learning Developer, helping others master these technologies. I love solving the hard problems that come with deploying generative AI in the real world.";
+  "Alongside shipping systems, I design technical learning experiences that help teams understand what they are building. I care about clarity, grounded execution, and making advanced AI feel useful in real-world environments.";
+
+const PARAGRAPH_3 =
+  "Based in Malang, Indonesia, I work across research, engineering, and interface design to make intelligent systems easier to trust, operate, and scale.";
 
 const PROFILE_IMAGE = "/images/profile-placeholder.svg";
 const CV_DOWNLOAD_PATH = "/documents/dery-ferdika-cv.pdf";
@@ -31,11 +33,15 @@ const CV_DOWNLOAD_PATH = "/documents/dery-ferdika-cv.pdf";
 const profileRows = [
   {
     label: "Focus",
-    value: "LLM systems, agent workflows, and machine learning products.",
+    value: "LLM systems, agent workflows, RAG, and production AI delivery.",
   },
   {
     label: "Working style",
-    value: "Clarity first, production-minded, and deeply iterative.",
+    value: "Clear thinking, strong execution, and iterative product building.",
+  },
+  {
+    label: "What I bring",
+    value: "AI engineering, learning design, and interface awareness in one workflow.",
   },
 ];
 
@@ -149,10 +155,16 @@ export default function AboutTeaser() {
                 className={styles.scrambleBlock}
               />
             </p>
+            <p className={styles.text}>
+              <TextScramble
+                text={PARAGRAPH_3}
+                trigger={isVisible}
+                speed={6}
+                delay={900}
+                className={styles.scrambleBlock}
+              />
+            </p>
             <div className={styles.copyActions}>
-              <Link href="/about" className={styles.link}>
-                Read full background
-              </Link>
               <Button asChild variant="outline" size="lg" className={styles.cvButton}>
                 <a href={CV_DOWNLOAD_PATH} download aria-label="Download my CV as PDF">
                   <span className={styles.cvText}>Download My CV</span>
@@ -177,8 +189,8 @@ export default function AboutTeaser() {
                   AI systems, interfaces, and delivery.
                 </h3>
                 <p className={styles.identityText}>
-                  A merged profile card so the human layer and the working layer
-                  sit in one place.
+                  I build systems with a product lens, so strategy, implementation,
+                  and usability stay connected from start to launch.
                 </p>
               </div>
 
