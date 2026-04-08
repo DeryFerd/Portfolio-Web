@@ -12,6 +12,7 @@ interface CurtainRevealProps {
   children: React.ReactNode;
   className?: string;
   photoFit?: "cover" | "contain";
+  photoPosition?: string;
 }
 
 export default function CurtainReveal({
@@ -20,6 +21,7 @@ export default function CurtainReveal({
   children,
   className,
   photoFit = "cover",
+  photoPosition = "center",
 }: CurtainRevealProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,6 +35,7 @@ export default function CurtainReveal({
           src={imageSrc}
           alt={imageAlt}
           className={cn(styles.photo, photoFit === "contain" && styles.photoContain)}
+          style={{ objectPosition: photoPosition }}
         />
         {/* Clickable overlay when photo is visible */}
         {isOpen && (

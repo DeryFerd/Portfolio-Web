@@ -175,7 +175,8 @@ export default function AboutTeaser() {
               imageSrc={PROFILE_IMAGE}
               imageAlt="Profile portrait of Dery Ferdika"
               className={styles.profileReveal}
-              photoFit="contain"
+              photoFit="cover"
+              photoPosition="50% 22%"
             >
               <div className={styles.identityBlock}>
                 <p className={styles.identityEyebrow}>Dery Ferdika</p>
