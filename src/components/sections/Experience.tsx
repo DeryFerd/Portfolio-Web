@@ -168,7 +168,7 @@ const ExperienceItem = memo(function ExperienceItem({
 });
 
 export default function Experience() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const handleToggle = useCallback((index: number) => {
     setOpenIndex((currentIndex) =>
