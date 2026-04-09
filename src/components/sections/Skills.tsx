@@ -601,7 +601,7 @@ export default function Skills() {
   const rightScrollRef = useRef<HTMLDivElement>(null);
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [stackViewMode, setStackViewMode] = useState<StackViewMode>("detail");
+  const [stackViewMode, setStackViewMode] = useState<StackViewMode>("quick");
   const [coverProgress, setCoverProgress] = useState(0);
   const [backCoverProgress, setBackCoverProgress] = useState(0);
   const [dragMode, setDragMode] = useState<DragMode>("none");
