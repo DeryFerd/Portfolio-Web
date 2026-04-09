@@ -21,17 +21,18 @@ const experiences = [
     tags: ["NLP", "Computer Vision", "Production ML"],
   },
   {
-    company: "Cloud Corp",
-    role: "LLM DevOps",
-    period: "2024 - Present",
+    company: "Binar Academy",
+    role: "LLM Module Developer",
+    period: "2025",
     summary:
-      "Owning the path between model experimentation, reliable serving, and operational stability.",
+      "Architected a comprehensive end-to-end AI Engineering curriculum spanning mathematical foundations to production-grade LLM systems and security.",
     highlights: [
-      "Maintained deployment pipelines and model operations for large language model systems.",
-      "Handled the infrastructure needed for serving, monitoring, and iteration across LLM releases.",
-      "Focused on rollout hygiene and keeping AI services dependable once they were live.",
+      "Structured core mathematical foundations (Linear Algebra, Backpropagation) and mapped NLP evolution from Statistical Models to Transformers and emerging architectures like MAMBA/MoE",
+      "Designed advanced RAG architectures utilizing LangGraph, hybrid search, and fine-tuning via PEFT/LoRA for complex enterprise workflows",
+      "Established LLMOps and CI/CD pipelines on Kubernetes, optimizing inference latency with vLLM and quantization techniques",
+      "Implemented enterprise-grade security protocols and guardrails (NVIDIA NeMo) to mitigate prompt injection and ensure regulatory compliance",
     ],
-    tags: ["LLM Ops", "Pipelines", "Serving"],
+    tags: ["CURRICULUM DEVELOPMENT", "LLM ENGINEERING", "RAG SYSTEMS", "LLMOps"],
   },
   {
     company: "Home Credit Indonesia (via Rakamin Academy)",
