@@ -188,11 +188,11 @@ export default function Experience() {
               <p className={styles.kicker}>Experience</p>
             </div>
             <SectionHeadline
-              text="Where technical work became delivery."
+              text="Turning technical experiments into stable products."
               className={styles.title}
             />
             <SectionSubheadline
-              text='I care about the part between "it works" and "it ships." These roles shaped how I think about product clarity, implementation quality, and the real constraints around building with AI.'
+              text="The gap between a working notebook and a live service is where the real engineering happens. These roles reflect my focus on building AI that is maintainable, observable, and ready for production."
               className={styles.text}
             />
           </div>
