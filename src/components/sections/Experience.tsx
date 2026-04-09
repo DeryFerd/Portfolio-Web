@@ -8,17 +8,18 @@ import styles from "./Experience.module.css";
 
 const experiences = [
   {
-    company: "Tech Company",
-    role: "AI Engineer",
-    period: "2024 - Present",
+    company: "Independent",
+    role: "Solo Developer",
+    period: "2025 - Present",
     summary:
-      "Building production ML features with emphasis on NLP workflows and computer vision delivery.",
+      "Exploring cutting-edge AI technologies with focus on agentic systems and production-ready RAG architectures while deepening expertise in ML/DL fundamentals.",
     highlights: [
-      "Built and deployed ML models that moved from experimentation into production-facing features.",
-      "Shaped NLP workflows and computer vision systems around product constraints, accuracy, and runtime tradeoffs.",
-      "Worked across implementation and release decisions so model work stayed usable after launch.",
+      "Building production-ready RAG systems with emphasis on scalability, retrieval optimization, and real-world deployment scenarios",
+      "Experimenting with AI agents and agentic workflows to automate complex tasks and multi-step reasoning",
+      "Deepening understanding of machine learning and deep learning architectures through hands-on projects and systematic study",
+      "Focusing on AI education and knowledge dissemination, particularly in LLM applications and best practices",
     ],
-    tags: ["NLP", "Computer Vision", "Production ML"],
+    tags: ["AI AGENTS", "RAG SYSTEMS", "LLM", "SELF-DIRECTED LEARNING"],
   },
   {
     company: "Binar Academy",
