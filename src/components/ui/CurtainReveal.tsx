@@ -23,7 +23,7 @@ export default function CurtainReveal({
   photoFit = "cover",
   photoPosition = "center",
 }: CurtainRevealProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleCurtain = () => setIsOpen(!isOpen);
 
