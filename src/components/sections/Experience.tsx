@@ -181,7 +181,12 @@ export default function Experience() {
       <div className="container">
         <div className={styles.shell}>
           <div className={styles.copy}>
-            <p className={styles.kicker}>Experience</p>
+            <div className={styles.kickerRow}>
+              <span className={styles.kickerIcon} aria-hidden="true">
+                *
+              </span>
+              <p className={styles.kicker}>Experience</p>
+            </div>
             <SectionHeadline
               text="Where technical work became delivery."
               className={styles.title}

@@ -77,6 +77,8 @@
   font-size: 1.1rem;
   line-height: 1;
   color: var(--accent);
+  animation: spinMark 7s linear infinite;
+  transform-origin: center;
 }
 
 .title {
@@ -513,5 +515,15 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes spinMark {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

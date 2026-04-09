@@ -105,7 +105,12 @@ export default function AboutTeaser() {
       <div className="container">
         <div className={styles.shell}>
           <div className={styles.copy}>
-            <p className={styles.kicker}>About</p>
+            <div className={styles.kickerRow}>
+              <span className={styles.kickerIcon} aria-hidden="true">
+                *
+              </span>
+              <p className={styles.kicker}>About</p>
+            </div>
             <h2 className={styles.title}>
               {titlePhase === "thinking" ? (
                 <ShiningText 

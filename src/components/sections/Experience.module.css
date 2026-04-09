@@ -13,12 +13,32 @@
   max-width: 25rem;
 }
 
-.kicker {
+.kickerRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
   margin-bottom: 0.8rem;
+}
+
+.kicker {
+  margin-bottom: 0;
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+.kickerIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--accent);
+  animation: spinMark 7s linear infinite;
+  transform-origin: center;
 }
 
 .title {
@@ -273,6 +293,16 @@
 .itemTrigger:focus-visible .itemNumber {
   border-color: color-mix(in srgb, var(--accent) 42%, transparent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+@keyframes spinMark {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 900px) {
