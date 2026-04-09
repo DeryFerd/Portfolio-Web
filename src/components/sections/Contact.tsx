@@ -11,10 +11,10 @@ const SUBTITLE_TEXT =
   "I'm open to selected opportunities where AI systems need both technical depth and product-level clarity.";
 
 const socialLinks = [
-  { name: "GitHub", url: "https://github.com" },
-  { name: "LinkedIn", url: "https://linkedin.com" },
-  { name: "Twitter", url: "https://twitter.com" },
-  { name: "Medium", url: "https://medium.com" },
+  { name: "GitHub", url: "https://github.com/DeryFerd" },
+  { name: "LinkedIn", url: "https://www.linkedin.com/in/deryferdikaoktoriansah" },
+  { name: "X", url: "https://x.com" },
+  { name: "HuggingFace", url: "https://huggingface.co/DeryFerd" },
 ];
 
 export default function Contact() {
