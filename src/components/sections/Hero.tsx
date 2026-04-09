@@ -55,9 +55,9 @@ export default function Hero() {
           </p>
 
           <div className={styles.cta}>
-            <Link href="/projects" className={styles.primaryBtn}>
+            <a href="#projects" className={styles.primaryBtn}>
               View Projects
-            </Link>
+            </a>
             <a href="#contact" className={styles.secondaryBtn}>
               Get In Touch
             </a>
