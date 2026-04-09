@@ -5,7 +5,7 @@ import styles from "./Hero.module.css";
 const focusAreas = [
   "LLM systems",
   "RAG pipelines",
-  "Agent workflows",
+  "AI Agents",
   "Machine learning"
 ];
 
@@ -50,7 +50,7 @@ export default function Hero() {
           </h1>
 
           <p className={styles.description}>
-            Specializing in Machine Learning, MLOps, RAG, and agent workflows
+            Specializing in Machine Learning, MLOps, RAG, and AI agents
             for real-world AI products.
           </p>
 
