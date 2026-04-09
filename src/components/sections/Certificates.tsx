@@ -41,11 +41,11 @@ export default function Certificates() {
               <p className={styles.kicker}>Certificates</p>
             </div>
             <SectionHeadline
-              text="Formal training, kept visible and tidy."
+              text="Foundations & Continuous Learning."
               className={styles.title}
             />
             <SectionSubheadline
-              text="A lighter credential layer between public proof and shipped work. Browse through the carousel to see professional certifications from recognized institutions."
+              text="AI moves fast, so I keep my fundamentals sharp. These certifications represent my structured approach to mastering new architectures and staying current with industry standards."
               className={styles.text}
             />
           </div>
