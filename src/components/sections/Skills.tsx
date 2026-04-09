@@ -1071,11 +1071,11 @@ export default function Skills() {
               <p className={styles.kicker}>Core stack</p>
             </div>
             <SectionHeadline
-              text="One spine, six working chapters."
+              text="Technical foundation."
               className={styles.title}
             />
             <SectionSubheadline
-              text="The stack now behaves like an actual book: closed first, opened by dragging the cover, then moved chapter by chapter as the work shifts from data pipelines into models, LLM systems, product, and operations."
+              text="Six roles spanning data engineering through AI operations. Each chapter shows the tools and focus areas that turn raw data into production systems."
               className={styles.text}
             />
 
