@@ -217,11 +217,11 @@ export default function Projects() {
                 <p className={styles.kicker}>Selected projects</p>
               </div>
               <SectionHeadline
-                text="Work presented with more signal than noise."
+                text="Problems I've Solved"
                 className={styles.title}
               />
               <SectionSubheadline
-                text="A curated selection of projects that balance technical depth with practical delivery. Each case study shows how models, systems, and interfaces connect into real products."
+                text="A look into how I connect models, data pipelines, and user interfaces. Each project here is a case study in solving a specific technical challenge with a production-first mindset."
                 className={styles.text}
               />
             </div>
