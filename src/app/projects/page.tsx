@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import InteractiveHeadlineText from "@/components/ui/InteractiveHeadlineText";
 import TextScramble from "@/components/ui/TextScramble";
+import TypewriterText from "@/components/ui/TypewriterText";
 import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./page.module.css";
 
@@ -106,12 +107,11 @@ export default function ProjectsPage() {
           )}
         </h1>
         <p className={styles.subtitle}>
-          <TextScramble
+          <TypewriterText
             text="A working archive of AI, data, and product-facing builds, shaped less like a dump of demos and more like a record of systems delivered with intent."
             trigger={isVisible}
-            speed={6}
+            speed={40}
             delay={280}
-            className={styles.scrambleBlock}
           />
         </p>
         <div className={styles.grid}>

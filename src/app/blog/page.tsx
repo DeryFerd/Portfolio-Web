@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import InteractiveHeadlineText from "@/components/ui/InteractiveHeadlineText";
 import TextScramble from "@/components/ui/TextScramble";
+import TypewriterText from "@/components/ui/TypewriterText";
 import { ShiningText } from "@/components/ui/shining-text";
 import { posts } from "@/lib/blogData";
 import styles from "./page.module.css";
@@ -62,12 +63,11 @@ export default function BlogPage() {
           )}
         </h1>
         <p className={styles.subtitle}>
-          <TextScramble
+          <TypewriterText
             text="Notes, experiments, and technical reflections from building across AI, machine learning, data systems, and delivery."
             trigger={isVisible}
-            speed={6}
+            speed={40}
             delay={280}
-            className={styles.scrambleBlock}
           />
         </p>
 
