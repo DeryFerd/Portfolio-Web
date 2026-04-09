@@ -1,5 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import InteractiveHeadlineText from "@/components/ui/InteractiveHeadlineText";
+import TextScramble from "@/components/ui/TextScramble";
+import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./page.module.css";
 
 const projects = [
@@ -48,19 +54,65 @@ const projects = [
 ] as const;
 
 export default function ProjectsPage() {
+  const pageRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [titlePhase, setTitlePhase] = useState<"thinking" | "scramble" | "interactive">("thinking");
+  const [shouldScrambleTitle, setShouldScrambleTitle] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+    setTitlePhase("thinking");
+    setShouldScrambleTitle(false);
+
+    const timer = window.setTimeout(() => {
+      setTitlePhase("scramble");
+      setShouldScrambleTitle(true);
+    }, 1500);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
   return (
-    <div className={styles.page}>
+    <div ref={pageRef} className={styles.page}>
       <div className="container">
         <Link href="/#projects" className={styles.backLink}>
           &larr; Back to Home
         </Link>
         <h1 className={styles.title}>
-          <span className="text-accent">#</span> My Projects
+          {titlePhase === "thinking" ? (
+            <ShiningText
+              text="This Section is Thinking..."
+              className={styles.thinkingTitle}
+            />
+          ) : (
+            <>
+              {titlePhase === "scramble" ? (
+                <TextScramble
+                  key="projects-title-scramble"
+                  text="# My Projects"
+                  trigger={shouldScrambleTitle}
+                  speed={72}
+                  delay={140}
+                  onComplete={() => setTitlePhase("interactive")}
+                  className={styles.scrambleInline}
+                />
+              ) : (
+                <InteractiveHeadlineText
+                  text="# My Projects"
+                  className={styles.scrambleInline}
+                />
+              )}
+            </>
+          )}
         </h1>
         <p className={styles.subtitle}>
-          A working archive of AI, data, and product-facing builds, shaped less
-          like a dump of demos and more like a record of systems delivered with
-          intent.
+          <TextScramble
+            text="A working archive of AI, data, and product-facing builds, shaped less like a dump of demos and more like a record of systems delivered with intent."
+            trigger={isVisible}
+            speed={6}
+            delay={280}
+            className={styles.scrambleBlock}
+          />
         </p>
         <div className={styles.grid}>
           {projects.map((project) => (

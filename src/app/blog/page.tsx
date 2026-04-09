@@ -1,21 +1,74 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import InteractiveHeadlineText from "@/components/ui/InteractiveHeadlineText";
+import TextScramble from "@/components/ui/TextScramble";
+import { ShiningText } from "@/components/ui/shining-text";
 import { posts } from "@/lib/blogData";
 import styles from "./page.module.css";
 
 export default function BlogPage() {
+  const pageRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [titlePhase, setTitlePhase] = useState<"thinking" | "scramble" | "interactive">("thinking");
+  const [shouldScrambleTitle, setShouldScrambleTitle] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+    setTitlePhase("thinking");
+    setShouldScrambleTitle(false);
+
+    const timer = window.setTimeout(() => {
+      setTitlePhase("scramble");
+      setShouldScrambleTitle(true);
+    }, 1500);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
   return (
-    <div className={styles.page}>
+    <div ref={pageRef} className={styles.page}>
       <div className="container">
         <Link href="/#blog" className={styles.backLink}>
           &larr; Back to Home
         </Link>
         <h1 className={styles.title}>
-          <span className="text-accent">#</span> My Blog
+          {titlePhase === "thinking" ? (
+            <ShiningText
+              text="This Section is Thinking..."
+              className={styles.thinkingTitle}
+            />
+          ) : (
+            <>
+              {titlePhase === "scramble" ? (
+                <TextScramble
+                  key="blog-title-scramble"
+                  text="# My Blog"
+                  trigger={shouldScrambleTitle}
+                  speed={72}
+                  delay={140}
+                  onComplete={() => setTitlePhase("interactive")}
+                  className={styles.scrambleInline}
+                />
+              ) : (
+                <InteractiveHeadlineText
+                  text="# My Blog"
+                  className={styles.scrambleInline}
+                />
+              )}
+            </>
+          )}
         </h1>
         <p className={styles.subtitle}>
-          Notes, experiments, and technical reflections from building across
-          AI, machine learning, data systems, and delivery.
+          <TextScramble
+            text="Notes, experiments, and technical reflections from building across AI, machine learning, data systems, and delivery."
+            trigger={isVisible}
+            speed={6}
+            delay={280}
+            className={styles.scrambleBlock}
+          />
         </p>
 
         <div className={styles.grid}>
