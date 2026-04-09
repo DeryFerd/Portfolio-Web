@@ -47,17 +47,18 @@ const experiences = [
     tags: ["Recommendations", "Experimentation", "LLM Prototyping"],
   },
   {
-    company: "Data Solutions",
-    role: "Data Engineer",
+    company: "Zenius",
+    role: "Data Analytics Intern",
     period: "2023",
     summary:
-      "Designing ETL and warehousing flows for analytics-heavy systems and streaming workloads.",
+      "Completed intensive Data Analytics program under Kampus Merdeka (MBKM) initiative, focusing on analytical thinking and technical data skills.",
     highlights: [
-      "Built ETL pipelines for structured ingestion, transformation, and downstream reporting.",
-      "Worked on warehousing patterns that supported streaming and analytics-heavy product needs.",
-      "Improved data reliability so teams could use the same pipelines for both operations and insight work.",
+      "Developed proficiency in Python and SQL for data manipulation, cleaning, and analysis",
+      "Created data visualizations and dashboards to transform complex datasets into actionable insights",
+      "Applied logical reasoning and structured argumentation to solve analytical problems",
+      "Mastered data structures and warehousing concepts for analytics-heavy systems",
     ],
-    tags: ["ETL", "Warehousing", "Analytics"],
+    tags: ["DATA ANALYTICS", "PYTHON", "SQL", "DATA VISUALIZATION", "ETL"],
   },
 ];
 
