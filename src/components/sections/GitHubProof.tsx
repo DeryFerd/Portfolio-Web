@@ -179,11 +179,11 @@ export default async function GitHubProof() {
               <p className={styles.kicker}>Public proof</p>
             </div>
             <SectionHeadline
-              text="Public proof of steady execution."
+              text="A record of what I'm building."
               className={styles.title}
             />
             <SectionSubheadline
-              text="Repository activity is not the whole story, but it helps show consistency, iteration, and how often technical work turns into shipped output."
+              text="Code is my primary language. While GitHub squares don't show the full complexity of a project, they do show my commitment to shipping something every day and iterating in the open."
               className={styles.text}
             />
             <div className={styles.identityRow}>
