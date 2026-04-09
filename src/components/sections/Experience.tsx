@@ -34,17 +34,18 @@ const experiences = [
     tags: ["LLM Ops", "Pipelines", "Serving"],
   },
   {
-    company: "Startup Inc",
-    role: "Machine Learning Intern",
-    period: "2023 - 2024",
+    company: "Home Credit Indonesia (via Rakamin Academy)",
+    role: "Data Science Intern",
+    period: "2025",
     summary:
-      "Supporting experimentation-heavy product work across recommendations, pipelines, and early LLM use cases.",
+      "Project-based internship focused on credit risk modeling and end-to-end data science workflows for financial services.",
     highlights: [
-      "Developed recommendation workflows and supported the surrounding data preparation steps.",
-      "Contributed to data pipelines that kept experiments reproducible and easier to evaluate.",
-      "Explored practical LLM applications with an eye toward fit, feasibility, and product value.",
+      "Built classification models (Logistic Regression, Random Forest, XGBoost, CatBoost) to predict loan default risk on customer application data",
+      "Performed exploratory data analysis (EDA) and feature engineering to identify patterns in customer payment behavior and risk factors",
+      "Handled data preprocessing challenges including missing values, data cleaning, and imbalanced dataset optimization using ROC-AUC metrics",
+      "Delivered actionable business recommendations based on model performance and key risk indicators",
     ],
-    tags: ["Recommendations", "Experimentation", "LLM Prototyping"],
+    tags: ["DATA SCIENCE", "MACHINE LEARNING", "EDA"],
   },
   {
     company: "Zenius",
