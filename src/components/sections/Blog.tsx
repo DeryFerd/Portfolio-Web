@@ -104,11 +104,11 @@ export default function Blog() {
                 <p className={styles.kicker}>Latest writing</p>
               </div>
               <SectionHeadline
-                text="Notes from building and learning in public."
+                text="Writing & Technical Notes."
                 className={styles.title}
               />
               <SectionSubheadline
-                text="A collection of articles that break down technical concepts, implementation details, and practical lessons from real projects. Each piece is written to be useful before you even finish reading."
+                text="Sometimes the best way to learn is to explain. I write about my experiments in AI and the technical hurdles I encounter while building data systems."
                 className={styles.text}
               />
             </div>
