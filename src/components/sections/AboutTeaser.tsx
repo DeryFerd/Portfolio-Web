@@ -178,12 +178,15 @@ export default function AboutTeaser() {
               photoFit="cover"
               photoPosition="50% 22%"
             >
-              <div className={styles.identityBlock}>
-                <p className={styles.identityEyebrow}>Dery Ferdika</p>
-                <h3 className={styles.identityTitle}>AI systems with product clarity.</h3>
-                <p className={styles.identityText}>
-                  A tighter profile panel that keeps the photo as the anchor and the context close at hand.
-                </p>
+              <div className={styles.identityGrid}>
+                <div className={styles.identityCell}>
+                  <span className={styles.identityLabel}>Name</span>
+                  <span className={styles.identityValue}>Dery Ferdika</span>
+                </div>
+                <div className={styles.identityCell}>
+                  <span className={styles.identityLabel}>Degree</span>
+                  <span className={styles.identityValue}>Pure Mathematics</span>
+                </div>
               </div>
 
               <div className={styles.metaGrid}>

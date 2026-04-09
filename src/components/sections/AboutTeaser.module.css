@@ -184,30 +184,38 @@
   min-height: 31rem;
 }
 
-.identityBlock {
+.identityGrid {
   display: grid;
-  gap: 0.42rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 1rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
-.identityEyebrow {
+.identityCell {
+  display: grid;
+  gap: 0.42rem;
+  padding: 0.9rem 0;
+}
+
+.identityCell + .identityCell {
+  padding-left: 1rem;
+  border-left: 1px solid var(--border);
+}
+
+.identityLabel {
   font-size: 0.68rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
-.identityTitle {
+.identityValue {
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2vw, 1.55rem);
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  font-size: 1.02rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
   color: var(--text-primary);
-}
-
-.identityText {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
 }
 
 .metaGrid {
@@ -283,6 +291,16 @@
 @media (max-width: 520px) {
   .profileReveal {
     min-height: 23rem;
+  }
+
+  .identityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .identityCell + .identityCell {
+    padding-top: 0;
+    padding-left: 0;
+    border-left: 0;
   }
 
   .metaGrid {
