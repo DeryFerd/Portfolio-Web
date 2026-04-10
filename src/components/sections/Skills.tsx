@@ -23,6 +23,8 @@ interface RoleChapter {
   id: string;
   chapter: string;
   label: string;
+  introTitle: string;
+  introText: string;
   deck: string;
   note: string;
   summary: string;
@@ -170,6 +172,9 @@ const chapters: RoleChapter[] = [
     id: "data-engineer",
     chapter: "Chapter 01",
     label: "Data Engineer",
+    introTitle: "Build the foundation before the intelligence.",
+    introText:
+      "This chapter focuses on the data layer first: how information is collected, cleaned, stored, and moved so every model or product feature starts from something dependable.",
     deck: "Start from the pipes, schema choices, and storage patterns that keep every later step from fighting inconsistent data.",
     note: "Designing pipelines and storage so the rest of the system starts from reliable inputs.",
     summary:
@@ -183,6 +188,9 @@ const chapters: RoleChapter[] = [
     id: "data-science",
     chapter: "Chapter 02",
     label: "Data Science",
+    introTitle: "Find the signal before scaling the work.",
+    introText:
+      "This part is about reading the data carefully, testing assumptions, and deciding which patterns are strong enough to justify deeper engineering effort.",
     deck: "Understand the pattern first, pressure-test the idea, and reduce guesswork before the engineering effort gets bigger.",
     note: "Exploring patterns, testing assumptions, and deciding which ideas deserve to move forward.",
     summary:
@@ -196,6 +204,9 @@ const chapters: RoleChapter[] = [
     id: "ml-engineer",
     chapter: "Chapter 03",
     label: "ML Engineer",
+    introTitle: "Turn experiments into repeatable systems.",
+    introText:
+      "Here the focus shifts from a promising notebook result to a workflow that can be trained, evaluated, deployed, and maintained with fewer surprises.",
     deck: "Move from a promising experiment to a repeatable training and inference flow that is ready for application traffic.",
     note: "Building training and inference workflows that are stable enough to leave the notebook.",
     summary:
@@ -209,6 +220,9 @@ const chapters: RoleChapter[] = [
     id: "llm-engineer",
     chapter: "Chapter 04",
     label: "LLM Engineer",
+    introTitle: "Make language systems useful in context.",
+    introText:
+      "This chapter is about shaping model behavior through prompt design, retrieval quality, and evaluation loops so responses stay grounded in the task at hand.",
     deck: "Refine prompts, retrieval, and evaluation so the model answers with grounded context instead of polished guesswork.",
     note: "Shaping prompts, retrieval, and evaluation so language systems stay useful in context.",
     summary:
@@ -222,6 +236,9 @@ const chapters: RoleChapter[] = [
     id: "ai-engineer",
     chapter: "Chapter 05",
     label: "AI Engineer",
+    introTitle: "Design the layer people actually feel.",
+    introText:
+      "At this stage, the question is no longer whether the model works, but whether the experience feels clear, responsive, and genuinely helpful to the person using it.",
     deck: "Translate model capability into a workflow or interface that people can understand quickly and use with confidence.",
     note: "Designing product experiences where model capability has to feel clear, fast, and useful.",
     summary:
@@ -235,6 +252,9 @@ const chapters: RoleChapter[] = [
     id: "mlops",
     chapter: "Chapter 06",
     label: "MLOps",
+    introTitle: "Keep the system calm after it ships.",
+    introText:
+      "This chapter covers the operational side of the stack: reproducibility, observability, release discipline, and the routines that keep production stable over time.",
     deck: "Keep the release path calm with observability, reproducible environments, and habits that make maintenance predictable.",
     note: "Deploying, observing, and maintaining ML systems without turning every release into drama.",
     summary:
@@ -1131,13 +1151,10 @@ export default function Skills() {
                         >
                           <span className={styles.contentsKicker}>Playbook</span>
                           <h3 className={styles.contentsTitle}>
-                            One portfolio, multiple ways of building.
+                            {activeChapter.introTitle}
                           </h3>
                           <p className={styles.contentsText}>
-                            These chapters show how I usually approach a project:
-                            prepare the data, test the idea, shape the model
-                            behavior, turn it into a usable interface, then keep
-                            the whole thing stable in production.
+                            {activeChapter.introText}
                           </p>
 
                           <div className={styles.contentsList}>
