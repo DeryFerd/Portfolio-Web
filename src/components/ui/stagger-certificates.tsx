@@ -36,7 +36,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
     <div
       onClick={() => !isHidden && handleMove(position)}
       className={cn(
-        "absolute left-1/2 top-1/2 cursor-pointer border-2 p-6 transition-all duration-500 ease-in-out",
+        "absolute left-1/2 top-1/2 flex cursor-pointer flex-col border-2 p-6 transition-all duration-500 ease-in-out",
         isHidden && "opacity-0 pointer-events-none",
         isCenter 
           ? "z-10 bg-[#f5f0e6] text-[#1a1a1a] border-[#d4c8b0]" 
@@ -83,16 +83,18 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       </div>
       
       {/* Title */}
-      <h3 className={cn(
-        "text-sm sm:text-base font-medium leading-tight mb-2 line-clamp-2",
-        isCenter ? "text-[#1a1a1a]" : "text-[#4a4a4a]"
-      )}>
-        {certificate.title}
-      </h3>
+      <div className="flex flex-1 items-center justify-center px-3 pb-6 pt-2 text-center">
+        <h3 className={cn(
+          "max-w-[16ch] text-base font-medium leading-snug tracking-[-0.01em] sm:text-lg",
+          isCenter ? "text-[#1f1a14]" : "text-[#4a4a4a]"
+        )}>
+          {certificate.title}
+        </h3>
+      </div>
       
       {/* Meta info */}
       <div className={cn(
-        "absolute bottom-6 left-6 right-6",
+        "mt-auto border-t border-[#d9cfbc]/80 pt-4",
         isCenter ? "text-[#1a1a1a]/70" : "text-[#6a6a6a]"
       )}>
         <p className="text-xs font-medium uppercase tracking-wider">
