@@ -16,7 +16,7 @@ interface StackTool {
   label: string;
   caption: string;
   accent: string;
-  logoUrl: string;
+  logoUrl?: string;
 }
 
 interface RoleChapter {
@@ -85,17 +85,10 @@ const stackTools: StackTool[] = [
     logoUrl: "https://cdn.simpleicons.org/pytorch",
   },
   {
-    id: "llms",
-    label: "LLMs",
-    caption: "Reasoning layers shaped through prompting, evaluation, and product behavior.",
-    accent: "#f2c078",
-    logoUrl: "https://cdn.simpleicons.org/openai",
-  },
-  {
-    id: "rag",
-    label: "RAG",
-    caption: "Retrieval systems that keep model output anchored to the right context.",
-    accent: "#c08cff",
+    id: "langchain",
+    label: "LangChain",
+    caption: "Orchestration flows for retrieval, tool use, and grounded language system behavior.",
+    accent: "#0f6b4b",
     logoUrl: "https://cdn.simpleicons.org/langchain",
   },
   {
@@ -114,7 +107,7 @@ const stackTools: StackTool[] = [
   },
   {
     id: "tailwind",
-    label: "Tailwind",
+    label: "Tailwind CSS",
     caption: "Fast UI iteration when the frontend needs to move with the backend pace.",
     accent: "#33d6dd",
     logoUrl: "https://cdn.simpleicons.org/tailwindcss",
@@ -161,6 +154,30 @@ const stackTools: StackTool[] = [
     accent: "#ffcf3f",
     logoUrl: "https://cdn.simpleicons.org/huggingface",
   },
+  {
+    id: "vllm",
+    label: "vLLM",
+    caption: "High-throughput inference serving for large language models in production workflows.",
+    accent: "#6f7cff",
+  },
+  {
+    id: "chroma",
+    label: "Chroma",
+    caption: "Vector retrieval infrastructure for context storage, similarity search, and grounded generation.",
+    accent: "#9a6cff",
+  },
+  {
+    id: "wandb",
+    label: "Weights & Biases",
+    caption: "Experiment tracking, model evaluation, and training observability for ML delivery.",
+    accent: "#ffbe3b",
+  },
+  {
+    id: "tavily",
+    label: "Tavily",
+    caption: "Search and research retrieval for AI agents that need fresher external context.",
+    accent: "#00b894",
+  },
 ];
 
 const stackToolById: Record<string, StackTool> = Object.fromEntries(
@@ -180,7 +197,7 @@ const chapters: RoleChapter[] = [
     summary:
       "I use this layer to make data trustworthy before anyone trains a model or ships a feature. It covers ingestion, cleanup, warehousing, and the small operational choices that prevent messy downstream work.",
     focus: ["ETL", "Warehousing", "Reliability"],
-    stackIds: ["python", "postgres", "docker", "node"],
+    stackIds: ["python", "postgres", "docker", "git"],
     bridge: "Gives every downstream workflow a cleaner starting point.",
     accent: "#7a95ff",
   },
@@ -196,7 +213,7 @@ const chapters: RoleChapter[] = [
     summary:
       "This is where I look for signal instead of noise: understanding the data, comparing approaches, and turning vague questions into experiments with a clear next step.",
     focus: ["EDA", "Feature work", "Evaluation"],
-    stackIds: ["python", "pytorch", "postgres", "llms"],
+    stackIds: ["python", "sklearn", "postgres", "opencv"],
     bridge: "Turns open questions into decisions the product side can act on.",
     accent: "#5ab0f5",
   },
@@ -212,7 +229,7 @@ const chapters: RoleChapter[] = [
     summary:
       "Here the work shifts from proving that a model can work to making it repeatable, measurable, and ready to serve inside a real application.",
     focus: ["Training", "Inference", "Serving"],
-    stackIds: ["python", "pytorch", "docker", "node"],
+    stackIds: ["pytorch", "huggingface", "python", "fastapi", "wandb"],
     bridge: "Moves model work closer to something users can actually depend on.",
     accent: "#ff7b4d",
   },
@@ -228,7 +245,7 @@ const chapters: RoleChapter[] = [
     summary:
       "I treat LLM work as a systems problem, not just a prompt-writing exercise. The goal is to control context, improve retrieval, and check behavior so the output stays grounded and helpful.",
     focus: ["Prompts", "Retrieval", "Eval loops"],
-    stackIds: ["llms", "rag", "python", "postgres"],
+    stackIds: ["langchain", "huggingface", "pytorch", "python", "vllm", "chroma", "tavily"],
     bridge: "Makes generative features feel more reliable in everyday use.",
     accent: "#f2c078",
   },
@@ -244,7 +261,7 @@ const chapters: RoleChapter[] = [
     summary:
       "This chapter is about turning model capability into something people can actually use, whether that means an assistant, an internal tool, or a workflow that helps someone decide faster.",
     focus: ["Agents", "Product UX", "Workflows"],
-    stackIds: ["react", "nextjs", "llms", "node"],
+    stackIds: ["nextjs", "react", "typescript", "fastapi", "tailwind"],
     bridge: "Turns smart behavior into product interactions that feel intentional.",
     accent: "#65d8ff",
   },
@@ -260,7 +277,7 @@ const chapters: RoleChapter[] = [
     summary:
       "This is the operational layer: reproducible environments, release discipline, monitoring, and the habits that make AI systems easier to trust after they go live.",
     focus: ["Deployments", "Observability", "CI/CD"],
-    stackIds: ["docker", "python", "node", "postgres"],
+    stackIds: ["docker", "git", "python", "postgres", "wandb", "vllm"],
     bridge: "Keeps shipped systems maintainable when real usage starts to stress them.",
     accent: "#8cd66f",
   },
@@ -292,49 +309,6 @@ function SkillIcon({ skillId }: { skillId: string }) {
   }
 
   switch (skillId) {
-    case "llms":
-      return (
-        <svg viewBox="0 0 48 48" aria-hidden="true">
-          <circle cx="24" cy="24" r="5.4" fill="currentColor" />
-          <circle cx="24" cy="10.5" r="3.3" fill="currentColor" opacity="0.8" />
-          <circle cx="36.5" cy="18" r="3.3" fill="currentColor" opacity="0.72" />
-          <circle cx="33" cy="33.5" r="3.3" fill="currentColor" opacity="0.64" />
-          <circle cx="15" cy="34" r="3.3" fill="currentColor" opacity="0.78" />
-          <circle cx="11" cy="17.5" r="3.3" fill="currentColor" opacity="0.7" />
-          <path
-            d="M24 15.2 32.2 19.6 29.6 29 18.4 29 15.8 19.6Z"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.4"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-    case "rag":
-      return (
-        <svg viewBox="0 0 48 48" aria-hidden="true">
-          <rect
-            x="10"
-            y="12"
-            width="20"
-            height="18"
-            rx="4"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.8"
-          />
-          <path
-            d="M20 31h14a4 4 0 0 0 4-4V15"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.8"
-            strokeLinecap="round"
-          />
-          <circle cx="18" cy="20" r="2.2" fill="currentColor" />
-          <circle cx="24" cy="20" r="2.2" fill="currentColor" opacity="0.72" />
-          <circle cx="30" cy="20" r="2.2" fill="currentColor" opacity="0.48" />
-        </svg>
-      );
     case "python":
       return (
         <svg viewBox="0 0 48 48" aria-hidden="true">
@@ -405,6 +379,76 @@ function SkillIcon({ skillId }: { skillId: string }) {
             stroke="currentColor"
             strokeWidth="2.4"
             transform="rotate(-60 24 24)"
+          />
+        </svg>
+      );
+    case "vllm":
+      return (
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path
+            d="M11 14.5 20.2 33.5 24 25.9 27.8 33.5 37 14.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M18.4 14.5h11.2"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.6"
+            strokeLinecap="round"
+            opacity="0.58"
+          />
+        </svg>
+      );
+    case "chroma":
+      return (
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="18" cy="18" r="6" fill="none" stroke="currentColor" strokeWidth="3" />
+          <circle cx="30" cy="18" r="6" fill="none" stroke="currentColor" strokeWidth="3" opacity="0.8" />
+          <circle cx="24" cy="30" r="6" fill="none" stroke="currentColor" strokeWidth="3" opacity="0.6" />
+        </svg>
+      );
+    case "wandb":
+      return (
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path
+            d="M9 15.5 15.5 32 24 18.5 32.5 32 39 15.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <circle cx="24" cy="18.5" r="2.2" fill="currentColor" />
+        </svg>
+      );
+    case "tavily":
+      return (
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path
+            d="M12 15h24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+          <path
+            d="M24 15v18"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            opacity="0.72"
+          />
+          <path
+            d="M17 33h14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
           />
         </svg>
       );
@@ -1082,8 +1126,14 @@ export default function Skills() {
   } as CSSProperties;
 
   const quickStackItems = useMemo(
-    () =>
-      stackTools.filter((tool) => !["llms", "rag"].includes(tool.id)),
+    () => {
+      const orderedIds = chapters.flatMap((chapter) => chapter.stackIds);
+      const uniqueIds = Array.from(new Set(orderedIds));
+
+      return uniqueIds
+        .map((toolId) => stackToolById[toolId])
+        .filter((tool): tool is StackTool => Boolean(tool));
+    },
     [],
   );
 
