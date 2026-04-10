@@ -825,11 +825,12 @@ export default function Skills() {
 
     const bounds = event.currentTarget.getBoundingClientRect();
     const relativeX = (event.clientX - bounds.left) / bounds.width;
+    const shouldResumeBackCover =
+      activeIndex === chapters.length - 1 && backCoverProgress > 0.005;
     const nextMode: DragMode =
       coverProgress < 0.995
         ? "cover"
-        : activeIndex === chapters.length - 1 &&
-            (backCoverProgress > 0.005 || relativeX >= 1 - COVER_ZONE_RATIO)
+        : shouldResumeBackCover
           ? "back-cover"
           : "page";
     const scrollTarget =
