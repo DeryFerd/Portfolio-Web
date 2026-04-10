@@ -23,6 +23,7 @@ interface RoleChapter {
   id: string;
   chapter: string;
   label: string;
+  deck: string;
   note: string;
   summary: string;
   focus: string[];
@@ -169,6 +170,7 @@ const chapters: RoleChapter[] = [
     id: "data-engineer",
     chapter: "Chapter 01",
     label: "Data Engineer",
+    deck: "Start from the pipes, schema choices, and storage patterns that keep every later step from fighting inconsistent data.",
     note: "Designing pipelines and storage so the rest of the system starts from reliable inputs.",
     summary:
       "I use this layer to make data trustworthy before anyone trains a model or ships a feature. It covers ingestion, cleanup, warehousing, and the small operational choices that prevent messy downstream work.",
@@ -181,6 +183,7 @@ const chapters: RoleChapter[] = [
     id: "data-science",
     chapter: "Chapter 02",
     label: "Data Science",
+    deck: "Understand the pattern first, pressure-test the idea, and reduce guesswork before the engineering effort gets bigger.",
     note: "Exploring patterns, testing assumptions, and deciding which ideas deserve to move forward.",
     summary:
       "This is where I look for signal instead of noise: understanding the data, comparing approaches, and turning vague questions into experiments with a clear next step.",
@@ -193,6 +196,7 @@ const chapters: RoleChapter[] = [
     id: "ml-engineer",
     chapter: "Chapter 03",
     label: "ML Engineer",
+    deck: "Move from a promising experiment to a repeatable training and inference flow that is ready for application traffic.",
     note: "Building training and inference workflows that are stable enough to leave the notebook.",
     summary:
       "Here the work shifts from proving that a model can work to making it repeatable, measurable, and ready to serve inside a real application.",
@@ -205,6 +209,7 @@ const chapters: RoleChapter[] = [
     id: "llm-engineer",
     chapter: "Chapter 04",
     label: "LLM Engineer",
+    deck: "Refine prompts, retrieval, and evaluation so the model answers with grounded context instead of polished guesswork.",
     note: "Shaping prompts, retrieval, and evaluation so language systems stay useful in context.",
     summary:
       "I treat LLM work as a systems problem, not just a prompt-writing exercise. The goal is to control context, improve retrieval, and check behavior so the output stays grounded and helpful.",
@@ -217,6 +222,7 @@ const chapters: RoleChapter[] = [
     id: "ai-engineer",
     chapter: "Chapter 05",
     label: "AI Engineer",
+    deck: "Translate model capability into a workflow or interface that people can understand quickly and use with confidence.",
     note: "Designing product experiences where model capability has to feel clear, fast, and useful.",
     summary:
       "This chapter is about turning model capability into something people can actually use, whether that means an assistant, an internal tool, or a workflow that helps someone decide faster.",
@@ -229,6 +235,7 @@ const chapters: RoleChapter[] = [
     id: "mlops",
     chapter: "Chapter 06",
     label: "MLOps",
+    deck: "Keep the release path calm with observability, reproducible environments, and habits that make maintenance predictable.",
     note: "Deploying, observing, and maintaining ML systems without turning every release into drama.",
     summary:
       "This is the operational layer: reproducible environments, release discipline, monitoring, and the habits that make AI systems easier to trust after they go live.",
@@ -567,7 +574,7 @@ function TurnBackFace({ chapter }: { chapter: RoleChapter }) {
     >
       <span className={styles.turnBackKicker}>{chapter.chapter}</span>
       <h4 className={styles.turnBackTitle}>{chapter.label}</h4>
-      <p className={styles.turnBackText}>{chapter.note}</p>
+      <p className={styles.turnBackText}>{chapter.deck}</p>
     </div>
   );
 }
@@ -1159,6 +1166,9 @@ export default function Skills() {
                             </h4>
                             <p className={styles.currentNote}>
                               {activeChapter.note}
+                            </p>
+                            <p className={styles.currentNote}>
+                              {activeChapter.deck}
                             </p>
                           </div>
                         </div>
