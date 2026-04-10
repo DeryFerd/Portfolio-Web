@@ -69,7 +69,7 @@ export default function CertificatePreviewDialog({
         suppressHydrationWarning
       />
 
-      <div className={styles.shell}>
+      <div className={styles.shell} onClick={onClose}>
         <div
           className={styles.dialog}
           role="dialog"
