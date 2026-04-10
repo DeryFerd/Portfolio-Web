@@ -169,72 +169,72 @@ const chapters: RoleChapter[] = [
     id: "data-engineer",
     chapter: "Chapter 01",
     label: "Data Engineer",
-    note: "Pipelines, storage, and clean movement before anything becomes intelligence.",
+    note: "Designing pipelines and storage so the rest of the system starts from reliable inputs.",
     summary:
-      "This chapter is about making data dependable: ingestion, transformation, warehousing, and the operational discipline that every downstream model quietly depends on.",
+      "I use this layer to make data trustworthy before anyone trains a model or ships a feature. It covers ingestion, cleanup, warehousing, and the small operational choices that prevent messy downstream work.",
     focus: ["ETL", "Warehousing", "Reliability"],
     stackIds: ["python", "postgres", "docker", "node"],
-    bridge: "Keeps the rest of the stack fed with context that is actually usable.",
+    bridge: "Gives every downstream workflow a cleaner starting point.",
     accent: "#7a95ff",
   },
   {
     id: "data-science",
     chapter: "Chapter 02",
     label: "Data Science",
-    note: "Exploration, signal finding, and experiment framing before the product layer starts.",
+    note: "Exploring patterns, testing assumptions, and deciding which ideas deserve to move forward.",
     summary:
-      "Here the work is less about shipping chrome and more about finding signal: understanding distributions, testing ideas, and deciding which directions deserve to become systems.",
+      "This is where I look for signal instead of noise: understanding the data, comparing approaches, and turning vague questions into experiments with a clear next step.",
     focus: ["EDA", "Feature work", "Evaluation"],
     stackIds: ["python", "pytorch", "postgres", "llms"],
-    bridge: "Turns raw information into hypotheses worth engineering around.",
+    bridge: "Turns open questions into decisions the product side can act on.",
     accent: "#5ab0f5",
   },
   {
     id: "ml-engineer",
     chapter: "Chapter 03",
     label: "ML Engineer",
-    note: "Training loops, model iteration, and inference paths that are built to ship.",
+    note: "Building training and inference workflows that are stable enough to leave the notebook.",
     summary:
-      "This is the chapter where experiments stop being isolated notebooks and start becoming repeatable systems with serving, performance, and operational constraints in view.",
+      "Here the work shifts from proving that a model can work to making it repeatable, measurable, and ready to serve inside a real application.",
     focus: ["Training", "Inference", "Serving"],
     stackIds: ["python", "pytorch", "docker", "node"],
-    bridge: "Connects modeling work to something that can survive product reality.",
+    bridge: "Moves model work closer to something users can actually depend on.",
     accent: "#ff7b4d",
   },
   {
     id: "llm-engineer",
     chapter: "Chapter 04",
     label: "LLM Engineer",
-    note: "Prompting, retrieval, and evaluation loops for language systems that stay grounded.",
+    note: "Shaping prompts, retrieval, and evaluation so language systems stay useful in context.",
     summary:
-      "I treat LLM work as system design rather than prompt theater: context selection, retrieval quality, and the behavioral checks that keep outputs useful instead of just fluent.",
+      "I treat LLM work as a systems problem, not just a prompt-writing exercise. The goal is to control context, improve retrieval, and check behavior so the output stays grounded and helpful.",
     focus: ["Prompts", "Retrieval", "Eval loops"],
     stackIds: ["llms", "rag", "python", "postgres"],
-    bridge: "Shapes generative behavior into something more trustworthy and more usable.",
+    bridge: "Makes generative features feel more reliable in everyday use.",
     accent: "#f2c078",
   },
   {
     id: "ai-engineer",
     chapter: "Chapter 05",
     label: "AI Engineer",
-    note: "User-facing intelligence where models meet product and workflows meet people.",
+    note: "Designing product experiences where model capability has to feel clear, fast, and useful.",
     summary:
-      "This spread is about turning model capability into product experience: agents, copilots, and interfaces that feel coherent, responsive, and understandable in daily use.",
+      "This chapter is about turning model capability into something people can actually use, whether that means an assistant, an internal tool, or a workflow that helps someone decide faster.",
     focus: ["Agents", "Product UX", "Workflows"],
     stackIds: ["react", "nextjs", "llms", "node"],
-    bridge: "Makes intelligence legible once it leaves the notebook and enters the product.",
+    bridge: "Turns smart behavior into product interactions that feel intentional.",
     accent: "#65d8ff",
   },
   {
     id: "mlops",
     chapter: "Chapter 06",
     label: "MLOps",
-    note: "Deployment discipline, observability, and the calm side of keeping models live.",
+    note: "Deploying, observing, and maintaining ML systems without turning every release into drama.",
     summary:
-      "The goal here is confidence: reproducible environments, smooth promotion paths, and operational habits that make ML and AI systems feel dependable under real pressure.",
+      "This is the operational layer: reproducible environments, release discipline, monitoring, and the habits that make AI systems easier to trust after they go live.",
     focus: ["Deployments", "Observability", "CI/CD"],
     stackIds: ["docker", "python", "node", "postgres"],
-    bridge: "Turns technical capability into something repeatable, monitorable, and shippable.",
+    bridge: "Keeps shipped systems maintainable when real usage starts to stress them.",
     accent: "#8cd66f",
   },
 ];
@@ -1075,7 +1075,7 @@ export default function Skills() {
               className={styles.title}
             />
             <SectionSubheadline
-              text="Six roles spanning data engineering through AI operations. Each chapter shows the tools and focus areas that turn raw data into production systems."
+              text="A practical view of how I work across the stack, from data plumbing and experiments to interfaces, deployment, and AI operations."
               className={styles.text}
             />
 
@@ -1124,12 +1124,13 @@ export default function Skills() {
                         >
                           <span className={styles.contentsKicker}>Playbook</span>
                           <h3 className={styles.contentsTitle}>
-                            One portfolio, several operating modes.
+                            One portfolio, multiple ways of building.
                           </h3>
                           <p className={styles.contentsText}>
-                            The same build philosophy shows up in different forms:
-                            data movement, experiment design, model delivery, LLM
-                            behavior, product surfaces, and production stability.
+                            These chapters show how I usually approach a project:
+                            prepare the data, test the idea, shape the model
+                            behavior, turn it into a usable interface, then keep
+                            the whole thing stable in production.
                           </p>
 
                           <div className={styles.contentsList}>
@@ -1200,7 +1201,8 @@ export default function Skills() {
                           <span className={styles.coverKicker}>Dery Ferdika</span>
                           <h3 className={styles.coverTitle}>AI / Data Playbook</h3>
                           <p className={styles.coverText}>
-                            Open the cover, then turn through the roles.
+                            Open the book to see how the stack changes from one role
+                            to the next.
                           </p>
                         </div>
 
@@ -1218,7 +1220,8 @@ export default function Skills() {
                           <span className={styles.coverKicker}>Chapter 06 complete</span>
                           <h3 className={styles.coverTitle}>Close the playbook.</h3>
                           <p className={styles.coverText}>
-                            One more swipe closes the back cover, like finishing the last page of a real book.
+                            The last page closes the loop: build it well, ship it
+                            carefully, and keep it dependable after launch.
                           </p>
                         </div>
 
