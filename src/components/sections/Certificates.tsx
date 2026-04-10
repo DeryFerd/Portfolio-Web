@@ -25,7 +25,7 @@ export default function Certificates() {
     id: cert.slug,
     title: cert.title,
     issuer: cert.issuer,
-    issuedAt: formatIssuedAt(cert.issuedAt),
+    issuedAt: cert.issuedAt ? formatIssuedAt(cert.issuedAt) : undefined,
     image: cert.image,
   }));
 

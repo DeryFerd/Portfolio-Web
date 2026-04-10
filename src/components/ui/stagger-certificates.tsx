@@ -11,7 +11,7 @@ export interface CertificateItem {
   id: string;
   title: string;
   issuer: string;
-  issuedAt: string;
+  issuedAt?: string;
   image: string;
 }
 
@@ -98,9 +98,11 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
         <p className="text-xs font-medium uppercase tracking-wider">
           {certificate.issuer}
         </p>
-        <p className="text-xs mt-1">
-          {certificate.issuedAt}
-        </p>
+        {certificate.issuedAt ? (
+          <p className="text-xs mt-1">
+            {certificate.issuedAt}
+          </p>
+        ) : null}
       </div>
     </div>
   );
