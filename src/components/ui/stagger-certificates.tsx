@@ -19,6 +19,7 @@ interface CertificateCardProps {
   position: number;
   certificate: CertificateItem;
   handleMove: (steps: number) => void;
+  onPreview?: (certificate: CertificateItem) => void;
   cardSize: number;
   isHidden?: boolean;
 }
@@ -27,6 +28,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
   position, 
   certificate, 
   handleMove, 
+  onPreview,
   cardSize,
   isHidden = false
 }) => {
@@ -34,7 +36,18 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 
   return (
     <div
-      onClick={() => !isHidden && handleMove(position)}
+      onClick={() => {
+        if (isHidden) {
+          return;
+        }
+
+        if (isCenter) {
+          onPreview?.(certificate);
+          return;
+        }
+
+        handleMove(position);
+      }}
       className={cn(
         "absolute left-1/2 top-1/2 flex cursor-pointer flex-col border-2 p-6 transition-all duration-500 ease-in-out",
         isHidden && "opacity-0 pointer-events-none",
@@ -114,12 +127,14 @@ interface StaggerCertificatesProps {
   certificates: CertificateItem[];
   className?: string;
   onIndexChange?: (index: number) => void;
+  onPreview?: (certificate: CertificateItem) => void;
 }
 
 export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({ 
   certificates,
   className,
-  onIndexChange
+  onIndexChange,
+  onPreview,
 }) => {
   const [cardSize, setCardSize] = useState(340);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -181,6 +196,7 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
             key={certificate.id}
             certificate={certificate}
             handleMove={handleMove}
+            onPreview={onPreview}
             position={position}
             cardSize={cardSize}
             isHidden={isHidden}

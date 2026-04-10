@@ -1,0 +1,126 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(10, 10, 10, 0.72);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.dialog {
+  width: min(1120px, 100%);
+  max-height: min(92dvh, 980px);
+  overflow: hidden;
+  border: 1px solid rgba(216, 205, 184, 0.46);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(245, 239, 228, 0.96)),
+    #f5f0e6;
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.28),
+    0 1px 0 rgba(255, 255, 255, 0.72) inset;
+}
+
+.header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.4rem);
+  border-bottom: 1px solid rgba(60, 48, 28, 0.1);
+}
+
+.meta {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin-bottom: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(48, 38, 24, 0.55);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.35rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: #1f1a14;
+}
+
+.issuer {
+  margin-top: 0.45rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(31, 26, 20, 0.72);
+}
+
+.closeButton {
+  flex: none;
+  min-height: 2.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(60, 48, 28, 0.14);
+  background: rgba(255, 255, 255, 0.52);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1f1a14;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.closeButton:hover,
+.closeButton:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(60, 48, 28, 0.2);
+}
+
+.frame {
+  padding: clamp(0.8rem, 1.8vw, 1.25rem);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.44), transparent 48%),
+    rgba(214, 202, 181, 0.16);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(92dvh - 8.5rem);
+  object-fit: contain;
+  border: 1px solid rgba(60, 48, 28, 0.08);
+  background: #fbf8f1;
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .closeButton {
+    width: 100%;
+  }
+}

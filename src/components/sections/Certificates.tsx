@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import CertificatePreviewDialog from "@/components/ui/CertificatePreviewDialog";
 import SectionHeadline from "@/components/ui/SectionHeadline";
 import SectionSubheadline from "@/components/ui/SectionSubheadline";
 import { StaggerCertificates, CertificateItem } from "@/components/ui/stagger-certificates";
@@ -19,6 +20,7 @@ function formatIssuedAt(value: string) {
 
 export default function Certificates() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [previewCertificate, setPreviewCertificate] = useState<CertificateItem | null>(null);
 
   // Transform certificates data for StaggerCertificates
   const certificateItems: CertificateItem[] = certificates.map((cert) => ({
@@ -56,6 +58,7 @@ export default function Certificates() {
             certificates={certificateItems} 
             className={styles.staggerContainer}
             onIndexChange={setActiveIndex}
+            onPreview={setPreviewCertificate}
           />
         </div>
 
@@ -66,6 +69,14 @@ export default function Certificates() {
           <span className={styles.counterTotal}>{String(certificates.length).padStart(2, "0")}</span>
         </div>
       </div>
+
+      <CertificatePreviewDialog
+        open={previewCertificate !== null}
+        onClose={() => setPreviewCertificate(null)}
+        title={previewCertificate?.title ?? ""}
+        issuer={previewCertificate?.issuer ?? ""}
+        image={previewCertificate?.image ?? ""}
+      />
     </section>
   );
 }
