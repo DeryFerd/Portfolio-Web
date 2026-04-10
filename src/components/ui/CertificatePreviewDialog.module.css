@@ -118,7 +118,7 @@
   width: auto;
   max-width: 100%;
   height: auto;
-  max-height: calc(92dvh - 10rem);
+  max-height: calc(92dvh - 11.5rem);
   object-fit: contain;
   border: 2px solid rgba(60, 48, 28, 0.15);
   background: #fbf8f1;
