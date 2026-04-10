@@ -107,8 +107,6 @@
   align-items: center;
   justify-content: center;
   padding: clamp(0.8rem, 1.8vw, 1.25rem);
-  padding-bottom: clamp(1.2rem, 2.5vw, 1.8rem);
-  margin-bottom: 0.5rem;
   background:
     radial-gradient(circle at top, rgba(255, 255, 255, 0.44), transparent 48%),
     rgba(214, 202, 181, 0.16);
@@ -117,13 +115,13 @@
 
 .image {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
   max-height: calc(92dvh - 10rem);
   object-fit: contain;
   border: 2px solid rgba(60, 48, 28, 0.15);
   background: #fbf8f1;
-  margin-bottom: 0.5rem;
 }
 
 .footer {
