@@ -19,7 +19,7 @@ const socialLinks = [
   {
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/deryferdikaoktoriansah",
-    iconUrl: "https://cdn.simpleicons.org/linkedin/0A66C2",
+    iconUrl: "https://www.google.com/s2/favicons?domain=linkedin.com&sz=128",
   },
   {
     name: "X",
