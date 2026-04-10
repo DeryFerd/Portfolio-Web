@@ -111,7 +111,7 @@ export default function Contact() {
             </div>
             <div className={styles.metaRow}>
               <span className={styles.metaLabel}>Focus</span>
-              <span className={styles.metaValue}>AI products, tooling, and interfaces</span>
+              <span className={styles.metaValue}>AI Agents, Agentic AI, RAG, Machine Learning</span>
             </div>
             <div className={styles.links}>
               {socialLinks.map((social) => (
