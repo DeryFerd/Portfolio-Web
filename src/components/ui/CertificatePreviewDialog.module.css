@@ -26,13 +26,16 @@
   width: min(1120px, 100%);
   max-height: min(92dvh, 980px);
   overflow: hidden;
-  border: 1px solid rgba(216, 205, 184, 0.46);
+  border: 1px solid rgba(216, 205, 184, 0.6);
+  border-bottom: 3px solid rgba(216, 205, 184, 0.8);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(245, 239, 228, 0.96)),
     #f5f0e6;
   box-shadow:
     0 28px 80px rgba(0, 0, 0, 0.28),
     0 1px 0 rgba(255, 255, 255, 0.72) inset;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -99,20 +102,34 @@
 }
 
 .frame {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: clamp(0.8rem, 1.8vw, 1.25rem);
+  padding-bottom: clamp(1.2rem, 2.5vw, 1.8rem);
+  margin-bottom: 0.5rem;
   background:
     radial-gradient(circle at top, rgba(255, 255, 255, 0.44), transparent 48%),
     rgba(214, 202, 181, 0.16);
+  border-top: 1px solid rgba(60, 48, 28, 0.1);
 }
 
 .image {
   display: block;
   width: 100%;
   height: auto;
-  max-height: calc(92dvh - 8.5rem);
+  max-height: calc(92dvh - 10rem);
   object-fit: contain;
-  border: 1px solid rgba(60, 48, 28, 0.08);
+  border: 2px solid rgba(60, 48, 28, 0.15);
   background: #fbf8f1;
+  margin-bottom: 0.5rem;
+}
+
+.footer {
+  height: 0.5rem;
+  background: rgba(245, 239, 228, 0.96);
+  border-top: 1px solid rgba(60, 48, 28, 0.1);
 }
 
 @media (max-width: 640px) {
