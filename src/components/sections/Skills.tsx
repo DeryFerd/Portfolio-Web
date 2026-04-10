@@ -159,24 +159,28 @@ const stackTools: StackTool[] = [
     label: "vLLM",
     caption: "High-throughput inference serving for large language models in production workflows.",
     accent: "#6f7cff",
+    logoUrl: "https://www.google.com/s2/favicons?domain=vllm.ai&sz=128",
   },
   {
     id: "chroma",
     label: "Chroma",
     caption: "Vector retrieval infrastructure for context storage, similarity search, and grounded generation.",
     accent: "#9a6cff",
+    logoUrl: "https://www.google.com/s2/favicons?domain=trychroma.com&sz=128",
   },
   {
     id: "wandb",
     label: "Weights & Biases",
     caption: "Experiment tracking, model evaluation, and training observability for ML delivery.",
     accent: "#ffbe3b",
+    logoUrl: "https://www.google.com/s2/favicons?domain=wandb.ai&sz=128",
   },
   {
     id: "tavily",
     label: "Tavily",
     caption: "Search and research retrieval for AI agents that need fresher external context.",
     accent: "#00b894",
+    logoUrl: "https://www.google.com/s2/favicons?domain=tavily.com&sz=128",
   },
 ];
 
@@ -379,76 +383,6 @@ function SkillIcon({ skillId }: { skillId: string }) {
             stroke="currentColor"
             strokeWidth="2.4"
             transform="rotate(-60 24 24)"
-          />
-        </svg>
-      );
-    case "vllm":
-      return (
-        <svg viewBox="0 0 48 48" aria-hidden="true">
-          <path
-            d="M11 14.5 20.2 33.5 24 25.9 27.8 33.5 37 14.5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M18.4 14.5h11.2"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.6"
-            strokeLinecap="round"
-            opacity="0.58"
-          />
-        </svg>
-      );
-    case "chroma":
-      return (
-        <svg viewBox="0 0 48 48" aria-hidden="true">
-          <circle cx="18" cy="18" r="6" fill="none" stroke="currentColor" strokeWidth="3" />
-          <circle cx="30" cy="18" r="6" fill="none" stroke="currentColor" strokeWidth="3" opacity="0.8" />
-          <circle cx="24" cy="30" r="6" fill="none" stroke="currentColor" strokeWidth="3" opacity="0.6" />
-        </svg>
-      );
-    case "wandb":
-      return (
-        <svg viewBox="0 0 48 48" aria-hidden="true">
-          <path
-            d="M9 15.5 15.5 32 24 18.5 32.5 32 39 15.5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <circle cx="24" cy="18.5" r="2.2" fill="currentColor" />
-        </svg>
-      );
-    case "tavily":
-      return (
-        <svg viewBox="0 0 48 48" aria-hidden="true">
-          <path
-            d="M12 15h24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
-          <path
-            d="M24 15v18"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            opacity="0.72"
-          />
-          <path
-            d="M17 33h14"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
           />
         </svg>
       );
