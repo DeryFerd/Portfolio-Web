@@ -147,14 +147,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.9rem;
+  font-size: 3.2rem;
   font-weight: 900;
   line-height: 1;
   color: var(--accent);
   opacity: 0.94;
   text-shadow:
     0 0 0.5px currentColor,
-    0 0 8px color-mix(in srgb, var(--accent) 36%, transparent);
+    0 0 14px color-mix(in srgb, var(--accent) 42%, transparent);
 }
 
 .projectTitle {
