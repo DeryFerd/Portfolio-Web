@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import SectionHeadline from "@/components/ui/SectionHeadline";
 import SectionSubheadline from "@/components/ui/SectionSubheadline";
+import IncomingLabel from "@/components/ui/IncomingLabel";
 import QuickPreviewDialog from "@/components/ui/QuickPreviewDialog";
 import { posts } from "@/lib/blogData";
 import styles from "./Blog.module.css";
@@ -221,7 +222,13 @@ export default function Blog() {
                       _ {String(index + 1).padStart(2, "0")} .
                     </span>
                     <span className={styles.postTitleRow}>
-                      <span className={styles.postTitle}>{post.title}</span>
+                      <span className={styles.postTitle}>
+                        {post.isIncoming ? (
+                          <IncomingLabel text="More Incoming" />
+                        ) : (
+                          post.title
+                        )}
+                      </span>
                       {post.isIncoming ? (
                         <span className={styles.warningBadge}>⚠</span>
                       ) : null}
@@ -259,7 +266,9 @@ export default function Blog() {
                 <h3 className={styles.detailTitle}>{activePost.title}</h3>
                 <p className={styles.detailExcerpt}>{activePost.excerpt}</p>
                 {activePost.isIncoming ? (
-                  <span className={styles.detailLinkMuted}>⚠ More incoming</span>
+                  <span className={styles.detailLinkMuted}>
+                    ⚠ More incoming
+                  </span>
                 ) : (
                   <Link href={`/blog/${activePost.slug}`} className={styles.detailLink}>
                     Read article

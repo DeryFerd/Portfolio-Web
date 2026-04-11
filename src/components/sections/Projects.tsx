@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import SectionHeadline from "@/components/ui/SectionHeadline";
 import SectionSubheadline from "@/components/ui/SectionSubheadline";
+import IncomingLabel from "@/components/ui/IncomingLabel";
 import QuickPreviewDialog from "@/components/ui/QuickPreviewDialog";
 import styles from "./Projects.module.css";
 
@@ -157,7 +158,13 @@ export default function Projects() {
                       _ {String(index + 1).padStart(2, "0")} .
                     </span>
                     <span className={styles.projectTitleRow}>
-                      <span className={styles.projectTitle}>{project.title}</span>
+                      <span className={styles.projectTitle}>
+                        {project.isIncoming ? (
+                          <IncomingLabel text="More Incoming" />
+                        ) : (
+                          project.title
+                        )}
+                      </span>
                       {project.isIncoming ? (
                         <span className={styles.warningBadge}>⚠</span>
                       ) : null}
@@ -195,7 +202,9 @@ export default function Projects() {
                   {activeProject.description}
                 </p>
                 {activeProject.isIncoming ? (
-                  <span className={styles.detailLinkMuted}>⚠ More incoming</span>
+                  <span className={styles.detailLinkMuted}>
+                    ⚠ More incoming
+                  </span>
                 ) : (
                   <Link
                     href={`/projects/${activeProject.slug}`}
