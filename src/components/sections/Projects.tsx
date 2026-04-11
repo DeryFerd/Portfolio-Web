@@ -25,10 +25,7 @@ type ProjectEntry = {
 const incomingImage =
   "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&h=720&fit=crop";
 
-function createIncomingProject(
-  slug: string,
-  year: string,
-): ProjectEntry {
+function createIncomingProject(slug: string, year: string): ProjectEntry {
   return {
     title: "More Incoming",
     description:
@@ -122,10 +119,7 @@ export default function Projects() {
                 </span>
                 <p className={styles.kicker}>Selected projects</p>
               </div>
-              <SectionHeadline
-                text="Problems I've Solved"
-                className={styles.title}
-              />
+              <SectionHeadline text="Problems I've Solved" className={styles.title} />
               <SectionSubheadline
                 text="A look into how I connect models, data pipelines, and user interfaces. Each project here is a case study in solving a specific technical challenge with a production-first mindset."
                 className={styles.text}
@@ -156,7 +150,14 @@ export default function Projects() {
                     <span className={styles.projectNumber}>
                       _ {String(index + 1).padStart(2, "0")} .
                     </span>
-                    <span className={styles.projectTitleRow}>
+                    <span
+                      className={`${styles.projectTitleRow} ${project.isIncoming ? styles.projectTitleRowIncoming : ""}`}
+                    >
+                      {project.isIncoming ? (
+                        <span className={styles.warningCenter} aria-hidden="true">
+                          <span className={styles.warningBadge}>⚠</span>
+                        </span>
+                      ) : null}
                       <span className={styles.projectTitle}>
                         {project.isIncoming ? (
                           <span className={styles.incomingTitle}>
@@ -169,9 +170,6 @@ export default function Projects() {
                           project.title
                         )}
                       </span>
-                      {project.isIncoming ? (
-                        <span className={styles.warningBadge}>⚠</span>
-                      ) : null}
                       <span className={styles.projectArrow} aria-hidden="true">
                         -&gt;
                       </span>
@@ -202,18 +200,11 @@ export default function Projects() {
               <div className={styles.detailMeta}>
                 <p className={styles.detailYear}>{activeProject.year}</p>
                 <h3 className={styles.detailTitle}>{activeProject.title}</h3>
-                <p className={styles.detailDescription}>
-                  {activeProject.description}
-                </p>
+                <p className={styles.detailDescription}>{activeProject.description}</p>
                 {activeProject.isIncoming ? (
-                  <span className={styles.detailLinkMuted}>
-                    ⚠ More incoming
-                  </span>
+                  <span className={styles.detailLinkMuted}>⚠ More incoming</span>
                 ) : (
-                  <Link
-                    href={`/projects/${activeProject.slug}`}
-                    className={styles.detailLink}
-                  >
+                  <Link href={`/projects/${activeProject.slug}`} className={styles.detailLink}>
                     Open case study
                   </Link>
                 )}

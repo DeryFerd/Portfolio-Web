@@ -114,27 +114,49 @@
 }
 
 .postTitleRow {
+  position: relative;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.7rem;
   min-width: 0;
+}
+
+.postTitleRowIncoming {
+  isolation: isolate;
+}
+
+.warningCenter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.55rem;
+  height: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--border));
+  border-radius: 0.42rem;
+  background: color-mix(in srgb, var(--bg-primary) 84%, transparent);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transform: translate(-50%, -52%);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .warningBadge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.2rem;
-  height: 1.2rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--border));
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
   font-size: 0.72rem;
   line-height: 1;
   color: var(--accent);
+  opacity: 0.92;
 }
 
 .postTitle {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-display);
   font-size: clamp(1.45rem, 2.85vw, 2.2rem);
   line-height: 0.98;
@@ -160,6 +182,8 @@
 }
 
 .postArrow {
+  position: relative;
+  z-index: 1;
   flex: none;
   font-size: clamp(0.95rem, 1.2vw, 1.2rem);
   line-height: 1;

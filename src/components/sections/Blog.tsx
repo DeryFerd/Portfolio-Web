@@ -76,26 +76,21 @@ function extractPostSignals(content: string) {
     if (!line) {
       return;
     }
-
     if (line.startsWith("```")) {
       insideCodeBlock = !insideCodeBlock;
       return;
     }
-
     if (insideCodeBlock) {
       return;
     }
-
     if (line.startsWith("## ")) {
       headings.push(line.replace("## ", ""));
       return;
     }
-
     if (/^\d+\.\s/.test(line)) {
       listItems.push(line.replace(/^\d+\.\s/, ""));
       return;
     }
-
     paragraphs.push(line.replace(/\*\*/g, ""));
   });
 
@@ -104,10 +99,7 @@ function extractPostSignals(content: string) {
 
 export default function Blog() {
   const writingEntries = useMemo<WritingEntry[]>(
-    () => [
-      { ...posts[0], isIncoming: false },
-      ...incomingWritings,
-    ],
+    () => [{ ...posts[0], isIncoming: false }, ...incomingWritings],
     [],
   );
   const [activeIndex, setActiveIndex] = useState(0);
@@ -139,14 +131,11 @@ export default function Blog() {
     }
 
     const { headings, listItems, paragraphs } = extractPostSignals(previewPost.content);
-
     const outlineItems = headings.slice(0, 4);
     const takeawayItems =
       listItems.length > 0
         ? listItems.slice(0, 3)
-        : paragraphs
-            .filter((paragraph) => paragraph.length > 64)
-            .slice(1, 4);
+        : paragraphs.filter((paragraph) => paragraph.length > 64).slice(1, 4);
 
     return {
       outlineItems:
@@ -186,10 +175,7 @@ export default function Blog() {
                 </span>
                 <p className={styles.kicker}>Latest writing</p>
               </div>
-              <SectionHeadline
-                text="Writing & Technical Notes."
-                className={styles.title}
-              />
+              <SectionHeadline text="Writing & Technical Notes." className={styles.title} />
               <SectionSubheadline
                 text="Sometimes the best way to learn is to explain. I write about my experiments in AI and the technical hurdles I encounter while building data systems."
                 className={styles.text}
@@ -220,7 +206,14 @@ export default function Blog() {
                     <span className={styles.postNumber}>
                       _ {String(index + 1).padStart(2, "0")} .
                     </span>
-                    <span className={styles.postTitleRow}>
+                    <span
+                      className={`${styles.postTitleRow} ${post.isIncoming ? styles.postTitleRowIncoming : ""}`}
+                    >
+                      {post.isIncoming ? (
+                        <span className={styles.warningCenter} aria-hidden="true">
+                          <span className={styles.warningBadge}>⚠</span>
+                        </span>
+                      ) : null}
                       <span className={styles.postTitle}>
                         {post.isIncoming ? (
                           <span className={styles.incomingTitle}>
@@ -233,9 +226,6 @@ export default function Blog() {
                           post.title
                         )}
                       </span>
-                      {post.isIncoming ? (
-                        <span className={styles.warningBadge}>⚠</span>
-                      ) : null}
                       <span className={styles.postArrow} aria-hidden="true">
                         -&gt;
                       </span>
@@ -270,9 +260,7 @@ export default function Blog() {
                 <h3 className={styles.detailTitle}>{activePost.title}</h3>
                 <p className={styles.detailExcerpt}>{activePost.excerpt}</p>
                 {activePost.isIncoming ? (
-                  <span className={styles.detailLinkMuted}>
-                    ⚠ More incoming
-                  </span>
+                  <span className={styles.detailLinkMuted}>⚠ More incoming</span>
                 ) : (
                   <Link href={`/blog/${activePost.slug}`} className={styles.detailLink}>
                     Read article
