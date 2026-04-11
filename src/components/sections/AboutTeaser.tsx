@@ -19,13 +19,10 @@ const JAKARTA_TIME_FORMATTER = new Intl.DateTimeFormat("en-GB", {
 });
 
 const PARAGRAPH_1 =
-  "Hi, I am Dery. I am an aspiring AI Engineer with a degree in pure mathematics, and I build reliable AI products. My work is backed by a solid foundation in machine learning and deep learning, focusing on making advanced systems easy to trust and operate.";
+  "Hi, I am Dery. I am an aspiring AI Engineer with a degree in pure mathematics, and I build reliable AI products using a solid foundation in machine learning and deep learning. My main focus is on building autonomous AI agents and practical agentic AI workflows. To support this, I regularly develop efficient systems using RAG and model optimization, and I am highly interested in data engineering to ensure everything is robust and production-ready.";
 
 const PARAGRAPH_2 =
-  "I specialize in building autonomous AI agents and practical agentic AI workflows. To make this happen, I regularly develop efficient systems using RAG and model optimization. Because great AI needs strong infrastructure, I am also highly interested in data engineering to keep everything production-ready.";
-
-const PARAGRAPH_3 =
-  "Beyond shipping code, I also work as a curriculum developer, helping others learn these technologies while staying close to the realities of production AI.";
+  "Beyond shipping code, I also work as a curriculum developer to help others learn these technologies. Whether I am building scalable infrastructure or designing learning materials, my goal is always to make advanced AI systems easy to trust, operate, and deploy in the real world.";
 
 const PROFILE_IMAGE = "/images/dery-photo.jpg";
 const CV_DOWNLOAD_PATH = "/documents/dery-ferdika-cv.pdf";
@@ -153,15 +150,6 @@ export default function AboutTeaser() {
                 trigger={isVisible}
                 speed={6}
                 delay={600}
-                className={styles.scrambleBlock}
-              />
-            </p>
-            <p className={styles.text}>
-              <TextScramble
-                text={PARAGRAPH_3}
-                trigger={isVisible}
-                speed={6}
-                delay={900}
                 className={styles.scrambleBlock}
               />
             </p>
