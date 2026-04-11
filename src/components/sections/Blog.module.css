@@ -135,7 +135,7 @@
   align-items: center;
   justify-content: center;
   opacity: 0.62;
-  transform: translate(-50%, -48%);
+  transform: translate(-50%, -38%);
   z-index: 3;
   pointer-events: none;
   transition:
@@ -227,7 +227,7 @@
 .postTrigger:hover .postTitleRowIncoming .warningCenter,
 .postTrigger:focus-visible .postTitleRowIncoming .warningCenter {
   opacity: 0.98;
-  transform: translate(-50%, -48%) scale(1.08);
+  transform: translate(-50%, -38%) scale(1.08);
 }
 
 .postMeta {
