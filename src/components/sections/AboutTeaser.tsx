@@ -19,10 +19,10 @@ const JAKARTA_TIME_FORMATTER = new Intl.DateTimeFormat("en-GB", {
 });
 
 const PARAGRAPH_1 =
-  "Hi, I am Dery. I am an aspiring AI Engineer with a degree in pure mathematics, and I build reliable AI products using a solid foundation in machine learning and deep learning. My main focus is on building autonomous AI agents and practical agentic AI workflows. To support this, I regularly develop efficient systems using RAG and model optimization, and I am highly interested in data engineering to ensure everything is robust and production-ready.";
+  "Hi, I am Dery. As a pure math graduate and aspiring AI Engineer, I build reliable products backed by machine learning and deep learning. I specialize in autonomous AI agents, agentic AI workflows, and RAG systems. I am also highly interested in data engineering to keep my builds production-ready.";
 
 const PARAGRAPH_2 =
-  "Beyond shipping code, I also work as a curriculum developer to help others learn these technologies. Whether I am building scalable infrastructure or designing learning materials, my goal is always to make advanced AI systems easy to trust, operate, and deploy in the real world.";
+  "Beyond shipping code, I work as a curriculum developer to help others master these tools. My goal is always to make advanced AI easy to trust and use in the real world.";
 
 const PROFILE_IMAGE = "/images/dery-photo.jpg";
 const CV_DOWNLOAD_PATH = "/documents/dery-ferdika-cv.pdf";
