@@ -11,9 +11,9 @@ export default function IncomingLabel({ text = "More Incoming" }: IncomingLabelP
     <span className={styles.label}>
       <span>{text}</span>
       <span className={styles.dots} aria-hidden="true">
-        <span className={styles.dot} />
-        <span className={styles.dot} />
-        <span className={styles.dot} />
+        <span className={styles.dot}>.</span>
+        <span className={styles.dot}>.</span>
+        <span className={styles.dot}>.</span>
       </span>
     </span>
   );
