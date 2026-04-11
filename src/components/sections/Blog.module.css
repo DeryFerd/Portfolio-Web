@@ -120,6 +120,20 @@
   min-width: 0;
 }
 
+.warningBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--border));
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  font-size: 0.72rem;
+  line-height: 1;
+  color: var(--accent);
+}
+
 .postTitle {
   font-family: var(--font-display);
   font-size: clamp(1.45rem, 2.85vw, 2.2rem);
@@ -229,6 +243,19 @@
 
 .detailLink {
   font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.detailLinkMuted {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--border));
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border-radius: 999px;
+  font-size: 0.74rem;
   font-weight: 600;
   color: var(--accent);
 }

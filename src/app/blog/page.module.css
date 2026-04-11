@@ -107,6 +107,10 @@
   border-color: var(--archive-card-border-hover);
 }
 
+.cardIncoming {
+  border-style: dashed;
+}
+
 .imageWrapper {
   display: block;
   width: 100%;
@@ -174,9 +178,26 @@
   letter-spacing: -0.05em;
   color: var(--text-primary);
   transition: color var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
 }
 
 .cardTitle:hover {
+  color: var(--accent);
+}
+
+.warningBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--archive-card-border));
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  font-size: 0.72rem;
+  line-height: 1;
   color: var(--accent);
 }
 
@@ -211,4 +232,21 @@
 .readMore:hover {
   color: var(--text-primary);
   border-color: var(--archive-card-border-hover);
+}
+
+.readMoreMuted {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  padding: 0.6rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--archive-card-border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: auto;
 }

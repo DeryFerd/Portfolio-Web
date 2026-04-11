@@ -44,9 +44,6 @@ const projects: ArchiveProject[] = [
   },
   createIncomingProject("image-classifier"),
   createIncomingProject("recommender-system"),
-  createIncomingProject("sentiment-analysis"),
-  createIncomingProject("object-detection"),
-  createIncomingProject("time-series"),
 ];
 
 export default function ProjectsPage() {

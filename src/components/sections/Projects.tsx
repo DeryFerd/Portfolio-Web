@@ -95,9 +95,6 @@ const projects: ProjectEntry[] = [
   },
   createIncomingProject("image-classifier", "2026"),
   createIncomingProject("recommender-system", "2026"),
-  createIncomingProject("sentiment-analysis", "2026"),
-  createIncomingProject("object-detection", "2026"),
-  createIncomingProject("time-series", "2026"),
 ];
 
 export default function Projects() {

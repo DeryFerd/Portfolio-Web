@@ -9,6 +9,61 @@ import QuickPreviewDialog from "@/components/ui/QuickPreviewDialog";
 import { posts } from "@/lib/blogData";
 import styles from "./Blog.module.css";
 
+type WritingEntry = {
+  title: string;
+  excerpt: string;
+  date: string;
+  slug: string;
+  tags: string[];
+  image: string;
+  content: string;
+  isIncoming: boolean;
+};
+
+const incomingWritingImage =
+  "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=960&h=640&fit=crop";
+
+const incomingWritings: WritingEntry[] = [
+  {
+    title: "More Incoming",
+    excerpt:
+      "⚠ This note slot is reserved for the next paper breakdown. A practical summary will be published soon.",
+    date: "2026-04",
+    slug: "incoming-note-01",
+    tags: ["Incoming", "Paper Notes", "In Progress"],
+    image: incomingWritingImage,
+    content: `
+## Status
+This writing slot is still in progress.
+
+## Planned structure
+1. Paper in 60 seconds
+2. Why it matters for product decisions
+3. Practical takeaways for implementation
+    `,
+    isIncoming: true,
+  },
+  {
+    title: "More Incoming",
+    excerpt:
+      "⚠ Another writing slot is intentionally kept open while the next technical note is being prepared.",
+    date: "2026-04",
+    slug: "incoming-note-02",
+    tags: ["Incoming", "Technical Notes", "Roadmap"],
+    image: incomingWritingImage,
+    content: `
+## Status
+Drafting in progress.
+
+## Planned structure
+1. Core concept recap
+2. Tradeoffs and limitations
+3. What to test next
+    `,
+    isIncoming: true,
+  },
+];
+
 function extractPostSignals(content: string) {
   const headings: string[] = [];
   const listItems: string[] = [];
@@ -48,13 +103,41 @@ function extractPostSignals(content: string) {
 }
 
 export default function Blog() {
+  const writingEntries = useMemo<WritingEntry[]>(
+    () => [
+      { ...posts[0], isIncoming: false },
+      ...incomingWritings,
+    ],
+    [],
+  );
   const [activeIndex, setActiveIndex] = useState(0);
   const [previewSlug, setPreviewSlug] = useState<string | null>(null);
-  const activePost = posts[activeIndex];
-  const previewPost = posts.find((post) => post.slug === previewSlug) ?? activePost;
+  const activePost = writingEntries[activeIndex];
+  const previewPost =
+    writingEntries.find((post) => post.slug === previewSlug) ?? activePost;
   const isPreviewOpen = previewSlug !== null;
 
   const previewContent = useMemo(() => {
+    if (previewPost.isIncoming) {
+      return {
+        outlineItems: [
+          "Paper in 60 seconds",
+          "Why it matters in product context",
+          "What to test in implementation",
+        ],
+        takeawayItems: [
+          "Keeps the writing section honest without pretending unfinished notes are published.",
+          "Signals the direction of upcoming content so visitors know what is coming next.",
+          "Maintains structure consistency while preserving quality for final write-ups.",
+        ],
+        topicCards: previewPost.tags.map((tag, index) => ({
+          index: String(index + 1).padStart(2, "0"),
+          meta: "Status",
+          title: tag,
+        })),
+      };
+    }
+
     const { headings, listItems, paragraphs } = extractPostSignals(previewPost.content);
 
     const outlineItems = headings.slice(0, 4);
@@ -88,7 +171,7 @@ export default function Blog() {
 
   const handleOpenPreview = (index: number) => {
     setActiveIndex(index);
-    setPreviewSlug(posts[index]?.slug ?? null);
+    setPreviewSlug(writingEntries[index]?.slug ?? null);
   };
 
   return (
@@ -119,7 +202,7 @@ export default function Blog() {
 
           <div className={styles.contentGrid}>
             <div className={styles.postList}>
-              {posts.map((post, index) => (
+              {writingEntries.map((post, index) => (
                 <article
                   key={post.slug}
                   className={`${styles.postItem} ${index === activeIndex ? styles.postItemActive : ""}`}
@@ -139,12 +222,17 @@ export default function Blog() {
                     </span>
                     <span className={styles.postTitleRow}>
                       <span className={styles.postTitle}>{post.title}</span>
+                      {post.isIncoming ? (
+                        <span className={styles.warningBadge}>⚠</span>
+                      ) : null}
                       <span className={styles.postArrow} aria-hidden="true">
                         -&gt;
                       </span>
                     </span>
                     <span className={styles.postMeta}>
-                      {post.date} / {post.tags.join(" / ")}
+                      {post.isIncoming
+                        ? `⚠ Incoming / ${post.tags.slice(0, 2).join(" / ")}`
+                        : `${post.date} / ${post.tags.join(" / ")}`}
                     </span>
                   </button>
                 </article>
@@ -153,7 +241,7 @@ export default function Blog() {
 
             <aside className={styles.detailPanel}>
               <div className={styles.detailStage}>
-                {posts.map((post, index) => (
+                {writingEntries.map((post, index) => (
                   <Image
                     key={post.slug}
                     src={post.image}
@@ -170,9 +258,13 @@ export default function Blog() {
                 <p className={styles.detailDate}>{activePost.date}</p>
                 <h3 className={styles.detailTitle}>{activePost.title}</h3>
                 <p className={styles.detailExcerpt}>{activePost.excerpt}</p>
-                <Link href={`/blog/${activePost.slug}`} className={styles.detailLink}>
-                  Read article
-                </Link>
+                {activePost.isIncoming ? (
+                  <span className={styles.detailLinkMuted}>⚠ More incoming</span>
+                ) : (
+                  <Link href={`/blog/${activePost.slug}`} className={styles.detailLink}>
+                    Read article
+                  </Link>
+                )}
               </div>
             </aside>
           </div>
@@ -183,16 +275,16 @@ export default function Blog() {
         open={isPreviewOpen}
         onClose={() => setPreviewSlug(null)}
         modalLabel={`${previewPost.title} writing preview`}
-        category="Writing / Notes in Public"
+        category={previewPost.isIncoming ? "Writing / Incoming Slot" : "Writing / Notes in Public"}
         year={previewPost.date.slice(0, 4)}
-        kindLabel="Reading note"
+        kindLabel={previewPost.isIncoming ? "Incoming note" : "Reading note"}
         title={previewPost.title}
         summary={previewPost.excerpt}
         image={previewPost.image}
         tags={previewPost.tags}
         primaryAction={{
-          href: `/blog/${previewPost.slug}`,
-          label: "Read article",
+          href: previewPost.isIncoming ? "/blog" : `/blog/${previewPost.slug}`,
+          label: previewPost.isIncoming ? "View archive status" : "Read article",
         }}
         secondaryAction={{
           href: "/blog",

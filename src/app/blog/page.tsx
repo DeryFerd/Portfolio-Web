@@ -10,6 +10,43 @@ import { ShiningText } from "@/components/ui/shining-text";
 import { posts } from "@/lib/blogData";
 import styles from "./page.module.css";
 
+type ArchivePost = {
+  title: string;
+  excerpt: string;
+  date: string;
+  slug: string;
+  tags: string[];
+  image: string;
+  isIncoming: boolean;
+};
+
+const incomingPostImage =
+  "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=600&h=400&fit=crop";
+
+const archivePosts: ArchivePost[] = [
+  { ...posts[0], isIncoming: false },
+  {
+    title: "More Incoming",
+    excerpt:
+      "⚠ This slot is reserved for an upcoming paper note. A concise technical breakdown will be published soon.",
+    date: "2026-04",
+    slug: "incoming-note-01",
+    tags: ["Incoming", "Paper Notes", "In Progress"],
+    image: incomingPostImage,
+    isIncoming: true,
+  },
+  {
+    title: "More Incoming",
+    excerpt:
+      "⚠ Another writing slot is intentionally kept open while the next research summary is being prepared.",
+    date: "2026-04",
+    slug: "incoming-note-02",
+    tags: ["Incoming", "Technical Notes", "Roadmap"],
+    image: incomingPostImage,
+    isIncoming: true,
+  },
+];
+
 export default function BlogPage() {
   const pageRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -72,9 +109,15 @@ export default function BlogPage() {
         </p>
 
         <div className={styles.grid}>
-          {posts.map((post) => (
-            <article key={post.slug} className={styles.card}>
-              <Link href={`/blog/${post.slug}`} className={styles.imageWrapper}>
+          {archivePosts.map((post) => (
+            <article
+              key={post.slug}
+              className={`${styles.card} ${post.isIncoming ? styles.cardIncoming : ""}`}
+            >
+              <Link
+                href={post.isIncoming ? "/blog" : `/blog/${post.slug}`}
+                className={styles.imageWrapper}
+              >
                 <Image
                   src={post.image}
                   alt={post.title}
@@ -95,13 +138,24 @@ export default function BlogPage() {
                     ))}
                   </div>
                 </div>
-                <Link href={`/blog/${post.slug}`}>
-                  <h2 className={styles.cardTitle}>{post.title}</h2>
-                </Link>
+                {post.isIncoming ? (
+                  <h2 className={styles.cardTitle}>
+                    {post.title}
+                    <span className={styles.warningBadge}>⚠</span>
+                  </h2>
+                ) : (
+                  <Link href={`/blog/${post.slug}`}>
+                    <h2 className={styles.cardTitle}>{post.title}</h2>
+                  </Link>
+                )}
                 <p className={styles.excerpt}>{post.excerpt}</p>
-                <Link href={`/blog/${post.slug}`} className={styles.readMore}>
-                  Read More &rarr;
-                </Link>
+                {post.isIncoming ? (
+                  <span className={styles.readMoreMuted}>⚠ More incoming</span>
+                ) : (
+                  <Link href={`/blog/${post.slug}`} className={styles.readMore}>
+                    Read More &rarr;
+                  </Link>
+                )}
               </div>
             </article>
           ))}
