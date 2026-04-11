@@ -107,6 +107,10 @@
   transform: translateY(-6px);
 }
 
+.cardIncoming {
+  border-style: dashed;
+}
+
 .imageWrapper {
   display: block;
   width: 100%;
@@ -133,6 +137,23 @@
   font-size: clamp(1.4rem, 2.2vw, 1.9rem);
   line-height: 0.98;
   letter-spacing: -0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.warningBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--archive-card-border));
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  font-size: 0.74rem;
+  line-height: 1;
+  color: var(--accent);
 }
 
 .cardDescription {
@@ -184,9 +205,23 @@
   border-color: var(--archive-card-border-hover);
 }
 
+.cardLinkMuted {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.6rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--archive-card-border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
   }
 }
-

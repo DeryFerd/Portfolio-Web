@@ -9,50 +9,45 @@ import TypewriterText from "@/components/ui/TypewriterText";
 import { ShiningText } from "@/components/ui/shining-text";
 import styles from "./page.module.css";
 
-const projects = [
+type ArchiveProject = {
+  title: string;
+  description: string;
+  tags: string[];
+  slug: string;
+  image: string;
+  isIncoming: boolean;
+};
+
+const incomingImage =
+  "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop";
+
+function createIncomingProject(slug: string): ArchiveProject {
+  return {
+    title: "More Incoming",
+    description:
+      "⚠ This slot is reserved for the next case study. A full breakdown will be published once the build is ready.",
+    tags: ["Incoming", "In Progress", "Roadmap"],
+    slug,
+    image: incomingImage,
+    isIncoming: true,
+  };
+}
+
+const projects: ArchiveProject[] = [
   {
     title: "AI Chatbot",
     description: "A conversational AI built with GPT models for customer support automation.",
     tags: ["NLP", "GPT", "FastAPI"],
     slug: "ai-chatbot",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
+    isIncoming: false,
   },
-  {
-    title: "Image Classifier",
-    description: "Deep learning model for image classification using CNN architecture.",
-    tags: ["Computer Vision", "PyTorch", "ResNet"],
-    slug: "image-classifier",
-    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
-  },
-  {
-    title: "Recommender System",
-    description: "Collaborative filtering recommendation engine for e-commerce platforms.",
-    tags: ["ML", "Recommendation", "Python"],
-    slug: "recommender-system",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-  },
-  {
-    title: "Sentiment Analysis",
-    description: "Real-time sentiment analysis for social media monitoring.",
-    tags: ["NLP", "BERT", "Streamlit"],
-    slug: "sentiment-analysis",
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop",
-  },
-  {
-    title: "Object Detection",
-    description: "YOLO-based object detection for autonomous vehicles.",
-    tags: ["Computer Vision", "YOLO", "OpenCV"],
-    slug: "object-detection",
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=400&fit=crop",
-  },
-  {
-    title: "Time Series Forecasting",
-    description: "LSTM model for stock price prediction and financial forecasting.",
-    tags: ["Deep Learning", "LSTM", "Finance"],
-    slug: "time-series",
-    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=400&fit=crop",
-  },
-] as const;
+  createIncomingProject("image-classifier"),
+  createIncomingProject("recommender-system"),
+  createIncomingProject("sentiment-analysis"),
+  createIncomingProject("object-detection"),
+  createIncomingProject("time-series"),
+];
 
 export default function ProjectsPage() {
   const pageRef = useRef<HTMLDivElement>(null);
@@ -116,8 +111,14 @@ export default function ProjectsPage() {
         </p>
         <div className={styles.grid}>
           {projects.map((project) => (
-            <article key={project.slug} className={styles.card}>
-              <Link href={`/projects/${project.slug}`} className={styles.imageWrapper}>
+            <article
+              key={project.slug}
+              className={`${styles.card} ${project.isIncoming ? styles.cardIncoming : ""}`}
+            >
+              <Link
+                href={project.isIncoming ? "/projects" : `/projects/${project.slug}`}
+                className={styles.imageWrapper}
+              >
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -127,7 +128,12 @@ export default function ProjectsPage() {
                   unoptimized
                 />
               </Link>
-              <h2 className={styles.cardTitle}>{project.title}</h2>
+              <h2 className={styles.cardTitle}>
+                {project.title}
+                {project.isIncoming ? (
+                  <span className={styles.warningBadge}>⚠</span>
+                ) : null}
+              </h2>
               <p className={styles.cardDescription}>{project.description}</p>
               <div className={styles.tags}>
                 {project.tags.map((tag) => (
@@ -136,9 +142,13 @@ export default function ProjectsPage() {
                   </span>
                 ))}
               </div>
-              <Link href={`/projects/${project.slug}`} className={styles.cardLink}>
-                View Details &rarr;
-              </Link>
+              {project.isIncoming ? (
+                <span className={styles.cardLinkMuted}>⚠ More incoming</span>
+              ) : (
+                <Link href={`/projects/${project.slug}`} className={styles.cardLink}>
+                  View Details &rarr;
+                </Link>
+              )}
             </article>
           ))}
         </div>

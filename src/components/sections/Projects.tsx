@@ -8,7 +8,60 @@ import SectionSubheadline from "@/components/ui/SectionSubheadline";
 import QuickPreviewDialog from "@/components/ui/QuickPreviewDialog";
 import styles from "./Projects.module.css";
 
-const projects = [
+type ProjectEntry = {
+  title: string;
+  description: string;
+  tags: string[];
+  slug: string;
+  year: string;
+  category: string;
+  image: string;
+  buildScope: string[];
+  outcomes: string[];
+  stackCards: Array<{ index: string; meta: string; title: string }>;
+  isIncoming: boolean;
+};
+
+const incomingImage =
+  "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&h=720&fit=crop";
+
+function createIncomingProject(
+  slug: string,
+  year: string,
+): ProjectEntry {
+  return {
+    title: "More Incoming",
+    description:
+      "⚠ This slot is intentionally reserved for the next case study. A deeper build update will be published here soon.",
+    tags: ["Incoming", "In Progress", "Roadmap"],
+    slug,
+    year,
+    category: "Archive Slot",
+    image: incomingImage,
+    buildScope: [
+      "Define the production problem and measurable success criteria before publishing.",
+      "Document architecture and delivery choices once implementation reaches a stable milestone.",
+      "Prepare reproducible evidence: stack decisions, constraints, and tradeoffs.",
+      "Ship a complete write-up when the build is strong enough to review publicly.",
+    ],
+    outcomes: [
+      "Keeps the archive honest by showing progress without inflating unfinished work.",
+      "Signals upcoming case studies while preserving quality standards for published projects.",
+      "Makes room for stronger documentation instead of lightweight placeholder claims.",
+    ],
+    stackCards: [
+      { index: "01", meta: "Status", title: "⚠ More Incoming" },
+      { index: "02", meta: "Stage", title: "Research" },
+      { index: "03", meta: "Stage", title: "Build" },
+      { index: "04", meta: "Stage", title: "Validation" },
+      { index: "05", meta: "Stage", title: "Documentation" },
+      { index: "06", meta: "Release", title: "Case study pending" },
+    ],
+    isIncoming: true,
+  };
+}
+
+const projects: ProjectEntry[] = [
   {
     title: "AI Chatbot",
     description:
@@ -38,158 +91,14 @@ const projects = [
       { index: "05", meta: "Ops", title: "Prompt eval loops" },
       { index: "06", meta: "Delivery", title: "Support automation" },
     ],
+    isIncoming: false,
   },
-  {
-    title: "Image Classifier",
-    description:
-      "A deep learning workflow for image classification using CNN-based architecture and fast inference-ready outputs.",
-    tags: ["Computer Vision", "PyTorch", "ResNet", "Inference"],
-    slug: "image-classifier",
-    year: "2025",
-    category: "Computer Vision",
-    image:
-      "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=900&h=720&fit=crop",
-    buildScope: [
-      "Dataset preparation, augmentation, and training loops designed to keep the model stable across classes.",
-      "CNN-based experimentation around accuracy, inference speed, and export readiness for downstream use.",
-      "Inference packaging so uploaded images can be turned into clear predictions instead of raw logits.",
-      "Evaluation views that make confidence, error cases, and class balance easier to explain.",
-    ],
-    outcomes: [
-      "Creates a more useful computer vision showcase than a notebook because prediction and interface are shipped together.",
-      "Demonstrates the translation from model experimentation into an input-output experience that people can actually try.",
-      "Keeps the system readable by pairing performance work with visible inference behavior.",
-    ],
-    stackCards: [
-      { index: "01", meta: "Model", title: "ResNet" },
-      { index: "02", meta: "Training", title: "PyTorch" },
-      { index: "03", meta: "Data", title: "Augmentation" },
-      { index: "04", meta: "Inference", title: "Prediction service" },
-      { index: "05", meta: "Interface", title: "Upload workflow" },
-      { index: "06", meta: "Review", title: "Confidence outputs" },
-    ],
-  },
-  {
-    title: "Recommender System",
-    description:
-      "A collaborative filtering engine tuned for product discovery, personalization, and real recommendation workflows.",
-    tags: ["ML", "Recommendation", "Python", "Personalization"],
-    slug: "recommender-system",
-    year: "2025",
-    category: "Applied Machine Learning",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&h=720&fit=crop",
-    buildScope: [
-      "Recommendation logic around collaborative filtering and ranking behavior for product discovery use cases.",
-      "Interaction modeling from user history so the engine can move beyond static catalog suggestions.",
-      "Evaluation passes around relevance and recommendation quality before exposing anything in the interface.",
-      "A delivery flow that makes suggestions readable as a product pattern instead of a notebook metric.",
-    ],
-    outcomes: [
-      "Frames personalization as a workflow problem, not just a matrix factorization exercise.",
-      "Makes the recommendation engine easier to evaluate because the experience is tied back to product behavior.",
-      "Shows how data, ranking logic, and interface design connect into one decision system.",
-    ],
-    stackCards: [
-      { index: "01", meta: "ML", title: "Collaborative filtering" },
-      { index: "02", meta: "Ranking", title: "Recommendation logic" },
-      { index: "03", meta: "Data", title: "Interaction history" },
-      { index: "04", meta: "Tooling", title: "Python" },
-      { index: "05", meta: "Product", title: "Discovery flows" },
-      { index: "06", meta: "Signal", title: "Personalization" },
-    ],
-  },
-  {
-    title: "Sentiment Analysis",
-    description:
-      "A real-time sentiment monitor for social data, designed to surface trends and response signals with clarity.",
-    tags: ["NLP", "BERT", "Streamlit", "Monitoring"],
-    slug: "sentiment-analysis",
-    year: "2024",
-    category: "Language Intelligence",
-    image:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&h=720&fit=crop",
-    buildScope: [
-      "Streaming-style sentiment classification across social or public text sources to detect tone shifts quickly.",
-      "Model integration that keeps the classification layer understandable rather than black-boxed.",
-      "Dashboard views that translate sentiment outputs into readable movement, trends, and alerts.",
-      "A feedback loop where outputs can be reviewed in context, not only as aggregated scores.",
-    ],
-    outcomes: [
-      "Useful for showing how NLP systems can support monitoring and response, not only offline analysis.",
-      "Brings visibility to trend movement so the model output feels operational instead of abstract.",
-      "Pairs language modeling with a simple presentation layer that keeps the signal legible.",
-    ],
-    stackCards: [
-      { index: "01", meta: "NLP", title: "BERT" },
-      { index: "02", meta: "Interface", title: "Streamlit" },
-      { index: "03", meta: "Signal", title: "Sentiment scoring" },
-      { index: "04", meta: "Monitoring", title: "Trend views" },
-      { index: "05", meta: "Input", title: "Social text" },
-      { index: "06", meta: "Delivery", title: "Real-time feedback" },
-    ],
-  },
-  {
-    title: "Object Detection",
-    description:
-      "A YOLO-based detection pipeline oriented around real-world imagery, monitoring, and applied computer vision.",
-    tags: ["Computer Vision", "YOLO", "OpenCV", "Detection"],
-    slug: "object-detection",
-    year: "2024",
-    category: "Computer Vision",
-    image:
-      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=900&h=720&fit=crop",
-    buildScope: [
-      "Real-world detection flow for multiple objects across image frames rather than synthetic toy examples.",
-      "Bounding-box generation and class labeling with a pipeline designed for readable monitoring outputs.",
-      "Inference handling built around speed, practical imagery, and visual review of results.",
-      "A delivery layer that turns object detection into a usable interface instead of a terminal-only run.",
-    ],
-    outcomes: [
-      "Shows the step from model output into monitoring-ready visualization, which is where many vision demos stop.",
-      "Keeps the result practical by focusing on image review, detection clarity, and inference responsiveness.",
-      "Connects model performance with a presentation format that makes outcomes inspectable.",
-    ],
-    stackCards: [
-      { index: "01", meta: "Model", title: "YOLO" },
-      { index: "02", meta: "Vision", title: "OpenCV" },
-      { index: "03", meta: "Output", title: "Bounding boxes" },
-      { index: "04", meta: "Inference", title: "Frame processing" },
-      { index: "05", meta: "Review", title: "Visual detection QA" },
-      { index: "06", meta: "Use case", title: "Applied monitoring" },
-    ],
-  },
-  {
-    title: "Time Series Forecasting",
-    description:
-      "An LSTM forecasting setup for financial signals, with a focus on model behavior, trend reading, and deployment readiness.",
-    tags: ["Deep Learning", "LSTM", "Finance", "Forecasting"],
-    slug: "time-series",
-    year: "2024",
-    category: "Forecasting Systems",
-    image:
-      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&h=720&fit=crop",
-    buildScope: [
-      "Sequence modeling for financial-style signals with attention to trend windows and data preparation.",
-      "LSTM experimentation around stability, drift, and readable output behavior across time windows.",
-      "Forecast views that make projection behavior easier to inspect instead of burying it in metrics.",
-      "A setup designed to bridge research iteration and deployment-minded presentation.",
-    ],
-    outcomes: [
-      "Useful as a forecasting case study because it surfaces model behavior, not just future values.",
-      "Makes sequence prediction more legible by pairing charts, context, and trend interpretation together.",
-      "Shows how analytical modeling can be delivered in a way that feels closer to a usable tool.",
-    ],
-    stackCards: [
-      { index: "01", meta: "Model", title: "LSTM" },
-      { index: "02", meta: "Data", title: "Time windows" },
-      { index: "03", meta: "Domain", title: "Finance" },
-      { index: "04", meta: "Evaluation", title: "Trend reading" },
-      { index: "05", meta: "Interface", title: "Forecast charts" },
-      { index: "06", meta: "Delivery", title: "Deployment readiness" },
-    ],
-  },
-] as const;
+  createIncomingProject("image-classifier", "2026"),
+  createIncomingProject("recommender-system", "2026"),
+  createIncomingProject("sentiment-analysis", "2026"),
+  createIncomingProject("object-detection", "2026"),
+  createIncomingProject("time-series", "2026"),
+];
 
 export default function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -252,6 +161,9 @@ export default function Projects() {
                     </span>
                     <span className={styles.projectTitleRow}>
                       <span className={styles.projectTitle}>{project.title}</span>
+                      {project.isIncoming ? (
+                        <span className={styles.warningBadge}>⚠</span>
+                      ) : null}
                       <span className={styles.projectArrow} aria-hidden="true">
                         -&gt;
                       </span>
@@ -285,12 +197,16 @@ export default function Projects() {
                 <p className={styles.detailDescription}>
                   {activeProject.description}
                 </p>
-                <Link
-                  href={`/projects/${activeProject.slug}`}
-                  className={styles.detailLink}
-                >
-                  Open case study
-                </Link>
+                {activeProject.isIncoming ? (
+                  <span className={styles.detailLinkMuted}>⚠ More incoming</span>
+                ) : (
+                  <Link
+                    href={`/projects/${activeProject.slug}`}
+                    className={styles.detailLink}
+                  >
+                    Open case study
+                  </Link>
+                )}
               </div>
             </aside>
           </div>

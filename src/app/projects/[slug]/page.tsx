@@ -134,7 +134,27 @@ export default async function ProjectDetail({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = projectData[slug] || projectData["ai-chatbot"];
+  const isIncomingSlug = slug !== "ai-chatbot";
+  const project = isIncomingSlug
+    ? {
+        title: "More Incoming",
+        description:
+          "⚠ This project slot is still in progress. A complete technical breakdown will be published once the implementation and validation are ready.",
+        tags: ["Incoming", "In Progress", "Roadmap"],
+        image:
+          "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=600&fit=crop",
+        content: `
+## Status
+This page is intentionally reserved for an upcoming case study.
+
+## What will be added
+- Problem framing and production constraints
+- Architecture decisions and tradeoffs
+- Implementation details with stack notes
+- Outcome metrics and next iteration plan
+    `,
+      }
+    : projectData["ai-chatbot"];
 
   return (
     <div className={styles.page}>
@@ -188,18 +208,24 @@ export default async function ProjectDetail({
           })}
         </div>
 
-        <div className={styles.links}>
-          {project.github && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer" className={styles.link}>
-              GitHub &rarr;
-            </a>
-          )}
-          {project.demo && (
-            <a href={project.demo} target="_blank" rel="noopener noreferrer" className={styles.link}>
-              Live Demo &rarr;
-            </a>
-          )}
-        </div>
+        {isIncomingSlug ? (
+          <div className={styles.links}>
+            <span className={styles.linkMuted}>⚠ More incoming</span>
+          </div>
+        ) : (
+          <div className={styles.links}>
+            {project.github && (
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                GitHub &rarr;
+              </a>
+            )}
+            {project.demo && (
+              <a href={project.demo} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                Live Demo &rarr;
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

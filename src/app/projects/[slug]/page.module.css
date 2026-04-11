@@ -216,6 +216,20 @@
   box-shadow: none;
 }
 
+.linkMuted {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--detail-chip-border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
 @media (max-width: 768px) {
   .backNav {
     gap: var(--spacing-xs);
