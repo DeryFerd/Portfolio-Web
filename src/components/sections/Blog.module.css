@@ -129,29 +129,32 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 2.1rem;
-  height: 1.6rem;
+  width: auto;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--border));
-  border-radius: 0.55rem;
-  background: color-mix(in srgb, var(--bg-primary) 84%, transparent);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  opacity: 0.58;
   transform: translate(-50%, -50%);
-  z-index: 0;
+  z-index: 3;
   pointer-events: none;
+  transition:
+    opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .warningBadge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.98rem;
+  font-size: 1.38rem;
+  font-weight: 900;
   line-height: 1;
   color: var(--accent);
-  opacity: 0.92;
+  opacity: 0.94;
+  text-shadow:
+    0 0 0.5px currentColor,
+    0 0 8px color-mix(in srgb, var(--accent) 36%, transparent);
 }
 
 .postTitle {
@@ -213,6 +216,18 @@
 .postTrigger:focus-visible .postArrow {
   opacity: 1;
   transform: translateY(0);
+}
+
+.postTrigger:hover .postTitleRowIncoming .postTitle,
+.postTrigger:focus-visible .postTitleRowIncoming .postTitle {
+  filter: blur(1.35px);
+  opacity: 0.78;
+}
+
+.postTrigger:hover .postTitleRowIncoming .warningCenter,
+.postTrigger:focus-visible .postTitleRowIncoming .warningCenter {
+  opacity: 0.98;
+  transform: translate(-50%, -50%) scale(1.08);
 }
 
 .postMeta {
@@ -352,6 +367,7 @@
   .postItem,
   .postTitle,
   .postArrow,
+  .warningCenter,
   .detailImage {
     transition: none;
   }
