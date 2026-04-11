@@ -95,15 +95,18 @@ const projects: ProjectEntry[] = [
 ];
 
 export default function Projects() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [previewSlug, setPreviewSlug] = useState<string | null>(null);
-  const activeProject = projects[activeIndex];
+  const detailIndex = hoveredIndex ?? selectedIndex;
+  const activeProject = projects[detailIndex];
   const previewProject =
     projects.find((project) => project.slug === previewSlug) ?? activeProject;
   const isPreviewOpen = previewSlug !== null;
 
   const handleOpenPreview = (index: number) => {
-    setActiveIndex(index);
+    setSelectedIndex(index);
+    setHoveredIndex(index);
     setPreviewSlug(projects[index]?.slug ?? null);
   };
 
@@ -135,13 +138,15 @@ export default function Projects() {
               {projects.map((project, index) => (
                 <article
                   key={project.slug}
-                  className={`${styles.projectItem} ${index === activeIndex ? styles.projectItemActive : ""}`}
+                  className={`${styles.projectItem} ${index === hoveredIndex ? styles.projectItemActive : ""}`}
                 >
                   <button
                     type="button"
-                    className={`${styles.projectTrigger} ${index === activeIndex ? styles.projectTriggerActive : ""}`}
-                    onMouseEnter={() => setActiveIndex(index)}
-                    onFocus={() => setActiveIndex(index)}
+                    className={`${styles.projectTrigger} ${index === hoveredIndex ? styles.projectTriggerActive : ""}`}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onFocus={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    onBlur={() => setHoveredIndex(null)}
                     onClick={() => handleOpenPreview(index)}
                     aria-haspopup="dialog"
                     aria-expanded={previewSlug === project.slug}
@@ -188,11 +193,11 @@ export default function Projects() {
                   <Image
                     key={project.slug}
                     src={project.image}
-                    alt={index === activeIndex ? project.title : ""}
+                    alt={index === detailIndex ? project.title : ""}
                     width={900}
                     height={720}
-                    className={`${styles.detailImage} ${index === activeIndex ? styles.detailImageActive : ""}`}
-                    aria-hidden={index !== activeIndex}
+                    className={`${styles.detailImage} ${index === detailIndex ? styles.detailImageActive : ""}`}
+                    aria-hidden={index !== detailIndex}
                     unoptimized
                   />
                 ))}

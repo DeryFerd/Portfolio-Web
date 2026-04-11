@@ -98,13 +98,15 @@ function extractPostSignals(content: string) {
 }
 
 export default function Blog() {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const writingEntries = useMemo<WritingEntry[]>(
     () => [{ ...posts[0], isIncoming: false }, ...incomingWritings],
     [],
   );
-  const [activeIndex, setActiveIndex] = useState(0);
   const [previewSlug, setPreviewSlug] = useState<string | null>(null);
-  const activePost = writingEntries[activeIndex];
+  const detailIndex = hoveredIndex ?? selectedIndex;
+  const activePost = writingEntries[detailIndex];
   const previewPost =
     writingEntries.find((post) => post.slug === previewSlug) ?? activePost;
   const isPreviewOpen = previewSlug !== null;
@@ -159,7 +161,8 @@ export default function Blog() {
   }, [previewPost]);
 
   const handleOpenPreview = (index: number) => {
-    setActiveIndex(index);
+    setSelectedIndex(index);
+    setHoveredIndex(index);
     setPreviewSlug(writingEntries[index]?.slug ?? null);
   };
 
@@ -191,13 +194,15 @@ export default function Blog() {
               {writingEntries.map((post, index) => (
                 <article
                   key={post.slug}
-                  className={`${styles.postItem} ${index === activeIndex ? styles.postItemActive : ""}`}
+                  className={`${styles.postItem} ${index === hoveredIndex ? styles.postItemActive : ""}`}
                 >
                   <button
                     type="button"
-                    className={`${styles.postTrigger} ${index === activeIndex ? styles.postTriggerActive : ""}`}
-                    onMouseEnter={() => setActiveIndex(index)}
-                    onFocus={() => setActiveIndex(index)}
+                    className={`${styles.postTrigger} ${index === hoveredIndex ? styles.postTriggerActive : ""}`}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onFocus={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    onBlur={() => setHoveredIndex(null)}
                     onClick={() => handleOpenPreview(index)}
                     aria-haspopup="dialog"
                     aria-expanded={previewSlug === post.slug}
@@ -246,11 +251,11 @@ export default function Blog() {
                   <Image
                     key={post.slug}
                     src={post.image}
-                    alt={index === activeIndex ? post.title : ""}
+                    alt={index === detailIndex ? post.title : ""}
                     width={960}
                     height={640}
-                    className={`${styles.detailImage} ${index === activeIndex ? styles.detailImageActive : ""}`}
-                    aria-hidden={index !== activeIndex}
+                    className={`${styles.detailImage} ${index === detailIndex ? styles.detailImageActive : ""}`}
+                    aria-hidden={index !== detailIndex}
                     unoptimized
                   />
                 ))}
