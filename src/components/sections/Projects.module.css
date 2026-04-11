@@ -145,6 +145,20 @@
     transform 0.12s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.incomingTitle {
+  display: inline;
+}
+
+.incomingDots {
+  display: inline-block;
+  margin-left: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  transform: translateY(0.12em);
+  animation: incomingDotsReveal 1.9s steps(3, end) infinite;
+}
+
 .projectArrow {
   flex: none;
   font-size: clamp(0.95rem, 1.2vw, 1.2rem);
@@ -317,6 +331,11 @@
   .detailImage {
     transition: none;
   }
+
+  .incomingDots {
+    animation: none;
+    width: 3ch;
+  }
 }
 
 @keyframes spinMark {
@@ -326,5 +345,23 @@
 
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes incomingDotsReveal {
+  0% {
+    width: 0;
+  }
+
+  30% {
+    width: 1ch;
+  }
+
+  60% {
+    width: 2ch;
+  }
+
+  100% {
+    width: 3ch;
   }
 }

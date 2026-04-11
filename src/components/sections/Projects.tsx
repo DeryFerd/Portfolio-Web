@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import SectionHeadline from "@/components/ui/SectionHeadline";
 import SectionSubheadline from "@/components/ui/SectionSubheadline";
-import IncomingLabel from "@/components/ui/IncomingLabel";
 import QuickPreviewDialog from "@/components/ui/QuickPreviewDialog";
 import styles from "./Projects.module.css";
 
@@ -160,7 +159,12 @@ export default function Projects() {
                     <span className={styles.projectTitleRow}>
                       <span className={styles.projectTitle}>
                         {project.isIncoming ? (
-                          <IncomingLabel text="More Incoming" />
+                          <span className={styles.incomingTitle}>
+                            More Incoming
+                            <span className={styles.incomingDots} aria-hidden="true">
+                              ...
+                            </span>
+                          </span>
                         ) : (
                           project.title
                         )}
