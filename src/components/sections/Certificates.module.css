@@ -16,15 +16,10 @@
 }
 
 :global(html:not([data-theme="light"])) .staggerContainer {
-  border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--border));
-  border-radius: 1rem;
-  background:
-    radial-gradient(circle at 84% 12%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 35%),
-    radial-gradient(circle at 14% 86%, rgba(108, 137, 181, 0.18), transparent 38%),
-    color-mix(in srgb, var(--bg-card) 90%, rgba(9, 12, 16, 0.82));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 20px 44px rgba(0, 0, 0, 0.3);
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .counter {
