@@ -22,6 +22,7 @@ interface CertificateCardProps {
   onPreview?: (certificate: CertificateItem) => void;
   cardSize: number;
   isHidden?: boolean;
+  isDarkTheme: boolean;
 }
 
 const CertificateCard: React.FC<CertificateCardProps> = ({ 
@@ -30,7 +31,8 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
   handleMove, 
   onPreview,
   cardSize,
-  isHidden = false
+  isHidden = false,
+  isDarkTheme,
 }) => {
   const isCenter = position === 0;
 
@@ -51,9 +53,13 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       className={cn(
         "absolute left-1/2 top-1/2 flex cursor-pointer flex-col border-2 p-6 transition-all duration-500 ease-in-out",
         isHidden && "opacity-0 pointer-events-none",
-        isCenter 
-          ? "z-10 bg-[#f5f0e6] text-[#1a1a1a] border-[#d4c8b0]" 
-          : "z-0 bg-[#faf8f3] text-[#4a4a4a] border-[#e8e0d0] hover:border-[#d4c8b0]/50"
+        isDarkTheme
+          ? isCenter
+            ? "z-10 bg-[rgba(21,25,32,0.96)] text-[#e6edf7] border-[rgba(126,171,231,0.45)]"
+            : "z-0 bg-[rgba(15,18,24,0.9)] text-[#bcc6d6] border-[rgba(126,171,231,0.2)] hover:border-[rgba(126,171,231,0.44)]"
+          : isCenter
+            ? "z-10 bg-[#f5f0e6] text-[#1a1a1a] border-[#d4c8b0]"
+            : "z-0 bg-[#faf8f3] text-[#4a4a4a] border-[#e8e0d0] hover:border-[#d4c8b0]/50"
       )}
       style={{
         width: cardSize,
@@ -65,12 +71,19 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
           translateY(${isCenter ? -50 : position % 2 ? 12 : -12}px)
           rotate(${isCenter ? 0 : position % 2 ? 2 : -2}deg)
         `,
-        boxShadow: isCenter ? "0px 8px 0px 4px rgba(212, 200, 176, 0.5)" : "0px 0px 0px 0px transparent"
+        boxShadow: isCenter
+          ? isDarkTheme
+            ? "0px 18px 36px rgba(0, 0, 0, 0.45), inset 0px 0px 0px 1px rgba(126, 171, 231, 0.22)"
+            : "0px 8px 0px 4px rgba(212, 200, 176, 0.5)"
+          : "0px 0px 0px 0px transparent",
       }}
     >
       {/* Corner ribbon effect */}
       <span
-        className="absolute block origin-top-right rotate-45 bg-[#e8e0d0]"
+        className={cn(
+          "absolute block origin-top-right rotate-45",
+          isDarkTheme ? "bg-[rgba(126,171,231,0.35)]" : "bg-[#e8e0d0]",
+        )}
         style={{
           right: -2,
           top: 38,
@@ -81,9 +94,14 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       
       {/* Certificate Image */}
       <div 
-        className="relative mb-4 w-full aspect-[1.4/1] overflow-hidden bg-[#e8e0d0]"
+        className={cn(
+          "relative mb-4 w-full aspect-[1.4/1] overflow-hidden",
+          isDarkTheme ? "bg-[rgba(126,171,231,0.14)]" : "bg-[#e8e0d0]",
+        )}
         style={{
-          boxShadow: "3px 3px 0px rgba(250, 248, 243, 1)"
+          boxShadow: isDarkTheme
+            ? "3px 3px 0px rgba(17, 20, 27, 0.9)"
+            : "3px 3px 0px rgba(250, 248, 243, 1)",
         }}
       >
         <Image
@@ -99,7 +117,13 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       <div className="flex flex-1 items-center justify-center px-3 pb-6 pt-2 text-center">
         <h3 className={cn(
           "max-w-[16ch] text-base font-medium leading-snug tracking-[-0.01em] sm:text-lg",
-          isCenter ? "text-[#1f1a14]" : "text-[#4a4a4a]"
+          isDarkTheme
+            ? isCenter
+              ? "text-[#ebf1fb]"
+              : "text-[#c1c9d7]"
+            : isCenter
+              ? "text-[#1f1a14]"
+              : "text-[#4a4a4a]",
         )}>
           {certificate.title}
         </h3>
@@ -107,8 +131,17 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
       
       {/* Meta info */}
       <div className={cn(
-        "mt-auto border-t border-[#d9cfbc]/80 pt-4",
-        isCenter ? "text-[#1a1a1a]/70" : "text-[#6a6a6a]"
+        "mt-auto border-t pt-4",
+        isDarkTheme
+          ? "border-[rgba(126,171,231,0.28)]"
+          : "border-[#d9cfbc]/80",
+        isDarkTheme
+          ? isCenter
+            ? "text-[#dbe6f7]/76"
+            : "text-[#aab4c2]"
+          : isCenter
+            ? "text-[#1a1a1a]/70"
+            : "text-[#6a6a6a]"
       )}>
         <p className="text-xs font-medium uppercase tracking-wider">
           {certificate.issuer}
@@ -138,6 +171,7 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
 }) => {
   const [cardSize, setCardSize] = useState(340);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
   // Duplicate certificates 3x to create seamless infinite effect
   const [certificatesList, setCertificatesList] = useState(() => {
     const duplicated = [...certificates, ...certificates, ...certificates].map((cert, i) => ({
@@ -180,6 +214,20 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    const syncTheme = () => {
+      setIsDarkTheme(root.getAttribute("data-theme") !== "light");
+    };
+
+    syncTheme();
+
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div
       className={cn("relative w-full overflow-hidden", className)}
@@ -200,6 +248,7 @@ export const StaggerCertificates: React.FC<StaggerCertificatesProps> = ({
             position={position}
             cardSize={cardSize}
             isHidden={isHidden}
+            isDarkTheme={isDarkTheme}
           />
         );
       })}
