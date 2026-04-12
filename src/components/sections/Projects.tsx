@@ -106,7 +106,6 @@ export default function Projects() {
 
   const handleOpenPreview = (index: number) => {
     setSelectedIndex(index);
-    setHoveredIndex(index);
     setPreviewSlug(projects[index]?.slug ?? null);
   };
 
@@ -144,7 +143,11 @@ export default function Projects() {
                     type="button"
                     className={`${styles.projectTrigger} ${index === hoveredIndex ? styles.projectTriggerActive : ""}`}
                     onMouseEnter={() => setHoveredIndex(index)}
-                    onFocus={() => setHoveredIndex(index)}
+                    onFocus={(event) => {
+                      if (event.currentTarget.matches(":focus-visible")) {
+                        setHoveredIndex(index);
+                      }
+                    }}
                     onMouseLeave={() => setHoveredIndex(null)}
                     onBlur={() => setHoveredIndex(null)}
                     onClick={() => handleOpenPreview(index)}

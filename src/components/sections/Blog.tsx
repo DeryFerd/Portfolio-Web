@@ -162,7 +162,6 @@ export default function Blog() {
 
   const handleOpenPreview = (index: number) => {
     setSelectedIndex(index);
-    setHoveredIndex(index);
     setPreviewSlug(writingEntries[index]?.slug ?? null);
   };
 
@@ -200,7 +199,11 @@ export default function Blog() {
                     type="button"
                     className={`${styles.postTrigger} ${index === hoveredIndex ? styles.postTriggerActive : ""}`}
                     onMouseEnter={() => setHoveredIndex(index)}
-                    onFocus={() => setHoveredIndex(index)}
+                    onFocus={(event) => {
+                      if (event.currentTarget.matches(":focus-visible")) {
+                        setHoveredIndex(index);
+                      }
+                    }}
                     onMouseLeave={() => setHoveredIndex(null)}
                     onBlur={() => setHoveredIndex(null)}
                     onClick={() => handleOpenPreview(index)}

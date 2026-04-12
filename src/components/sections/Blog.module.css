@@ -77,15 +77,14 @@
 .postItem {
   border-bottom: 1px solid var(--border);
   opacity: 0.34;
-  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.08s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .postItemActive {
   opacity: 1;
 }
 
-.postItem:hover,
-.postItem:focus-within {
+.postItem:hover {
   opacity: 1;
 }
 
@@ -166,8 +165,8 @@
   letter-spacing: -0.04em;
   color: var(--text-primary);
   transition:
-    color 0.12s linear,
-    transform 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+    color 0.08s linear,
+    transform 0.08s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .incomingTitle {
@@ -194,8 +193,8 @@
   opacity: 0;
   transform: translateY(4px);
   transition:
-    opacity 0.24s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 0.14s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.14s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .postTriggerActive .postTitle {
@@ -297,7 +296,8 @@
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
 }
 
 .detailImageActive {
