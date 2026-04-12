@@ -143,6 +143,7 @@ const ExperienceItem = memo(function ExperienceItem({
               delay={120}
               speed={14}
               className={styles.summary}
+              replayOnDesktop
             />
             <ul className={styles.highlights}>
               {experience.highlights.map((highlight, highlightIndex) => (
@@ -153,6 +154,7 @@ const ExperienceItem = memo(function ExperienceItem({
                     trigger={isOpen}
                     delay={300 + highlightIndex * 220}
                     speed={12}
+                    replayOnDesktop
                   />
                 </li>
               ))}
