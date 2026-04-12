@@ -1,7 +1,7 @@
 // Data blog posts terpusat — digunakan di Blog section, /blog page, dan /blog/[slug]
 export const posts = [
     {
-        title: "Getting Started with Large Language Models",
+        title: "Claude Code Advisor",
         excerpt: "A comprehensive guide to understanding and working with LLMs for production applications.",
         date: "2024-01-15",
         slug: "getting-started-with-llms",
