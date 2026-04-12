@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 import LetsTalkPanel from "@/components/layout/LetsTalkPanel";
 import PortfolioChatPanel from "@/components/layout/PortfolioChatPanel";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -22,6 +23,7 @@ export default function Header() {
   const [isHidden, setIsHidden] = useState(false);
   const [isLetsTalkOpen, setIsLetsTalkOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const lastScrollYRef = useRef(0);
   const hiddenRef = useRef(false);
@@ -86,7 +88,25 @@ export default function Header() {
     setIsHidden(false);
   }, [isChatOpen, isLetsTalkOpen]);
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMobileMenuOpen]);
+
   const handleOpenChat = () => {
+    setIsMobileMenuOpen(false);
     setIsLetsTalkOpen(false);
     setIsChatOpen(true);
   };
@@ -120,13 +140,15 @@ export default function Header() {
       top: Math.max(0, targetTop),
       behavior: "smooth",
     });
+
+    setIsMobileMenuOpen(false);
   };
 
   return (
     <>
       <header
         className={styles.header}
-        data-hidden={isChatOpen || isLetsTalkOpen ? false : isHidden}
+        data-hidden={isChatOpen || isLetsTalkOpen || isMobileMenuOpen ? false : isHidden}
         data-robot-avoid
       >
         <div className={`container ${styles.headerShell}`}>
@@ -155,15 +177,65 @@ export default function Header() {
                 className={styles.contactButton}
                 aria-haspopup="dialog"
                 aria-expanded={isLetsTalkOpen}
-                onClick={() => setIsLetsTalkOpen(true)}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsLetsTalkOpen(true);
+                }}
               >
                 Let&apos;s Talk
               </button>
               <ThemeToggle />
+              <button
+                type="button"
+                className={styles.mobileMenuButton}
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-nav-menu"
+                onClick={() => setIsMobileMenuOpen((current) => !current)}
+              >
+                {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+              </button>
             </div>
+          </div>
+
+          <div
+            id="mobile-nav-menu"
+            className={styles.mobileMenuPanel}
+            data-open={isMobileMenuOpen}
+          >
+            <nav className={styles.mobileNav}>
+              {navLinks.map((link) => (
+                <Link
+                  key={`mobile-${link.href}`}
+                  href={link.href}
+                  className={styles.mobileNavLink}
+                  onClick={(event) => handleNavLinkClick(event, link.href)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+            <button
+              type="button"
+              className={styles.mobileContactButton}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setIsLetsTalkOpen(true);
+              }}
+            >
+              Let&apos;s Talk
+            </button>
           </div>
         </div>
       </header>
+      <button
+        type="button"
+        className={styles.mobileMenuBackdrop}
+        data-open={isMobileMenuOpen}
+        aria-hidden={!isMobileMenuOpen}
+        tabIndex={isMobileMenuOpen ? 0 : -1}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
       <LetsTalkPanel
         open={isLetsTalkOpen}
         onClose={() => setIsLetsTalkOpen(false)}
