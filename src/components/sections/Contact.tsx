@@ -12,21 +12,25 @@ const SUBTITLE_TEXT =
 
 const socialLinks = [
   {
+    id: "github",
     name: "GitHub",
     url: "https://github.com/DeryFerd",
     iconUrl: "https://cdn.simpleicons.org/github",
   },
   {
+    id: "linkedin",
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/deryferdikaoktoriansah",
     iconUrl: "https://www.google.com/s2/favicons?domain=linkedin.com&sz=128",
   },
   {
+    id: "x",
     name: "X",
     url: "https://x.com",
     iconUrl: "https://cdn.simpleicons.org/x",
   },
   {
+    id: "huggingface",
     name: "HuggingFace",
     url: "https://huggingface.co/DeryFerd",
     iconUrl: "https://cdn.simpleicons.org/huggingface/FFD21E",
@@ -137,6 +141,7 @@ export default function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.link}
+                  data-brand={social.id}
                 >
                   <span className={styles.linkIcon}>
                     <img
