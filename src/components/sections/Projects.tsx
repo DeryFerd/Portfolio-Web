@@ -98,10 +98,10 @@ export default function Projects() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [previewSlug, setPreviewSlug] = useState<string | null>(null);
-  const detailIndex = hoveredIndex ?? selectedIndex;
-  const activeProject = projects[detailIndex];
+  const detailIndex = hoveredIndex;
+  const activeProject = detailIndex !== null ? projects[detailIndex] : null;
   const previewProject =
-    projects.find((project) => project.slug === previewSlug) ?? activeProject;
+    projects.find((project) => project.slug === previewSlug) ?? projects[selectedIndex];
   const isPreviewOpen = previewSlug !== null;
 
   const handleOpenPreview = (index: number) => {
@@ -203,16 +203,20 @@ export default function Projects() {
                 ))}
               </div>
               <div className={styles.detailMeta}>
-                <p className={styles.detailYear}>{activeProject.year}</p>
-                <h3 className={styles.detailTitle}>{activeProject.title}</h3>
-                <p className={styles.detailDescription}>{activeProject.description}</p>
-                {activeProject.isIncoming ? (
-                  <span className={styles.detailLinkMuted}>⚠ More incoming</span>
-                ) : (
-                  <Link href={`/projects/${activeProject.slug}`} className={styles.detailLink}>
-                    Open case study
-                  </Link>
-                )}
+                {activeProject ? (
+                  <>
+                    <p className={styles.detailYear}>{activeProject.year}</p>
+                    <h3 className={styles.detailTitle}>{activeProject.title}</h3>
+                    <p className={styles.detailDescription}>{activeProject.description}</p>
+                    {activeProject.isIncoming ? (
+                      <span className={styles.detailLinkMuted}>⚠ More incoming</span>
+                    ) : (
+                      <Link href={`/projects/${activeProject.slug}`} className={styles.detailLink}>
+                        Open case study
+                      </Link>
+                    )}
+                  </>
+                ) : null}
               </div>
             </aside>
           </div>

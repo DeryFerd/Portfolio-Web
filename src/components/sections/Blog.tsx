@@ -105,10 +105,10 @@ export default function Blog() {
     [],
   );
   const [previewSlug, setPreviewSlug] = useState<string | null>(null);
-  const detailIndex = hoveredIndex ?? selectedIndex;
-  const activePost = writingEntries[detailIndex];
+  const detailIndex = hoveredIndex;
+  const activePost = detailIndex !== null ? writingEntries[detailIndex] : null;
   const previewPost =
-    writingEntries.find((post) => post.slug === previewSlug) ?? activePost;
+    writingEntries.find((post) => post.slug === previewSlug) ?? writingEntries[selectedIndex];
   const isPreviewOpen = previewSlug !== null;
 
   const previewContent = useMemo(() => {
@@ -261,16 +261,20 @@ export default function Blog() {
                 ))}
               </div>
               <div className={styles.detailMeta}>
-                <p className={styles.detailDate}>{activePost.date}</p>
-                <h3 className={styles.detailTitle}>{activePost.title}</h3>
-                <p className={styles.detailExcerpt}>{activePost.excerpt}</p>
-                {activePost.isIncoming ? (
-                  <span className={styles.detailLinkMuted}>⚠ More incoming</span>
-                ) : (
-                  <Link href={`/blog/${activePost.slug}`} className={styles.detailLink}>
-                    Read article
-                  </Link>
-                )}
+                {activePost ? (
+                  <>
+                    <p className={styles.detailDate}>{activePost.date}</p>
+                    <h3 className={styles.detailTitle}>{activePost.title}</h3>
+                    <p className={styles.detailExcerpt}>{activePost.excerpt}</p>
+                    {activePost.isIncoming ? (
+                      <span className={styles.detailLinkMuted}>⚠ More incoming</span>
+                    ) : (
+                      <Link href={`/blog/${activePost.slug}`} className={styles.detailLink}>
+                        Read article
+                      </Link>
+                    )}
+                  </>
+                ) : null}
               </div>
             </aside>
           </div>
