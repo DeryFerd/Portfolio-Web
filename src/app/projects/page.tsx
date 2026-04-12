@@ -35,10 +35,10 @@ function createIncomingProject(slug: string): ArchiveProject {
 
 const projects: ArchiveProject[] = [
   {
-    title: "AI Chatbot",
-    description: "A conversational AI built with GPT models for customer support automation.",
-    tags: ["NLP", "GPT", "FastAPI"],
-    slug: "ai-chatbot",
+    title: "Qwen-Phi Distillation",
+    description: "A Phi-2 distillation project trained for coding and math reasoning with Qwen2.5 teachers.",
+    tags: ["Distillation", "Phi-2", "Qwen2.5"],
+    slug: "qwen-phi-distillation",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
     isIncoming: false,
   },

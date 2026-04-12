@@ -38,14 +38,14 @@ const aboutSummary =
 
 const projects: ProjectKnowledge[] = [
   {
-    title: "AI Chatbot",
-    slug: "ai-chatbot",
+    title: "Qwen-Phi Distillation",
+    slug: "qwen-phi-distillation",
     year: "2026",
     description:
-      "A conversational AI built for support automation with context-aware responses and production-minded delivery.",
-    tags: ["NLP", "GPT", "FastAPI"],
+      "A compact Phi-2 distillation project tuned for Python code generation and step-by-step math reasoning.",
+    tags: ["Distillation", "Phi-2", "Qwen2.5"],
     detail:
-      "This project centers on support automation with GPT-style responses, context-aware flows, and a delivery mindset that pushes beyond demo quality.",
+      "This project distills Qwen2.5 teacher capability into a smaller Phi-2 checkpoint and publishes the full training intent through a public Hugging Face model card.",
   },
   {
     title: "Image Classifier",
@@ -311,7 +311,7 @@ export function buildAssistantReply(input: string): AssistantReply {
 
   if (includesAny(query, ["project", "projects", "work", "case study", "portfolio"])) {
     return {
-      text: `The current highlighted project set spans ${projects.map((project) => project.title).join(", ")}. If you want a strong starting point, begin with AI Chatbot for product AI, Image Classifier for computer vision, and Recommender System for applied ML.`,
+      text: `The current highlighted project set spans ${projects.map((project) => project.title).join(", ")}. If you want a strong starting point, begin with Qwen-Phi Distillation for LLM distillation, Image Classifier for computer vision, and Recommender System for applied ML.`,
       links: [
         { label: "View project archive", href: "/projects" },
         { label: "Jump to selected work", href: "/#projects" },

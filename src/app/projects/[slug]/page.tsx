@@ -10,37 +10,38 @@ const projectData: Record<string, {
   content: string;
   image: string;
   github?: string;
+  huggingFace?: string;
   demo?: string;
 }> = {
-  "ai-chatbot": {
-    title: "AI Chatbot",
-    description: "A conversational AI built with GPT models for customer support automation.",
-    tags: ["NLP", "GPT", "FastAPI", "React"],
+  "qwen-phi-distillation": {
+    title: "Qwen-Phi Distillation",
+    description:
+      "A fine-tuned Phi-2 model distilled from Qwen2.5 teacher models for Python code generation and step-by-step math reasoning.",
+    tags: ["Distillation", "Phi-2", "Qwen2.5", "Math", "Code"],
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop",
     content: `
 ## Overview
-Built a conversational AI chatbot using GPT-3.5 API for customer support automation. The system handles common queries and escalates complex issues to human agents.
+This project distills larger teacher models into a compact checkpoint by adapting \`microsoft/phi-2\` for two focused tasks: Python code generation and grade-school math reasoning.
 
 ## Tech Stack
-- **Backend**: FastAPI, Python
-- **AI**: OpenAI GPT-3.5
-- **Frontend**: React, TypeScript
-- **Database**: PostgreSQL
+- **Base model**: microsoft/phi-2
+- **Teacher models**: Qwen2.5-Coder-7B-Instruct, Qwen2.5-Math-7B-Instruct
+- **Training**: LoRA with \`trl.SFTTrainer\`
+- **Datasets**: GSM8K, MATH, MBPP (+ mixed instruction data)
+- **Inference**: Hugging Face Transformers pipeline
 
 ## Features
-- Natural language understanding
-- Context-aware conversations
-- Multi-language support
-- Analytics dashboard
-- Easy integration with existing systems
+- Python function generation from natural language prompts
+- Step-by-step math word-problem solving
+- Instruction-output format tuned for practical prompting
+- Lightweight model profile for resource-constrained experimentation
 
 ## Results
-- 70% reduction in customer support workload
-- Average response time under 2 seconds
-- 95% customer satisfaction rate
+- Published a reproducible Hugging Face model card with training details
+- Demonstrated mixed-task distillation into a smaller 3B class model
+- Documented model limitations and deployment caveats for safer usage
     `,
-    github: "https://github.com",
-    demo: "https://demo.com",
+    huggingFace: "https://huggingface.co/DeryFerd/Qwen2.5-Math-Coder-Distill-Phi-2-4.4K-MixMathCode",
   },
   "image-classifier": {
     title: "Image Classifier",
@@ -134,7 +135,7 @@ export default async function ProjectDetail({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const isIncomingSlug = slug !== "ai-chatbot";
+  const isIncomingSlug = slug !== "qwen-phi-distillation";
   const project = isIncomingSlug
     ? {
         title: "More Incoming",
@@ -154,7 +155,7 @@ This page is intentionally reserved for an upcoming case study.
 - Outcome metrics and next iteration plan
     `,
       }
-    : projectData["ai-chatbot"];
+    : projectData["qwen-phi-distillation"];
 
   return (
     <div className={styles.page}>
@@ -214,6 +215,11 @@ This page is intentionally reserved for an upcoming case study.
           </div>
         ) : (
           <div className={styles.links}>
+            {project.huggingFace && (
+              <a href={project.huggingFace} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                Hugging Face &rarr;
+              </a>
+            )}
             {project.github && (
               <a href={project.github} target="_blank" rel="noopener noreferrer" className={styles.link}>
                 GitHub &rarr;
