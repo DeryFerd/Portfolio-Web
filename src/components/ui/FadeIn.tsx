@@ -50,10 +50,19 @@ export default function FadeIn({ children, delay = 0, direction = "auto" }: Fade
   const [isVisible, setIsVisible] = useState(false);
   const [hiddenTransform, setHiddenTransform] = useState(() => getHiddenTransform(direction));
   const ref = useRef<HTMLDivElement>(null);
+  const revealOnceRef = useRef(false);
 
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
+    const mediaQuery = window.matchMedia("(max-width: 1024px), (hover: none), (pointer: coarse)");
+    revealOnceRef.current = mediaQuery.matches;
+
+    const handleMediaChange = () => {
+      revealOnceRef.current = mediaQuery.matches;
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
 
     const updateHiddenTransform = (rect?: DOMRect) => {
       setHiddenTransform(getHiddenTransform(direction, rect ?? element.getBoundingClientRect(), window.innerHeight));
@@ -65,17 +74,25 @@ export default function FadeIn({ children, delay = 0, direction = "auto" }: Fade
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          if (revealOnceRef.current) {
+            observer.unobserve(element);
+          }
           return;
         }
 
-        updateHiddenTransform(entry.boundingClientRect);
-        setIsVisible(false);
+        if (!revealOnceRef.current) {
+          updateHiddenTransform(entry.boundingClientRect);
+          setIsVisible(false);
+        }
       },
       { threshold: 0.1, rootMargin: "-50px" }
     );
 
     observer.observe(element);
-    return () => observer.disconnect();
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+      observer.disconnect();
+    };
   }, [direction]);
 
   return (
