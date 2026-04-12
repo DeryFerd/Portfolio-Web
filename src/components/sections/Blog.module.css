@@ -252,6 +252,44 @@
   min-height: clamp(16rem, 30vw, 22rem);
 }
 
+.detailEmpty {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 0.45rem;
+  padding: 1.4rem;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      color-mix(in srgb, var(--accent) 12%, transparent),
+      transparent 58%
+    ),
+    var(--bg-secondary);
+}
+
+.detailEmptyTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+
+.detailEmptyText {
+  margin: 0;
+  max-width: 19rem;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
 .detailImage {
   position: absolute;
   inset: 0;

@@ -189,6 +189,14 @@ export default function Projects() {
 
             <aside className={styles.detailPanel}>
               <div className={styles.detailStage}>
+                {activeProject ? null : (
+                  <div className={styles.detailEmpty}>
+                    <p className={styles.detailEmptyTitle}>Hover a project to preview</p>
+                    <p className={styles.detailEmptyText}>
+                      Move your cursor over any row on the left to inspect the project snapshot.
+                    </p>
+                  </div>
+                )}
                 {projects.map((project, index) => (
                   <Image
                     key={project.slug}

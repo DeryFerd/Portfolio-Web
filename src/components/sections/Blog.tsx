@@ -247,6 +247,14 @@ export default function Blog() {
 
             <aside className={styles.detailPanel}>
               <div className={styles.detailStage}>
+                {activePost ? null : (
+                  <div className={styles.detailEmpty}>
+                    <p className={styles.detailEmptyTitle}>Hover a note to preview</p>
+                    <p className={styles.detailEmptyText}>
+                      Move your cursor over any row on the left to inspect the writing snapshot.
+                    </p>
+                  </div>
+                )}
                 {writingEntries.map((post, index) => (
                   <Image
                     key={post.slug}
