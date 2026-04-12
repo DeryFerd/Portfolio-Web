@@ -49,38 +49,47 @@ function getHiddenTransform(
 export default function FadeIn({ children, delay = 0, direction = "auto" }: FadeInProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [hiddenTransform, setHiddenTransform] = useState(() => getHiddenTransform(direction));
+  const [revealOnce, setRevealOnce] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const revealOnceRef = useRef(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 1024px), (hover: none), (pointer: coarse)");
+    setRevealOnce(mediaQuery.matches);
+
+    const handleMediaChange = () => {
+      setRevealOnce(mediaQuery.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, []);
 
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-    const mediaQuery = window.matchMedia("(max-width: 1024px), (hover: none), (pointer: coarse)");
-    revealOnceRef.current = mediaQuery.matches;
-
-    const handleMediaChange = () => {
-      revealOnceRef.current = mediaQuery.matches;
-    };
-
-    mediaQuery.addEventListener("change", handleMediaChange);
 
     const updateHiddenTransform = (rect?: DOMRect) => {
       setHiddenTransform(getHiddenTransform(direction, rect ?? element.getBoundingClientRect(), window.innerHeight));
     };
 
     updateHiddenTransform();
+    if (!revealOnce) {
+      setIsVisible(false);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          if (revealOnceRef.current) {
+          if (revealOnce) {
             observer.unobserve(element);
           }
           return;
         }
 
-        if (!revealOnceRef.current) {
+        if (!revealOnce) {
           updateHiddenTransform(entry.boundingClientRect);
           setIsVisible(false);
         }
@@ -90,10 +99,9 @@ export default function FadeIn({ children, delay = 0, direction = "auto" }: Fade
 
     observer.observe(element);
     return () => {
-      mediaQuery.removeEventListener("change", handleMediaChange);
       observer.disconnect();
     };
-  }, [direction]);
+  }, [direction, revealOnce]);
 
   return (
     <div
