@@ -14,6 +14,7 @@ const navLinks = [
   { href: "/#experience", label: "Experience" },
   { href: "/#projects", label: "Projects" },
   { href: "/#blog", label: "Journal" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 const TOP_REVEAL_OFFSET = 24;
