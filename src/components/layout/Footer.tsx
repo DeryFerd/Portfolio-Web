@@ -1,14 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./Footer.module.css";
-
-const socialLinks = [
-  { href: "https://github.com", label: "GitHub" },
-  { href: "https://linkedin.com", label: "LinkedIn" },
-  { href: "https://twitter.com", label: "Twitter" },
-];
 
 export default function Footer() {
   const pathname = usePathname();
@@ -25,19 +18,6 @@ export default function Footer() {
 
           <div className={styles.bottomRow}>
             <div className={styles.signature}>AI systems, interfaces, and delivery.</div>
-            <div className={styles.socials}>
-              {socialLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.socialLink}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
           </div>
         </div>
       </div>
