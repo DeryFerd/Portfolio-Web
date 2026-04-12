@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SectionHeadline from "@/components/ui/SectionHeadline";
@@ -100,6 +100,7 @@ function extractPostSignals(content: string) {
 export default function Blog() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoverEnabled, setHoverEnabled] = useState(false);
   const writingEntries = useMemo<WritingEntry[]>(
     () => [{ ...posts[0], isIncoming: false }, ...incomingWritings],
     [],
@@ -110,6 +111,22 @@ export default function Blog() {
   const previewPost =
     writingEntries.find((post) => post.slug === previewSlug) ?? writingEntries[selectedIndex];
   const isPreviewOpen = previewSlug !== null;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(hover: hover) and (pointer: fine) and (min-width: 1025px)",
+    );
+    const syncHoverCapability = () => {
+      setHoverEnabled(mediaQuery.matches);
+      if (!mediaQuery.matches) {
+        setHoveredIndex(null);
+      }
+    };
+
+    syncHoverCapability();
+    mediaQuery.addEventListener("change", syncHoverCapability);
+    return () => mediaQuery.removeEventListener("change", syncHoverCapability);
+  }, []);
 
   const previewContent = useMemo(() => {
     if (previewPost.isIncoming) {
@@ -193,19 +210,31 @@ export default function Blog() {
               {writingEntries.map((post, index) => (
                 <article
                   key={post.slug}
-                  className={`${styles.postItem} ${index === hoveredIndex ? styles.postItemActive : ""}`}
+                  className={`${styles.postItem} ${hoverEnabled && index === hoveredIndex ? styles.postItemActive : ""}`}
                 >
                   <button
                     type="button"
-                    className={`${styles.postTrigger} ${index === hoveredIndex ? styles.postTriggerActive : ""}`}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onFocus={(event) => {
-                      if (event.currentTarget.matches(":focus-visible")) {
+                    className={`${styles.postTrigger} ${hoverEnabled && index === hoveredIndex ? styles.postTriggerActive : ""}`}
+                    onMouseEnter={() => {
+                      if (hoverEnabled) {
                         setHoveredIndex(index);
                       }
                     }}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    onBlur={() => setHoveredIndex(null)}
+                    onFocus={(event) => {
+                      if (hoverEnabled && event.currentTarget.matches(":focus-visible")) {
+                        setHoveredIndex(index);
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (hoverEnabled) {
+                        setHoveredIndex(null);
+                      }
+                    }}
+                    onBlur={() => {
+                      if (hoverEnabled) {
+                        setHoveredIndex(null);
+                      }
+                    }}
                     onClick={() => handleOpenPreview(index)}
                     aria-haspopup="dialog"
                     aria-expanded={previewSlug === post.slug}

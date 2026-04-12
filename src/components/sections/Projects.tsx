@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SectionHeadline from "@/components/ui/SectionHeadline";
@@ -98,11 +98,28 @@ export default function Projects() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [previewSlug, setPreviewSlug] = useState<string | null>(null);
+  const [hoverEnabled, setHoverEnabled] = useState(false);
   const detailIndex = hoveredIndex;
   const activeProject = detailIndex !== null ? projects[detailIndex] : null;
   const previewProject =
     projects.find((project) => project.slug === previewSlug) ?? projects[selectedIndex];
   const isPreviewOpen = previewSlug !== null;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(hover: hover) and (pointer: fine) and (min-width: 1025px)",
+    );
+    const syncHoverCapability = () => {
+      setHoverEnabled(mediaQuery.matches);
+      if (!mediaQuery.matches) {
+        setHoveredIndex(null);
+      }
+    };
+
+    syncHoverCapability();
+    mediaQuery.addEventListener("change", syncHoverCapability);
+    return () => mediaQuery.removeEventListener("change", syncHoverCapability);
+  }, []);
 
   const handleOpenPreview = (index: number) => {
     setSelectedIndex(index);
@@ -137,19 +154,31 @@ export default function Projects() {
               {projects.map((project, index) => (
                 <article
                   key={project.slug}
-                  className={`${styles.projectItem} ${index === hoveredIndex ? styles.projectItemActive : ""}`}
+                  className={`${styles.projectItem} ${hoverEnabled && index === hoveredIndex ? styles.projectItemActive : ""}`}
                 >
                   <button
                     type="button"
-                    className={`${styles.projectTrigger} ${index === hoveredIndex ? styles.projectTriggerActive : ""}`}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onFocus={(event) => {
-                      if (event.currentTarget.matches(":focus-visible")) {
+                    className={`${styles.projectTrigger} ${hoverEnabled && index === hoveredIndex ? styles.projectTriggerActive : ""}`}
+                    onMouseEnter={() => {
+                      if (hoverEnabled) {
                         setHoveredIndex(index);
                       }
                     }}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    onBlur={() => setHoveredIndex(null)}
+                    onFocus={(event) => {
+                      if (hoverEnabled && event.currentTarget.matches(":focus-visible")) {
+                        setHoveredIndex(index);
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (hoverEnabled) {
+                        setHoveredIndex(null);
+                      }
+                    }}
+                    onBlur={() => {
+                      if (hoverEnabled) {
+                        setHoveredIndex(null);
+                      }
+                    }}
                     onClick={() => handleOpenPreview(index)}
                     aria-haspopup="dialog"
                     aria-expanded={previewSlug === project.slug}

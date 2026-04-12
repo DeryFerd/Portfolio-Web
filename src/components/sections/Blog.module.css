@@ -357,8 +357,7 @@
   }
 
   .detailPanel {
-    order: -1;
-    position: static;
+    display: none;
   }
 
   .detailStage {
@@ -367,7 +366,15 @@
   }
 
   .postItem {
-    opacity: 0.44;
+    opacity: 1;
+  }
+}
+
+@media (hover: none), (pointer: coarse), (max-width: 1024px) {
+  .incomingDots {
+    animation: none;
+    width: 3ch;
+    transform: none;
   }
 }
 
