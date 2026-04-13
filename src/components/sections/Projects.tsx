@@ -67,8 +67,7 @@ const projects: ProjectEntry[] = [
     slug: "qwen-phi-distillation",
     year: "2026",
     category: "LLM / Distillation",
-    image:
-      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=900&h=720&fit=crop",
+    image: "/images/projects/project-1.jpg",
     buildScope: [
       "Distilled math and coding capability from Qwen2.5 teacher models into a compact Phi-2 checkpoint.",
       "Fine-tuned on mixed instruction data from GSM8K, MATH, and MBPP-style coding tasks.",

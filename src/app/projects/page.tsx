@@ -39,7 +39,7 @@ const projects: ArchiveProject[] = [
     description: "A Phi-2 distillation project trained for coding and math reasoning with Qwen2.5 teachers.",
     tags: ["Distillation", "Phi-2", "Qwen2.5"],
     slug: "qwen-phi-distillation",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
+    image: "/images/projects/project-1.jpg",
     isIncoming: false,
   },
   createIncomingProject("image-classifier"),

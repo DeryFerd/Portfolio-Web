@@ -18,7 +18,7 @@ const projectData: Record<string, {
     description:
       "A fine-tuned Phi-2 model distilled from Qwen2.5 teacher models for Python code generation and step-by-step math reasoning.",
     tags: ["Distillation", "Phi-2", "Qwen2.5", "Math", "Code"],
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop",
+    image: "/images/projects/project-1.jpg",
     content: `
 ## Overview
 This project distills larger teacher models into a compact checkpoint by adapting \`microsoft/phi-2\` for two focused tasks: Python code generation and grade-school math reasoning.
