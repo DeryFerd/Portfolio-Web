@@ -269,8 +269,8 @@ export default function Blog() {
                     </span>
                     <span className={styles.postMeta}>
                       {post.isIncoming
-                        ? `⚠ Incoming / ${post.tags.slice(0, 2).join(" / ")}`
-                        : `${post.date} / ${post.tags.join(" / ")}`}
+                        ? `⚠ Incoming | ${post.tags.slice(0, 2).join(" / ")}`
+                        : `${post.date} | ${post.tags.join(" / ")}`}
                     </span>
                   </button>
                 </article>
