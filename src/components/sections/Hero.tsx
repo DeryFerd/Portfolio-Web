@@ -3,10 +3,11 @@ import TypeWriter from "@/components/ui/TypeWriter";
 import styles from "./Hero.module.css";
 
 const focusAreas = [
-  "LLM systems",
-  "RAG pipelines",
+  "LLM Systems",
+  "RAG",
   "AI Agents",
-  "Machine learning"
+  "Machine Learning",
+  "Deep Learning"
 ];
 
 const roles = [
@@ -50,7 +51,7 @@ export default function Hero() {
           </h1>
 
           <p className={styles.description}>
-            Specializing in Machine Learning, MLOps, RAG, and AI agents
+            Specializing in Machine Learning, Agentic AI, RAG, and AI agents
             for real-world AI products.
           </p>
 
