@@ -157,6 +157,7 @@
 }
 
 :global(html:not([data-theme="light"])) .link[data-brand="github"] .linkIcon img,
+:global(html:not([data-theme="light"])) .link[data-brand="linkedin"] .linkIcon img,
 :global(html:not([data-theme="light"])) .link[data-brand="x"] .linkIcon img {
   filter:
     brightness(0) invert(1)
