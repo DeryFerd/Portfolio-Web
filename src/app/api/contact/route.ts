@@ -100,7 +100,30 @@ export async function POST(request: Request) {
     );
   }
 
-  const body = (await request.json().catch(() => null)) as ContactPayload | null;
+  const rawBody = await request.text().catch(() => null);
+  if (!rawBody) {
+    return NextResponse.json(
+      {
+        error: "Invalid request payload.",
+      },
+      { status: 400 },
+    );
+  }
+
+  if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+    return NextResponse.json(
+      { error: "Request body too large." },
+      { status: 413 },
+    );
+  }
+
+  let body: ContactPayload | null = null;
+  try {
+    body = (JSON.parse(rawBody) as ContactPayload | null) ?? null;
+  } catch {
+    body = null;
+  }
+
   if (!body || typeof body !== "object" || Array.isArray(body)) {
     return NextResponse.json(
       {
