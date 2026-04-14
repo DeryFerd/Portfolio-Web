@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getContactRateLimitStatus } from "@/lib/contactRateLimit";
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
@@ -7,8 +8,6 @@ const MAX_EMAIL_LENGTH = 160;
 const MAX_MESSAGE_LENGTH = 2400;
 const MAX_BODY_BYTES = 10_000;
 const SUPPORTED_CONTENT_TYPE = "application/json";
-const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT_MAX_REQUESTS = 5;
 const RESEND_TIMEOUT_MS = 10_000;
 
 interface ContactPayload {
@@ -17,19 +16,6 @@ interface ContactPayload {
   message?: string;
   companyWebsite?: string;
 }
-
-interface RateLimitBucket {
-  count: number;
-  resetAt: number;
-}
-
-const globalForRateLimit = globalThis as typeof globalThis & {
-  __contactRateLimitMap?: Map<string, RateLimitBucket>;
-};
-
-const rateLimitMap =
-  globalForRateLimit.__contactRateLimitMap ??
-  (globalForRateLimit.__contactRateLimitMap = new Map<string, RateLimitBucket>());
 
 function normalizeValue(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -71,46 +57,7 @@ function getClientIp(request: Request) {
   return "unknown";
 }
 
-function getRateLimitStatus(clientIp: string, now = Date.now()) {
-  const current = rateLimitMap.get(clientIp);
-
-  if (!current || now >= current.resetAt) {
-    rateLimitMap.set(clientIp, {
-      count: 1,
-      resetAt: now + RATE_LIMIT_WINDOW_MS,
-    });
-    return {
-      limited: false,
-      retryAfterSeconds: 0,
-    };
-  }
-
-  if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return {
-      limited: true,
-      retryAfterSeconds: Math.max(1, Math.ceil((current.resetAt - now) / 1000)),
-    };
-  }
-
-  current.count += 1;
-  rateLimitMap.set(clientIp, current);
-  return {
-    limited: false,
-    retryAfterSeconds: 0,
-  };
-}
-
-function pruneRateLimitMap(now = Date.now()) {
-  for (const [ip, bucket] of rateLimitMap.entries()) {
-    if (bucket.resetAt <= now) {
-      rateLimitMap.delete(ip);
-    }
-  }
-}
-
 export async function POST(request: Request) {
-  pruneRateLimitMap();
-
   const contentType = request.headers.get("content-type")?.toLowerCase() ?? "";
   if (!contentType.includes(SUPPORTED_CONTENT_TYPE)) {
     return NextResponse.json(
@@ -138,7 +85,7 @@ export async function POST(request: Request) {
   }
 
   const clientIp = getClientIp(request);
-  const rateLimitStatus = getRateLimitStatus(clientIp);
+  const rateLimitStatus = await getContactRateLimitStatus(clientIp);
   if (rateLimitStatus.limited) {
     return NextResponse.json(
       {
