@@ -51,7 +51,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
         handleMove(position);
       }}
       className={cn(
-        "absolute left-1/2 top-1/2 flex cursor-pointer flex-col border-2 p-6 transition-all duration-500 ease-in-out",
+        "absolute left-1/2 top-1/2 flex cursor-pointer flex-col border-2 p-6 transition-[transform,opacity,background-color,border-color,color,box-shadow] duration-200 ease-out",
         isHidden && "opacity-0 pointer-events-none",
         isDarkTheme
           ? isCenter
