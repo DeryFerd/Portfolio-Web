@@ -5,6 +5,8 @@ const RESEND_ENDPOINT = "https://api.resend.com/emails";
 const MAX_NAME_LENGTH = 80;
 const MAX_EMAIL_LENGTH = 160;
 const MAX_MESSAGE_LENGTH = 2400;
+const MAX_BODY_BYTES = 10_000;
+const SUPPORTED_CONTENT_TYPE = "application/json";
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
 const RESEND_TIMEOUT_MS = 10_000;
@@ -13,6 +15,7 @@ interface ContactPayload {
   name?: string;
   email?: string;
   message?: string;
+  companyWebsite?: string;
 }
 
 interface RateLimitBucket {
@@ -68,7 +71,7 @@ function getClientIp(request: Request) {
   return "unknown";
 }
 
-function isRateLimited(clientIp: string, now = Date.now()) {
+function getRateLimitStatus(clientIp: string, now = Date.now()) {
   const current = rateLimitMap.get(clientIp);
 
   if (!current || now >= current.resetAt) {
@@ -76,16 +79,25 @@ function isRateLimited(clientIp: string, now = Date.now()) {
       count: 1,
       resetAt: now + RATE_LIMIT_WINDOW_MS,
     });
-    return false;
+    return {
+      limited: false,
+      retryAfterSeconds: 0,
+    };
   }
 
   if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return true;
+    return {
+      limited: true,
+      retryAfterSeconds: Math.max(1, Math.ceil((current.resetAt - now) / 1000)),
+    };
   }
 
   current.count += 1;
   rateLimitMap.set(clientIp, current);
-  return false;
+  return {
+    limited: false,
+    retryAfterSeconds: 0,
+  };
 }
 
 function pruneRateLimitMap(now = Date.now()) {
@@ -99,21 +111,70 @@ function pruneRateLimitMap(now = Date.now()) {
 export async function POST(request: Request) {
   pruneRateLimitMap();
 
+  const contentType = request.headers.get("content-type")?.toLowerCase() ?? "";
+  if (!contentType.includes(SUPPORTED_CONTENT_TYPE)) {
+    return NextResponse.json(
+      { error: "Content-Type must be application/json." },
+      { status: 415 },
+    );
+  }
+
+  const rawContentLength = request.headers.get("content-length");
+  if (rawContentLength) {
+    const contentLength = Number.parseInt(rawContentLength, 10);
+    if (!Number.isFinite(contentLength) || contentLength < 0) {
+      return NextResponse.json(
+        { error: "Invalid Content-Length header." },
+        { status: 400 },
+      );
+    }
+
+    if (contentLength > MAX_BODY_BYTES) {
+      return NextResponse.json(
+        { error: "Request body too large." },
+        { status: 413 },
+      );
+    }
+  }
+
   const clientIp = getClientIp(request);
-  if (isRateLimited(clientIp)) {
+  const rateLimitStatus = getRateLimitStatus(clientIp);
+  if (rateLimitStatus.limited) {
     return NextResponse.json(
       {
         error: "Too many requests. Please wait a few minutes and try again.",
       },
-      { status: 429 },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": rateLimitStatus.retryAfterSeconds.toString(),
+        },
+      },
     );
   }
 
   const body = (await request.json().catch(() => null)) as ContactPayload | null;
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return NextResponse.json(
+      {
+        error: "Invalid request payload.",
+      },
+      { status: 400 },
+    );
+  }
 
-  const name = normalizeValue(body?.name);
-  const email = normalizeValue(body?.email).toLowerCase();
-  const message = normalizeValue(body?.message);
+  if (normalizeValue(body.companyWebsite)) {
+    return NextResponse.json(
+      {
+        error: "Your message could not be sent right now.",
+      },
+      { status: 400 },
+    );
+  }
+
+  const name = normalizeValue(body.name);
+  const email = normalizeValue(body.email).toLowerCase();
+  const message = normalizeValue(body.message);
 
   if (!name || !email || !message) {
     return NextResponse.json(

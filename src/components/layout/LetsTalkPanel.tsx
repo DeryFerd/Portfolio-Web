@@ -9,6 +9,7 @@ import {
   type ChangeEvent,
   type FormEvent,
 } from "react";
+import { CONTACT_EMAIL } from "@/lib/contactConfig";
 import styles from "./LetsTalkPanel.module.css";
 
 type PanelView = "menu" | "fit" | "form" | "success";
@@ -26,7 +27,6 @@ interface LetsTalkPanelProps {
   onOpenChat: () => void;
 }
 
-const DIRECT_EMAIL = "deryferdikao125@gmail.com";
 const JAKARTA_TIME_ZONE = "Asia/Jakarta";
 const JAKARTA_TIME_FORMATTER = new Intl.DateTimeFormat("en-GB", {
   hour: "2-digit",
@@ -279,7 +279,7 @@ export default function LetsTalkPanel({
   const selectedNeed = getProjectNeed(projectNeed);
   const routeTitle = getRouteTitle(projectStage, projectNeed);
   const briefCopy = buildBriefCopy(projectType, projectStage, projectNeed);
-  const mailtoHref = `mailto:${DIRECT_EMAIL}?subject=${encodeURIComponent(
+  const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
     `${selectedProject.label} | ${routeTitle}`,
   )}&body=${encodeURIComponent(briefCopy)}`;
 
@@ -710,7 +710,7 @@ export default function LetsTalkPanel({
                 >
                   Back to options
                 </button>
-                <a href={`mailto:${DIRECT_EMAIL}`} className={styles.inlineLink}>
+                <a href={`mailto:${CONTACT_EMAIL}`} className={styles.inlineLink}>
                   Send direct email
                 </a>
               </div>

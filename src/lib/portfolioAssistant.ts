@@ -1,4 +1,5 @@
 import { posts } from "@/lib/blogData";
+import { CONTACT_EMAIL } from "@/lib/contactConfig";
 
 export interface AssistantLink {
   href: string;
@@ -287,10 +288,10 @@ export function buildAssistantReply(input: string): AssistantReply {
 
   if (includesAny(query, ["contact", "email", "hire", "reach", "talk", "collab", "collaboration"])) {
     return {
-      text: "The best direct contact on the site is deryferdikao125@gmail.com. Dery is based in Malang, Indonesia and is open to selected AI projects, internal tools, and product-facing collaborations.",
+      text: `The best direct contact on the site is ${CONTACT_EMAIL}. Dery is based in Malang, Indonesia and is open to selected AI projects, internal tools, and product-facing collaborations.`,
       links: [
         { label: "Open contact section", href: "/#contact" },
-        { label: "Email Dery", href: "mailto:deryferdikao125@gmail.com" },
+        { label: "Email Dery", href: `mailto:${CONTACT_EMAIL}` },
       ],
     };
   }

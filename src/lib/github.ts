@@ -1,6 +1,12 @@
 import { unstable_cache } from "next/cache";
 
-const GITHUB_USERNAME = process.env.NEXT_PUBLIC_GITHUB_USERNAME ?? "DeryFerd";
+const FALLBACK_GITHUB_USERNAME = "DeryFerd";
+const GITHUB_FETCH_TIMEOUT_MS = 8_000;
+const rawGitHubUsername =
+  process.env.NEXT_PUBLIC_GITHUB_USERNAME ?? FALLBACK_GITHUB_USERNAME;
+const GITHUB_USERNAME = /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i.test(rawGitHubUsername)
+  ? rawGitHubUsername
+  : FALLBACK_GITHUB_USERNAME;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REVALIDATE_SECONDS = 600;
 
@@ -77,10 +83,14 @@ function getGitHubHeaders() {
 }
 
 async function fetchJson<T>(url: string, init?: RequestInit): Promise<T | null> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), GITHUB_FETCH_TIMEOUT_MS);
+
   try {
     const response = await fetch(url, {
       ...init,
       next: { revalidate: REVALIDATE_SECONDS },
+      signal: controller.signal,
     });
 
     if (!response.ok) {
@@ -90,6 +100,8 @@ async function fetchJson<T>(url: string, init?: RequestInit): Promise<T | null> 
     return (await response.json()) as T;
   } catch {
     return null;
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
 
