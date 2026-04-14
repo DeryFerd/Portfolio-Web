@@ -201,7 +201,7 @@ export default async function GitHubProof() {
                   href={data.profileUrl}
                   className={styles.identityLink}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   @{data.username}
                 </Link>
@@ -288,7 +288,7 @@ export default async function GitHubProof() {
                 href={data.profileUrl}
                 className={styles.panelLink}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Open GitHub
               </Link>
@@ -417,7 +417,7 @@ export default async function GitHubProof() {
                         href={repo.url}
                         className={styles.repoName}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                       >
                         {repo.name}
                       </Link>
