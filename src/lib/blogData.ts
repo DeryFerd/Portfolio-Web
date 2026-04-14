@@ -2,48 +2,49 @@
 export const posts = [
     {
         title: "Claude Code Advisor",
-        excerpt: "A comprehensive guide to understanding and working with LLMs for production applications.",
-        date: "2024-01-15",
-        slug: "getting-started-with-llms",
-        tags: ["NLP", "LLM", "Tutorial"],
-        image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&h=400&fit=crop",
+        excerpt: "Advisor Strategy membantu dapat intelligence mendekati Opus dengan biaya sekelas Sonnet, cocok buat yang kuotanya cepat habis di Claude Code.",
+        date: "2026-04-14",
+        slug: "claude-code-advisor-strategy",
+        tags: ["Claude Code", "Advisor Strategy", "Anthropic", "Agentic AI"],
+        image: "/images/blog/claude-code-advisor.png",
         content: `
-## Introduction
+## Context
 
-Large Language Models (LLMs) have revolutionized the field of natural language processing. In this tutorial, we'll explore how to work with these powerful models.
+Lagi ngerjain projects dengan Claude Code akhir-akhir ini? Satu masalah yang paling sering muncul adalah limit yang habis lebih cepat dari yang diharapkan, bahkan di Max Plan sekalipun. Penyebab utamanya sederhana: terlalu banyak task langsung dilempar ke Opus 4.6 dengan full thinking. Beberapa prompt saja sudah cukup untuk menguras kuota.
 
-## What are LLMs?
+## Advisor Strategy, Singkatnya
 
-Large Language Models are deep learning models trained on vast amounts of text data. They can understand and generate human-like text, making them incredibly versatile for a wide range of applications.
+Anthropic punya solusi untuk ini: Advisor Strategy. Tujuannya mendapatkan intelligence mendekati Opus tapi dengan cost selevel Sonnet.
 
-## Getting Started
+Konsepnya cukup elegan:
+1. Biarkan Haiku atau Sonnet menangani eksekusi end-to-end.
+2. Panggil Opus hanya ketika executor benar-benar stuck.
+3. Opus hanya memberi guidance singkat ke shared context.
+4. Executor (Haiku/Sonnet) lanjut implementasi sampai selesai.
 
-Here's a basic example using the OpenAI API:
+Di pola ini, Opus tidak memanggil tools dan tidak memberi output langsung ke user. Opus murni sebagai advisor.
 
-\`\`\`python
-import openai
+## Kenapa Pendekatan Ini Menarik
 
-openai.api_key = "your-api-key"
+Ini kebalikan dari pola sub-agent umum, di mana model besar jadi orchestrator lalu mendelegasikan task ke model kecil. Pada Advisor Strategy, model kecil yang mengemudikan flow, lalu hanya eskalasi ke Opus saat benar-benar perlu.
 
-response = openai.ChatCompletion.create(
-  model="gpt-3.5-turbo",
-  messages=[
-    {"role": "system", "content": "You are a helpful assistant."},
-    {"role": "user", "content": "Hello!"}
-  ]
-)
-\`\`\`
+## Benchmark Snapshot
 
-## Best Practices
+Beberapa hasil yang paling relevan:
+1. SWE-bench Multilingual: Sonnet 4.6 sendiri 72.1%, naik ke 74.8% saat pakai Opus Advisor.
+2. Cost per agentic task di setup Sonnet + Opus Advisor turun sekitar 11.9%.
+3. BrowseComp: Haiku naik dari 19.7% ke 41.2% saat dipasangkan dengan Opus Advisor.
+4. Terminal-Bench 2.0 juga menunjukkan peningkatan signifikan.
 
-1. Always validate outputs
-2. Implement proper error handling
-3. Monitor costs and usage
-4. Consider privacy implications
+## Implementasi di API
 
-## Conclusion
+Implementasinya cukup one-line change di request Messages API: deklarasikan advisor_20260301.
 
-LLMs are powerful tools that can accelerate development significantly. Start small, experiment, and scale up as you learn.
+Handoff model terjadi dalam satu request /v1/messages, tanpa extra round-trips dan tanpa context management manual dari sisi developer. Executor yang memutuskan kapan konsultasi ke Opus.
+
+## Closing Note
+
+Fitur ini sudah bisa dicoba dalam fase beta. Buat yang lagi ngos-ngosan sama kuota Claude Code, ini termasuk opsi yang worth trying.
     `,
     },
     {
