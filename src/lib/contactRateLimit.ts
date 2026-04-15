@@ -39,6 +39,12 @@ function getRedisClient() {
   return globalForRateLimit.__contactRateLimitRedis;
 }
 
+export function hasDistributedRateLimitBackend() {
+  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+  return Boolean(url && token);
+}
+
 function hashIp(clientIp: string) {
   return createHash("sha256").update(clientIp).digest("hex").slice(0, 24);
 }
@@ -121,4 +127,3 @@ export async function getContactRateLimitStatus(
 ): Promise<RateLimitStatus> {
   return getRedisRateLimitStatus(clientIp);
 }
-
