@@ -159,28 +159,28 @@ const stackTools: StackTool[] = [
     label: "vLLM",
     caption: "High-throughput inference serving for large language models in production workflows.",
     accent: "#6f7cff",
-    logoUrl: "https://www.google.com/s2/favicons?domain=vllm.ai&sz=128",
+    logoUrl: "/icons/vllm.ico",
   },
   {
     id: "chroma",
     label: "Chroma",
     caption: "Vector retrieval infrastructure for context storage, similarity search, and grounded generation.",
     accent: "#9a6cff",
-    logoUrl: "https://www.google.com/s2/favicons?domain=trychroma.com&sz=128",
+    logoUrl: "/icons/chroma.ico",
   },
   {
     id: "wandb",
     label: "Weights & Biases",
     caption: "Experiment tracking, model evaluation, and training observability for ML delivery.",
     accent: "#ffbe3b",
-    logoUrl: "https://www.google.com/s2/favicons?domain=wandb.ai&sz=128",
+    logoUrl: "/icons/wandb.svg",
   },
   {
     id: "tavily",
     label: "Tavily",
     caption: "Search and research retrieval for AI agents that need fresher external context.",
     accent: "#00b894",
-    logoUrl: "https://www.google.com/s2/favicons?domain=tavily.com&sz=128",
+    logoUrl: "/icons/tavily.ico",
   },
 ];
 
