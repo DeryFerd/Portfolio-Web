@@ -49,3 +49,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local review artifacts
+.qwen/
+SWE-*.md
+security-review-*.md
+*security-address*.md
+*threat-model*.md

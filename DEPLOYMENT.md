@@ -1,115 +1,52 @@
-# Deployment Guide
+# Deployment Guide (Vercel)
 
-## Prerequisites
-- Node.js installed
-- GitHub account
-- Netlify account
-- Sanity.io account (free tier)
+## 1. Prerequisites
+- GitHub repository connected to Vercel
+- Node.js LTS locally (for pre-deploy checks)
 
-## Step 1: Install Dependencies
+## 2. Local Validation
+Run this before pushing:
 
 ```bash
-cd Web\ Portfolio/portfolio
-npm install next-sanity @sanity/client @sanity/image-url @portabletext/react
+npm install
+npm run build
 ```
 
-## Step 2: Setup Sanity.io
-
-1. Go to [sanity.io](https://www.sanity.io) and create a free account
-2. Create a new project
-3. Note your Project ID
-4. Create a dataset (e.g., "production")
-
-## Step 3: Environment Variables
-
-Create a `.env.local` file in the project root:
+## 3. Required Environment Variables (Vercel Project)
+Set these in Vercel Project Settings -> Environment Variables:
 
 ```env
-NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
-NEXT_PUBLIC_SANITY_DATASET=production
+RESEND_API_KEY=re_your_resend_api_key
+CONTACT_TO_EMAIL=hello@yourdomain.com
+CONTACT_FROM_EMAIL=Portfolio Contact <hello@yourdomain.com>
+NEXT_PUBLIC_CONTACT_EMAIL=hello@yourdomain.com
+NEXT_PUBLIC_SITE_URL=https://yourdomain.com
+UPSTASH_REDIS_REST_URL=https://your-upstash-url.upstash.io
+UPSTASH_REDIS_REST_TOKEN=your_upstash_token
 ```
 
-## Step 4: Push to GitHub
+Optional but recommended:
 
-```bash
-cd Web\ Portfolio/portfolio
-git init
-git add .
-git commit -m "Initial portfolio setup"
+```env
+GITHUB_TOKEN=ghp_xxx
+NEXT_PUBLIC_GITHUB_USERNAME=DeryFerd
 ```
 
-Create a new repository on GitHub and push:
+## 4. Vercel Deployment Flow
+1. Push to `main` -> production deployment.
+2. Push to feature branch / PR -> preview deployment.
+3. Confirm the deployment build logs are green.
 
-```bash
-git remote add origin https://github.com/your-username/portfolio.git
-git push -u origin main
-```
+## 5. Post-Deploy Smoke Checklist
+- Home page loads in light/dark mode.
+- `Core Stack` icons render correctly.
+- `Download My CV` downloads from `/documents/dery-ferdika-cv.pdf`.
+- Contact form:
+  - valid request works,
+  - invalid origin is blocked,
+  - rate limiting responds with 429 when abused.
 
-## Step 5: Deploy to Netlify
-
-1. Go to [Netlify](https://www.netlify.com) and sign in
-2. Click "Add new site" > "Import an existing project"
-3. Select GitHub and choose your repository
-4. Build settings:
-   - Build command: `npm run build`
-   - Publish directory: `.next`
-5. Add environment variables:
-   - `NEXT_PUBLIC_SANITY_PROJECT_ID` = your-project-id
-   - `NEXT_PUBLIC_SANITY_DATASET` = production
-6. Click "Deploy site"
-
-## Step 6: Update Sanity Studio (Optional)
-
-To embed Sanity Studio in your portfolio:
-
-```bash
-npm install @sanity/studio
-```
-
-Create a route at `/studio` with Sanity Studio embedded.
-
-## Customization
-
-### Update Personal Info
-- Edit content in `/app/page.tsx` (Hero section)
-- Edit `/app/about/page.tsx` (About page)
-- Edit `/app/contact/page.tsx` (Contact page)
-
-### Add Projects
-- Edit `/app/projects/page.tsx` and add new project objects to the array
-
-### Add Blog Posts
-- Edit `/app/blog/page.tsx` and add new post objects to the array
-
-### Change Colors
-- Edit `/src/styles/globals.css` and update CSS variables:
-  - `--accent` - Change the electric blue (#00b4d8) to your preferred color
-
-### Change Font
-- Currently using JetBrains Mono
-- To change, edit `/app/layout.tsx`
-
-## Running Locally
-
-```bash
-npm run dev
-```
-
-Visit `http://localhost:3000`
-
-## Building for Production
-
-```bash
-npm run build
-npm run start
-```
-
-## Notes
-
-- The current data is stored in static arrays for easy editing
-- To fully integrate with Sanity CMS, you need to:
-  1. Set up Sanity schemas
-  2. Create the Sanity Studio
-  3. Fetch data from Sanity using the client
-
-- For now, the portfolio works without Sanity - just edit the static files directly.
+## 6. Notes
+- Security headers and CSP are configured in `next.config.ts`.
+- Contact API hardening is in `src/app/api/contact/route.ts`.
+- Distributed rate limiting is in `src/lib/contactRateLimit.ts` and relies on Upstash Redis in production.
