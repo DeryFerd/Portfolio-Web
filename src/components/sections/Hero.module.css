@@ -294,13 +294,49 @@
 }
 
 @media (max-width: 768px) {
+  .hero {
+    position: relative;
+    top: auto;
+    min-height: 100svh;
+  }
+
   .heroInner {
+    min-height: 100svh;
     padding-top: calc(var(--header-height) + 3rem);
     padding-bottom: 6.5rem;
   }
 
+  .video {
+    transform: none;
+    filter: none;
+  }
+
+  .videoGlow,
+  .videoGrid {
+    display: none;
+  }
+
+  .videoShade {
+    background:
+      linear-gradient(180deg, rgba(5, 8, 10, 0.55) 0%, rgba(5, 8, 10, 0.16) 34%, rgba(5, 8, 10, 0.84) 100%);
+  }
+
   .heroContent {
     gap: 1.2rem;
+    animation: none;
+    opacity: 1;
+  }
+
+  .eyebrow,
+  .title,
+  .titleName,
+  .titleRole,
+  .description,
+  .cta,
+  .focusRail,
+  .scrollHint {
+    animation: none;
+    opacity: 1;
   }
 
   .titleName {

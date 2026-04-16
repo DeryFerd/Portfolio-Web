@@ -25,7 +25,7 @@ const PARAGRAPH_2 =
   "Beyond shipping code, I work as a curriculum developer to help others master these tools. My goal is always to make advanced AI easy to trust and use in the real world.";
 
 const PROFILE_IMAGE = "/images/dery-photo.jpg";
-const CV_DOWNLOAD_PATH = "/documents/dery-ferdika-cv.pdf";
+const CV_DOWNLOAD_PATH = "/api/download-cv";
 
 const profileRows = [
   {
@@ -155,7 +155,11 @@ export default function AboutTeaser() {
             </p>
             <div className={styles.copyActions}>
               <Button asChild variant="outline" size="lg" className={styles.cvButton}>
-                <a href={CV_DOWNLOAD_PATH} download aria-label="Download my CV as PDF">
+                <a
+                  href={CV_DOWNLOAD_PATH}
+                  download="Dery-Ferdika-CV.pdf"
+                  aria-label="Download my CV as PDF"
+                >
                   <span className={styles.cvText}>Download My CV</span>
                   <Download className={styles.cvIcon} aria-hidden="true" />
                 </a>
