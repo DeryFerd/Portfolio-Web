@@ -216,11 +216,10 @@
   display: grid;
   align-content: start;
   gap: 0.42rem;
-  padding: 0.9rem 0;
+  padding: 0.9rem 0.5rem;
 }
 
 .identityCell + .identityCell {
-  padding-left: 1rem;
   border-left: 1px solid var(--border);
 }
 
@@ -255,11 +254,10 @@
   display: grid;
   align-content: start;
   gap: 0.42rem;
-  padding: 0.9rem 0;
+  padding: 0.9rem 0.5rem;
 }
 
 .metaCell + .metaCell {
-  padding-left: 1rem;
   border-left: 1px solid var(--border);
 }
 
@@ -293,11 +291,10 @@
   display: grid;
   align-content: start;
   gap: 0.42rem;
-  padding: 0.9rem 0;
+  padding: 0.9rem 0.5rem;
 }
 
 .cardRow + .cardRow {
-  padding-left: 1rem;
   border-left: 1px solid var(--border);
 }
 
@@ -312,6 +309,9 @@
 
 .rowValue {
   display: block;
+  width: 147px;
+  max-width: 100%;
+  min-height: 86.55px;
   font-size: 0.96rem;
   line-height: 1.5;
   color: var(--text-primary);
