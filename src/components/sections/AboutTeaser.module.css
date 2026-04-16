@@ -214,6 +214,7 @@
 
 .identityCell {
   display: grid;
+  align-content: start;
   gap: 0.42rem;
   padding: 0.9rem 0;
 }
@@ -224,6 +225,8 @@
 }
 
 .identityLabel {
+  display: block;
+  line-height: 1.1;
   font-size: 0.68rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -231,6 +234,7 @@
 }
 
 .identityValue {
+  display: block;
   font-family: var(--font-display);
   font-size: 1.02rem;
   line-height: 1.2;
@@ -249,6 +253,7 @@
 
 .metaCell {
   display: grid;
+  align-content: start;
   gap: 0.42rem;
   padding: 0.9rem 0;
 }
@@ -259,6 +264,8 @@
 }
 
 .metaLabel {
+  display: block;
+  line-height: 1.1;
   font-size: 0.68rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -266,6 +273,7 @@
 }
 
 .metaValue {
+  display: block;
   font-family: var(--font-display);
   font-size: 1.02rem;
   line-height: 1.2;
@@ -283,6 +291,7 @@
 
 .cardRow {
   display: grid;
+  align-content: start;
   gap: 0.42rem;
   padding: 0.9rem 0;
 }
@@ -293,6 +302,8 @@
 }
 
 .rowLabel {
+  display: block;
+  line-height: 1.1;
   font-size: 0.68rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -300,6 +311,7 @@
 }
 
 .rowValue {
+  display: block;
   font-size: 0.96rem;
   line-height: 1.5;
   color: var(--text-primary);
