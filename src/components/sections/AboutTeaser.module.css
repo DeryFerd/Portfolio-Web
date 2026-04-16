@@ -308,29 +308,85 @@
   }
 }
 
+@media (max-width: 768px) {
+  .profileReveal {
+    min-height: 22.8rem;
+    height: auto;
+  }
+}
+
 @media (max-width: 520px) {
   .profileReveal {
-    min-height: 23rem;
+    min-height: 22.2rem;
+    height: auto;
+  }
+
+  .identityCell,
+  .metaCell {
+    gap: 0.38rem;
+    padding: 0.78rem 0.6rem;
+  }
+
+  .identityLabel,
+  .metaLabel,
+  .rowLabel {
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+  }
+
+  .identityValue,
+  .metaValue {
+    font-size: 1rem;
+    line-height: 1.2;
   }
 
   .identityGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 0.96rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    align-items: stretch;
   }
 
   .identityCell + .identityCell {
-    padding-top: 0;
-    padding-left: 0;
-    border-left: 0;
+    border-left: 1px solid var(--border);
   }
 
   .metaGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 0;
+    margin-bottom: 0.96rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    align-items: stretch;
   }
 
   .metaCell + .metaCell {
-    padding-top: 0;
-    padding-left: 0;
-    border-left: 0;
+    border-left: 1px solid var(--border);
+  }
+
+  .cardRows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    align-items: stretch;
+  }
+
+  .cardRow {
+    gap: 0.28rem;
+    padding: 0.78rem 0.6rem;
+    border-top: 0;
+  }
+
+  .cardRow + .cardRow {
+    border-left: 1px solid var(--border);
+  }
+
+  .rowValue {
+    font-size: 0.82rem;
+    line-height: 1.32;
+    letter-spacing: 0.005em;
   }
 }
 

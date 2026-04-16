@@ -30,11 +30,11 @@ const CV_DOWNLOAD_PATH = "/api/download-cv";
 const profileRows = [
   {
     label: "Focus",
-    value: "LLM systems, agent workflows, RAG, and production AI delivery.",
+    value: "LLM systems, AI agents, and RAG for production workflows.",
   },
   {
     label: "Layer",
-    value: "Engineering depth with learning design and interface awareness.",
+    value: "Engineering execution with learning design and interface clarity.",
   },
 ];
 
@@ -173,7 +173,7 @@ export default function AboutTeaser() {
               imageAlt="Profile portrait of Dery Ferdika"
               className={styles.profileReveal}
               photoFit="cover"
-              photoPosition="50% 22%"
+              photoPosition="50% 20%"
             >
               <div className={styles.identityGrid}>
                 <div className={styles.identityCell}>

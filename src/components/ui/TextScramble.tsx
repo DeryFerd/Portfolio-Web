@@ -21,9 +21,24 @@ export default function TextScramble({
   trigger = true,
   onComplete,
 }: TextScrambleProps) {
+  const [isMobile, setIsMobile] = useState(false);
   const [displayed, setDisplayed] = useState("");
   const frameRef = useRef<number | null>(null);
   const completedTextRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const handleChange = () => {
+      setIsMobile(media.matches);
+    };
+
+    handleChange();
+    media.addEventListener("change", handleChange);
+
+    return () => {
+      media.removeEventListener("change", handleChange);
+    };
+  }, []);
 
   const scramble = useCallback(() => {
     const length = text.length;
@@ -66,6 +81,13 @@ export default function TextScramble({
       return;
     }
 
+    if (isMobile) {
+      completedTextRef.current = text;
+      setDisplayed(text);
+      onComplete?.();
+      return;
+    }
+
     if (completedTextRef.current === text) {
       setDisplayed(text);
       return;
@@ -77,7 +99,7 @@ export default function TextScramble({
       clearTimeout(timeout);
       if (frameRef.current) clearTimeout(frameRef.current);
     };
-  }, [delay, scramble, trigger, text]);
+  }, [delay, scramble, trigger, text, isMobile, onComplete]);
 
   useEffect(() => {
     return () => {

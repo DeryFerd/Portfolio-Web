@@ -172,4 +172,23 @@
   .container {
     min-height: 100%;
   }
+
+  .infoBox {
+    padding: 1.05rem 0.95rem;
+  }
+
+  .infoContent {
+    flex: 0 0 auto;
+  }
+
+  .clickIndicator,
+  .closeButton {
+    padding: 0.56rem;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .clickIndicator {
+    display: none !important;
+  }
 }

@@ -2,6 +2,10 @@
   display: inline-block;
 }
 
+.mobileSwap {
+  animation: wordFade 0.95s ease both;
+}
+
 .cursor {
   display: inline-block;
   color: var(--accent);
@@ -14,5 +18,18 @@
   }
   51%, 100% {
     opacity: 0;
+  }
+}
+
+@keyframes wordFade {
+  0% {
+    opacity: 0;
+    transform: translateY(0.2em);
+    filter: blur(1.5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }

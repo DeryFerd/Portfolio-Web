@@ -16,11 +16,49 @@ export default function TypeWriter({
   deleteSpeed = 50, 
   pauseDuration = 2000 
 }: TypeWriterProps) {
+  const [isMobile, setIsMobile] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState(words[0]?.slice(0, 1) ?? "");
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const handleChange = () => {
+      setIsMobile(media.matches);
+    };
+
+    handleChange();
+    media.addEventListener("change", handleChange);
+
+    return () => {
+      media.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      return;
+    }
+
+    if (words.length === 0) {
+      setCurrentText("");
+      return;
+    }
+
+    const currentWord = words[currentWordIndex] ?? words[0] ?? "";
+    setCurrentText(currentWord);
+
+    const timeout = window.setTimeout(() => {
+      setCurrentWordIndex((prev) => (prev + 1) % words.length);
+    }, pauseDuration);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [currentWordIndex, isMobile, pauseDuration, words]);
+
+  useEffect(() => {
+    if (isMobile) return;
     if (words.length === 0) return;
 
     const word = words[currentWordIndex];
@@ -51,7 +89,15 @@ export default function TypeWriter({
     }, delay);
 
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentWordIndex, words, speed, deleteSpeed, pauseDuration]);
+  }, [currentText, isDeleting, currentWordIndex, words, speed, deleteSpeed, pauseDuration, isMobile]);
+
+  if (isMobile) {
+    return (
+      <span className={`${styles.typewriter} ${styles.mobileSwap}`} key={currentWordIndex}>
+        {currentText}
+      </span>
+    );
+  }
 
   return (
     <span className={styles.typewriter}>
