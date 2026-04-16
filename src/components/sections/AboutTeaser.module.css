@@ -275,30 +275,33 @@
 
 .cardRows {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  align-items: stretch;
 }
 
 .cardRow {
   display: grid;
-  gap: 0.35rem;
-  padding-top: 0.95rem;
-  border-top: 1px solid var(--border);
+  gap: 0.42rem;
+  padding: 0.9rem 0;
 }
 
-.cardRow:first-child {
-  padding-top: 0;
-  border-top: 0;
+.cardRow + .cardRow {
+  padding-left: 1rem;
+  border-left: 1px solid var(--border);
 }
 
 .rowLabel {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .rowValue {
   font-size: 0.96rem;
-  line-height: 1.6;
+  line-height: 1.5;
   color: var(--text-primary);
 }
 
