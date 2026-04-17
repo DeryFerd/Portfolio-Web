@@ -22,7 +22,7 @@ const PARAGRAPH_1 =
   "Hi, I am Dery. As a pure math graduate and aspiring AI Engineer, I build reliable products backed by machine learning and deep learning. I specialize in autonomous AI agents, agentic AI workflows, and RAG systems. I am also highly interested in data engineering to keep my builds production-ready.";
 
 const PARAGRAPH_2 =
-  "Beyond shipping code, I work as a curriculum developer to help others master these tools. My goal is always to make advanced AI easy to trust and use in the real world.";
+  "Beyond shipping code, I work as a curriculum developer to help others master AI stuff. My goal is always to make advanced AI easy to trust and use in the real world.";
 
 const PROFILE_IMAGE = "/images/dery-photo.jpg";
 const CV_DOWNLOAD_PATH = "/api/download-cv";
