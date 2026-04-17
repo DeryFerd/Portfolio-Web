@@ -112,6 +112,11 @@ export default function Header() {
     setIsChatOpen(true);
   };
 
+  const handleBackToLetsTalk = () => {
+    setIsChatOpen(false);
+    setIsLetsTalkOpen(true);
+  };
+
   const handleNavLinkClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     if (pathname !== "/" || !href.startsWith("/#")) {
       return;
@@ -245,6 +250,7 @@ export default function Header() {
       <PortfolioChatPanel
         open={isChatOpen}
         onClose={() => setIsChatOpen(false)}
+        onBack={handleBackToLetsTalk}
       />
     </>
   );

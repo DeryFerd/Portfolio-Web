@@ -1,8 +1,41 @@
 .overlay {
+  --chat-panel: linear-gradient(180deg, rgba(24, 29, 32, 0.97), rgba(16, 20, 23, 0.98));
+  --chat-panel-base: #111619;
+  --chat-border: rgba(244, 238, 229, 0.1);
+  --chat-border-strong: rgba(244, 238, 229, 0.14);
+  --chat-chip: rgba(255, 255, 255, 0.05);
+  --chat-chip-strong: rgba(255, 255, 255, 0.07);
+  --chat-user: color-mix(in srgb, var(--accent) 18%, rgba(255, 255, 255, 0.04));
+  --chat-user-border: color-mix(in srgb, var(--accent) 26%, rgba(255, 255, 255, 0.08));
+  --chat-label: rgba(177, 185, 190, 0.78);
+  --chat-text: #f4eee5;
+  --chat-muted: rgba(203, 197, 188, 0.74);
+  --chat-link-bg: color-mix(in srgb, var(--accent) 16%, rgba(255, 255, 255, 0.03));
+  --chat-link-border: color-mix(in srgb, var(--accent) 22%, rgba(255, 255, 255, 0.08));
+  --chat-link-text: color-mix(in srgb, var(--accent) 48%, #f4eee5);
+  --chat-shadow: rgba(0, 0, 0, 0.28);
   position: fixed;
   inset: 0;
   z-index: 120;
   pointer-events: none;
+}
+
+:global([data-theme="light"]) .overlay {
+  --chat-panel: linear-gradient(180deg, rgba(249, 244, 235, 0.98), rgba(242, 236, 225, 0.98));
+  --chat-panel-base: #f2eadf;
+  --chat-border: rgba(33, 50, 40, 0.1);
+  --chat-border-strong: rgba(33, 50, 40, 0.16);
+  --chat-chip: rgba(255, 255, 255, 0.56);
+  --chat-chip-strong: rgba(255, 255, 255, 0.74);
+  --chat-user: rgba(77, 106, 55, 0.1);
+  --chat-user-border: rgba(77, 106, 55, 0.16);
+  --chat-label: rgba(96, 104, 100, 0.84);
+  --chat-text: #233127;
+  --chat-muted: rgba(82, 98, 86, 0.82);
+  --chat-link-bg: rgba(77, 106, 55, 0.08);
+  --chat-link-border: rgba(77, 106, 55, 0.16);
+  --chat-link-text: #476235;
+  --chat-shadow: rgba(42, 34, 24, 0.14);
 }
 
 .overlay[data-open="true"] {
@@ -33,12 +66,12 @@
   grid-template-rows: auto auto auto minmax(0, 1fr) auto;
   gap: 0.9rem;
   padding: 1rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--chat-border);
   border-radius: 1.9rem;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)),
-    var(--bg-secondary);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+  background: var(--chat-panel), var(--chat-panel-base);
+  box-shadow:
+    0 24px 80px var(--chat-shadow),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
   transform: translateX(calc(100% + 2rem));
   opacity: 0;
   transition:
@@ -58,12 +91,18 @@
   gap: 1rem;
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .kicker {
   margin-bottom: 0.4rem;
   font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(122, 131, 137, 0.88);
+  color: var(--chat-label);
 }
 
 .title {
@@ -71,21 +110,33 @@
   font-size: clamp(1.7rem, 3vw, 2.2rem);
   line-height: 0.96;
   letter-spacing: -0.04em;
-  color: var(--text-primary);
+  color: var(--chat-text);
 }
 
+.backButton,
 .closeButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-height: 2.4rem;
+  border: 1px solid var(--chat-border-strong);
+  border-radius: 999px;
+  background: var(--chat-chip);
+  line-height: 1;
+  color: var(--chat-text);
+}
+
+.backButton {
+  padding: 0.58rem 0.92rem;
+  font-size: 0.73rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.closeButton {
   width: 2.4rem;
   height: 2.4rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
   font-size: 1.35rem;
-  line-height: 1;
-  color: var(--text-primary);
 }
 
 .panelIntro {
@@ -93,9 +144,9 @@
   align-items: center;
   gap: 0.7rem;
   padding: 0.9rem 1rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--chat-border-strong);
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--chat-chip);
 }
 
 .statusDot {
@@ -109,7 +160,7 @@
 .introText {
   font-size: 0.9rem;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--chat-muted);
 }
 
 .promptRail {
@@ -123,13 +174,13 @@
   align-items: center;
   min-height: 2.15rem;
   padding: 0.45rem 0.8rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--chat-border-strong);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--chat-chip);
   font-size: 0.74rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-primary);
+  color: var(--chat-text);
 }
 
 .messages {
@@ -153,7 +204,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(122, 131, 137, 0.86);
+  color: var(--chat-label);
 }
 
 .messageBubble {
@@ -162,19 +213,19 @@
   gap: 0.9rem;
   padding: 0.95rem 1rem;
   border-radius: 1.25rem;
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--chat-border-strong);
+  background: var(--chat-chip);
 }
 
 .message[data-role="user"] .messageBubble {
-  background: rgba(77, 106, 55, 0.14);
-  border-color: rgba(77, 106, 55, 0.24);
+  background: var(--chat-user);
+  border-color: var(--chat-user-border);
 }
 
 .messageText {
   font-size: 0.95rem;
   line-height: 1.7;
-  color: var(--text-primary);
+  color: var(--chat-text);
 }
 
 .linkRail {
@@ -189,12 +240,12 @@
   min-height: 2rem;
   padding: 0.4rem 0.72rem;
   border-radius: 999px;
-  border: 1px solid rgba(77, 106, 55, 0.2);
-  background: rgba(77, 106, 55, 0.08);
+  border: 1px solid var(--chat-link-border);
+  background: var(--chat-link-bg);
   font-size: 0.74rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--chat-link-text);
 }
 
 .thinkingDots {
@@ -236,7 +287,7 @@
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--chat-link-text);
 }
 
 .resetButton {
@@ -256,23 +307,23 @@
   min-width: 0;
   min-height: 3rem;
   padding: 0.75rem 0.95rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--chat-border-strong);
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-primary);
+  background: var(--chat-chip-strong);
+  color: var(--chat-text);
 }
 
 .input::placeholder {
-  color: var(--text-muted);
+  color: var(--chat-muted);
 }
 
 .sendButton {
   min-height: 3rem;
   padding: 0.75rem 1rem;
   border-radius: 1rem;
-  border: 1px solid rgba(77, 106, 55, 0.22);
-  background: rgba(77, 106, 55, 0.14);
-  color: var(--text-primary);
+  border: 1px solid var(--chat-link-border);
+  background: var(--chat-link-bg);
+  color: var(--chat-text);
   font-size: 0.82rem;
   font-weight: 600;
 }

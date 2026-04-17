@@ -18,6 +18,7 @@ interface ProjectKnowledge {
   description: string;
   tags: string[];
   detail: string;
+  isIncoming?: boolean;
 }
 
 interface ExperienceKnowledge {
@@ -49,54 +50,26 @@ const projects: ProjectKnowledge[] = [
       "This project distills Qwen2.5 teacher capability into a smaller Phi-2 checkpoint and publishes the full training intent through a public Hugging Face model card.",
   },
   {
-    title: "Image Classifier",
+    title: "More Incoming",
     slug: "image-classifier",
-    year: "2025",
+    year: "2026",
     description:
-      "A deep learning workflow for image classification using CNN-based architecture and fast inference-ready outputs.",
-    tags: ["Computer Vision", "PyTorch", "ResNet"],
+      "This archive slot is intentionally reserved for the next published case study once the build is strong enough to document properly.",
+    tags: ["Incoming", "In Progress", "Roadmap"],
     detail:
-      "It focuses on computer vision and inference-ready classification using a CNN-oriented pipeline and deployment-friendly outputs.",
+      "This slot is being held for an upcoming case study, so the portfolio stays honest about what is fully documented and what is still being shaped behind the scenes.",
+    isIncoming: true,
   },
   {
-    title: "Recommender System",
+    title: "More Incoming",
     slug: "recommender-system",
-    year: "2025",
+    year: "2026",
     description:
-      "A collaborative filtering engine tuned for product discovery, personalization, and real recommendation workflows.",
-    tags: ["ML", "Recommendation", "Python"],
+      "A second archive slot is reserved for the next project write-up once the architecture, tradeoffs, and evidence are ready to publish.",
+    tags: ["Incoming", "In Progress", "Roadmap"],
     detail:
-      "This is the portfolio's recommendation workflow story: collaborative filtering, product discovery, and practical personalization logic.",
-  },
-  {
-    title: "Sentiment Analysis",
-    slug: "sentiment-analysis",
-    year: "2024",
-    description:
-      "A real-time sentiment monitor for social data, designed to surface trends and response signals with clarity.",
-    tags: ["NLP", "BERT", "Streamlit"],
-    detail:
-      "It is an NLP-driven monitor for sentiment signals, meant to surface trend shifts clearly rather than just classify text in isolation.",
-  },
-  {
-    title: "Object Detection",
-    slug: "object-detection",
-    year: "2024",
-    description:
-      "A YOLO-based detection pipeline oriented around real-world imagery, monitoring, and applied computer vision.",
-    tags: ["Computer Vision", "YOLO", "OpenCV"],
-    detail:
-      "This work leans into applied computer vision using a YOLO-style detection pipeline for real-world imagery and monitoring use cases.",
-  },
-  {
-    title: "Time Series Forecasting",
-    slug: "time-series",
-    year: "2024",
-    description:
-      "An LSTM forecasting setup for financial signals, with a focus on model behavior, trend reading, and deployment readiness.",
-    tags: ["Deep Learning", "LSTM", "Finance"],
-    detail:
-      "This project explores financial forecasting with LSTM, focusing on trend behavior, model reading, and deployment-minded experimentation.",
+      "It marks another upcoming publication slot, giving room for a stronger case study instead of filling the archive with lightweight placeholder claims.",
+    isIncoming: true,
   },
 ];
 
@@ -244,6 +217,16 @@ function findRole(query: string) {
 }
 
 function buildProjectReply(project: ProjectKnowledge): AssistantReply {
+  if (project.isIncoming) {
+    return {
+      text: `${project.title} (${project.year}) is currently an archive placeholder rather than a published case study. ${project.detail}`,
+      links: [
+        { label: "View project archive", href: "/projects" },
+        { label: "Jump to selected work", href: "/#projects" },
+      ],
+    };
+  }
+
   return {
     text: `${project.title} (${project.year}) is one of the highlighted portfolio pieces. ${project.detail} The stack signal shown on the site is ${project.tags.join(", ")}.`,
     links: [
@@ -312,7 +295,7 @@ export function buildAssistantReply(input: string): AssistantReply {
 
   if (includesAny(query, ["project", "projects", "work", "case study", "portfolio"])) {
     return {
-      text: `The current highlighted project set spans ${projects.map((project) => project.title).join(", ")}. If you want a strong starting point, begin with Qwen-Phi Distillation for LLM distillation, Image Classifier for computer vision, and Recommender System for applied ML.`,
+      text: "The selected project section is intentionally tight right now: Qwen-Phi Distillation is the main published case study, and the other two slots are marked More Incoming so unfinished work does not get oversold. Start with Qwen-Phi Distillation first, then treat the remaining slots as signals of what will be documented next.",
       links: [
         { label: "View project archive", href: "/projects" },
         { label: "Jump to selected work", href: "/#projects" },

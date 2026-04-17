@@ -131,6 +131,39 @@ const INITIAL_FORM_STATE: ContactFormState = {
   message: "",
 };
 
+function lockBodyScroll() {
+  const previousOverflow = document.body.style.overflow;
+  const previousPaddingRight = document.body.style.paddingRight;
+  const previousScrollbarCompensation = document.documentElement.style.getPropertyValue(
+    "--scrollbar-compensation",
+  );
+  const scrollbarWidth =
+    window.innerWidth - document.documentElement.clientWidth;
+
+  document.body.style.overflow = "hidden";
+
+  if (scrollbarWidth > 0) {
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.documentElement.style.setProperty(
+      "--scrollbar-compensation",
+      `${scrollbarWidth}px`,
+    );
+  }
+
+  return () => {
+    document.body.style.overflow = previousOverflow;
+    document.body.style.paddingRight = previousPaddingRight;
+    if (previousScrollbarCompensation) {
+      document.documentElement.style.setProperty(
+        "--scrollbar-compensation",
+        previousScrollbarCompensation,
+      );
+    } else {
+      document.documentElement.style.removeProperty("--scrollbar-compensation");
+    }
+  };
+}
+
 type ProjectTypeId = (typeof projectTypes)[number]["id"];
 type ProjectStageId = (typeof projectStages)[number]["id"];
 type ProjectNeedId = (typeof projectNeeds)[number]["id"];
@@ -237,8 +270,7 @@ export default function LetsTalkPanel({
       return () => window.clearTimeout(timeoutId);
     }
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const unlockBodyScroll = lockBodyScroll();
 
     const focusTimeoutId = window.setTimeout(() => {
       closeButtonRef.current?.focus();
@@ -253,7 +285,7 @@ export default function LetsTalkPanel({
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      unlockBodyScroll();
       window.clearTimeout(focusTimeoutId);
       window.removeEventListener("keydown", handleKeyDown);
     };
@@ -438,17 +470,17 @@ export default function LetsTalkPanel({
               {view === "fit" ? (
                 <button
                   type="button"
-                  className={styles.closeButton}
+                  className={`${styles.closeButton} ${styles.backButton}`}
                   aria-label="Back to Let's Talk options"
                   onClick={() => setView("menu")}
                 >
-                  &lt;
+                  Back
                 </button>
               ) : null}
               {view === "form" ? (
                 <button
                   type="button"
-                  className={styles.closeButton}
+                  className={`${styles.closeButton} ${styles.backButton}`}
                   aria-label="Back to project fit options"
                   onClick={() => {
                     setView("fit");
@@ -456,7 +488,7 @@ export default function LetsTalkPanel({
                     setErrorMessage("");
                   }}
                 >
-                  &lt;
+                  Back
                 </button>
               ) : null}
               <button

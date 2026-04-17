@@ -1,4 +1,4 @@
-const FALLBACK_CONTACT_EMAIL = "hello@yourdomain.com";
+const FALLBACK_CONTACT_EMAIL = "deryferdikao125@gmail.com";
 
 function isValidPublicEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);

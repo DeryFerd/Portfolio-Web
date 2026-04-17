@@ -35,14 +35,49 @@ const INITIAL_MESSAGE: ChatMessage = {
   ],
 };
 
+function lockBodyScroll() {
+  const previousOverflow = document.body.style.overflow;
+  const previousPaddingRight = document.body.style.paddingRight;
+  const previousScrollbarCompensation = document.documentElement.style.getPropertyValue(
+    "--scrollbar-compensation",
+  );
+  const scrollbarWidth =
+    window.innerWidth - document.documentElement.clientWidth;
+
+  document.body.style.overflow = "hidden";
+
+  if (scrollbarWidth > 0) {
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.documentElement.style.setProperty(
+      "--scrollbar-compensation",
+      `${scrollbarWidth}px`,
+    );
+  }
+
+  return () => {
+    document.body.style.overflow = previousOverflow;
+    document.body.style.paddingRight = previousPaddingRight;
+    if (previousScrollbarCompensation) {
+      document.documentElement.style.setProperty(
+        "--scrollbar-compensation",
+        previousScrollbarCompensation,
+      );
+    } else {
+      document.documentElement.style.removeProperty("--scrollbar-compensation");
+    }
+  };
+}
+
 interface PortfolioChatPanelProps {
   open: boolean;
   onClose: () => void;
+  onBack: () => void;
 }
 
 export default function PortfolioChatPanel({
   open,
   onClose,
+  onBack,
 }: PortfolioChatPanelProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE]);
   const [draft, setDraft] = useState("");
@@ -61,12 +96,11 @@ export default function PortfolioChatPanel({
       }
     };
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const unlockBodyScroll = lockBodyScroll();
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      unlockBodyScroll();
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [onClose, open]);
@@ -141,6 +175,15 @@ export default function PortfolioChatPanel({
     setMessages([INITIAL_MESSAGE]);
   };
 
+  const handleBackToPrompts = () => {
+    if (messages.length > 1 || draft.trim()) {
+      resetConversation();
+      return;
+    }
+
+    onBack();
+  };
+
   return (
     <div className={styles.overlay} data-open={open}>
       <button
@@ -163,14 +206,28 @@ export default function PortfolioChatPanel({
             <p className={styles.kicker}>Chat with My AI</p>
             <h2 className={styles.title}>Ask about the portfolio</h2>
           </div>
-          <button
-            type="button"
-            className={styles.closeButton}
-            onClick={onClose}
-            aria-label="Close AI chat"
-          >
-            x
-          </button>
+          <div className={styles.headerActions}>
+            <button
+              type="button"
+              className={styles.backButton}
+              onClick={handleBackToPrompts}
+              aria-label={
+                messages.length > 1 || draft.trim()
+                  ? "Back to quick prompts"
+                  : "Back"
+              }
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              className={styles.closeButton}
+              onClick={onClose}
+              aria-label="Close AI chat"
+            >
+              x
+            </button>
+          </div>
         </div>
 
         <div className={styles.panelIntro}>
