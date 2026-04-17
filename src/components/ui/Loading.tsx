@@ -1,19 +1,35 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./Loading.module.css";
 
 const VIDEO_DURATION_MS = 3000;
+const MOBILE_BREAKPOINT = 768;
 
 export default function Loading() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFading, setIsFading] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
 
-    if (reduceMotion) {
+    if (reduceMotion || isMobile) {
+      setIsLoading(false);
+      return;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      return;
+    }
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
+
+    if (reduceMotion || isMobile) {
       const timer = window.setTimeout(() => {
         setIsLoading(false);
       }, 500);
@@ -32,7 +48,7 @@ export default function Loading() {
       window.clearTimeout(fadeTimer);
       window.clearTimeout(hideTimer);
     };
-  }, []);
+  }, [isLoading]);
 
   if (!isLoading) {
     return null;
