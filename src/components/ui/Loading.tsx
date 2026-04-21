@@ -7,11 +7,19 @@ const VIDEO_DURATION_MS = 3000;
 const MOBILE_BREAKPOINT = 768;
 
 export default function Loading() {
+  const [hasMounted, setHasMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isFading, setIsFading] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  const markVideoReady = () => {
+    setIsVideoReady(true);
+  };
+
   useLayoutEffect(() => {
+    setHasMounted(true);
+
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isMobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
 
@@ -22,7 +30,7 @@ export default function Loading() {
   }, []);
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!hasMounted || !isLoading) {
       return;
     }
 
@@ -34,6 +42,16 @@ export default function Loading() {
         setIsLoading(false);
       }, 500);
       return () => window.clearTimeout(timer);
+    }
+
+    if (!isVideoReady) {
+      const readyFallbackTimer = window.setTimeout(() => {
+        setIsVideoReady(true);
+      }, 900);
+
+      return () => {
+        window.clearTimeout(readyFallbackTimer);
+      };
     }
 
     const fadeTimer = window.setTimeout(() => {
@@ -48,7 +66,21 @@ export default function Loading() {
       window.clearTimeout(fadeTimer);
       window.clearTimeout(hideTimer);
     };
-  }, [isLoading]);
+  }, [hasMounted, isLoading, isVideoReady]);
+
+  useEffect(() => {
+    if (!hasMounted || !isLoading || !isVideoReady) {
+      return;
+    }
+
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+    }
+
+    videoRef.current?.play().catch(() => {
+      // Autoplay can be delayed briefly; the overlay remains stable until playback begins.
+    });
+  }, [hasMounted, isLoading, isVideoReady]);
 
   if (!isLoading) {
     return null;
@@ -67,10 +99,13 @@ export default function Loading() {
       <video
         ref={videoRef}
         className={styles.introVideo}
-        autoPlay
         muted
         playsInline
         preload="auto"
+        data-ready={isVideoReady}
+        onLoadedData={markVideoReady}
+        onCanPlay={markVideoReady}
+        onCanPlayThrough={markVideoReady}
       >
         <source src="/videos/intro.mp4" type="video/mp4" />
       </video>
